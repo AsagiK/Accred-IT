@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `capstone`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
@@ -81,7 +79,7 @@ CREATE TABLE `documents` (
   `Document_Desc` varchar(300) DEFAULT 'No Description Given.',
   `Document_Ext` varchar(45) NOT NULL,
   PRIMARY KEY (`Document_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +88,7 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES (20,'IMAGE TEST','uploads/picture.jpg','TESTING TESTING ','.jpg'),(21,'DOCUMENT TEST','uploads/asean.docx','DOCUMENT TESTING TESTING','.docx'),(22,'Test File','uploads/GEFILIFINALPRESENTATION.pdf','Hi','.pdf'),(23,'Test','uploads/Jeld-RentalReceipt.docx','Test','.docx'),(24,'wsdfawqefq','uploads/05UsersandFilePermissionsv2.pptx','wefqwefqw','.pptx'),(25,'ewqfqfeqefqwefqwefq','uploads/LSDC-Folk-Attendance.pdf','qfwefqwefqwefqwefqewf','.pdf'),(26,'TEST PPTX','uploads/05UsersandFilePermissionsv2.pptx','TESTING','.pptx'),(27,'Network Test','uploads/__ai_chan_getsuyoubi_no_tawawa_drawn_by_himura_kiseki__351255e59b8f196938aa0f378be7a6f1.png','Tawawa','.png'),(28,'Network Test2','uploads/1543998205_yMm5Qfr0MVuOWQ7DR_360.mp4','Test','.mp4');
+INSERT INTO `documents` VALUES (20,'IMAGE TEST','uploads/picture.jpg','TESTING TESTING ','.jpg'),(21,'DOCUMENT TEST','uploads/asean.docx','DOCUMENT TESTING TESTING','.docx'),(22,'Test File','uploads/GEFILIFINALPRESENTATION.pdf','Hi','.pdf'),(23,'Test','uploads/Jeld-RentalReceipt.docx','Test','.docx'),(24,'wsdfawqefq','uploads/05UsersandFilePermissionsv2.pptx','wefqwefqw','.pptx'),(25,'ewqfqfeqefqwefqwefq','uploads/LSDC-Folk-Attendance.pdf','qfwefqwefqwefqwefqewf','.pdf'),(26,'TEST PPTX','uploads/05UsersandFilePermissionsv2.pptx','TESTING','.pptx'),(27,'Network Test','uploads/__ai_chan_getsuyoubi_no_tawawa_drawn_by_himura_kiseki__351255e59b8f196938aa0f378be7a6f1.png','Tawawa','.png'),(28,'Network Test2','uploads/1543998205_yMm5Qfr0MVuOWQ7DR_360.mp4','Test','.mp4'),(29,'test','uploads/asean.docx','test','.docx');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,8 +126,8 @@ DROP TABLE IF EXISTS `groupdetails`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `groupdetails` (
   `Groupdetails_ID` int(11) NOT NULL,
-  `Group_Leader_ID` int(11) DEFAULT NULL,
-  `Group_Member_ID` int(11) DEFAULT NULL
+  `Groupdetails_UserID` int(11) NOT NULL,
+  `Groupdetails_Position` varchar(45) NOT NULL DEFAULT 'Member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,6 +137,7 @@ CREATE TABLE `groupdetails` (
 
 LOCK TABLES `groupdetails` WRITE;
 /*!40000 ALTER TABLE `groupdetails` DISABLE KEYS */;
+INSERT INTO `groupdetails` VALUES (1,29,'Member');
 /*!40000 ALTER TABLE `groupdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,8 +160,9 @@ CREATE TABLE `plans` (
   `PriorityLevel` varchar(45) DEFAULT NULL,
   `BaseStandard` varchar(200) DEFAULT NULL,
   `recommendation_ID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`Plan_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Plan_ID`),
+  UNIQUE KEY `Plan_ID_UNIQUE` (`Plan_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +171,6 @@ CREATE TABLE `plans` (
 
 LOCK TABLES `plans` WRITE;
 /*!40000 ALTER TABLE `plans` DISABLE KEYS */;
-INSERT INTO `plans` VALUES (1,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(2,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(3,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(4,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(5,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(6,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(7,'TEST','TEST','TEST','TEST','TEST',NULL,NULL,NULL,NULL,NULL),(8,'1','1','2','4','6',1,1,'High','1234',1),(9,'dsafas','gsdgdsga','dafadgsad','dgasdffdsa','adfsgadfgdf',NULL,NULL,NULL,NULL,1),(10,'2','3','5','6','7',NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `plans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,9 +271,10 @@ CREATE TABLE `tasks` (
   `BaseStandard` varchar(45) NOT NULL,
   `Group` varchar(45) DEFAULT 'Not Assigned',
   `Personnel` varchar(45) DEFAULT 'Not Assigned',
-  `Level` int(11) DEFAULT NULL,
+  `Level` varchar(45) DEFAULT 'Not Assigned',
+  `plan_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`task_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (1,'1','2','3','4','5','6','Not Assigned','Not Assigned',NULL);
+INSERT INTO `tasks` VALUES (1,'1','2','3','4','5','6','Not Assigned','Not Assigned',NULL,0),(2,'aaaa','aaaa','aaa','aaa','aaaaa','aaaaa','Not Assigned','Not Assigned',NULL,0),(3,'123','123','123','123','123','123','Not Assigned','Not Assigned','Not Assigned',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +306,7 @@ CREATE TABLE `users` (
   `passwd` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,6 +315,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (27,'admin','admin','rovi_soriano@hotmail.com',1,NULL,'123123','admin','$2b$10$K5Mr/InOK12.q3pN8bp0I.EvWT6eBjXpoczJBVEpCwUfVdgr9vo8a'),(28,'User','Name','rijanemay@hotmail.com',4,1,'123123',NULL,NULL),(29,'TESTING DB','TESTING DB','TESTING@DB.COM',2,1,'091827366',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -327,4 +328,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-03 23:00:45
+-- Dump completed on 2019-07-07 16:51:42
