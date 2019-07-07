@@ -68,8 +68,9 @@ module.exports = {
         var ME = req.body.Measurement;
         var QT = req.body.QT;
         var BS = req.body.BS;
-        var sql = "INSERT INTO `capstone`.`tasks` (`Task_Name`, `Task_Desc`, `GenObj`, `Measurement`, `QT`, `BaseStandard`) VALUES (?, ?, ?, ?, ?, ?);"
-        var values = [TN, TD, GO, ME, QT, BS]
+        var PL = req.body.priority;
+        var sql = "INSERT INTO `capstone`.`tasks` (`Task_Name`, `Task_Desc`, `GenObj`, `Measurement`, `QT`, `BaseStandard`, `Level` ) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        var values = [TN, TD, GO, ME, QT, BS, PL];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
