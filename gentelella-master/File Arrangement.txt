@@ -1,4 +1,4 @@
 htmls > views/pages
 css and js > public/assets
 
-app > routes > controllers
+app > routes > controller
