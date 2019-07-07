@@ -73,7 +73,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="file" id="DocFile" name="DocFile" required="required"
-                                                class="form-control col-md-7 col-xs-12">
+                                                class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -111,14 +111,16 @@
 
             <!-- footer content -->
             <footer>
-                <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                </div>
+                <input type="file" />
+                <p>MD5 Hash: <span id="md5"></span></p>
+
+
                 <div class="clearfix"></div>
             </footer>
             <!-- /footer content -->
         </div>
     </div>
+
 
     <!script for dynamic text area>
         <script type="text/javascript">
@@ -126,13 +128,40 @@
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
+
+            function md5Generate(f) {
+                var file = event.target;
+                var test = document.getElementById('DocFile');
+
+                console.log(test);
+                var reader = new FileReader();
+
+
+            }
+
+            $('input').change(
+                function () {
+                    var reader = FileReader();
+
+                    reader.addEventListener(
+                        'load',
+                        function () {
+                            var wordArray = CryptoJS.lib.WordArray.create(this.result);
+                            $('#md5').text(CryptoJS.MD5(wordArray));
+                        }
+                    );
+
+                    reader.readAsArrayBuffer(this.files[0]);
+                }
+            );
         </script>
 
-        <!--MD5 HASH SCRIPT-->
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+
         <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <!script src="assets/vendors/jquery/dist/jquery.min.js"><!/script>
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!--MD5 HASH SCRIPT-->
+        <script src="assets/vendors/md5/md5.min.js"></script>
+        <script src="assets/vendors/crypto/md5.js"></script>
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
