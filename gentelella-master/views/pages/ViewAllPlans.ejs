@@ -60,31 +60,35 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Task</th>
+                                                <th>Plan ID</th>
                                                 <th>General Objective</th>
                                                 <th>Measurement</th>
+                                                <th>Base Formula</th>
                                                 <th>Quality Target</th>
-                                                <th>Base Standard</th>
+                                                <th>Procedures</th>
                                                 <th>Group Assigned</th>
-                                                <!--Exclude to G.L-->
-                                                <th>Personnel Assigned</th>
-                                                <!---Exclude to G.M-->
+                                                <th>Cycle Time</th>
                                                 <th>Priority Level</th>
+                                                <th>Base Standard</th>
+                                                <th>Recommendation ID</th>
                                             </tr>
                                         </thead>
                                         
                                         <tbody>
+                                             <% for (var plan of data) { %>
                                             <tr>
-                                                <th scope="row"></th>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <th scope="row"><%= plan.Plan_ID %></th>
+                                                <td><%= plan.GenObjective %></td>
+                                                <td><%= plan.Measurement%></td>
+                                                <td><%= plan.BaseFormula%></td>
+                                                <td><%= plan.QualityTarget%></td>
+                                                <td><%= plan.Procedures%></td>
+                                                <td><%= plan.GroupAssigned%></td>
+                                                <td><%= plan.CycleTime%></td>
+                                                <td><%= plan.PriorityLevel%></td>
+                                                <td><%= plan.BaseStandard%></td>
+                                                <td><%= plan.Recommendation_ID%></td>
+                                                <% } %>
                                             </tr>
                                         </tbody>
                                         

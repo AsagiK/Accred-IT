@@ -419,5 +419,15 @@ module.exports = {
             console.log("Assign Member to Group Page");
         });
     },
+    ViewAllPlans: function (req, resp) {
 
+        connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewAllPlans.ejs', {
+                data: results
+            });
+            console.log(results);
+        });
+        console.log("ViewAllPlans");
+    },
 }
