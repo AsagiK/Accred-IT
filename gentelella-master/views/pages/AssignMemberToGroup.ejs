@@ -83,7 +83,7 @@
                                                         <%= user.User_First %></td>
                                                     <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
-                                                        <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>" style="visibility:collapse;">test</td>
+                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>" style="visibility:collapse;">test</td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -117,12 +117,16 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <button class="btn btn-primary" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
+                                        <form method="get" action="ViewGroups">
+                                            
+                                            <button type="submit"  class="btn btn-success" style="display: none;" id="back">Hi</button>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -175,9 +179,9 @@
     <!--TEST SCRIPT FOR ADDING-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".add-row").click(function () {
-                $("#table1 tbody").find('input[name="record"]').each(function () {
+        $(document).ready(function() {
+            $(".add-row").click(function() {
+                $("#table1 tbody").find('input[name="record"]').each(function() {
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
@@ -201,8 +205,8 @@
             });
 
             // Find and remove selected table rows
-            $(".delete-row").click(function () {
-                $("#table2 tbody tr").find('input[name="record"]').each(function () {
+            $(".delete-row").click(function() {
+                $("#table2 tbody tr").find('input[name="record"]').each(function() {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
                         var UID = $('#UID' + index).attr("value");
@@ -220,23 +224,45 @@
                 });
             });
 
-            $("#toJSON").click(function () {
+            $("#toJSON").click(function() {
 
-                var table = JSON.stringify($('#table2').tableToJSON({ignoreColumns: [0, 2, 3]}));
-                var table2 = JSON.stringify($('#table2').tableToJSON({ignoreColumns: [0, 2, 3, 4]}));// 
-                
+                var table = JSON.stringify($('#table2').tableToJSON({
+                    ignoreColumns: [0, 2, 3]
+                }));
+                var table2 = JSON.stringify($('#table2').tableToJSON({
+                    ignoreColumns: [0, 2, 3, 4]
+                })); // 
+
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignTaskJSON', true);
-                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-                xhr.onload = function () {
+                xhr.open('POST', '/AssignGroupJSON', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
                     console.log(xhr.responseText);
                 };
-                
-                
 
-                xhr.send("table="+table+"&table2="+table2);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState > 2) {
+                        var respData = xhr.responseText;
+                        if(respData == "OK"){
+                            console.log("Hi");
+                            back();
+                        }
+                    }
+                };
+
+
+                xhr.send("table=" + table + "&table2=" + table2);
 
             });
+            
+            function back() {
+                console.log("Hi")
+
+               var button = document.getElementById('back');
+                button.click();
+
+            };
+
 
 
         });

@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit User</h3>
+                            <h3>Edit User <%= data[0].User_First %> <%= data[0].User_Last %></h3>
 
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="alteruser" method="POST">
-
+                                    <% if (data[0].Role != "1") {%>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name
                                         </label>
@@ -85,7 +85,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Edit Role</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="role">
-                                                <% for (var role of dataB){ %>
+                                                <% for (var role of dataB) { %>
                                                 <option value="<%= role.Role_ID %>"><%= role.Role_Name %></option>
                                                 <% } %>
                                             </select>
@@ -106,6 +106,10 @@
                                             <button class="btn btn-primary" type="reset">Reset</button>
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
+                                        
+                                        <% } if (data[0].Role == "1") { %>
+                                        <h3 style="text-align:center;" > Admin accounts cannot be edited :^) </h3>
+                                        <%}%>
                                     </div>
 
                                 </form>

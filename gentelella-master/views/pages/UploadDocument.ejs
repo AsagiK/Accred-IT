@@ -63,7 +63,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--First name Input field-->
-                                            <input type="text" id="first-name" name="DocName" required="required"
+                                            <input type="text" id="docname" name="DocName" required="required"
                                                 class="form-control col-md-7 col-xs-12" placeholder="First name">
                                         </div>
                                     </div>
@@ -72,8 +72,8 @@
                                             File <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="file" name="DocFile" required="required" 
-                                                class="form-control col-md-7 col-xs-12" placeholder="Last Name">
+                                            <input type="file" id="DocFile" name="DocFile" required="required"
+                                                class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -82,9 +82,9 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!Document Description>
-                                            <textarea id="description" name="DocDesc" required="required"
-                                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                                style="overflow:hidden"></textarea>
+                                                <textarea id="description" name="DocDesc" required="required"
+                                                    class="form-control col-md-7 col-xs-12"
+                                                    onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                         </div>
                                     </div>
 
@@ -121,15 +121,18 @@
     </div>
 
     <!script for dynamic text area>
-        <script>
+        <script type="text/javascript">
             function textAreaAdjust(o) {
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
         </script>
 
+        <!--MD5 HASH SCRIPT-->
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
         <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <!script src="assets/vendors/jquery/dist/jquery.min.js"><!/script>
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
