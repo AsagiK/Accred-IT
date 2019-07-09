@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Assign Recommendation to Group Page</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <%- include ./nav.ejs %>
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+
+                            <h3>Edit Recommendation Page</h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <br />
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
+                                    action="alterrecommendation" method="POST">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Recommendation Name<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="hidden" name="UID" value="<%= data[0].recommendation_ID%>">
+                                            <input type="text" id="recommendationName" name="recommendationName"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].recommendation_Name%>" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Quality Target"
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea class="form-control" rows="3" id="recommendationDesc"
+                                                name="recommendationDesc" value="<%= data[0].recommendation_Desc%>"
+                                                readonly><%= data[0].recommendation_Desc%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
+                                            Grade<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="grade" readonly>
+                                                <!--Must be able  retrieve grading scheme from Grade setting-->
+                                                <option value="<%= data[0].recommendation_Grade%>">
+                                                    <%= data[0].recommendation_Grade%></option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="F">F</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Priority
+                                            Level<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="priority" readonly>
+                                                <option value="<%= data[0].priority_Level%>">
+                                                    <%= data[0].priority_Level%></option>
+                                                <option value="High">High</option>
+                                                <option value="Low">Medium</option>
+                                                <option value="Medium">Low</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Quality Target"
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area<span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea class="form-control" rows="3" id="recommendationDesc"
+                                                name="recommendationDesc" value="<%= data[0].recommendation_Desc%>"
+                                                readonly><%= data[0].Area_Name%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Choose Group To Assign: 
+                                            Level<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="priority" readonly>
+                                                <option value="<%= data[0].priority_Level%>">
+                                                    <%= data[0].priority_Level%></option>
+                                                <option value="High">High</option>
+                                                <option value="Low">Medium</option>
+                                                <option value="Medium">Low</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a type="button" class="btn btn-default" href="/RecommendationNonAjax">
+                                            cancel
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
+
+</body>
+
+</html>

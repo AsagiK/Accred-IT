@@ -127,10 +127,10 @@ module.exports = {
 
     addgroup: function (req, resp) {
         var gn = (req.body.GroupName);
-        var sg = (req.body.SelectGroup);
+        var sa = (req.body.SelectArea);
         var gd = (req.body.GroupDesc);
         var sql = "INSERT INTO `capstone`.`group` (`Group_Name`, `Area_ID`) VALUES (? , ?)";
-        var values = [gn, sg];
+        var values = [gn, sa];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -242,11 +242,13 @@ module.exports = {
     },
 
     RecommendationNonAjax: function (req, resp) {
-        connection.query("Select * FROM capstone.recommendation;", function (err, results, fields) {
+        connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, area.Area_Name, group.Group_Name  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID; Select * FROM capstone.area;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/RecommendationNonAjax.ejs', {
-                data: results
+                data: results[0],
+                dataB: results[1]
             });
+            console.log(results);
             console.log("RECOMMENDATION NON AJAX");
         });
     },
@@ -256,6 +258,7 @@ module.exports = {
         var recommendationDesc = (req.body.recommendationDesc);
         var grade = (req.body.grade);
         var priority = (req.body.priority);
+        var area = (req.body.SelectArea);
         var today = new Date();
         //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -266,16 +269,18 @@ module.exports = {
         console.log(recommendationDesc);
         console.log(grade);
         console.log(priority);
+        console.log(area);
         console.log(current);
-        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `status`) VALUES (? , ? , ? , ?, ?)";
-        var values = [recommendationName, recommendationDesc, grade, priority, current];
+        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`) VALUES (? , ? , ? , ?, ?, ?)";
+        var values = [recommendationName, recommendationDesc, grade, priority, current, area];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            connection.query("Select * FROM capstone.recommendation;", function (err, results, fields) {
+            connection.query("Select * FROM capstone.recommendation; Select * FROM capstone.area;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/RecommendationNonAjax.ejs', {
-                    data: results
+                    data: results[0],
+                    dataB: results[1]
                 });
                 console.log("RECOMMENDATION NON AJAX");
             });
@@ -453,6 +458,20 @@ module.exports = {
         setTimeout(function () {
             resp.redirect('/Viewtasks');
         }, 3000);
+    },
+
+    AssignRecommendationToGroup: function (req, resp) {
+        var id = (req.query.UID);
+        console.log(id);
+        var values = [id];
+        connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, area.Area_Name, group.Group_Name  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = (?);", values, function (err, results) {
+            if (err) throw err;
+            console.log(results);
+            resp.render('./pages/AssignRecommendationToGroup.ejs', {
+                data: results
+            })
+        });
+        console.log("Edit Recommendations Page");
     },
 
 }
