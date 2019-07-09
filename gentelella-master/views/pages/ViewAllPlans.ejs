@@ -77,7 +77,7 @@
                                         <tbody>
                                              <% for (var plan of data) { %>
                                             <tr>
-                                                <th scope="row"><%= plan.Plan_ID %></th>
+                                                <td><%= plan.Plan_ID %></td>
                                                 <td><%= plan.GenObjective %></td>
                                                 <td><%= plan.Measurement%></td>
                                                 <td><%= plan.BaseFormula%></td>
@@ -87,7 +87,7 @@
                                                 <td><%= plan.CycleTime%></td>
                                                 <td><%= plan.PriorityLevel%></td>
                                                 <td><%= plan.BaseStandard%></td>
-                                                <td><%= plan.Recommendation_ID%></td>
+                                                <td><%= plan.recommendation_ID%></td>
                                                 <% } %>
                                             </tr>
                                         </tbody>
