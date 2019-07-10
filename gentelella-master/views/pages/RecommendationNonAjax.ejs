@@ -70,29 +70,51 @@
                                                     <th>Description</th>
                                                     <th>Given Grade</th>
                                                     <th>Priority Level</th>
-                                                    <!High, Medium, Low>
-                                                        <th>Status</th>
-                                                        <! Status will be No Updates or Updated Last(Date Here)>
-
+                                                    <th>Area Assigned</th>
+                                                    <th>Group Assigned</th>
+                                                    <th>Date</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% for (var recommendation of data) { %>
-                                                <form method="get" action="editrecommendation">
+                                                <% for (var recommendation of data) { 
+                                                    
+                                                    %>
+
                                                 <tr>
-                                                    <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
+
                                                     <td><%= recommendation.recommendation_Name %></td>
                                                     <td><%= recommendation.recommendation_Desc %></td>
                                                     <td><%= recommendation.recommendation_Grade %></td>
                                                     <td><%= recommendation.priority_Level %></td>
-                                                    <td><%= recommendation.status.toString().substring(0,15) %></td>
+                                                    <td><%= recommendation.Area_Name %></td>
+                                                    <td><%= recommendation.Group_Name %></td>
+                                                    <td><%= recommendation.date_insert.toString().substring(0,15) %>
+                                                    </td>
                                                     <td>
+
                                                         <div class="form-group">
                                                             <div>
                                                                 <!BUTTONS FOR EDIT AND PLAN>
-                                                                    <button type="submit" class="btn btn-primary">Edit Recommendation</button>
+                                                                    <% if (recommendation.Group_Name=="No Group Assigned") { %>
+                                                                    <form method="get" action="AssignRecommendationToGroup">
+                                                                        <input type="hidden" name="AID" value="<%= recommendation.area_ID %>">
+                                                                        <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Assign
+                                                                            Group</button>
                                                                     </form>
-                                                                    <br/><br/>
+                                                                    <% } else { %>
+                                                                    <form method="get" action="editrecommendation">
+                                                                        <input type="hidden" name="UID"
+                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Edit
+                                                                            Recommendation</button>
+                                                                    </form>
+                                                                    <% } %>
+
+                                                                    <br /><br />
                                                                     <form method="get" action="PlanPage">
                                                                         <input type="hidden" name="PID"
                                                                             value="<%= recommendation.recommendation_ID %>">
@@ -252,6 +274,26 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Assign Area<span
+                                                    class="required">*</span>
+                                            </label>
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <select class="form-control" placeholder="Select Area"
+                                                        name="SelectArea">
+
+
+                                                        <!-- code for taking data from sql to show on page-->
+                                                        <% for(var area of dataB){ %>
+                                                        <option value=<%=area.Area_ID %>> <%= area.Area_Name %>
+                                                        </option>
+                                                        <% } %>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 Close
@@ -277,8 +319,8 @@
                                     <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="CreateCycle" data-parsley-validate
-                                        class="form-horizontal form-label-left" action="addcycle" method="POST">
+                                    <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left"
+                                        action="addcycle" method="POST">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                 for="first-name">Cycle
@@ -301,9 +343,8 @@
                                                             <div class="input-prepend input-group">
                                                                 <span class="add-on input-group-addon"><i
                                                                         class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                                <input type="text" name="date"
-                                                                    id="reservation" class="form-control"
-                                                                    value="" />
+                                                                <input type="text" name="date" id="reservation"
+                                                                    class="form-control" value="" />
                                                             </div>
                                                         </div>
                                                     </div>

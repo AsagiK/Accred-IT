@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Upload Document</title>
+    <title>Assign Recommendation to Group Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Upload Document</h3>
+                            <h3>Edit Recommendation Page</h3>
 
                         </div>
                     </div>
@@ -55,113 +55,105 @@
                             <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
-                                    action="SendDocument" method="POST" encType="multipart/form-data">
+                                    action="alterrecommendation" method="POST">
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Document Name <span class="required">*</span>
+                                            for="first-name">Recommendation Name<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--First name Input field-->
-                                            <input type="text" id="docname" name="DocName" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="First name">
+                                            <input type="hidden" name="UID" value="<%= data[0].recommendation_ID%>">
+                                            <input type="text" id="recommendationName" name="recommendationName"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].recommendation_Name%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
-                                            File <span class="required">*</span>
+                                        <label for="Quality Target"
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea class="form-control" rows="3" id="recommendationDesc"
+                                                name="recommendationDesc" value="<%= data[0].recommendation_Desc%>"
+                                                readonly><%= data[0].recommendation_Desc%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
+                                            Grade<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="file" id="DocFile" name="DocFile" required="required"
-                                                class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
+                                                <input type="text" id="grade" name="grade"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].recommendation_Grade%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Description <span class="required">*</span>
+                                            for="first-name">Priority
+                                            Level<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!Document Description>
-                                                <textarea id="description" name="DocDesc" required="required"
-                                                    class="form-control col-md-7 col-xs-12"
-                                                    onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                <input type="text" id="priority" name="priority"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].priority_Level%>" />
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="Quality Target"
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area<span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="hidden" name="AID" value="<%= data[0].area_ID%>">
+                                                <input type="text" id="" name=""
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].Area_Name%>" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Choose Group To Assign: 
+                                            Level<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="group" id ="group">
+                                                <% for (var group of dataB) { %>
+                                                <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a type="button" class="btn btn-default" href="/RecommendationNonAjax">
+                                            cancel
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                    </div>
 
-
-
+                                </form>
                             </div>
-                            <div class="ln_solid"></div>
-                            <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                    <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                </div>
-                            </div>
-
-                            </form>
                         </div>
                     </div>
                 </div>
+
+
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
             </div>
-
-
-            <!-- /page content -->
-
-            <!-- footer content -->
-            <footer>
-                <input type="file" />
-                <p>MD5 Hash: <span id="md5"></span></p>
-
-
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
         </div>
-    </div>
-
-
-    <!script for dynamic text area>
-        <script type="text/javascript">
-            function textAreaAdjust(o) {
-                o.style.height = "1px";
-                o.style.height = (25 + o.scrollHeight) + "px";
-            }
-
-            function md5Generate(f) {
-                var file = event.target;
-                var test = document.getElementById('DocFile');
-
-                console.log(test);
-                var reader = new FileReader();
-
-
-            }
-
-            $('input').change(
-                function () {
-                    var reader = FileReader();
-
-                    reader.addEventListener(
-                        'load',
-                        function () {
-                            var wordArray = CryptoJS.lib.WordArray.create(this.result);
-                            $('#md5').text(CryptoJS.MD5(wordArray));
-                        }
-                    );
-
-                    reader.readAsArrayBuffer(this.files[0]);
-                }
-            );
-        </script>
-
 
         <!-- jQuery -->
         <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-        <!--MD5 HASH SCRIPT-->
-        <script src="assets/vendors/md5/md5.min.js"></script>
-        <script src="assets/vendors/crypto/md5.js"></script>
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
