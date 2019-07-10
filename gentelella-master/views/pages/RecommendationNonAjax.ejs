@@ -98,8 +98,8 @@
                                                                 <!BUTTONS FOR EDIT AND PLAN>
                                                                     <% if (recommendation.Group_Name=="No Group Assigned") { %>
                                                                     <form method="get" action="AssignRecommendationToGroup">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                        <input type="hidden" name="AID" value="<%= recommendation.area_ID %>">
+                                                                        <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Assign
                                                                             Group</button>

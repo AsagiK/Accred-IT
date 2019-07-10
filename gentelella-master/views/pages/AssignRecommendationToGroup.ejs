@@ -126,11 +126,9 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="priority" readonly>
-                                                <option value="<%= data[0].priority_Level%>">
-                                                    <%= data[0].priority_Level%></option>
-                                                <option value="High">High</option>
-                                                <option value="Low">Medium</option>
-                                                <option value="Medium">Low</option>
+                                                <% for (var group of dataB) { %>
+                                                <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                <% } %>
                                             </select>
                                         </div>
                                     </div>
