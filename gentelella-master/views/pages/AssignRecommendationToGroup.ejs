@@ -83,15 +83,9 @@
                                             Grade<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="grade" readonly>
-                                                <!--Must be able  retrieve grading scheme from Grade setting-->
-                                                <option value="<%= data[0].recommendation_Grade%>">
-                                                    <%= data[0].recommendation_Grade%></option>
-                                                <option value="A">A</option>
-                                                <option value="B">B</option>
-                                                <option value="C">C</option>
-                                                <option value="F">F</option>
-                                            </select>
+                                                <input type="text" id="grade" name="grade"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].recommendation_Grade%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -100,13 +94,9 @@
                                             Level<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="priority" readonly>
-                                                <option value="<%= data[0].priority_Level%>">
-                                                    <%= data[0].priority_Level%></option>
-                                                <option value="High">High</option>
-                                                <option value="Low">Medium</option>
-                                                <option value="Medium">Low</option>
-                                            </select>
+                                                <input type="text" id="priority" name="priority"
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].priority_Level%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -114,9 +104,10 @@
                                             class="control-label col-md-3 col-sm-3 col-xs-12">Area<span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="recommendationDesc"
-                                                name="recommendationDesc" value="<%= data[0].recommendation_Desc%>"
-                                                readonly><%= data[0].Area_Name%></textarea>
+                                                <input type="hidden" name="AID" value="<%= data[0].area_ID%>">
+                                                <input type="text" id="" name=""
+                                                readonly class="form-control col-md-7 col-xs-12"
+                                                value="<%= data[0].Area_Name%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -125,7 +116,7 @@
                                             Level<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="priority" readonly>
+                                            <select class="form-control" name="group" id ="group">
                                                 <% for (var group of dataB) { %>
                                                 <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
                                                 <% } %>

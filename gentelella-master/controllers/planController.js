@@ -350,6 +350,8 @@ module.exports = {
         var desc = (req.body.recommendationDesc);
         var grade = (req.body.grade);
         var priority = (req.body.priority);
+        var AID = (req.body.AID);
+        var GID = (req.body.group);
         var date = new Date();
         var current = date.toISOString().split('T')[0];
         console.log(id);
@@ -357,8 +359,8 @@ module.exports = {
         console.log(desc);
         console.log(grade);
         console.log(priority);
-        var sql = "Update capstone.recommendation set recommendation_Name = ?, recommendation_Desc = ?, recommendation_Grade = ?, priority_Level = ?, status = ? where recommendation_ID = ?";
-        var values = [name, desc, grade, priority, current, id];
+        var sql = "Update capstone.recommendation set recommendation_Name = ?, recommendation_Desc = ?, recommendation_Grade = ?, priority_Level = ?, date_insert = ?, area_ID = ?, group_ID = ? where recommendation_ID = ?";
+        var values = [name, desc, grade, priority, current, AID, GID, id];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -463,7 +465,7 @@ module.exports = {
     AssignRecommendationToGroup: function (req, resp) {
         var RID = req.query.UID;
         var AID = req.query.AID;
-        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
+        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
         var values = [RID, AID]
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
