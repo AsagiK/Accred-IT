@@ -331,17 +331,19 @@ module.exports = {
     },
 
     editrecommendation: function (req, resp) {
-        var id = (req.query.UID);
-        console.log(id);
-        var values = [id];
-        connection.query("SELECT * FROM capstone.recommendation where recommendation.recommendation_ID = (?);", values, function (err, results) {
+        var RID = req.query.UID;
+        var AID = req.query.AID;
+        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, recommendation.group_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
+        var values = [RID, AID]
+        connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
-            console.log(results);
             resp.render('./pages/EditRecommendation.ejs', {
-                data: results
-            })
+                data: results[0],
+                dataB: results[1]
+            });
+            console.log(results);
+            console.log("Edit Recommendation Page");
         });
-        console.log("Edit Recommendations Page");
     },
 
     alterrecommendation: function (req, resp) {
