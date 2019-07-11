@@ -54,161 +54,180 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                
-
-                                    <div class="col-md-12 col-sm-6 col-xs-12">
-                                        <div class="x_panel">
-                                            <div class="x_title">
-                                                <h2><i class="fa fa-align-left"></i>View Groups</h2>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="x_content">
-
-                                                <!-- start accordion -->
-                                                <% for(var area of dataA) { %>
-                                                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                                                    <div class="panel">
-                                                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= area.Area_ID%>" aria-expanded="true" aria-controls="collapse<%= area.Area_ID%>">
-                                                            <h4 class="panel-title"><%= area.Area_Name %></h4>
-                                                        </a>
-                                                        <div id="collapse<%= area.Area_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-
-                                                            <div class="panel-body">
 
 
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2><i class="fa fa-align-left"></i>View Groups</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+
+                                            <!-- start accordion -->
+                                            <% for(var area of dataA) { %>
+                                            <div class="accordion" id="accordion" role="tablist"
+                                                aria-multiselectable="true">
+                                                <div class="panel">
+                                                    <a class="panel-heading" role="tab" id="headingOne"
+                                                        data-toggle="collapse" data-parent="#accordion"
+                                                        href="#collapse<%= area.Area_ID%>" aria-expanded="true"
+                                                        aria-controls="collapse<%= area.Area_ID%>">
+                                                        <h4 class="panel-title"><%= area.Area_Name %></h4>
+                                                    </a>
+                                                    <div id="collapse<%= area.Area_ID %>"
+                                                        class="panel-collapse collapse" role="tabpanel"
+                                                        aria-labelledby="headingOne">
+
+                                                        <div class="panel-body">
 
 
-                                                                <!--Group 1 table-->
-                                                                <% for(var group of dataB) { %>
-                                                                <% if (group.Area_ID == area.Area_ID){ %>
-                                                                <div class="panel">
-                                                                    <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= group.Group_ID %>" aria-expanded="true" aria-controls="Collapse<%= group.Group_ID %>">
-                                                                        <h3 class="panel-title"><%= group.Group_Name %></h3>
-                                                                    </a>
-                                                                    <div id="Collapse<%= group.Group_ID %>" class="collapse">
 
 
-                                                                        <table class="table table-bordered">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>#</th>
-                                                                                    <th>First Name</th>
-                                                                                    <th>Last Name</th>
-                                                                                    <th>Username</th>
-                                                                                    <th>Contact Number</th>
-                                                                                    <th>Position</th>
-                                                                                    <th></th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <% for(var user of dataC) { %>
-                                                                            <% if(user.Group == group.Group_ID) {%>
-                                                                            <tbody>
-                                                                                <tr>
+                                                            <!--Group 1 table-->
+                                                            <% for(var group of dataB) { %>
+                                                            <% if (group.Area_ID == area.Area_ID){ %>
+                                                            <div class="panel">
+                                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                                    data-toggle="collapse" data-parent="#headingOne"
+                                                                    href="#Collapse<%= group.Group_ID %>"
+                                                                    aria-expanded="true"
+                                                                    aria-controls="Collapse<%= group.Group_ID %>">
+                                                                    <h3 class="panel-title"><%= group.Group_Name %></h3>
+                                                                </a>
+                                                                <div id="Collapse<%= group.Group_ID %>"
+                                                                    class="collapse">
 
-                                                                                    <td><%= user.User_ID %></td>
-                                                                                    <td><%= user.User_First %></td>
-                                                                                    <td><%= user.User_Last %></td>
-                                                                                    <td><%= user.username %></td>
-                                                                                    <td><%= user.ContactNo %></td>
-                                                                                    <td><%= user.Role %></td>
-                                                                                    <td>
-                                                                                        <form method="get" action="EditPositionInGroup  ">
-                                                                                            <button class="btn btn-primary" type="button">Edit Position</button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            <% } %>
-                                                                            <% } %>
-                                                                        </table>
 
-                                                                        
-                                                                        <div class="form-group">
-                                                                            <form method="GET" action="AssignMemberToGroup">
-                                                                            <input type="hidden" name="GID" value="<%= group.Group_ID %>">
-                                                                            <button class="btn btn-primary" type="submit">Add Member </button>
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>#</th>
+                                                                                <th>First Name</th>
+                                                                                <th>Last Name</th>
+                                                                                <th>Username</th>
+                                                                                <th>Contact Number</th>
+                                                                                <th>Role</th>
+                                                                                <th>Group Role</th>
+                                                                                <th></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <% for(var user of dataC) { %>
+                                                                        <% if(user.Group == group.Group_ID) {%>
+                                                                        <tbody>
+                                                                            <tr>
+
+                                                                                <td><%= user.User_ID %></td>
+                                                                                <td><%= user.User_First %></td>
+                                                                                <td><%= user.User_Last %></td>
+                                                                                <td><%= user.username %></td>
+                                                                                <td><%= user.ContactNo %></td>
+                                                                                <td><%= user.Role_Name %></td>
+                                                                                <td><%= user.Groupdetails_Position %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <% if (user.Groupdetails_Position == "Member") { %>
+                                                                                    <form method="get" action="">
+                                                                                        <button class="btn btn-primary"
+                                                                                            type="button">Make Group
+                                                                                            Leader</button>
+                                                                                    </form>
+                                                                                    <% } else { %>
+                                                                                    <form method="get" action="">
+                                                                                        <button class="btn btn-primary"
+                                                                                            type="button">Make Group Member</button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                    </table>
+
+
+                                                                    <div class="form-group">
+                                                                        <form method="GET" action="AssignMemberToGroup">
+                                                                            <input type="hidden" name="GID"
+                                                                                value="<%= group.Group_ID %>">
+                                                                            <button class="btn btn-primary"
+                                                                                type="submit">Add Member </button>
                                                                         </form>
-                                                                        </div>
-                                                                        <br>
-                                                                        <form method="get" action="AssignLeaderToGroup">
-                                                                                <div class="form-group">
-                                                                            <button class="btn btn-primary" type="button">Assign Group Leader</button>
-                                                                        </form>
-                                                                        </div>
-
                                                                     </div>
                                                                 </div>
-                                                                <% } %>
-                                                                <% } %>
-                                                                <!--End of Group 1 Table -->
-
 
                                                             </div>
                                                         </div>
+                                                        <% } %>
+                                                        <% } %>
+                                                        <!--End of Group 1 Table -->
+
+
                                                     </div>
                                                 </div>
-                                                <% } %>
-                                                <!-- end of accordion -->
-
                                             </div>
                                         </div>
-                                    </div>
+                                        <% } %>
+                                        <!-- end of accordion -->
 
-                                
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
-
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
             </div>
-        </div>
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
 
 </body>
 

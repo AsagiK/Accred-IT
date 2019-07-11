@@ -35,7 +35,7 @@ module.exports = {
 
     Createusers: function (req, resp) {
 
-        connection.query("SELECT * FROM capstone.roles where Role_ID > 1;", function (err, result, fields) {
+        connection.query("SELECT * FROM capstone.roles where Role_ID > 3;", function (err, result, fields) {
             if (err) throw err;
             resp.render('./pages/CreateUser.ejs', {
                 data: result
@@ -92,7 +92,7 @@ module.exports = {
     },
 
     ViewGroups: function (req, resp) {
-        connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users", function (err, results, fields) {
+        connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
             if (err) throw err;
             console.log(results);
             resp.render('./pages/ViewGroups.ejs', {
@@ -147,13 +147,14 @@ module.exports = {
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
+        var un = fn+ln;
     //    console.log(fn);
     //    console.log(ln);
     //    console.log(em);
     //    console.log(rl);
     //    console.log(co);
-        var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`) VALUES (? , ? , ? , ? , ?)";
-        var values = [fn, ln, em, rl, co];
+        var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
+        var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -472,4 +473,7 @@ module.exports = {
             console.log("Assign Recommendation to Group");
         });
     },
+
+    
+
 }
