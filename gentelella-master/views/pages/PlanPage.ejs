@@ -85,15 +85,12 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th>General Objective</th>
-                                                                <th>Measurement</th>
-                                                                <th>Base Formula</th>
-                                                                <th>Base Standard</th>
-                                                                <th>Quality Targets</th>
+                                                                <th>ID</th>
+                                                                <th>Plan Name</th>
+                                                                <th>Plan Description</th>
                                                                 <th>Group Assigned</th>
                                                                 <th>Priority Level</th>
-                                                                <th>Cycle Time</th>
-                                                                <th>Procedures</th>
+                                                                <th>Cycle Plan</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -103,15 +100,13 @@
                                                             <tr>
                                                                 <input type="hidden" name="UIDRecommendation" value="<%= dataB[0].recommendation_ID %>">
                                                                 <input type="hidden" name="UID" value="<%= plan.Plan_ID %>">
-                                                                <td><%= plan.GenObjective %></td>
-                                                                <td><%= plan.Measurement %></td>
-                                                                <td><%= plan.BaseFormula %></td>
-                                                                <td>Base Standard</td>
-                                                                <td><%= plan.QualityTarget %></td>
+                                                                <td><%= plan.plan_ID %></td>
+                                                                <td><%= plan.PlanName %></td>
+                                                                <td><%= plan.PlanDescription %></td>
                                                                 <td><%= plan.Group_Name %></td>
                                                                 <td><%= plan.PriorityLevel %></td>
                                                                 <td><%= plan.CycleTime %>: <%= plan.start_Date %> - <%= plan.end_Date %></td>
-                                                                <td><%= plan.Procedures %></td>
+                                                                
                                                                 <td><button type="submit" class="btn btn-primary">Assign Group</button></td>
                                                             </tr>
                                                             </form>
@@ -124,7 +119,30 @@
                                                         aria-labelledby="profile-tab">
                                                         <form id="create" data-parsley-validate
                                                             class="form-horizontal form-label-left" method="post"
-                                                            action="SendPlan">
+                                                            action="SendPlan"> 
+
+                                                            <!--Plan Name input field--> 
+                                                                <div class="form-group">
+                                                                    <label for="Plan Name" class="control-label col-md-3 col-sm-3 col-xs-12"> Plan Name: <span class="required">*</span></label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="Plan Name" name="PlanName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Plan Name">
+                                                                    </div>
+                                                                </div> 
+                                                            
+                                                            <!--Plan Description field-->
+                                                            <div class="form-group">
+                                                                    <label for="Plan Description"
+                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Plan Description:
+                                                                        <span class="required">*</span></label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <textarea class="form-control" rows="3"
+                                                                            id="PlanDesc" name="PlanD"
+                                                                            placeholder="Plan Description"
+                                                                            required="required"
+                                                                            onkeyup="textAreaAdjust(this)"
+                                                                            style="overflow:hidden"></textarea>
+                                                                    </div>
+                                                                </div>   
                                                             <!General Objective input field>
                                                                 <div class="form-group">
                                                                     <label

@@ -211,15 +211,23 @@ module.exports = {
         var tn = req.body.BaseFormula;
         var qt = req.body.QualityTarget;
         var pr = req.body.Procedures;
+        var pl = "High";
+        var bs = "No base standard assigned"
         var RID = req.body.RID;
+        var pn = req.body.PlanName;
+        var pd = req.body.PlanD;
         console.log(go);
         console.log(me);
         console.log(tn);
         console.log(qt);
         console.log(pr);
+        console.log(pl);
+        console.log(bs);
         console.log(RID);
-        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`, `recommendation_ID`) VALUES (? , ? , ? , ?, ?, ?)";
-        var values = [go, me, tn, qt, pr, RID];
+        console.log(pn);
+        console.log(pd);
+        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`,`PriorityLevel`,`BaseStandard`, `recommendation_ID`,`PlanName`,`PlanDescription`) VALUES (? , ? , ? , ?, ?, ?, ?, ?,?,?)";
+        var values = [go, me, tn, qt, pr, pl, bs, RID, pn, pd];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -229,7 +237,7 @@ module.exports = {
 
     Planning: function (req, resp) {
         var PlanID = req.query.PID;
-        var sql = "Select plans.Plan_ID, plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.QualityTarget, plans.Procedures, group.Group_Name, cycle.cycle_Name, cycle.start_Date, cycle.end_Date, plans.PriorityLevel, plans.BaseStandard FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
         var values = [PlanID, PlanID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;

@@ -52,7 +52,14 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" method="post" action="SendPlan" data-parsley-validate class="form-horizontal form-label-left">
+                                <form id="demo-form2" method="post" action="SendPlan" data-parsley-validate class="form-horizontal form-label-left"> 
+                                    <!Plan Name input field> 
+                                    <div class="form-group">
+                                        <label for="Plan Name" class="control-label col-md-3 col-sm-3 col-xs-12"> Plan Name: <span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="Plan Name" name="PlanName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Plan Name">
+                                        </div>
+                                    </div>
                                     <!General Objective input field>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">General Objective: <span class="required">*</span>
