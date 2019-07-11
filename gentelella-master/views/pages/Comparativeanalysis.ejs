@@ -30,501 +30,389 @@
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-<<<<<<< HEAD
-    <link href="assets/build/css/custom.min.css" rel="stylesheet"> 
-    <!--Table floating left and right-->
-    <link rel="stylesheet" type="text/css" href="src/scss/tables.scss">
-  </head>
-
-  <body class="nav-md">
-        <div class="container body">
-          <div class="main_container">
-            <%- include ./nav.ejs %>
-            <!-- page content -->
-            <div class="right_col" role="main">
-              <div class="">
-                <div class="page-title">
-                  <div class="title_left"> 
-
-                    <!--Tables--> 
-                      
-                        
-                        <!--Left Table-->
-                        <div id="Left" style="float: left" >
-                                <style>
-                                    .content-table {
-                                          
-                                          border-collapse:collapse;
-                                          margin: 25px 0;
-                                          font-size: 1.0em;
-                                          min-width: 400px; 
-                                          border-radius: 5px 5px 0 0;
-                                          overflow: hidden;
-                                          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
-                                          float:left; 
-                                          
-               
-                                    } 
-              
-                                    .content-table th{
-                                        border: 1px solid #000; 
-                                        background-color: darkseagreen;
-                                        color: white;
-                                    }
-              
-                                    .content-table th,
-                                    .content-table td{
-                                        padding: 12px 15px;
-              
-                                    }
-              
-                                    .content-table tr{
-                                      border-bottom: 1px solid #dddddd;
-                                    }
-              
-                                    .content-table tbody tr:nth-of-type(even){
-                                        background-color: #f3f3f3;
-                                    }
-              
-                                    .content-table tbody tr:last-of-type{
-                                      border-bottom: 2px solid #009879;
-                                    }
-              
-                                    .content-table thead tr {
-                                      padding:5px 15px;
-                                      text-align:left; 
-                                      font-weight: bold;
-                                      border-bottom: 1px solid #ddd;
-              
-                                    } 
-          
-                                    .button {
-                                      background-color: #4CAF50; 
-                                      border: none;
-                                      color: white;
-                                      padding: 16px 32px;
-                                      text-align: center;
-                                      text-decoration: none;
-                                      display: inline-block;
-                                      font-size: 16px;
-                                      margin: 4px 2px;
-                                      -webkit-transition-duration: 0.4s; 
-                                      transition-duration: 0.4s;
-                                      cursor: pointer;
-                                    } 
-                                             
-                                    </style> 
-                                
-                                <table class="content-table">
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                                    <th>General Objective</th>
-                                    <!--Measurement-->>
-                                    <th>Quality Target</th>
-                                    <!--removed base standard column-->
-                                    <th>Group Assigned</th><!--Exclude to G.L-->
-                                    <th>Personnel Assigned</th><!---Exclude to G.M-->
-                                    <th>Priority Level</th>
-                                    <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                                    
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                                    <td>Safety Practices and Academic Efficiency </td>
-                                    
-                                    <td> 8/10</td>
-                                    <td> Student Services </td>
-                                    <td></td>>
-                                    <td>9/10</td>
-                                    <td> 5/10 </td>
-                                    
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                                    <td>Safety Practices and Academic Efficiency </td>
-                                    
-                                    <td> 9/10 </td>
-                                    <td> Student Services </td>
-                                    <td></td>>
-                                    <td>9/10</td>
-                                    <td> 6/10 </td>
-                                    
-                                  </tr>
-                                  <tr>
-                                      <th scope="row">3</th>
-                                      <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                                      <td>Safety Practices and Academic Efficiency </td>
-                                      
-                                      <td> 9/10 </td>
-                                      <td> Student Services </td>
-                                      <td></td>>
-                                      <td>9/10</td>
-                                      <td> 6/10 </td>
-                                      
-                                    </tr>
-                                </tbody>
-                              </table> 
-                            
-                              <h4> Current Cycle <h4>
-                             </div> 
-
-                            <!--Right table-->>
-                             <div id=Right style="float: right"> 
-                                <style>
-                                  .content-table2 {
-                                          
-                                          border-collapse:collapse;
-                                          margin: 25px 0;
-                                          font-size: 1.0em;
-                                          min-width: 400px; 
-                                          border-radius: 5px 5px 0 0;
-                                          overflow: hidden;
-                                          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
-                                          float: right;
-                                          
-                                          
-                                    } 
-              
-                                    .content-table2 th{
-                                        border: 1px solid #000; 
-                                        background-color: darkseagreen;
-                                        color: white;
-                                    }
-              
-                                    .content-table2 th,
-                                    .content-table2 td{
-                                        padding: 12px 15px;
-              
-                                    }
-              
-                                    .content-table2 tr{
-                                      border-bottom: 1px solid #dddddd;
-                                    }
-              
-                                    .content-table2 tbody tr:nth-of-type(even){
-                                        background-color: #f3f3f3;
-                                    }
-              
-                                    .content-table2 tbody tr:last-of-type{
-                                      border-bottom: 2px solid #009879;
-                                    }
-              
-                                    .content-table2 thead tr {
-                                      padding:5px 15px;
-                                      text-align:left; 
-                                      font-weight: bold;
-                                      border-bottom: 1px solid #ddd;
-              
-                                    } 
-                                  </style>
-                                <table class="content-table2" style="float: right">
-                                    <thead>
-                                      <tr>
-                                        <th>#</th>
-                                        <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                                        <th>General Objective</th>
-                                        <!--measurement-->>
-                                        <th>Quality Target</th>
-                                        <!--removed base standard column-->
-                                        <th>Group Assigned</th><!--Exclude to G.L-->
-                                        <th>Personnel Assigned</th><!---Exclude to G.M-->
-                                        <th>Priority Level</th>
-                                        <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                                        
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                          <th scope="row">1</th>
-                                          <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                                          <td>Safety Practices and Academic Efficiency </td>
-                                          
-                                          <td> 8/10</td>
-                                          <td> Student Services </td>
-                                          <td></td>>
-                                          <td>9/10</td>
-                                          <td> 7/10 </td>
-                                          
-                                        </tr>
-                                        <tr>
-                                          <th scope="row">2</th>
-                                          <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                                          <td>Safety Practices and Academic Efficiency </td>
-                                          
-                                          <td> 9/10 </td>
-                                          <td> Student Services </td>
-                                          <td></td>>
-                                          <td>9/10</td>
-                                          <td> 5/10 </td>
-                                          
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                                            <td>Safety Practices and Academic Efficiency </td>
-                                            
-                                            <td> 9/10 </td>
-                                            <td> Student Services </td>
-                                            <td></td>>
-                                            <td>9/10</td>
-                                            <td> 6/10 </td>
-                                            
-                                          </tr>
-                                      </tbody>
-                                  </table> 
-                                  
-                             </div>
-                            <button class ="button" type="submit">Back to Area Selection</button> 
-                              <div class="ln_solid"></div>
-
-
-
-    <footer>
-        <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-        </div>
-         <div class="clearfix"></div>
-        </footer>
-         <!-- /footer content -->
-        </div>
-        </div>
-                      
-                          <!-- jQuery -->
-                          <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-                          <!-- Bootstrap -->
-                          <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-                          <!-- FastClick -->
-                          <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-                          <!-- NProgress -->
-                          <script src="assets/vendors/nprogress/nprogress.js"></script>
-                          <!-- bootstrap-progressbar -->
-                          <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-                          <!-- iCheck -->
-                          <script src="assets/vendors/iCheck/icheck.min.js"></script>
-                          <!-- bootstrap-daterangepicker -->
-                          <script src="assets/vendors/moment/min/moment.min.js"></script>
-                          <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-                          <!-- bootstrap-wysiwyg -->
-                          <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-                          <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-                          <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-                          <!-- jQuery Tags Input -->
-                          <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-                          <!-- Switchery -->
-                          <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-                          <!-- Select2 -->
-                          <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-                          <!-- Parsley -->
-                          <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-                          <!-- Autosize -->
-                          <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-                          <!-- jQuery autocomplete -->
-                          <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-                          <!-- starrr -->
-                          <script src="assets/vendors/starrr/dist/starrr.js"></script>
-                          <!-- Custom Theme Scripts -->
-                          <script src="assets/build/js/custom.min.js"></script> 
-
-    </body>
-</html>
-=======
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-            <%- include ./nav.ejs %>
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
+    <div class="container body"> 
 
-                            <h3>Comparative Analysis</h3>
-
-                            <h4>Area Selected:(Dispaly selected area from previous page here) <h4>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <h3>Previous cycle </h3>
-                            <div class="x_content">
-                                <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                                    <!--view table for previous cycle-->
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Criteria</th> <!-- changed to Critera instead of Task-->
-                                                <th>General Objective</th>
-                                                <th>Measurement</th>
-                                                <th>Quality Target</th>
-                                                <!--removed base standard column-->
-                                                <th>Group Assigned</th>
-                                                <!--Exclude to G.L-->
-                                                <th>Personnel Assigned</th>
-                                                <!---Exclude to G.M-->
-                                                <th>Priority Level</th>
-                                                <th>Score
-                                                <th>
-                                                    <!--Added score row to display recieved score from previous cycle-->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>All classrooms contain fire extinguishers and contain proper materials to maximize learning efficiency</td>
-                                                <td>Safety Practices and Academic Efficiency </td>
-                                                <td>(Don't know what to put here yet)</td>
-                                                <td> E </td>
-                                                <td> Student Services </td>
-                                                <td></td>>
-                                                <td>8/10</td>
-                                                <td> L </td>>
-
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>@twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="ln_solid"></div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <h3> Current Cycle </h3>
-                            <div class="x_content">
-                                <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                                    <!--view table for previous cycle-->
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Criteria</th> <!-- changed to Critera instead of Task-->
-                                                <th>General Objective</th>
-                                                <th>Measurement</th>
-                                                <th>Quality Target</th>
-                                                <!--removed base standard column-->
-                                                <th>Group Assigned</th>
-                                                <!--Exclude to G.L-->
-                                                <th>Personnel Assigned</th>
-                                                <!---Exclude to G.M-->
-                                                <th>Priority Level</th>
-                                                <th>Score
-                                                <th>
-                                                    <!--Added score row to display recieved score from previous cycle-->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>@twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="ln_solid"></div>
-
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
+      <div class="main_container">
+        <%- include ./nav.ejs %>
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title" style="float: left">
+                    <h3> Previous Cycle Scores & Current Cycles Scores </h3>
+              </div>
             </div>
-        </div>
+            <form id="AcademicYearPicker" action="getJson">
+                    <select class="selectpicker" data-style="btn-info" name="selectpicker" style="float: left; box-sizing: border-box; ">
+                        <optgroup label="Select Academic Year">
+                          <option name="2014-2015" value="0">2014-2015</option>
+                          <option name="2015-2016" value="1">2015-2016</option>
+                          <option name="2016-2017" value="2">2016-2017</option>
+                          <option name="2017-2018" value="3">2017-2018</option>
+                        </optgroup>
+                    </select>
+                </form> 
+                <br>
+                <form id="CyclePicker" action="getJson">
+                        <select class="selectpicker" data-style="btn-info" name="selectpicker" style="float: left ; box-sizing: border-box; padding-left: 40x">
+                            <optgroup label="Select Cycle">
+                              <option name="1" value="0">1</option>
+                              <option name="2" value="1">2</option>
+                              <option name="3" value="2">3</option>
+                              
+                            </optgroup>
+                        </select>
+                    </form>
+                <!--Div fpr Table generation-->
+                <div class="box600"> 
+                    
+                    <table class="smalltable floatleft"><!-- First Table --> 
+                      <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                            <th>General Objective</th>
+                            <!--Measurement-->
+                            <th>Quality Target</th>
+                            <!--removed base standard column-->
+                            <th>Group Assigned</th><!--Exclude to G.L-->
+                            <th>Personnel Assigned</th><!---Exclude to G.M-->
+                            <th>Priority Level</th>
+                            <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>All classrooms contain fire extinguishers for cases of emergency</td>
+                            <td>Safety Practices and Academic Efficiency </td>
+                            
+                            <td> 8/10</td>
+                            <td> Student Services </td>
+                            <td></td>
+                            <td>9/10</td>
+                            <td> 5/10 </td>
+                            
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
+                            <td>Safety Practices and Academic Efficiency </td>
+                            
+                            <td> 9/10 </td>
+                            <td> Student Services </td>
+                            <td></td>
+                            <td>9/10</td>
+                            <td> 6/10 </td>
+                            
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
+                              <td>Safety Practices and Academic Efficiency </td>
+                              
+                              <td> 9/10 </td>
+                              <td> Student Services </td>
+                              <td></td>
+                              <td>9/10</td>
+                              <td> 6/10 </td>
+                              
+                            </tr>
+                        </tbody>
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+                    </table>
+                
+                    
+                    <table class="smalltable floatleft"> <!--Second Table-->
+
+                        <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                              <th>General Objective</th>
+                              <!--measurement-->
+                              <th>Quality Target</th>
+                              <!--removed base standard column-->
+                              <th>Group Assigned</th><!--Exclude to G.L-->
+                              <th>Personnel Assigned</th><!---Exclude to G.M-->
+                              <th>Priority Level</th>
+                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>All classrooms contain fire extinguishers for cases of emergency</td>
+                                <td>Safety Practices and Academic Efficiency </td>
+                                
+                                <td> 8/10</td>
+                                <td> Student Services </td>
+                                <td></td>
+                                <td>9/10</td>
+                                <td> 7/10 </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
+                                <td>Safety Practices and Academic Efficiency </td>
+                                
+                                <td> 9/10 </td>
+                                <td> Student Services </td>
+                                <td></td>
+                                <td>9/10</td>
+                                <td> 5/10 </td>
+                                
+                              </tr>
+                              <tr>
+                                  <th scope="row">3</th>
+                                  <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
+                                  <td>Safety Practices and Academic Efficiency </td>
+                                  
+                                  <td> 9/10 </td>
+                                  <td> Student Services </td>
+                                  <td></td>
+                                  <td>9/10</td>
+                                  <td> 6/10 </td>
+                                  
+                                </tr>
+                            </tbody>
+
+                    </table>
+                    <table class="smalltable floatleft"> <!--Third Table-->
+
+                        <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                              <th>General Objective</th>
+                              <!--measurement-->
+                              <th>Quality Target</th>
+                              <!--removed base standard column-->
+                              <th>Group Assigned</th><!--Exclude to G.L-->
+                              <th>Personnel Assigned</th><!---Exclude to G.M-->
+                              <th>Priority Level</th>
+                              <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>The library has enough learnin resources that can help the student with their specific courses </td>
+                                <td>Library </td>
+                                
+                                <td> 8/10</td>
+                                <td> Student Services </td>
+                                <td></td>
+                                <td>9/10</td>
+                                <td> 7/10 </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
+                                <td>Safety Practices and Academic Efficiency </td>
+                                
+                                <td> 9/10 </td>
+                                <td> Student Services </td>
+                                <td></td>
+                                <td>9/10</td>
+                                <td> 7/10 </td>
+                                
+                              </tr>
+                              <tr>
+                                  <th scope="row">3</th>
+                                  <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
+                                  <td>Safety Practices and Academic Efficiency </td>
+                                  
+                                  <td> 9/10 </td>
+                                  <td> Student Services </td>
+                                  <td></td>
+                                  <td>9/10</td>
+                                  <td> 6/10 </td>
+                                  
+                                </tr>
+                            </tbody>
+
+                    </table> 
+
+                    <table class="smalltable floatleft"> <!--Fourth Table-->  
+
+                        <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                              <th>General Objective</th>
+                              <!--measurement-->
+                              <th>Quality Target</th>
+                              <!--removed base standard column-->
+                              <th>Group Assigned</th><!--Exclude to G.L-->
+                              <th>Personnel Assigned</th><!---Exclude to G.M-->
+                              <th>Priority Level</th>
+                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <th scope="row">1</th>
+                                  <td>The library has enough learnin resources that can help the student with their specific courses </td>
+                                  <td>Library </td>
+                                  
+                                  <td> 8/10</td>
+                                  <td> Student Services </td>
+                                  <td></td>
+                                  <td>9/10</td>
+                                  <td> 8/10 </td>
+                                  
+                                </tr>
+                                <tr>
+                                  <th scope="row">2</th>
+                                  <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
+                                  <td>Safety Practices and Academic Efficiency </td>
+                                  
+                                  <td> 9/10 </td>
+                                  <td> Student Services </td>
+                                  <td></td>
+                                  <td>9/10</td>
+                                  <td> 7/10 </td>
+                                  
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
+                                    <td>Safety Practices and Academic Efficiency </td>
+                                    
+                                    <td> 9/10 </td>
+                                    <td> Student Services </td>
+                                    <td></td>
+                                    <td>9/10</td>
+                                    <td> 7/10 </td>
+                                    
+                                  </tr>
+                            </tbody>
+
+                    </table> 
+
+
+                    </div><!-- End Div for table creation -->
+
+                    <!--Table CSS-->
+                    <style> 
+                      
+                      table.smalltable {
+                          border:3px solid #000;
+                          width:350px; /*280px */
+                          margin:25px;
+                          border-collapse: collapse;
+                          font-size: 1.0em;
+                          min-width: 400px; 
+                          border-radius: 5px 5px 0 0;
+                          overflow: hidden;
+                          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                          float:left; 
+                          } 
+
+                          table.smalltable th{
+                          border: 1px solid #000; 
+                          background-color: darkseagreen;
+                          color: white;
+                          padding: 5px 7px;
+                          }
+
+                          table.smalltable td {
+                          font-size:100%;
+                          padding: 5px;
+                          text-align:center;
+                          vertical-align:top;
+                          padding: 12px 15px;
+                           }
+
+                          table.smalltable tr{
+                            border-bottom: 1px solid #dddddd;
+                          } 
+
+                          table.smalltable tbody tr:nth-of-type(even){
+                            background-color: #f3f3f3;
+                          }
+
+                          table.smalltable tbody tr:last-of-type{
+                            border-bottom: 2px solid #009879;
+                          }
+
+                          table.smalltable thead tr{
+                            padding: 5px 7px;
+                            text-align:left;
+                            font-weight: bold;
+                            border-bottom: 1px solid #ddd;
+                          }
+
+
+                          
+                          table.smalltable td:nth-child(odd) {font-weight:bold; width:50%; }
+                          table.smalltable td:nth-child(even) {font-weight:normal; width:50%;}
+
+                          @media only screen and (min-width : 768px) and (max-width : 959px) and (orientation:portrait) { .smalltable {float:none; width:100%; display:block; margin:0 auto; } }
+                      </style>
+                            
+        </div>  
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
 
 </body>
 
 </html>
->>>>>>> f40bab42964dbecc428aa990bf9019754e4ddd1e
