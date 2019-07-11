@@ -276,14 +276,7 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            connection.query("Select * FROM capstone.recommendation; Select * FROM capstone.area;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/RecommendationNonAjax.ejs', {
-                    data: results[0],
-                    dataB: results[1]
-                });
-                console.log("RECOMMENDATION NON AJAX");
-            });
+            resp.redirect('/RecommendationNonAjax');
         });
     },
 
