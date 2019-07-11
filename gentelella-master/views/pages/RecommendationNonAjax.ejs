@@ -106,8 +106,8 @@
                                                                     </form>
                                                                     <% } else { %>
                                                                     <form method="get" action="editrecommendation">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                        <input type="hidden" name="AID" value="<%= recommendation.area_ID %>">
+                                                                        <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Edit
                                                                             Recommendation</button>
