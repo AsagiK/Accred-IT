@@ -17,5 +17,11 @@ server.use(session({
 // ----
 var sess;
 module.exports = {
+    
+      sess = req.session;
+    if(!req.session.user){
+    
+     }else{
+    {current_user: sess.user}
 
 }
