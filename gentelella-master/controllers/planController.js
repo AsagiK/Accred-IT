@@ -435,7 +435,7 @@ module.exports = {
 
         connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel From capstone.plans Where Plan_ID=1;", function (err, results, fields) {
             if (err) throw err;
-            resp.render('./pages/ViewAllPlans.ejs', {
+            resp.render('./pages/ViewPlanDetails.ejs', {
                 data: results
             });
             console.log(results);

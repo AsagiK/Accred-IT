@@ -50,14 +50,13 @@
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
-
+                                    <% for (var plan of data) { %>
                                     <div class="col-md-12 col-sm-6 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:<%= plan.PriorityLevel%>
-</h2>
+                                                        <h2>Priority Level:<%= plan.PriorityLevel%></h2>
                                                     </div>
                                                     <div class="title_left">
                                                         <h2>Starting Date:</h2>
@@ -93,7 +92,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <% for (var plan of data) { %>
+                                                        
                                                         <tr>
                                                             <td><%= plan.Plan_ID %></td>
                                                             <td><%= plan.GenObjective %></td>
@@ -218,7 +217,7 @@
                             </div>
                         </div>
                     </div>
-
+                 <% } %>
                     </form>
                 </div>
             </div>
