@@ -20,8 +20,10 @@ module.exports = {
     
       sess = req.session;
     if(!req.session.user){
-    
+        console.log("No session")
+        resp.redirect('/login');
      }else{
     {current_user: sess.user}
+     }
 
 }

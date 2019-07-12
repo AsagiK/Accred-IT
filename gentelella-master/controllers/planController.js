@@ -22,27 +22,43 @@ module.exports = {
 
     Viewusers: function (req, resp) {
 
-        connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; ", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/Viewusers.ejs', {
-                data: results[0],
-                dataB: results[1]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+
+            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; ", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/Viewusers.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
-        console.log("Viewusers");
+            console.log("Viewusers");
+        }
     },
 
     Createusers: function (req, resp) {
 
-        connection.query("SELECT * FROM capstone.roles where Role_ID > 1;", function (err, result, fields) {
-            if (err) throw err;
-            resp.render('./pages/CreateUser.ejs', {
-                data: result
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+
+            connection.query("SELECT * FROM capstone.roles where Role_ID > 1;", function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/CreateUser.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+                console.log(result)
             });
-            console.log(result)
-        });
-        console.log("Createusers");
+        }
     },
 
     Viewtasks: function (req, resp) {
@@ -50,8 +66,10 @@ module.exports = {
         connection.query("Select * from capstone.tasks", function (err, result, fields) {
             if (err) throw err;
             console.log(result);
-            
-            resp.render('./pages/Viewtasks.ejs', {data: result});
+
+            resp.render('./pages/Viewtasks.ejs', {
+                data: result
+            });
         });
         console.log("Viewtasks");
     },
@@ -92,27 +110,44 @@ module.exports = {
     },
 
     ViewGroups: function (req, resp) {
-        connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users", function (err, results, fields) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/ViewGroups.ejs', {
-                dataA: results[0],
-                dataB: results[1],
-                dataC: results[2]
-            });
-        });
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
 
-        console.log("ViewGroups");
+            connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users", function (err, results, fields) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/ViewGroups.ejs', {
+                    dataA: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+            });
+
+            console.log("ViewGroups");
+
+        }
     },
 
     CreateGroup: function (req, resp) {
-        connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
-            if (err) throw err;
-            resp.render('./pages/CreateGroup.ejs', {
-                data: result
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/CreateGroup.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
             });
-        });
-        console.log("CreateGroup");
+            console.log("CreateGroup");
+        }
     },
 
     Comparativeanalysis: function (req, resp) {
@@ -139,19 +174,19 @@ module.exports = {
     },
 
     adduser: function (req, resp) {
-        
+
         console.log(req.body);
-        
+
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
-    //    console.log(fn);
-    //    console.log(ln);
-    //    console.log(em);
-    //    console.log(rl);
-    //    console.log(co);
+        //    console.log(fn);
+        //    console.log(ln);
+        //    console.log(em);
+        //    console.log(rl);
+        //    console.log(co);
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`) VALUES (? , ? , ? , ? , ?)";
         var values = [fn, ln, em, rl, co];
         connection.query(sql, values, function (err, result) {
@@ -426,7 +461,7 @@ module.exports = {
     assignmembertogroup: function (req, resp) {
         var GID = req.query.GID;
         var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group is null ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
-        var values= [GID];
+        var values = [GID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
             console.log(results[1])
