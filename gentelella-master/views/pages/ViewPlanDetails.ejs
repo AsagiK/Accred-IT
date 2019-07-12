@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Task Details-(Task Name here) Page</title>
+    <title>View Plan Details-(Task Name here) Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@
 
                             <div class="x_content">
                                 <div class="title_left">
-                                    <h1>View Task Details-(Task Name Here)</h1>
+                                    <h1>View Task Details-</h1>
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
@@ -56,7 +56,8 @@
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:Not Set</h2>
+                                                        <h2>Priority Level:<%= plan.PriorityLevel%>
+</h2>
                                                     </div>
                                                     <div class="title_left">
                                                         <h2>Starting Date:</h2>
@@ -66,7 +67,7 @@
 
                                                 <div class="page-title">
                                                     <div class="title_left">
-                                                        <h2>Number of Days Per Cycle: Day # of #</h2>
+                                                        <h2>Number of Days Per Cycle:<%= plan.CycleTime%></h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -92,14 +93,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <% for (var plan of data) { %>
                                                         <tr>
-                                                            <td>Prepare requirements in advance</td>
-                                                            <td>Delay in giving of final report due to excessive
-                                                                procrastination</td>
-                                                            <td>2</td>
-                                                            <td>Laboratories</td>
-                                                            <td>High</td>
-                                                            <td>For Checking</td>
+                                                            <td><%= plan.Plan_ID %></td>
+                                                            <td><%= plan.GenObjective %></td>
+                                                            <td><%= plan.Measurement%></td>
+                                                            <td><%= plan.BaseFormula%></td>
+                                                            <td><%= plan.QualityTarget%></td>
+                                                            <td><%= plan.BaseStandard%></td>
+                                                       <% } %>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -112,48 +114,10 @@
                                                 </a>
             <table class="table table-bordered">
                                                     <tbody>
-            <div>
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>To Do List</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-
-                  <div class="">
-                    <ul class="to_do">
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Schedule meeting with new client </p>
-                      </li>
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Create email address for new intern</p>
-                      </li>
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                      </li>
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                      </li>
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                      </li>
-                      <li>
-                        <p>
-                          <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+                                                        <thead>
+                                                            <tr>Procedures</tr>
+                                                        </thead>
+                                                            <td><%= plan.Procedures%></td>
                                                     </tbody>
                                                 </table>
                                             
