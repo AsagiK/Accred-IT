@@ -84,6 +84,8 @@
                                                     aria-labelledby="home-tab">
                                                     <table class="table table-bordered">
                                                         <thead>
+                                                            <h3>Plans with Cycles</h3>
+
                                                             <tr>
                                                                 <th>ID</th>
                                                                 <th>Plan Name</th>
@@ -100,6 +102,7 @@
                                                             <tr>
                                                                 <input type="hidden" name="UIDRecommendation" value="<%= dataB[0].recommendation_ID %>">
                                                                 <input type="hidden" name="UID" value="<%= plan.Plan_ID %>">
+                                                                <input type="hidden" name="GID" value="<%= dataB[0].group_ID %>">
                                                                 <td><%= plan.plan_ID %></td>
                                                                 <td><%= plan.PlanName %></td>
                                                                 <td><%= plan.PlanDescription %></td>

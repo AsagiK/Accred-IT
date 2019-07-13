@@ -273,7 +273,7 @@ module.exports = {
 
     Planning: function (req, resp) {
         var PlanID = req.query.PID;
-        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
         var values = [PlanID, PlanID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
@@ -356,13 +356,7 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-        });
-        connection.query("Select * FROM capstone.recommendation;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/RecommendationNonAjax.ejs', {
-                data: results
-            });
-            console.log("RECOMMENDATION NON AJAX");
+            resp.redirect('/RecommendationNonAjax');
         });
 
     },
@@ -411,8 +405,8 @@ module.exports = {
     },
 
     assignplantogroup: function (req, resp) {
-        var id = (req.query.UID);
-        var idrecommendation = (req.query.UIDRecommendation);
+        var id = (req.body.UID);
+        var idrecommendation = (req.body.UIDRecommendation);
         console.log(id);
         var values = [id, idrecommendation];
         connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID; SELECT * FROM capstone.cycle; SELECT * FROM capstone.recommendation where recommendation_ID = ?;", values, function (err, results) {
