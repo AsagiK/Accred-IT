@@ -55,7 +55,7 @@
                             <div class="x_content">
 
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                
                                     <!--view table for users-->
                                     <table class="table table-bordered">
                                         <thead>
@@ -71,6 +71,7 @@
                                                 <th>Personnel Assigned</th>
                                                 <!---Exclude to G.M-->
                                                 <th>Priority Level</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <% for(var task of data) { %>
@@ -85,14 +86,32 @@
                                                 <td><%= task.Group%></td>
                                                 <td><%= task.Personnel%></td>
                                                 <td><%= task.Level%></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <!BUTTONS FOR EDIT AND PLAN>
+                                                            <form method="get" action="AssignTask">
+                                                                <input type="hidden" name="TID"
+                                                                    value="<%= task.task_ID %>">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Assign Task</button>
+                                                            </form>
+                                                                <br/><br/>
+                                                                <form method="get" action="edittask">
+                                                                    <input type="hidden" name="TID"
+                                                                        value="<%= task.task_ID %>">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Edit Task</button>
+                                                                </form>
+                                                                
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <%}%>
                                     </table>
                                     <div class="ln_solid"></div>
-
-
-                                </form>
                             </div>
                         </div>
                     </div>

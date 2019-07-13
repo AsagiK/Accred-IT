@@ -41,6 +41,8 @@ module.exports = {
         var point = filename.lastIndexOf(".");
 
         var ext = filename.substr(point);
+        
+        console.log(req.files.DocFile.md5);
 
 
         let uploadedimg = req.files.DocFile;

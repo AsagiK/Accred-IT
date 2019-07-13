@@ -34,7 +34,7 @@
 </head>
 
 <body class="nav-md">
-    <div class="container body">
+    <div class="container body"> 
 <<<<<<< HEAD
       <div class="main_container">
         <%- include ./nav.ejs %>
@@ -45,10 +45,10 @@
                     <h3> Previous Cycle Scores & Current Cycles Scores </h3>
               </div>
             </div>
-            
+              
                 <!--Div fpr Table generation-->
                 <div class="box600"> 
-
+                    
                     <table class="smalltable floatleft"><!-- First Table --> 
                       <thead>
                           <tr>
@@ -177,7 +177,7 @@
                               <th>Group Assigned</th><!--Exclude to G.L-->
                               <th>Personnel Assigned</th><!---Exclude to G.M-->
                               <th>Priority Level</th>
-                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                              <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
                               
                             </tr>
                           </thead>
@@ -352,123 +352,6 @@
         </footer>
         <!-- /footer content -->
       </div>
-=======
-        <div class="main_container">
-            <%- include ./nav.ejs %>
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-
-                            <h3>Area Selection</h3>
-
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <style>
-                        * {
-                            box-sizing: border-box;
-                        }
-
-                        table {
-                            border-collapse: collapse;
-                        }
-
-                        td,
-                        th {
-                            padding: 5px 15px;
-                            text-align: left;
-                        }
-
-                        table,
-                        th,
-                        td {
-                            border: 1px solid #000;
-                        }
-
-                    </style>
-                    <form action="ComparativeAnalysis2" method="get">
-                        <table id="tableId">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox" /></th>
-                                    <th>Area Number</th>
-                                    <th>Area Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>1</td>
-                                    <td>Vision, Mission, Goals, and Objectives</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>2</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>3</td>
-                                    <td>Curriculum and Instruction</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>4</td>
-                                    <td>Suppoet to Students</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>5</td>
-                                    <td>Research</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>6</td>
-                                    <td>Extension and Community Involvement</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>7</td>
-                                    <td>Library</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>8</td>
-                                    <td>Physical Plant and Facilities</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>9</td>
-                                    <td>Laboratories</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                    <td>10</td>
-                                    <td>Administration</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <button type="submit">Select</button>
-                    </form>
-                </div>
-
-            </div>
-            <!-- /page content -->
-
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-        </div>
->>>>>>> f40bab42964dbecc428aa990bf9019754e4ddd1e
     </div>
 
     <!-- jQuery -->
