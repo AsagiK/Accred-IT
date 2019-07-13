@@ -456,8 +456,6 @@ module.exports = {
         console.log("ViewPlanDetails");
     },
     
-    
-}
 
     edittask: function (req, resp) {
         var id = (req.query.TID);
