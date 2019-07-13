@@ -250,6 +250,7 @@ module.exports = {
         var pl = "High";
         var bs = "No base standard assigned"
         var RID = req.body.RID;
+        var GID = req.body.GID;
         var pn = req.body.PlanName;
         var pd = req.body.PlanD;
         console.log(go);
@@ -262,8 +263,8 @@ module.exports = {
         console.log(RID);
         console.log(pn);
         console.log(pd);
-        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`,`PriorityLevel`,`BaseStandard`, `recommendation_ID`,`PlanName`,`PlanDescription`) VALUES (? , ? , ? , ?, ?, ?, ?, ?,?,?)";
-        var values = [go, me, tn, qt, pr, pl, bs, RID, pn, pd];
+        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`,`PriorityLevel`,`BaseStandard`, `recommendation_ID`,`PlanName`,`PlanDescription`, `GroupAssigned`) VALUES (? , ? , ? , ?, ?, ?, ?, ?,?,?,?)";
+        var values = [go, me, tn, qt, pr, pl, bs, RID, pn, pd, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
