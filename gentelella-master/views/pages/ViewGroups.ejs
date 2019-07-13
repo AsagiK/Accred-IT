@@ -123,12 +123,23 @@
                                                                                 <td><%= user.Groupdetails_Position %>
                                                                                 </td>
                                                                                 <td>
-
-                                                                                    <form method="get" action="">
+                                                                                    <% if (user.Groupdetails_Position == "Member") { %>
+                                                                                    <form method="post" action="makeLeader">
+                                                                                        <input type="hidden" name="UID" value="<%= user.User_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= group.Group_ID %>">
                                                                                         <button class="btn btn-primary"
-                                                                                            type="button">Change
-                                                                                            Position</button>
+                                                                                            type="submit">Make
+                                                                                            Leader</button>
                                                                                     </form>
+                                                                                    <% } else { %>
+                                                                                    <form method="post" action="makeMember">
+                                                                                        <input type="hidden" name="UID" value="<%= user.User_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= group.Group_ID %>">
+                                                                                        <button class="btn btn-primary"
+                                                                                            type="submit">Make
+                                                                                            Member</button>
+                                                                                    </form>
+                                                                                    <% } %>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -159,7 +170,7 @@
                                             </div>
                                             <% } %>
                                         </div>
-                                        
+
                                         <!-- end of accordion -->
 
                                     </div>

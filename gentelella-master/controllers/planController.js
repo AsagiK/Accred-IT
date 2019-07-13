@@ -474,6 +474,39 @@ module.exports = {
         });
     },
 
-    
+    makeLeader: function (req, resp) {
+        var UID = req.body.UID;
+        var GID = req.body.GID;
+        var position = "Leader";
+        console.log(position);
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            console.log("updating");
+            resp.redirect('/ViewGroups');
+        });
+        console.log("updating");
+        setTimeout(function () {
+            
+        }, 3000);
+    },
+
+    makeMember: function (req, resp) {
+        var UID = req.body.UID;
+        var GID = req.body.GID;
+        var position = "Member";
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+        });
+        console.log("updating");
+        setTimeout(function () {
+            resp.redirect('/ViewGroups');
+        }, 3000);
+    },
 
 }
