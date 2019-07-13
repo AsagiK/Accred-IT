@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Plan Details-(Task Name here) Page</title>
+    <title>View Task Details-(Task Name here) Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,26 +46,27 @@
 
                             <div class="x_content">
                                 <div class="title_left">
-                                    <h1>View Task Details-</h1>
+                                    <h1>View Task Details-(Task Name Here)</h1>
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
+
                                     <div class="col-md-12 col-sm-6 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:<%= data[0].PriorityLevel %></h2>
+                                                        <h2>Priority Level:Not Set</h2>
                                                     </div>
                                                     <div class="title_left">
-                                                        <h2>Duration:<%= data[0].start_date.toString().substring(0,15) %>-<%= data[0].end_date.toString().substring(0,15) %></h2>
+                                                        <h2>Starting Date:</h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
 
                                                 <div class="page-title">
                                                     <div class="title_left">
-                                                        <h2>Number of Days Per Cycle:<%= data[0].CycleTime %></h2>
+                                                        <h2>Number of Days Per Cycle: Day # of #</h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -87,17 +88,18 @@
                                                             <th>Base Formula</th>
                                                             <th>Base Standard</th>
                                                             <th>Quality Targets</th>
-                                                            <!--<th>Group Assigned</th>if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
+                                                            <th>Group Assigned</th><!--if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
                                                         <tr>
-                                                            <td><%= data[0].GenObjective %></td>
-                                                            <td><%= data[0].Measurement%></td>
-                                                            <td><%= data[0].BaseFormula%></td>
-                                                            <td><%= data[0].QualityTarget%></td>
-                                                            <td><%= data[0].BaseStandard%></td>
+                                                            <td>Prepare requirements in advance</td>
+                                                            <td>Delay in giving of final report due to excessive
+                                                                procrastination</td>
+                                                            <td>2</td>
+                                                            <td>Laboratories</td>
+                                                            <td>High</td>
+                                                            <td>For Checking</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -110,12 +112,51 @@
                                                 </a>
             <table class="table table-bordered">
                                                     <tbody>
-                                                        <thead>
-                                                            <tr>Procedures</tr>
-                                                        </thead>
-                                                            <td><%= data[0].Procedures%></td>
+            <div>
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>To Do List</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                  <div class="">
+                    <ul class="to_do">
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Schedule meeting with new client </p>
+                      </li>
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Create email address for new intern</p>
+                      </li>
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Have IT fix the network printer</p>
+                      </li>
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Copy backups to offsite location</p>
+                      </li>
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
+                      </li>
+                      <li>
+                        <p>
+                          <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
                                                     </tbody>
                                                 </table>
+                                            
                                         </div>
                                         <!--end of Group 2-->
                                     </div>
@@ -213,6 +254,7 @@
                             </div>
                         </div>
                     </div>
+
                     </form>
                 </div>
             </div>

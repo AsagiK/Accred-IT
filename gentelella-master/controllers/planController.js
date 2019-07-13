@@ -431,31 +431,6 @@ module.exports = {
             console.log("Assign Member to Group Page");
         });
     },
-    ViewAllPlans: function (req, resp) {
-
-
-        connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewAllPlans.ejs', {
-                data: results
-            });
-            console.log(results);
-        });
-        console.log("ViewAllPlans");
-    },
-
-    ViewPlanDetails: function (req, resp) {
-
-        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewPlanDetails.ejs', {
-                data: results
-            });
-            console.log(results);
-        });
-        console.log("ViewPlanDetails");
-    },
-    
 
     edittask: function (req, resp) {
         var id = (req.query.TID);
@@ -543,4 +518,3 @@ module.exports = {
     },
 
 }
-
