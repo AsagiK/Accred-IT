@@ -34,6 +34,8 @@ router.route('/AssignMemberToGroup').get(planCtrl.assignmembertogroup);
 router.route('/edittask').get(planCtrl.edittask);
 router.route('/altertask').post(planCtrl.altertask);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
+router.route('/makeLeader').post(planCtrl.makeLeader);
+router.route('/makeMember').post(planCtrl.makeMember);
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);

@@ -50,7 +50,7 @@ module.exports = {
             resp.redirect('/login');
         } else {
 
-            connection.query("SELECT * FROM capstone.roles where Role_ID > 1;", function (err, result, fields) {
+             connection.query("SELECT * FROM capstone.roles where Role_ID > 3;", function (err, result, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
                     data: result,
@@ -116,7 +116,7 @@ module.exports = {
             resp.redirect('/login');
         } else {
 
-            connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
                 if (err) throw err;
                 console.log(results);
                 resp.render('./pages/ViewGroups.ejs', {
@@ -182,13 +182,14 @@ module.exports = {
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
-        //    console.log(fn);
-        //    console.log(ln);
-        //    console.log(em);
-        //    console.log(rl);
-        //    console.log(co);
-        var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`) VALUES (? , ? , ? , ? , ?)";
-        var values = [fn, ln, em, rl, co];
+        var un = fn+ln;
+    //    console.log(fn);
+    //    console.log(ln);
+    //    console.log(em);
+    //    console.log(rl);
+    //    console.log(co);
+        var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
+        var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -319,14 +320,7 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            connection.query("Select * FROM capstone.recommendation; Select * FROM capstone.area;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/RecommendationNonAjax.ejs', {
-                    data: results[0],
-                    dataB: results[1]
-                });
-                console.log("RECOMMENDATION NON AJAX");
-            });
+            resp.redirect('/RecommendationNonAjax');
         });
     },
 
@@ -522,4 +516,40 @@ module.exports = {
             console.log("Assign Recommendation to Group");
         });
     },
+
+    makeLeader: function (req, resp) {
+        var UID = req.body.UID;
+        var GID = req.body.GID;
+        var position = "Leader";
+        console.log(position);
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            console.log("updating");
+            resp.redirect('/ViewGroups');
+        });
+        console.log("updating");
+        setTimeout(function () {
+            
+        }, 3000);
+    },
+
+    makeMember: function (req, resp) {
+        var UID = req.body.UID;
+        var GID = req.body.GID;
+        var position = "Member";
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+        });
+        console.log("updating");
+        setTimeout(function () {
+            resp.redirect('/ViewGroups');
+        }, 3000);
+    },
+
 }
