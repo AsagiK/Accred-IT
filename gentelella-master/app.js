@@ -68,6 +68,7 @@ server.get('/home', function (req, resp) {
     }else{
     resp.render('./pages/home.ejs',{current_user: sess.user});
     console.log(sess.user);
+    console.log(sess.user[0].role);
     }
 });
 
