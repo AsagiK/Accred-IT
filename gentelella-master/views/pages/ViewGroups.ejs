@@ -79,14 +79,11 @@
                                                         class="panel-collapse collapse" role="tabpanel"
                                                         aria-labelledby="headingOne">
 
+                                                        <% for(var group of dataB) { %>
+                                                        <% if (group.Area_ID == area.Area_ID){ %>
                                                         <div class="panel-body">
-
-
-
-
                                                             <!--Group 1 table-->
-                                                            <% for(var group of dataB) { %>
-                                                            <% if (group.Area_ID == area.Area_ID){ %>
+
                                                             <div class="panel">
                                                                 <a class="panel-heading" role="tab" id="HeadGroupOne"
                                                                     data-toggle="collapse" data-parent="#headingOne"
@@ -126,16 +123,11 @@
                                                                                 <td><%= user.Groupdetails_Position %>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <% if (user.Groupdetails_Position == "Member") { %>
+
                                                                                     <form method="get" action="">
                                                                                         <button class="btn btn-primary"
-                                                                                            type="button">Make Group
-                                                                                            Leader</button>
-                                                                                    </form>
-                                                                                    <% } else { %>
-                                                                                    <form method="get" action="">
-                                                                                        <button class="btn btn-primary"
-                                                                                            type="button">Make Group Member</button>
+                                                                                            type="button">Change
+                                                                                            Position</button>
                                                                                     </form>
                                                                                 </td>
                                                                             </tr>
@@ -165,8 +157,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <% } %>
                                         </div>
-                                        <% } %>
+                                        
                                         <!-- end of accordion -->
 
                                     </div>
