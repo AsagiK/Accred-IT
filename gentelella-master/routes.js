@@ -31,8 +31,6 @@ router.route('/alterrecommendation').post(planCtrl.alterrecommendation);
 router.route('/assignplantogroup').get(planCtrl.assignplantogroup);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/AssignMemberToGroup').get(planCtrl.assignmembertogroup);
-router.route('/ViewAllPlans').get(planCtrl.ViewAllPlans);
-router.route('/ViewPlanDetails').get(planCtrl.ViewPlanDetails);
 router.route('/edittask').get(planCtrl.edittask);
 router.route('/altertask').post(planCtrl.altertask);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);

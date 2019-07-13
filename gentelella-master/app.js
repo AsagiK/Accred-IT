@@ -35,7 +35,7 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/ViewPlanDetails');
+    resp.render('./pages/ViewTaskDetails.ejs');
 
     console.log("Testing testing");
 });
