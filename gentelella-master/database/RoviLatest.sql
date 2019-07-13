@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `capstone`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
@@ -106,7 +104,7 @@ CREATE TABLE `group` (
   `Group_Name` varchar(45) DEFAULT NULL,
   `Area_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`Group_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +113,7 @@ CREATE TABLE `group` (
 
 LOCK TABLES `group` WRITE;
 /*!40000 ALTER TABLE `group` DISABLE KEYS */;
-INSERT INTO `group` VALUES (1,'Analysis',1),(2,'Evaluation',1),(3,'Analysis',2),(4,'Evaluation',2),(5,'Analysis',3),(6,'Evaluation',3),(7,'Analysis',4),(8,'Evaluation',4),(9,'Analysis',5),(10,'Evaluation',5),(11,'Analysis',6),(12,'Evaluation',6),(13,'Analysis',7),(14,'Evaluation',7),(15,'Analysis',8),(16,'Evaluation',8),(17,'Analysis',9),(18,'Evaluation',9),(19,'Test Area',1);
+INSERT INTO `group` VALUES (0,'No Group Assigned',0),(1,'Analysis',1),(2,'Evaluation',1),(3,'Analysis',2),(4,'Evaluation',2),(5,'Analysis',3),(6,'Evaluation',3),(7,'Analysis',4),(8,'Evaluation',4),(9,'Analysis',5),(10,'Evaluation',5),(11,'Analysis',6),(12,'Evaluation',6),(13,'Analysis',7),(14,'Evaluation',7),(15,'Analysis',8),(16,'Evaluation',8),(17,'Analysis',9),(18,'Evaluation',9),(19,'Test Area',1),(20,'TESTING',2);
 /*!40000 ALTER TABLE `group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +137,7 @@ CREATE TABLE `groupdetails` (
 
 LOCK TABLES `groupdetails` WRITE;
 /*!40000 ALTER TABLE `groupdetails` DISABLE KEYS */;
-INSERT INTO `groupdetails` VALUES (1,29,'Member');
+INSERT INTO `groupdetails` VALUES (1,29,'Member'),(1,30,'Member'),(1,31,'Member'),(2,32,'Member');
 /*!40000 ALTER TABLE `groupdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,8 +160,10 @@ CREATE TABLE `plans` (
   `PriorityLevel` varchar(45) DEFAULT NULL,
   `BaseStandard` varchar(200) DEFAULT NULL,
   `recommendation_ID` int(11) DEFAULT NULL,
+  `PlanName` varchar(45) NOT NULL,
+  `PlanDescription` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`Plan_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `plans` (
 
 LOCK TABLES `plans` WRITE;
 /*!40000 ALTER TABLE `plans` DISABLE KEYS */;
-INSERT INTO `plans` VALUES (1,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(2,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(3,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(4,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(5,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(6,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL),(7,'TEST','TEST','TEST','TEST','TEST',NULL,NULL,NULL,NULL,NULL),(8,'1','1','2','4','6',1,1,'High','1234',1),(9,'dsafas','gsdgdsga','dafadgsad','dgasdffdsa','adfsgadfgdf',NULL,NULL,NULL,NULL,1),(10,'2','3','5','6','7',NULL,NULL,NULL,NULL,1);
+INSERT INTO `plans` VALUES (1,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(2,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(3,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(4,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(5,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(6,'1','2','3','4','5',NULL,NULL,NULL,NULL,NULL,'',NULL),(7,'TEST','TEST','TEST','TEST','TEST',NULL,NULL,NULL,NULL,NULL,'',NULL),(8,'1','1','2','4','6',1,1,'High','ewedcwec',1,'',NULL),(9,'dsafas','gsdgdsga','dafadgsad','dgasdffdsa','adfsgadfgdf',NULL,NULL,NULL,NULL,1,'',NULL),(10,'2','3','5','6','7',NULL,NULL,NULL,NULL,1,'',NULL),(11,'TEST PLAN','TEST PLAN','TEST PLAN','TEST PLAN','TEST PLAN',NULL,NULL,NULL,NULL,1,'',NULL);
 /*!40000 ALTER TABLE `plans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,9 +217,11 @@ CREATE TABLE `recommendation` (
   `recommendation_Desc` varchar(200) DEFAULT NULL,
   `recommendation_Grade` varchar(45) DEFAULT NULL,
   `priority_Level` varchar(45) DEFAULT NULL,
-  `status` datetime DEFAULT NULL,
+  `date_insert` datetime DEFAULT NULL,
+  `area_ID` int(11) DEFAULT NULL,
+  `group_ID` int(11) DEFAULT '0',
   PRIMARY KEY (`recommendation_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +230,7 @@ CREATE TABLE `recommendation` (
 
 LOCK TABLES `recommendation` WRITE;
 /*!40000 ALTER TABLE `recommendation` DISABLE KEYS */;
-INSERT INTO `recommendation` VALUES (1,'TEST2','TEST2','B','Medium','2019-07-03 00:00:00'),(2,'1','2','A','High','2019-06-29 00:00:00'),(3,'1234214','123412e12xd','A','Low','2019-07-03 00:00:00');
+INSERT INTO `recommendation` VALUES (1,'test','test','F','Medium','2019-07-11 00:00:00',1,2),(2,'test','ewfwef','F','High','2019-07-10 00:00:00',3,6),(3,'fhbsdfhgs','dfgsdfgsdfg','F','Low','2019-07-10 00:00:00',2,20),(4,'testing number 2','testing number 2 ','C','Medium','2019-07-09 00:00:00',9,0),(5,'testing number 2','testing number 2 ','C','Medium','2019-07-09 00:00:00',9,0),(6,'testing number 2','testing number 2 ','C','Medium','2019-07-11 00:00:00',9,18),(7,'TESTING INSERT ONE MORE TIME','TESTING INSERT ONE MORE TIME','F','Low','2019-07-11 00:00:00',4,8),(8,'TESTING INSERT ONE MORE TIME','TESTING INSERT ONE MORE TIME','F','Low','2019-07-11 00:00:00',4,0),(9,'TESTING RECOMMENDATION REDIRECT','TEST','F','Low','2019-07-11 00:00:00',9,0);
 /*!40000 ALTER TABLE `recommendation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +254,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'Admin'),(2,'QA Officer'),(3,'Group Leader'),(4,'Group Member');
+INSERT INTO `roles` VALUES (1,'Admin'),(2,'Group Member'),(3,'Group Leader'),(4,'QA Officer'),(5,'User');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +310,7 @@ CREATE TABLE `users` (
   `passwd` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +319,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (27,'admin','admin','rovi_soriano@hotmail.com',1,NULL,'123123','admin','$2b$10$K5Mr/InOK12.q3pN8bp0I.EvWT6eBjXpoczJBVEpCwUfVdgr9vo8a'),(28,'User','Name','rijanemay@hotmail.com',4,1,'123123',NULL,NULL),(29,'TESTING DB','TESTING DB','TESTING@DB.COM',2,1,'091827366',NULL,NULL);
+INSERT INTO `users` VALUES (27,'admin','admin','rovi_soriano@hotmail.com',1,NULL,'123123','admin','$2b$10$K5Mr/InOK12.q3pN8bp0I.EvWT6eBjXpoczJBVEpCwUfVdgr9vo8a'),(28,'User','Name','rijanemay@hotmail.com',4,1,'123123',NULL,NULL),(29,'TESTING DB','TESTING DB','TESTING@DB.COM',2,1,'091827366',NULL,NULL),(30,'test','test','debug@debug.com',1,1,'99999999999','test','$2b$10$/j8TThQPEZk.l0gjv8NXfuUlITxDgj9UiYJoZn96CiytZWsfsPXS.'),(31,'TESTING IF PASSWORD HASH','TESTING IF PASSWORD HASH','TEST@TEST.COM',4,1,'098172635',NULL,NULL),(32,'another test','another test','another@another.com',5,2,'091717821','another testanother test',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -330,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-07 15:27:05
+-- Dump completed on 2019-07-13 10:13:27
