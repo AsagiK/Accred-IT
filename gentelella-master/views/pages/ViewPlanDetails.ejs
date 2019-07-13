@@ -50,23 +50,22 @@
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
-                                    <% for (var plan of data) { %>
                                     <div class="col-md-12 col-sm-6 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:<%= plan.PriorityLevel%></h2>
+                                                        <h2>Priority Level:<%= data[0].PriorityLevel %></h2>
                                                     </div>
                                                     <div class="title_left">
-                                                        <h2>Starting Date:</h2>
+                                                        <h2>Duration:<%= data[0].start_date %>-<%= data[0].end_date %></h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
 
                                                 <div class="page-title">
                                                     <div class="title_left">
-                                                        <h2>Number of Days Per Cycle:<%= plan.CycleTime%></h2>
+                                                        <h2>Number of Days Per Cycle:<%= data[0].CycleTime %></h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -88,19 +87,17 @@
                                                             <th>Base Formula</th>
                                                             <th>Base Standard</th>
                                                             <th>Quality Targets</th>
-                                                            <th>Group Assigned</th><!--if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
+                                                            <!--<th>Group Assigned</th>if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         
                                                         <tr>
-                                                            <td><%= plan.Plan_ID %></td>
-                                                            <td><%= plan.GenObjective %></td>
-                                                            <td><%= plan.Measurement%></td>
-                                                            <td><%= plan.BaseFormula%></td>
-                                                            <td><%= plan.QualityTarget%></td>
-                                                            <td><%= plan.BaseStandard%></td>
-                                                       <% } %>
+                                                            <td><%= data[0].GenObjective %></td>
+                                                            <td><%= data[0].Measurement%></td>
+                                                            <td><%= data[0].BaseFormula%></td>
+                                                            <td><%= data[0].QualityTarget%></td>
+                                                            <td><%= data[0].BaseStandard%></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -116,10 +113,9 @@
                                                         <thead>
                                                             <tr>Procedures</tr>
                                                         </thead>
-                                                            <td><%= plan.Procedures%></td>
+                                                            <td><%= data[0].Procedures%></td>
                                                     </tbody>
                                                 </table>
-                                            
                                         </div>
                                         <!--end of Group 2-->
                                     </div>
@@ -217,7 +213,6 @@
                             </div>
                         </div>
                     </div>
-                 <% } %>
                     </form>
                 </div>
             </div>

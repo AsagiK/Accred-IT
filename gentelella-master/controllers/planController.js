@@ -433,7 +433,7 @@ module.exports = {
 
     ViewPlanDetails: function (req, resp) {
 
-        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel From capstone.plans Where Plan_ID=1;", function (err, results, fields) {
+        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewPlanDetails.ejs', {
                 data: results
@@ -442,4 +442,6 @@ module.exports = {
         });
         console.log("ViewPlanDetails");
     },
+    
+    
 }
