@@ -28,7 +28,7 @@ module.exports = {
             resp.redirect('/login');
         } else {
 
-            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; ", function (err, results, fields) {
+            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Viewusers.ejs', {
                     data: results[0],
@@ -50,13 +50,14 @@ module.exports = {
             resp.redirect('/login');
         } else {
 
-             connection.query("SELECT * FROM capstone.roles where Role_ID > 3;", function (err, result, fields) {
+             connection.query("SELECT * FROM capstone.roles where Role_ID > 3; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
-                    data: result,
+                    data: results[0],
+                    dataB: results[1],
                     current_user: sess.user
                 });
-                console.log(result)
+                console.log(results)
             });
         }
     },
@@ -99,7 +100,7 @@ module.exports = {
     },
 
     AssignTask: function (req, resp) {
-        connection.query("select * from capstone.users", function (err, result, fields) {
+        connection.query("select users.User_ID, users.User_First, users.USer_Last from capstone.users", function (err, result, fields) {
             if (err) throw err;
             resp.render('./pages/AssignTask.ejs', {
                 data: result
@@ -182,18 +183,17 @@ module.exports = {
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
-        var un = fn+ln;
-    //    console.log(fn);
-    //    console.log(ln);
-    //    console.log(em);
-    //    console.log(rl);
-    //    console.log(co);
+        var count = parseInt(req.body.count) + 1;
+        var un = fn+ln+count;
+        console.log(un);
+        
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
         var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
         });
+        
         resp.redirect('/Createusers');
     },
 
@@ -335,21 +335,15 @@ module.exports = {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
         var startDate = '';
-        var endDate = '';
         var startYear = date.substr(6, 4);
-        var endYear = date.substr(19, 4);
         var startMonth = date.substr(0, 2);
-        var endMonth = date.substr(13, 2);
         var startDay = date.substr(3, 2);
-        var endDay = date.substr(16, 2);
         console.log(cyclename);
         console.log(date);
         startDate = startYear + "-" + startMonth + "-" + startDay;
-        endDate = endYear + "-" + endMonth + "-" + endDay;
-        console.log("Start Date: " + startDate);
-        console.log("End Date: " + endDate);
-        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ? , ?)";
-        var values = [cyclename, startDate, endDate];
+        console.log("Start Date: " + startDate); 
+        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`) VALUES (? , ?)";
+        var values = [cyclename, startDate];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
