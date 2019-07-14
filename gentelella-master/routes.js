@@ -3,6 +3,7 @@ var planCtrl = require('./controllers/planController');
 var JSONCtrl = require('./controllers/JSONController');
 var DocCtrl = require('./controllers/DocumentController');
 var SessCtrl = require('./controllers/SessionController');
+var CheckCtrl = require('./controllers/CheckingController');
 var router = express.Router();
 //--PlanCtrl--
 router.route('/Viewusers').get(planCtrl.Viewusers);
@@ -50,6 +51,9 @@ router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);
 router.route('/Logout').get(SessCtrl.Logout);
+//--CheckCtrl
+router.route('/CheckingPage').get(CheckCtrl.CheckingPage);
+router.route('/CheckDetails').get(CheckCtrl.CheckDetails);
 
 
 
