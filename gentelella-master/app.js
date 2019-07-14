@@ -62,12 +62,14 @@ server.get('/RegisterAdminPage', function (req, resp) {
 
 server.get('/home', function (req, resp) {
     sess = req.session;
-    if(!req.session.user){
+    if (!req.session.user) {
         console.log("No session")
         resp.redirect('/login');
-    }else{
-    resp.render('./pages/home.ejs',{current_user: sess.user});
-    console.log(sess.user);
+    } else {
+        resp.render('./pages/home.ejs', {
+            current_user: sess.user
+        });
+        console.log(sess.user);
     }
 });
 
