@@ -35,7 +35,7 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/ViewPlanDetails');
+    resp.redirect('/RecommendationNonAjax');
 
     console.log("Testing testing");
 });
