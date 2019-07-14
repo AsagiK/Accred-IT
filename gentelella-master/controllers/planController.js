@@ -339,21 +339,15 @@ module.exports = {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
         var startDate = '';
-        var endDate = '';
         var startYear = date.substr(6, 4);
-        var endYear = date.substr(19, 4);
         var startMonth = date.substr(0, 2);
-        var endMonth = date.substr(13, 2);
         var startDay = date.substr(3, 2);
-        var endDay = date.substr(16, 2);
         console.log(cyclename);
         console.log(date);
         startDate = startYear + "-" + startMonth + "-" + startDay;
-        endDate = endYear + "-" + endMonth + "-" + endDay;
-        console.log("Start Date: " + startDate);
-        console.log("End Date: " + endDate);
-        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ? , ?)";
-        var values = [cyclename, startDate, endDate];
+        console.log("Start Date: " + startDate); 
+        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`) VALUES (? , ?)";
+        var values = [cyclename, startDate];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
