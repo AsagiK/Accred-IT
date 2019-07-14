@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Cycle Page</title>
+    <title>Checking Plans Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>View Cycle</h3>
+                            <h3>Checking Plans</h3>
 
                         </div>
                     </div>
@@ -59,23 +59,26 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Cycle Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Plan Name</th>
+                                            <th>Submitted By</th>
+                                            <th>Submitted</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
                                         <form>
-                                            <% for (var cycle of data) { %> 
+                                             
                                             <tr>
-                                                <td><%= cycle.cycle_ID %></td>
-                                                <td><%= cycle.cycle_Name %></td>
-                                                <td><%= cycle.start_Date %></td>
-                                                <td><%= cycle.status %></td>
+                                                <td>INSERT PLAN NAME HERE</td>
+                                                <td>INSERT WHO SUBMITTED HERE</td>
+                                                <td>INSERT DATE OF SUBMISSION HERE</td>
+                                                <td>
+                                                    <!CHANGE HREF TO BUTTON INORDER TO VIEW DETAILS OF SUBMISSION>
+                                                   <a href="CheckDetails" class="btn btn-primary"> View Report Details </a>
+                                                </td>
                                             </tr>
-                                            <% } %>
+                                            
                                         </form>
                                 
                                     </tbody>
