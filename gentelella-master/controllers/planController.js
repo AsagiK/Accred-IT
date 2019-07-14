@@ -50,7 +50,7 @@ module.exports = {
             resp.redirect('/login');
         } else {
 
-             connection.query("SELECT * FROM capstone.roles where Role_ID > 3; Select users.User_ID from capstone.users;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.roles where Role_ID > 3; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
                     data: results[0],
@@ -184,16 +184,16 @@ module.exports = {
         var rl = (req.body.role);
         var co = (req.body.contact);
         var count = parseInt(req.body.count) + 1;
-        var un = fn+ln+count;
+        var un = fn + ln + count;
         console.log(un);
-        
+
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
         var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
         });
-        
+
         resp.redirect('/Createusers');
     },
 
@@ -345,7 +345,7 @@ module.exports = {
         console.log(cyclename);
         console.log(date);
         startDate = startYear + "-" + startMonth + "-" + startDay;
-        console.log("Start Date: " + startDate); 
+        console.log("Start Date: " + startDate);
         var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`) VALUES (? , ?)";
         var values = [cyclename, startDate];
         connection.query(sql, values, function (err, result) {
@@ -456,6 +456,31 @@ module.exports = {
         });
     },
 
+
+    ViewAllPlans: function (req, resp) {
+
+        connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewAllPlans.ejs', {
+                data: results
+            });
+            console.log(results);
+        });
+        console.log("ViewAllPlans");
+    },
+
+    ViewPlanDetails: function (req, resp) {
+        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewPlanDetails.ejs', {
+                data: results
+            });
+            console.log(results);
+        });
+        console.log("ViewPlanDetails");
+    },
+
+
     edittask: function (req, resp) {
         var id = (req.query.TID);
         console.log(id);
@@ -521,7 +546,7 @@ module.exports = {
         });
         console.log("updating");
         setTimeout(function () {
-            
+
         }, 3000);
     },
 
