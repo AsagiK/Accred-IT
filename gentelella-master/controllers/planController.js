@@ -22,44 +22,27 @@ module.exports = {
 
     Viewusers: function (req, resp) {
 
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-
-            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/Viewusers.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    current_user: sess.user
-                });
-                console.log(results);
+        connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; ", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/Viewusers.ejs', {
+                data: results[0],
+                dataB: results[1]
             });
-            console.log("Viewusers");
-        }
+            console.log(results);
+        });
+        console.log("Viewusers");
     },
 
     Createusers: function (req, resp) {
 
-
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-
-             connection.query("SELECT * FROM capstone.roles where Role_ID > 3; Select users.User_ID from capstone.users;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/CreateUser.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    current_user: sess.user
-                });
-                console.log(results)
+        connection.query("SELECT * FROM capstone.roles where Role_ID > 3;", function (err, result, fields) {
+            if (err) throw err;
+            resp.render('./pages/CreateUser.ejs', {
+                data: result
             });
-        }
+            console.log(result)
+        });
+        console.log("Createusers");
     },
 
     Viewtasks: function (req, resp) {
@@ -67,10 +50,8 @@ module.exports = {
         connection.query("Select * from capstone.tasks", function (err, result, fields) {
             if (err) throw err;
             console.log(result);
-
-            resp.render('./pages/Viewtasks.ejs', {
-                data: result
-            });
+            
+            resp.render('./pages/Viewtasks.ejs', {data: result});
         });
         console.log("Viewtasks");
     },
@@ -100,7 +81,7 @@ module.exports = {
     },
 
     AssignTask: function (req, resp) {
-        connection.query("select users.User_ID, users.User_First, users.USer_Last from capstone.users", function (err, result, fields) {
+        connection.query("select * from capstone.users", function (err, result, fields) {
             if (err) throw err;
             resp.render('./pages/AssignTask.ejs', {
                 data: result
@@ -111,44 +92,27 @@ module.exports = {
     },
 
     ViewGroups: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-
-            connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
-                if (err) throw err;
-                console.log(results);
-                resp.render('./pages/ViewGroups.ejs', {
-                    dataA: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user
-                });
+        connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
+            if (err) throw err;
+            console.log(results);
+            resp.render('./pages/ViewGroups.ejs', {
+                dataA: results[0],
+                dataB: results[1],
+                dataC: results[2]
             });
+        });
 
-            console.log("ViewGroups");
-
-        }
+        console.log("ViewGroups");
     },
 
     CreateGroup: function (req, resp) {
-
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-            connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
-                if (err) throw err;
-                resp.render('./pages/CreateGroup.ejs', {
-                    data: result,
-                    current_user: sess.user
-                });
+        connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
+            if (err) throw err;
+            resp.render('./pages/CreateGroup.ejs', {
+                data: result
             });
-            console.log("CreateGroup");
-        }
+        });
+        console.log("CreateGroup");
     },
 
     Comparativeanalysis: function (req, resp) {
@@ -175,25 +139,26 @@ module.exports = {
     },
 
     adduser: function (req, resp) {
-
+        
         console.log(req.body);
-
+        
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
-        var count = parseInt(req.body.count) + 1;
-        var un = fn+ln+count;
-        console.log(un);
-        
+        var un = fn+ln;
+    //    console.log(fn);
+    //    console.log(ln);
+    //    console.log(em);
+    //    console.log(rl);
+    //    console.log(co);
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
         var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
         });
-        
         resp.redirect('/Createusers');
     },
 
@@ -247,8 +212,9 @@ module.exports = {
         var tn = req.body.BaseFormula;
         var qt = req.body.QualityTarget;
         var pr = req.body.Procedures;
+        var pl = "High";
+        var bs = "No base standard assigned"
         var RID = req.body.RID;
-        var GID = req.body.GID;
         var pn = req.body.PlanName;
         var pd = req.body.PlanD;
         console.log(go);
@@ -256,11 +222,13 @@ module.exports = {
         console.log(tn);
         console.log(qt);
         console.log(pr);
+        console.log(pl);
+        console.log(bs);
         console.log(RID);
         console.log(pn);
         console.log(pd);
-        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`, `recommendation_ID`,`PlanName`,`PlanDescription`, `GroupAssigned`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
-        var values = [go, me, tn, qt, pr, RID, pn, pd, GID];
+        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`,`PriorityLevel`,`BaseStandard`, `recommendation_ID`,`PlanName`,`PlanDescription`) VALUES (? , ? , ? , ?, ?, ?, ?, ?,?,?)";
+        var values = [go, me, tn, qt, pr, pl, bs, RID, pn, pd];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -270,7 +238,7 @@ module.exports = {
 
     Planning: function (req, resp) {
         var PlanID = req.query.PID;
-        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, plans.PriorityLevel, cycle.cycle_Name  FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
         var values = [PlanID, PlanID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
@@ -335,19 +303,31 @@ module.exports = {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
         var startDate = '';
+        var endDate = '';
         var startYear = date.substr(6, 4);
+        var endYear = date.substr(19, 4);
         var startMonth = date.substr(0, 2);
+        var endMonth = date.substr(13, 2);
         var startDay = date.substr(3, 2);
+        var endDay = date.substr(16, 2);
         console.log(cyclename);
         console.log(date);
         startDate = startYear + "-" + startMonth + "-" + startDay;
-        console.log("Start Date: " + startDate); 
-        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`) VALUES (? , ?)";
-        var values = [cyclename, startDate];
+        endDate = endYear + "-" + endMonth + "-" + endDay;
+        console.log("Start Date: " + startDate);
+        console.log("End Date: " + endDate);
+        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ? , ?)";
+        var values = [cyclename, startDate, endDate];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            resp.redirect('/RecommendationNonAjax');
+        });
+        connection.query("Select * FROM capstone.recommendation;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/RecommendationNonAjax.ejs', {
+                data: results
+            });
+            console.log("RECOMMENDATION NON AJAX");
         });
 
     },
@@ -396,8 +376,8 @@ module.exports = {
     },
 
     assignplantogroup: function (req, resp) {
-        var id = (req.body.UID);
-        var idrecommendation = (req.body.UIDRecommendation);
+        var id = (req.query.UID);
+        var idrecommendation = (req.query.UIDRecommendation);
         console.log(id);
         var values = [id, idrecommendation];
         connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID; SELECT * FROM capstone.cycle; SELECT * FROM capstone.recommendation where recommendation_ID = ?;", values, function (err, results) {
@@ -440,7 +420,7 @@ module.exports = {
     assignmembertogroup: function (req, resp) {
         var GID = req.query.GID;
         var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group is null ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
-        var values = [GID];
+        var values= [GID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
             console.log(results[1])
@@ -451,7 +431,6 @@ module.exports = {
             console.log("Assign Member to Group Page");
         });
     },
-
     ViewAllPlans: function (req, resp) {
 
         connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
@@ -562,3 +541,4 @@ module.exports = {
     },
 
 }
+

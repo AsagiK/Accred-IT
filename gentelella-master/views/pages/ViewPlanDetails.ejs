@@ -8,9 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>View Plan Details-<%= data[0].PlanName %> Page</title>
-
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -50,20 +48,18 @@
                             
                                 <div class="title_left">
                                     <h1>View Plan Details-<%= data[0].PlanName %></h1>
-
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
-
                                     <div class="col-md-12 col-sm-6 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:Not Set</h2>
+                                                        <h2>Priority Level:<%= data[0].PriorityLevel %></h2>
                                                     </div>
                                                     <div class="title_left">
-                                                        <h2>Starting Date:</h2>
+                                                        <h2>Duration:<%= data[0].start_date.toString().substring(0,15) %>-<%= data[0].end_date.toString().substring(0,15) %></h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -72,7 +68,6 @@
                                                         <div class="title_left">
                                                             <h2>Number of Days Per Cycle:<%= data[0].CycleTime %></h2>
                                                         </div>
-
                                                     </div>
                                                 <div class="clearfix"></div>
                                             </div>
@@ -93,18 +88,17 @@
                                                             <th>Base Formula</th>
                                                             <th>Base Standard</th>
                                                             <th>Quality Targets</th>
-                                                            <th>Group Assigned</th><!--if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
+                                                            <!--<th>Group Assigned</th>if Owning group views the ViewTaskDetails Page this should not show this should only show if an eligible member like Q.A needs to view task details-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        
                                                         <tr>
-                                                            <td>Prepare requirements in advance</td>
-                                                            <td>Delay in giving of final report due to excessive
-                                                                procrastination</td>
-                                                            <td>2</td>
-                                                            <td>Laboratories</td>
-                                                            <td>High</td>
-                                                            <td>For Checking</td>
+                                                            <td><%= data[0].GenObjective %></td>
+                                                            <td><%= data[0].Measurement%></td>
+                                                            <td><%= data[0].BaseFormula%></td>
+                                                            <td><%= data[0].QualityTarget%></td>
+                                                            <td><%= data[0].BaseStandard%></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -113,7 +107,6 @@
                                             <!--End of Group 1 Table -->
 
                                             <!-- Group 2 table testing -->
-
                                                                 <div class="panel">
                                                                     <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse" aria-expanded="true" aria-controls="Collapse<">
                                                                         <h3 class="panel-title"> Procedures</h3>
@@ -128,7 +121,6 @@
                                                                     </div>
                                                                 </div>
             
-
                                         <!--end of Group 2-->
                                     </div>
                                     </div>
@@ -145,9 +137,7 @@
                             </div>
                         </div>
                     </div>
-
            
-
 
     <!-- /page content -->
 
