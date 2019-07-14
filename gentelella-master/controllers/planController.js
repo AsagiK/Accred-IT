@@ -433,7 +433,6 @@ module.exports = {
     },
     ViewAllPlans: function (req, resp) {
 
-
         connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewAllPlans.ejs', {
@@ -444,20 +443,8 @@ module.exports = {
         console.log("ViewAllPlans");
     },
 
-    ViewPlanDetails: function (req, resp) {
-        var GO = (req.body.GenObjective);
-        var M = (req.body.Measurement);
-        var BF = (req.body.BaseF);
-        var BS = (req.body.BaseS);
-        var QT = (req.body.QualTar);
-        var P = (req.body.Procedures);
-        var PL = (req.body.PLevel);
-        var CT = (req.body.CycTime);
-        var SD = (req.body.SDate);
-        var ED = (req.body.EDate);
-        var sql ="SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=? and cycle_ID=?;"
-        var values = [GO,M,BF,BS,QT,P,PL,CT,CT,SD,ED]
-        connection.query(sql,values,function (err, results, fields) {
+        ViewPlanDetails: function (req, resp) {
+        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewPlanDetails.ejs', {
                 data: results
