@@ -542,12 +542,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             console.log("updating");
+        });
+        var position = "Member";
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID != ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            console.log("updating");
             resp.redirect('/ViewGroups');
         });
-        console.log("updating");
         setTimeout(function () {
 
-        }, 3000);
+        }, 1000);
     },
 
     makeMember: function (req, resp) {
@@ -563,7 +570,7 @@ module.exports = {
         console.log("updating");
         setTimeout(function () {
             resp.redirect('/ViewGroups');
-        }, 3000);
+        }, 1000);
     },
 
 }
