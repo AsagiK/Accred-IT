@@ -73,7 +73,14 @@
                                                         data-toggle="collapse" data-parent="#accordion"
                                                         href="#collapse<%= area.Area_ID%>" aria-expanded="true"
                                                         aria-controls="collapse<%= area.Area_ID%>">
-                                                        <h4 class="panel-title"><%= area.Area_Name %></h4>
+                                                        <h4 class="panel-title"><%= area.Area_Name %> - 
+                                                        <%if (area.GroupCount != 1){ %>
+                                                                <%= area.GroupCount %> Groups
+                                                        <%}else{%>
+                                                                <%= area.GroupCount %> Group
+                                                            <%}%>
+                                                            
+                                                        </h4>
                                                     </a>
                                                     <div id="collapse<%= area.Area_ID %>"
                                                         class="panel-collapse collapse" role="tabpanel"
@@ -90,7 +97,15 @@
                                                                     href="#Collapse<%= group.Group_ID %>"
                                                                     aria-expanded="true"
                                                                     aria-controls="Collapse<%= group.Group_ID %>">
-                                                                    <h3 class="panel-title"><%= group.Group_Name %></h3>
+                                                                    <h3 class="panel-title"><%= group.Group_Name %>
+                                                                    <%if (group.UserCount != 1){ %>
+                                                                        <%= group.UserCount %> Members
+                                                                    <%}else{%>
+                                                                        <%= group.UserCount %> Member
+                                                                    <%}%>   
+                                                                    
+                                                                    
+                                                                    </h3>
                                                                 </a>
                                                                 <div id="Collapse<%= group.Group_ID %>"
                                                                     class="collapse">
