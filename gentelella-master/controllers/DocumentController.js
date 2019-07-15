@@ -28,14 +28,14 @@ var sess
 module.exports = {
 
     UploadDocument: function (req, resp) {
-
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login');
         } else {
-            resp.render('./pages/UploadDocument.ejs', {current_user: sess.user});
-            
+            resp.render('./pages/UploadDocument.ejs', {
+                current_user: sess.user
+            });
         }
     },
 
@@ -44,14 +44,9 @@ module.exports = {
         var filename = req.files.DocFile.name;
         var path = 'uploads/' + req.files.DocFile.name
         var desc = req.body.DocDesc;
-
         var point = filename.lastIndexOf(".");
-
         var ext = filename.substr(point);
-
         console.log(req.files.DocFile.md5);
-
-
         let uploadedimg = req.files.DocFile;
         uploadedimg.mv('public/uploads/' + req.files.DocFile.name, function (err) {
             if (err) return console.log(err);
@@ -60,31 +55,29 @@ module.exports = {
 
         var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
         var values = [name, path, desc, ext];
-
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
             resp.redirect('/UploadDocument');
         });
-
-
     },
 
     ViewDocument: function (req, resp) {
         sess = req.session;
-    if (!req.session.user) {
-        console.log("No session")
-        resp.redirect('/login');
-    } else {
-        connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewDocument.ejs', {
-                data: results, current_user: sess.user
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewDocument.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
-        console.log("ViewDocument");
-    }
+            console.log("ViewDocument");
+        }
     },
 
 }

@@ -27,7 +27,6 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-
             connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone.users", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Viewusers.ejs', {
@@ -42,8 +41,6 @@ module.exports = {
     },
 
     Createusers: function (req, resp) {
-
-
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -63,7 +60,6 @@ module.exports = {
     },
 
     Viewtasks: function (req, resp) {
-
         connection.query("Select * from capstone.tasks", function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -95,8 +91,6 @@ module.exports = {
             console.log("Record Inserted");
             resp.redirect("/Viewtasks")
         });
-
-
     },
 
     AssignTask: function (req, resp) {
@@ -143,9 +137,7 @@ module.exports = {
                 });
                 console.log(passData);
             });
-
             console.log("ViewGroups");
-
         }
     },
 
@@ -191,9 +183,7 @@ module.exports = {
     },
 
     adduser: function (req, resp) {
-
         console.log(req.body);
-
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
         var em = (req.body.email);
@@ -202,14 +192,12 @@ module.exports = {
         var count = parseInt(req.body.count) + 1;
         var un = fn + ln + count;
         console.log(un);
-
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
         var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
         });
-
         resp.redirect('/Createusers');
     },
 
@@ -368,7 +356,6 @@ module.exports = {
             console.log("Record Inserted");
             resp.redirect('/RecommendationNonAjax');
         });
-
     },
 
     editrecommendation: function (req, resp) {
@@ -450,9 +437,7 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             resp.redirect('/PlanPage?PID=' + idrecommendation);
-
         });
-
     },
 
     assignmembertogroup: function (req, resp) {
@@ -471,7 +456,6 @@ module.exports = {
     },
 
     ViewAllPlans: function (req, resp) {
-
         connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewAllPlans.ejs', {
@@ -582,5 +566,4 @@ module.exports = {
         });
         console.log("updating");
     },
-
 }

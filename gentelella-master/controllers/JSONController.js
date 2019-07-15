@@ -25,8 +25,6 @@ module.exports = {
         var UID = req.body.table;
         UID = JSON.parse(UID);
         //   console.log(UID[0]["User ID"]);
-
-
         for (var i = 0; i < UID.length; i++) {
             var gid = UID[i]["Group ID"];
             var uid = UID[i]["User ID"]
@@ -41,8 +39,6 @@ module.exports = {
         setTimeout(function () {
             if (check == false) {
                 resp.send("Not OK")
-                
-                
             } else {
                 resp.send("OK");
             }
