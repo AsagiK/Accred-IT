@@ -41,6 +41,8 @@ module.exports = {
         setTimeout(function () {
             if (check == false) {
                 resp.send("Not OK")
+                
+                
             } else {
                 resp.send("OK");
             }

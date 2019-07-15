@@ -116,7 +116,21 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                     passData = {
+                        goodStatus: 0,
+                        msg: "User/s not added"
+                    }
+                }else{
+                     passData = {
+                        goodStatus: 1,
+                        msg: "User/s added"
+                    }
+                }
+            }
             connection.query("Select area.Area_ID, area.Area_Name, count(group.group_ID) as GroupCount from area left join capstone.`group` on area.Area_ID = group.Area_ID group by area.Area_ID; SELECT group.Group_ID, group.Area_ID, group.Group_Name, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group group by group_ID; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
                 if (err) throw err;
 
@@ -124,9 +138,10 @@ module.exports = {
                     dataA: results[0],
                     dataB: results[1],
                     dataC: results[2],
-                    current_user: sess.user
+                    current_user: sess.user,
+                    notif: passData
                 });
-                console.log(results);
+                console.log(passData);
             });
 
             console.log("ViewGroups");
