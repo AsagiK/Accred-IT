@@ -28,8 +28,15 @@ var sess
 module.exports = {
 
     UploadDocument: function (req, resp) {
-        resp.render('./pages/UploadDocument.ejs');
-        // console.log("Testing testing");
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            resp.render('./pages/UploadDocument.ejs', {current_user: sess.user});
+            
+        }
     },
 
     SendDocument: function (req, resp) {
@@ -41,7 +48,7 @@ module.exports = {
         var point = filename.lastIndexOf(".");
 
         var ext = filename.substr(point);
-        
+
         console.log(req.files.DocFile.md5);
 
 
@@ -64,18 +71,20 @@ module.exports = {
     },
 
     ViewDocument: function (req, resp) {
-
+        sess = req.session;
+    if (!req.session.user) {
+        console.log("No session")
+        resp.redirect('/login');
+    } else {
         connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewDocument.ejs', {
-                data: results
+                data: results, current_user: sess.user
             });
             console.log(results);
         });
-
-
-
         console.log("ViewDocument");
+    }
     },
 
 }
