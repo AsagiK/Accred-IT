@@ -120,12 +120,12 @@ module.exports = {
             var passData
             if (alert) {
                 if (alert == 0) {
-                     passData = {
+                    passData = {
                         goodStatus: 0,
                         msg: "User/s not added"
                     }
-                }else{
-                     passData = {
+                } else {
+                    passData = {
                         goodStatus: 1,
                         msg: "User/s added"
                     }
@@ -245,11 +245,10 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
+            if (result) {
+                resp.redirect('/Viewusers');
+            }
         });
-        console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/Viewusers');
-        }, 3000);
     },
 
     Recommendations: function (req, resp) {
@@ -408,11 +407,11 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
+            if (result) {
+                resp.redirect('/RecommendationNonAjax');
+            }
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/RecommendationNonAjax');
-        }, 3000);
     },
 
     assignplantogroup: function (req, resp) {
@@ -520,12 +519,12 @@ module.exports = {
         var values = [TN, TD, GO, ME, QT, BS, PL, ID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
+            if (result) {
+                resp.redirect('/Viewtasks');
+            }
             console.log(result);
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/Viewtasks');
-        }, 3000);
     },
 
     AssignRecommendationToGroup: function (req, resp) {
@@ -561,11 +560,11 @@ module.exports = {
         var values = [position, UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            console.log("updating");
-            resp.redirect('/ViewGroups');
+            if (result) {
+                resp.redirect('/ViewGroups');
+            }
         });
-        setTimeout(function () {}, 1000);
+
     },
 
     makeMember: function (req, resp) {
@@ -576,12 +575,12 @@ module.exports = {
         var values = [position, UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
+            if(result){
+                resp.redirect('/ViewGroups');
+            }
             console.log(result);
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/ViewGroups');
-        }, 1000);
     },
 
 }
