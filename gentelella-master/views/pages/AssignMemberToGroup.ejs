@@ -123,9 +123,14 @@
                                         <button class="btn btn-primary" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
-                                        <form method="get" action="ViewGroups">
-                                            
-                                            <button type="submit"  class="btn btn-success" style="display: none;" id="back">Hi</button>
+                                        <form method="get" action="/ViewGroups">
+                                            <input type="hidden" name="passdata" value="1">
+                                            <button type="submit"  class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                                        </form>
+                                        
+                                        <form method="get" action="/ViewGroups">
+                                            <input type="hidden" name="passdata" value="0">
+                                            <button type="submit"  class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                                         </form>
                                     </div>
                                 </div>
@@ -245,7 +250,9 @@
                         var respData = xhr.responseText;
                         if(respData == "OK"){
                             console.log("Hi");
-                            back();
+                            backsuccess();
+                        }else{
+                            backfail();
                         }
                     }
                 };
@@ -255,10 +262,18 @@
 
             });
             
-            function back() {
+            function backsuccess() {
                 console.log("Hi")
 
-               var button = document.getElementById('back');
+               var button = document.getElementById('backsuccess');
+                button.click();
+
+            };
+            
+            function backfail() {
+                console.log("Hi")
+
+               var button = document.getElementById('backfail');
                 button.click();
 
             };

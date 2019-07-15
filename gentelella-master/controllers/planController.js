@@ -27,7 +27,6 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-
             connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone.users", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Viewusers.ejs', {
@@ -42,8 +41,6 @@ module.exports = {
     },
 
     Createusers: function (req, resp) {
-
-
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -63,7 +60,6 @@ module.exports = {
     },
 
     Viewtasks: function (req, resp) {
-
         connection.query("Select * from capstone.tasks", function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -95,8 +91,6 @@ module.exports = {
             console.log("Record Inserted");
             resp.redirect("/Viewtasks")
         });
-
-
     },
 
     AssignTask: function (req, resp) {
@@ -116,20 +110,34 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-
-            connection.query("SELECT * FROM capstone.area; SELECT * FROM capstone.group; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "User/s not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "User/s added"
+                    }
+                }
+            }
+            connection.query("Select area.Area_ID, area.Area_Name, count(group.group_ID) as GroupCount from area left join capstone.`group` on area.Area_ID = group.Area_ID group by area.Area_ID; SELECT group.Group_ID, group.Area_ID, group.Group_Name, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group group by group_ID; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
                 if (err) throw err;
-                console.log(results);
+
                 resp.render('./pages/ViewGroups.ejs', {
                     dataA: results[0],
                     dataB: results[1],
                     dataC: results[2],
-                    current_user: sess.user
+                    current_user: sess.user,
+                    notif: passData
                 });
+                console.log(passData);
             });
-
             console.log("ViewGroups");
-
         }
     },
 
@@ -175,9 +183,7 @@ module.exports = {
     },
 
     adduser: function (req, resp) {
-
         console.log(req.body);
-
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
         var em = (req.body.email);
@@ -186,14 +192,12 @@ module.exports = {
         var count = parseInt(req.body.count) + 1;
         var un = fn + ln + count;
         console.log(un);
-
         var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
         var values = [fn, ln, em, rl, co, un];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
         });
-
         resp.redirect('/Createusers');
     },
 
@@ -229,11 +233,10 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
+            if (result) {
+                resp.redirect('/Viewusers');
+            }
         });
-        console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/Viewusers');
-        }, 3000);
     },
 
     Recommendations: function (req, resp) {
@@ -353,7 +356,6 @@ module.exports = {
             console.log("Record Inserted");
             resp.redirect('/RecommendationNonAjax');
         });
-
     },
 
     editrecommendation: function (req, resp) {
@@ -392,11 +394,11 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
+            if (result) {
+                resp.redirect('/RecommendationNonAjax');
+            }
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/RecommendationNonAjax');
-        }, 3000);
     },
 
     assignplantogroup: function (req, resp) {
@@ -414,7 +416,6 @@ module.exports = {
                 dataD: results[3]
             })
         });
-
         console.log("Edit Recommendations Page");
     },
 
@@ -436,9 +437,7 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             resp.redirect('/PlanPage?PID=' + idrecommendation);
-
         });
-
     },
 
     assignmembertogroup: function (req, resp) {
@@ -456,9 +455,7 @@ module.exports = {
         });
     },
 
-
     ViewAllPlans: function (req, resp) {
-
         connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewAllPlans.ejs', {
@@ -479,7 +476,6 @@ module.exports = {
         });
         console.log("ViewPlanDetails");
     },
-
 
     edittask: function (req, resp) {
         var id = (req.query.TID);
@@ -507,12 +503,12 @@ module.exports = {
         var values = [TN, TD, GO, ME, QT, BS, PL, ID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
+            if (result) {
+                resp.redirect('/Viewtasks');
+            }
             console.log(result);
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/Viewtasks');
-        }, 3000);
     },
 
     AssignRecommendationToGroup: function (req, resp) {
@@ -542,12 +538,17 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             console.log("updating");
-            resp.redirect('/ViewGroups');
         });
-        console.log("updating");
-        setTimeout(function () {
+        var position = "Member";
+        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID != ? && Groupdetails_ID = ?;";
+        var values = [position, UID, GID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            if (result) {
+                resp.redirect('/ViewGroups');
+            }
+        });
 
-        }, 3000);
     },
 
     makeMember: function (req, resp) {
@@ -558,12 +559,11 @@ module.exports = {
         var values = [position, UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
+            if(result){
+                resp.redirect('/ViewGroups');
+            }
             console.log(result);
         });
         console.log("updating");
-        setTimeout(function () {
-            resp.redirect('/ViewGroups');
-        }, 3000);
     },
-
 }
