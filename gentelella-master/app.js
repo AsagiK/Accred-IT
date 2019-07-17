@@ -5,6 +5,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const async = require("async");
 var mysql = require('mysql');
 var connection = require('./db');
 // ---- URL PARSER
@@ -64,7 +65,7 @@ server.get('/home', function (req, resp) {
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
-        resp.redirect('/login');
+        resp.redirect('/login?status=0');
     } else {
         resp.render('./pages/home.ejs', {
             current_user: sess.user
@@ -74,8 +75,32 @@ server.get('/home', function (req, resp) {
 });
 
 server.get('/login', function (req, resp) {
+    var status = req.query.status
+    console.log(status + "=====")
+    switch (status) 
+    {
+        case "0":
+            passData = {
+                goodStatus: 0,
+                msg: "You are not logged in"
+            }
+            resp.render('./pages/login.ejs', {
+                notif: passData
+            });
+            break;
+        case "1":
+            passData = {
+                goodStatus: 1,
+                msg: "Incorrect Username or Password"
+            }
+            resp.render('./pages/login.ejs', {
+                notif: passData
+            });
+            break;
+        default:
+            resp.render('./pages/login.ejs');
+    }
     console.log("Testing testing");
-    resp.render('./pages/login.ejs');
 });
 
 server.use('/', routes);

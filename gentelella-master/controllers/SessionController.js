@@ -96,7 +96,7 @@ module.exports = {
         connection.query(sql, values, function (err, result, fields) {
             if (result.length < 1) {
                 console.log("user not found")
-                resp.redirect('/login');
+                resp.redirect('/login?status=1');
             } else {
 
                 bcrypt.compare(pass, result[0].passwd, function (err, res) {
@@ -118,7 +118,7 @@ module.exports = {
 
 
                     } else {
-                        resp.redirect('/login');
+                        resp.redirect('/login?status=1');
                         console.log("Invalid user");
                     }
 
