@@ -142,7 +142,6 @@ module.exports = {
     },
 
     CreateGroup: function (req, resp) {
-
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -559,7 +558,7 @@ module.exports = {
         var values = [position, UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            if(result){
+            if (result) {
                 resp.redirect('/ViewGroups');
             }
             console.log(result);
