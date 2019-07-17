@@ -5,6 +5,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const async = require("async");
 var mysql = require('mysql');
 var connection = require('../db');
 // ---- URL PARSER
@@ -18,34 +19,33 @@ server.use(session({
 }));
 // ----
 var sess;
+
 module.exports = {
 
     AssignGroupJSON: function (req, resp) {
-        var check = false;
         var UID = req.body.table;
         UID = JSON.parse(UID);
-        //   console.log(UID[0]["User ID"]);
-        for (var i = 0; i < UID.length; i++) {
-            var gid = UID[i]["Group ID"];
-            var uid = UID[i]["User ID"]
+        
+        async.forEachOf(UID, function(value, key, callback){
+            var gid = UID[key]["Group ID"];
+            var uid = UID[key]["User ID"];
             var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
             var values = [gid, uid, gid, uid];
             connection.query(sql, values, function (err, result) {
-                if (err) check = false;
-                check = true;
-                console.log(result);
+                if (err) callback(err);
+                if(result){
+                    callback();
+                }
             });
-        };
-        setTimeout(function () {
-            if (check == false) {
-                console.log("Failed");
-                resp.send("Not OK")
-            } else {
-                console.log("Passed");
-                resp.send("OK");
-            }
-        }, 2000);
-
+        }, function(err){
+            if (err) {
+                    console.log("Failed");
+                    resp.send("Not OK")
+                } else {
+                    console.log("Passed");
+                    resp.send("OK");
+                }
+        })
     },
 
 

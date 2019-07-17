@@ -90,12 +90,12 @@
 <% if(notif.goodStatus == 1) {%>
 <div class="alert success">
     <span class="closebtn">&times;</span>
-     <%= notif.msg %>
+    <%= notif.msg %>
 </div>
 <%}else{%>
 <div class="alert">
     <span class="closebtn">&times;</span>
-     <%= notif.msg %>
+    <%= notif.msg %>
 </div>
 <%}%>
     <%}%>
@@ -126,7 +126,7 @@
                                 <div class="col-md-12 col-sm-6 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_title">
-                                            <h2><i class="fa fa-align-left"></i>View Groups</h2>
+                                            <h2><i class="fa fa-align-left"></i>Areas</h2>
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="x_content">
@@ -158,9 +158,9 @@
                                                                     <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= group.Group_ID %>" aria-expanded="true" aria-controls="Collapse<%= group.Group_ID %>">
                                                                         <h3 class="panel-title"><%= group.Group_Name %>
                                                                             <%if (group.UserCount != 1){ %>
-                                                                            <%= group.UserCount %> Members
+                                                                            - <%= group.UserCount %> Members
                                                                             <%}else{%>
-                                                                            <%= group.UserCount %> Member
+                                                                            - <%= group.UserCount %> Member
                                                                             <%}%>   
                                                                     
                                                                     
@@ -188,6 +188,7 @@
                                                                                 <tbody>
                                                                                     <tr>
 
+                                                                                        <% if (user.Groupdetails_Position == "Member") { %>
                                                                                         <td><%= user.User_ID %></td>
                                                                                         <td><%= user.User_First %></td>
                                                                                         <td><%= user.User_Last %></td>
@@ -197,7 +198,6 @@
                                                                                         <td><%= user.Groupdetails_Position %>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <% if (user.Groupdetails_Position == "Member") { %>
                                                                                             <form method="post" action="makeLeader">
                                                                                                 <input type="hidden" name="UID" value="<%= user.User_ID %>">
                                                                                                 <input type="hidden" name="GID" value="<%= group.Group_ID %>">
@@ -205,6 +205,15 @@
                                                                                                     Leader</button>
                                                                                             </form>
                                                                                             <% } else { %>
+                                                                                        <td><strong><%= user.User_ID %></strong></td>
+                                                                                        <td><strong><%= user.User_First %></strong></td>
+                                                                                        <td><strong><%= user.User_Last %></strong></td>
+                                                                                        <td><strong><%= user.username %></strong></td>
+                                                                                        <td><strong><%= user.ContactNo %></strong></td>
+                                                                                        <td><strong><%= user.Role_Name %></strong></td>
+                                                                                        <td><strong><%= user.Groupdetails_Position %></strong>
+                                                                                        </td>
+                                                                                        <td>
                                                                                             <form method="post" action="makeMember">
                                                                                                 <input type="hidden" name="UID" value="<%= user.User_ID %>">
                                                                                                 <input type="hidden" name="GID" value="<%= group.Group_ID %>">
@@ -242,7 +251,7 @@
                                 </div>
 
                                 <!-- end of accordion -->
-                                        
+
 
 
                             </div>
