@@ -246,7 +246,7 @@
                 };
 
                 xhr.onreadystatechange = function() {
-                    if (xhr.readyState > 2) {
+                    if (xhr.readyState == 4) {
                         var respData = xhr.responseText;
                         if(respData == "OK"){
                             console.log("Hi");
@@ -263,16 +263,12 @@
             });
             
             function backsuccess() {
-                console.log("Hi")
-
                var button = document.getElementById('backsuccess');
                 button.click();
 
             };
             
             function backfail() {
-                console.log("Hi")
-
                var button = document.getElementById('backfail');
                 button.click();
 

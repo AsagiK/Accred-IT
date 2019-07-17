@@ -38,11 +38,13 @@ module.exports = {
         };
         setTimeout(function () {
             if (check == false) {
+                console.log("Failed");
                 resp.send("Not OK")
             } else {
+                console.log("Passed");
                 resp.send("OK");
             }
-        }, 1000);
+        }, 2000);
 
     },
 
