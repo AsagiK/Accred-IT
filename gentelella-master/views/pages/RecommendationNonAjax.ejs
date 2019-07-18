@@ -57,15 +57,12 @@
                                         data-target=".bs-example-modal-lg">
                                         Create Recommendation
                                     </button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".createCycle">
-                                        Create Cycle
-                                    </button>
 
                                     <!view table for users>
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
+                                                    <th>Accreditation</th>
                                                     <th>Name</th>
                                                     <th>Description</th>
                                                     <th>Given Grade</th>
@@ -82,7 +79,7 @@
                                                     %>
 
                                                 <tr>
-
+                                                    <td><%= recommendation.accreditation_Name %></td>
                                                     <td><%= recommendation.recommendation_Name %></td>
                                                     <td><%= recommendation.recommendation_Desc %></td>
                                                     <td><%= recommendation.recommendation_Grade %></td>
@@ -97,17 +94,22 @@
                                                             <div>
                                                                 <!BUTTONS FOR EDIT AND PLAN>
                                                                     <% if (recommendation.Group_Name=="No Group Assigned") { %>
-                                                                    <form method="get" action="AssignRecommendationToGroup">
-                                                                        <input type="hidden" name="AID" value="<%= recommendation.area_ID %>">
-                                                                        <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
+                                                                    <form method="get"
+                                                                        action="AssignRecommendationToGroup">
+                                                                        <input type="hidden" name="AID"
+                                                                            value="<%= recommendation.area_ID %>">
+                                                                        <input type="hidden" name="UID"
+                                                                            value="<%= recommendation.recommendation_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Assign
                                                                             Group</button>
                                                                     </form>
                                                                     <% } else { %>
                                                                     <form method="get" action="editrecommendation">
-                                                                        <input type="hidden" name="AID" value="<%= recommendation.area_ID %>">
-                                                                        <input type="hidden" name="UID" value="<%= recommendation.recommendation_ID %>">
+                                                                        <input type="hidden" name="AID"
+                                                                            value="<%= recommendation.area_ID %>">
+                                                                        <input type="hidden" name="UID"
+                                                                            value="<%= recommendation.recommendation_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Edit
                                                                             Recommendation</button>
@@ -227,6 +229,18 @@
                                         method="POST">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                for="first-name">Accreditation<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select class="form-control" name="accreditation">
+                                                    <% for (var accreditation of dataC) { %>
+                                                    <option value="<%= accreditation.accreditation_ID %>"><%= accreditation.accreditation_Name %></option>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                 for="first-name">Recommendation Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -308,62 +322,7 @@
                         </div>
                     </div>
 
-                    <!--MODAL FOR CREATE CYCLE-->
-                    <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal2" value="Edit">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left"
-                                        action="addcycle" method="POST">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Cycle
-                                                Name<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="text" id="first-name" name="cycleName" required="required"
-                                                    class="form-control col-md-7 col-xs-12" placeholder="Name" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Set Cycle
-                                                Time:<span class="required"></span>
-                                            </label>
-                                            <form class="form-group">
-                                                <fieldset>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="controls">
-                                                            <div class="input-prepend input-group">
-                                                                <span class="add-on input-group-addon"><i
-                                                                        class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                                        <input type="text" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="submit" class="btn btn-primary" form="CreateCycle">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <!-- footer content -->
                     <footer>
                         <div class="pull-right">

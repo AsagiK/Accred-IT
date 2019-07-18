@@ -149,10 +149,6 @@
                                             data-target=".bs-example-modal-lg">
                                             Create Recommendation
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target=".createCycle">
-                                            Create Cycle
-                                        </button>
 
                                         <!view table for users>
                                             <table class="table table-bordered">
@@ -250,67 +246,6 @@
             </div>
         </div>
 
-        <!--Modal for Acting Phase -->
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            Acting Phase
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="CreateRecommendation" data-parsley-validate class="form-horizontal form-label-left"
-                            action="" method="">
-                            <div class="form-group">
-                                <label for="Quality Target"
-                                    class="control-label col-md-3 col-sm-3 col-xs-12">Comment<span
-                                        class="required">*</span></label>
-                                <!INPUT FOR COMMENT>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea class="form-control" rows="3" id="comment" name="comment"
-                                            placeholder="Description" required="required" onkeyup="textAreaAdjust(this)"
-                                            style="overflow:hidden"></textarea>
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Act
-                                    Deadline<span class="required"></span>
-                                </label>
-                                <form class="form-group">
-                                    <fieldset>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="controls">
-                                                <div class="input-prepend input-group">
-                                                    <span class="add-on input-group-addon"><i
-                                                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                    <!INPUT FOR DATE>
-                                                        <input type="text" class="form-control has-feedback-left"
-                                                            id="single_cal1" placeholder="First Name"
-                                                            aria-describedby="inputSuccess2Status">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-primary" form="CreateRecommendation">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!--Modal for Create -->
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -324,12 +259,24 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form id="CreateRecommendation" data-parsley-validate
-                            class="form-horizontal form-label-left" action="addrecommendation"
-                            method="POST">
+                        <form id="CreateRecommendation" data-parsley-validate class="form-horizontal form-label-left"
+                            action="addrecommendation" method="POST">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                    for="first-name">Recommendation Name<span class="required">*</span>
+                                    for="first-name">Accreditation<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="hidden" id="accreditation" name="accreditation" 
+                                        class="form-control col-md-7 col-xs-12"
+                                        value="<%= dataC[0].accreditation_ID %>" readonly />
+                                    <input type="text" id="" name=""
+                                        class="form-control col-md-7 col-xs-12"
+                                        placeholder="<%= dataC[0].accreditation_Name %>" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Recommendation
+                                    Name<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="recommendationName" name="recommendationName"
@@ -343,14 +290,12 @@
                                         class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <textarea class="form-control" rows="3" id="recommendationDesc"
-                                        name="recommendationDesc" placeholder="Description"
-                                        required="required" onkeyup="textAreaAdjust(this)"
-                                        style="overflow:hidden"></textarea>
+                                        name="recommendationDesc" placeholder="Description" required="required"
+                                        onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                    for="first-name">Given
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
                                     Grade<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -364,8 +309,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                    for="first-name">Priority
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority
                                     Level<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -382,8 +326,7 @@
                                 </label>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select class="form-control" placeholder="Select Area"
-                                            name="SelectArea">
+                                        <select class="form-control" placeholder="Select Area" name="SelectArea">
 
 
                                             <!-- code for taking data from sql to show on page-->

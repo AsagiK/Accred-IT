@@ -48,7 +48,8 @@
                             <h3> Recommendation Name: <%= dataB[0].recommendation_Name %></h3>
                         </div>
                         <div class="col-md-3">
-                            <a type="button" class="btn btn-primary btn-lg" href="/RecommendationNonAjax" style="float: right">Go Back</a><br /><br />
+                            <a type="button" class="btn btn-primary btn-lg" href="/RecommendationNonAjax"
+                                style="float: right">Go Back</a><br /><br />
                         </div>
                     </div>
                 </div>
@@ -59,6 +60,11 @@
                             <div class="x_content">
 
                                 <div>
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target=".createCycle">
+                                        Create Cycle
+                                    </button>
 
                                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -97,18 +103,23 @@
                                                         <tbody>
                                                             <% for (var plan of data) { %>
                                                             <form method="get" action="assignplantogroup">
-                                                            <tr>
-                                                                <input type="hidden" name="UIDRecommendation" value="<%= dataB[0].recommendation_ID %>">
-                                                                <input type="hidden" name="PID" value="<%= plan.Plan_ID %>">
-                                                                <td><%= plan.plan_ID %></td>
-                                                                <td><%= plan.PlanName %></td>
-                                                                <td><%= plan.PlanDescription %></td>
-                                                                <td><%= plan.Group_Name %></td>
-                                                                <td><%= plan.PriorityLevel %></td>
-                                                                <td><%= plan.CycleTime %>: <%= plan.start_Date %> - <%= plan.end_Date %></td>
-                                                                
-                                                                <td><button type="submit" class="btn btn-primary">Assign Group</button></td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <input type="hidden" name="UIDRecommendation"
+                                                                        value="<%= dataB[0].recommendation_ID %>">
+                                                                    <input type="hidden" name="PID"
+                                                                        value="<%= plan.Plan_ID %>">
+                                                                    <td><%= plan.plan_ID %></td>
+                                                                    <td><%= plan.PlanName %></td>
+                                                                    <td><%= plan.PlanDescription %></td>
+                                                                    <td><%= plan.Group_Name %></td>
+                                                                    <td><%= plan.PriorityLevel %></td>
+                                                                    <td><%= plan.CycleTime %>: <%= plan.start_Date %> -
+                                                                        <%= plan.end_Date %></td>
+
+                                                                    <td><button type="submit"
+                                                                            class="btn btn-primary">Assign
+                                                                            Group</button></td>
+                                                                </tr>
                                                             </form>
                                                             <% } %>
                                                         </tbody>
@@ -119,30 +130,36 @@
                                                         aria-labelledby="profile-tab">
                                                         <form id="create" data-parsley-validate
                                                             class="form-horizontal form-label-left" method="post"
-                                                            action="SendPlan"> 
+                                                            action="SendPlan">
 
-                                                            <!--Plan Name input field--> 
-                                                                <div class="form-group">
-                                                                    <label for="Plan Name" class="control-label col-md-3 col-sm-3 col-xs-12"> Plan Name: <span class="required">*</span></label>
-                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                        <input type="text" id="Plan Name" name="PlanName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Plan Name">
-                                                                    </div>
-                                                                </div> 
-                                                            
+                                                            <!--Plan Name input field-->
+                                                            <div class="form-group">
+                                                                <label for="Plan Name"
+                                                                    class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                    Plan Name: <span class="required">*</span></label>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="text" id="Plan Name" name="PlanName"
+                                                                        required="required"
+                                                                        class="form-control col-md-7 col-xs-12"
+                                                                        placeholder="Plan Name">
+                                                                </div>
+                                                            </div>
+
                                                             <!--Plan Description field-->
                                                             <div class="form-group">
-                                                                    <label for="Plan Description"
-                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Plan Description:
-                                                                        <span class="required">*</span></label>
-                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                        <textarea class="form-control" rows="3"
-                                                                            id="PlanDesc" name="PlanD"
-                                                                            placeholder="Plan Description"
-                                                                            required="required"
-                                                                            onkeyup="textAreaAdjust(this)"
-                                                                            style="overflow:hidden"></textarea>
-                                                                    </div>
-                                                                </div>   
+                                                                <label for="Plan Description"
+                                                                    class="control-label col-md-3 col-sm-3 col-xs-12">Plan
+                                                                    Description:
+                                                                    <span class="required">*</span></label>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <textarea class="form-control" rows="3"
+                                                                        id="PlanDesc" name="PlanD"
+                                                                        placeholder="Plan Description"
+                                                                        required="required"
+                                                                        onkeyup="textAreaAdjust(this)"
+                                                                        style="overflow:hidden"></textarea>
+                                                                </div>
+                                                            </div>
                                                             <!General Objective input field>
                                                                 <div class="form-group">
                                                                     <label
@@ -221,88 +238,13 @@
                                                                     <button type="submit" form="create"
                                                                         class="btn btn-primary">Submit</button>
                                                                 </div>
-                                                                <input type="hidden" name="GID" value="<%= dataB[0].group_ID %>">
-                                                            <input type="hidden" name="RID" value="<%= dataB[0].recommendation_ID %>">
+                                                                <input type="hidden" name="GID"
+                                                                    value="<%= dataB[0].group_ID %>">
+                                                                <input type="hidden" name="RID"
+                                                                    value="<%= dataB[0].recommendation_ID %>">
                                                         </form>
 
                                                     </div>
-
-                                                    <!--ASSIGN PLAN TO GROUP TAB-->
-                                                    <!--div role="tabpanel" class="tab-pane fade" id="tab_content3"
-                                                        aria-labelledby="profile-tab">
-                                                        <form id="Assign" data-parsley-validate
-                                                            class="form-horizontal form-label-left">
-                                                            
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                    for="first-name">Group<span
-                                                                        class="required">*</span>
-                                                                </label>
-                                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                       
-                                                                    <select class="form-control" name="role">
-                                                                        <!CODE FOR RETRIEVVING AND SHOWING THE GROUPS FOR SELECTION>
-                                                                        
-                                                                    </select>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                    for="first-name">Choose Cycle<span
-                                                                        class="required">*</span>
-                                                                </label>
-                                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                    <select class="form-control" name="role">
-                                                                        
-                                                                        
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                    for="first-name">Priority
-                                                                    Level<span class="required">*</span>
-                                                                </label>
-                                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                    <select class="form-control" name="role">
-                                                                        <option>High</option>
-                                                                        <option>Medium</option>
-                                                                        <option>Low</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label for="Quality Target"
-                                                                    class="control-label col-md-3 col-sm-3 col-xs-12">Base
-                                                                    Standard</label>
-                                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                    
-                                                                    <textarea class="form-control" rows="3"
-                                                                        id="General Objective"
-                                                                        placeholder="Base Standard" required="required"
-                                                                        onkeyup="textAreaAdjust(this)"
-                                                                        style="overflow:hidden"></textarea>
-
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                <button class="btn btn-primary"
-                                                                    type="reset">Reset</button>
-                                                                <button type="submit" form="Assign"
-                                                                    class="btn btn-primary">
-                                                                    Submit
-                                                                </button>
-                                                            </div>
-
-
-
-                                                        </form>
-                                                    </div-->
                                             </div>
                                     </div>
                                 </div>
@@ -326,6 +268,66 @@
             <!-- /footer content -->
         </div>
     </div>
+
+    <!--MODAL FOR CREATE CYCLE-->
+    <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal2" value="Edit">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left"
+                            action="addcycle" method="POST">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                    for="first-name">Cycle
+                                    Name<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="first-name" name="cycleName" required="required"
+                                        class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                    for="first-name">Set Cycle
+                                    Time:<span class="required"></span>
+                                </label>
+                                <form class="form-group">
+                                    <fieldset>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="controls">
+                                                <div class="input-prepend input-group">
+                                                    <span class="add-on input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                    <input type="text"
+                                                        class="form-control has-feedback-left"
+                                                        id="single_cal1" placeholder="First Name"
+                                                        aria-describedby="inputSuccess2Status">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary" form="CreateCycle">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     <!script for dynamic text area>
         <script>
