@@ -566,4 +566,50 @@ module.exports = {
         });
         console.log("updating");
     },
+
+    CreateAccreditation: function (req, resp) {
+        resp.render('./pages/CreateAccreditation.ejs');
+        console.log("CREATE ACCREDITATION");
+    },
+
+    AddAccreditation: function (req, resp) {
+        console.log(req.body);
+        var an = (req.body.accreditname);
+        var ad = (req.body.accreditdesc);
+        var sql = "INSERT INTO `capstone`.`accreditation` (`accreditation_Name`, `accreditation_Description`) VALUES (? , ?)";
+        var values = [an, ad];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+        });
+        resp.redirect('/ViewAccreditation');
+    },
+
+    ViewAccreditation: function (req, resp) {
+        connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewAccreditation.ejs', {
+                data: results
+            });
+            console.log(results);
+        });
+        console.log("VIEW ACCREDITATION");
+    },
+
+    ViewRecommendationsofAccreditation: function (req, resp) {
+        var AID = req.query.AID;
+        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID where accreditation.accreditation_ID = ?; Select * FROM capstone.area; Select * FROM capstone.accreditation where accreditation.accreditation_ID = ?;"
+        var values = [AID, AID];
+        connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewRecommendationofAccreditation.ejs', {
+                data: results[0],
+                dataB: results[1],
+                dataC: results[2]
+            });
+            console.log(results);
+            console.log("RECOMMENDATION NON AJAX");
+        });
+    },
+
 }

@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create Area </title>
+    <title>View Accreditation Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="assests/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -36,13 +36,15 @@
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-            <%- include ./nav.ejs %>
+            <% include ./nav %>
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Areas</h3>
+
+                            <h3>View Accreditation Page</h3>
+
                         </div>
                     </div>
                 </div>
@@ -52,64 +54,43 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Area
-                                            Name: <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="Task Name" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area Description <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="TaskDesc"
-                                                placeholder="Area Description" required="required" onkeyup="textAreaAdjust(this)"
-                                                style="overflow:hidden"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                <!--view table for users-->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Accreditation ID</th>
+                                            <th>Accreditation Name</th>
+                                            <th>Accreditation Description</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        
+                                             <% for (var accreditation of data) { %>
+                                            <tr>
+                                                <td><%= accreditation.accreditation_ID %></td>
+                                                <td><%= accreditation.accreditation_Name %></td>
+                                                <td><%= accreditation.accreditation_Description %></td>
+                                                <td>
+                                                    <form method="get" action="ViewRecommendationsofAccreditation">
+                                                        <input type="hidden" name="AID" value="<%= accreditation.accreditation_ID %>">
+                                                        <button class="btn btn-primary" type="submit">View Recommendations</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                        
+                                
+                                    </tbody>
+                                </table>
+                                <div class="ln_solid"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
             </div>
-        </div>
-
-        <!script for dynamic text area>
-            <script>
-                function textAreaAdjust(o) {
-                    o.style.height = "1px";
-                    o.style.height = (25 + o.scrollHeight) + "px";
-                }
-            </script>
 
             <!-- jQuery -->
             <script src="assets/vendors/jquery/dist/jquery.min.js"></script>

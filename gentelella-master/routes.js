@@ -39,6 +39,10 @@ router.route('/altertask').post(planCtrl.altertask);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
 router.route('/makeLeader').post(planCtrl.makeLeader);
 router.route('/makeMember').post(planCtrl.makeMember);
+router.route('/CreateAccreditation').get(planCtrl.CreateAccreditation);
+router.route('/ViewAccreditation').get(planCtrl.ViewAccreditation);
+router.route('/ViewRecommendationsofAccreditation').get(planCtrl.ViewRecommendationsofAccreditation);
+router.route('/AddAccreditation').post(planCtrl.AddAccreditation);
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);
