@@ -76,7 +76,6 @@ server.get('/home', function (req, resp) {
 
 server.get('/login', function (req, resp) {
     var status = req.query.status
-    console.log(status + "=====")
     switch (status) 
     {
         case "0":

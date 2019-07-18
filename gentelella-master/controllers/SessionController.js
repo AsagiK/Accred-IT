@@ -131,7 +131,7 @@ module.exports = {
 
     Logout: function (req, resp) {
         req.session.destroy();
-        resp.redirect('/home');
+        resp.redirect('/login');
     }
 
 }
