@@ -614,4 +614,9 @@ module.exports = {
         });
     },
 
+    CreateGrades: function (req, resp) {
+        resp.render('./pages/CreateGrades.ejs');
+        console.log("CREATE CUSTOM GRADES");
+    },
+
 }

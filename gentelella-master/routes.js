@@ -43,6 +43,7 @@ router.route('/CreateAccreditation').get(planCtrl.CreateAccreditation);
 router.route('/ViewAccreditation').get(planCtrl.ViewAccreditation);
 router.route('/ViewRecommendationsofAccreditation').get(planCtrl.ViewRecommendationsofAccreditation);
 router.route('/AddAccreditation').post(planCtrl.AddAccreditation);
+router.route('/CreateGrades').get(planCtrl.CreateGrades);
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);
