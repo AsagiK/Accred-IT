@@ -289,11 +289,12 @@ module.exports = {
     },
 
     RecommendationNonAjax: function (req, resp) {
-        connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID; Select * FROM capstone.area;", function (err, results, fields) {
+        connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID; Select * FROM capstone.area;SELECT * FROM capstone.accreditation", function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/RecommendationNonAjax.ejs', {
                 data: results[0],
-                dataB: results[1]
+                dataB: results[1],
+                dataC: results[2]
             });
             console.log(results);
             console.log("RECOMMENDATION NON AJAX");
@@ -301,6 +302,7 @@ module.exports = {
     },
 
     addrecommendation: function (req, resp) {
+        var accreditation = (req.body.accreditation);
         var recommendationName = (req.body.recommendationName);
         var recommendationDesc = (req.body.recommendationDesc);
         var grade = (req.body.grade);
@@ -318,8 +320,8 @@ module.exports = {
         console.log(priority);
         console.log(area);
         console.log(current);
-        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`) VALUES (? , ? , ? , ?, ?, ?)";
-        var values = [recommendationName, recommendationDesc, grade, priority, current, area];
+        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`, `accreditation_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
+        var values = [recommendationName, recommendationDesc, grade, priority, current, area, accreditation];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -565,4 +567,55 @@ module.exports = {
         });
         console.log("updating");
     },
+
+    CreateAccreditation: function (req, resp) {
+        resp.render('./pages/CreateAccreditation.ejs');
+        console.log("CREATE ACCREDITATION");
+    },
+
+    AddAccreditation: function (req, resp) {
+        console.log(req.body);
+        var an = (req.body.accreditname);
+        var ad = (req.body.accreditdesc);
+        var sql = "INSERT INTO `capstone`.`accreditation` (`accreditation_Name`, `accreditation_Description`) VALUES (? , ?)";
+        var values = [an, ad];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+        });
+        resp.redirect('/ViewAccreditation');
+    },
+
+    ViewAccreditation: function (req, resp) {
+        connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewAccreditation.ejs', {
+                data: results
+            });
+            console.log(results);
+        });
+        console.log("VIEW ACCREDITATION");
+    },
+
+    ViewRecommendationsofAccreditation: function (req, resp) {
+        var AID = req.query.AID;
+        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID where accreditation.accreditation_ID = ?; Select * FROM capstone.area; Select * FROM capstone.accreditation where accreditation.accreditation_ID = ?;"
+        var values = [AID, AID];
+        connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewRecommendationofAccreditation.ejs', {
+                data: results[0],
+                dataB: results[1],
+                dataC: results[2]
+            });
+            console.log(results);
+            console.log("RECOMMENDATION NON AJAX");
+        });
+    },
+
+    CreateGrades: function (req, resp) {
+        resp.render('./pages/CreateGrades.ejs');
+        console.log("CREATE CUSTOM GRADES");
+    },
+
 }

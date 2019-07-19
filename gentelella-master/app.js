@@ -35,7 +35,7 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/RecommendationNonAjax');
+    resp.redirect('/Recommendations');
 
     console.log("Testing testing");
 });

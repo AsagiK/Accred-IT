@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Recommendations Page</title>
+  <title>TESTING CODE PAGE</title>
 
   <!-- Bootstrap -->
   <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +33,14 @@
   <link href="assets/build/css/custom.min.css" rel="stylesheet" />
 </head>
 
+<style>
+
+  #accreditation{
+    width : 150px;
+  }
+
+</style>
+
 <body class="nav-md">
   <div class="container body">
     <div class="main_container">
@@ -42,7 +50,7 @@
         <div class="">
           <div class="page-title">
             <div class="title_left">
-              <h3>Recommendations Ajax Version</h3>
+              <h3>TESTING CODE PAGE</h3>
             </div>
           </div>
         </div>
@@ -51,57 +59,149 @@
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
               <div class="x_content">
-                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                  <div class="ln_solid"></div>
-                  <!--BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME-->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
-                    Create Recommendation
-                  </button>
-                  
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle">
-                    Create Cycle
-                  </button>
 
-                  <!--view table for users-->
+                <div class="container">
+                  <div class="tab tab-1">
+                    <table class="table table-bordered" id="table" border="1">
+                      <tr>
+                        <th>Code</th>
+                        <th>Rank</th>
+                        <th>Accreditation</th>
+                        <td id='hidden' value="" style="visibility:collapse;">test</td>
+                      </tr>
+
+                    </table>
+                  </div>
+                  <div class="tab tab-2">
+                    <!INPUT FOR CODE>
+                    <label for="code" >Code : </label> <input type="text" name="code" id="code"><br>
+                    <!INPUT FOR RANK>
+                    <label for="rank" >Rank : </label> <input type="text" name="rank" id="rank"><br>
+                    <!INPUT FOR ACCREDITATION>
+                    <label for="accreditation" >Accreditation : </label> <select class="form-control" name="accreditation" id="accreditation" stlye="width:150px;">
+
+                      <option value="1">PAASCU</option>
+                      <option value="2">ABET</option>
+                      <option value="3">Others</option>
+
+                    </select>
+                    
+                    <br>
+                    <button onclick="addHtmlTableRow();">Add</button>
+                    <button onclick="editHtmlTbleSelectedRow();">Edit</button>
+                    <button onclick="removeSelectedRow();">Remove</button>
+                  </div>
+                </div>
+
+                <script>
+                  var rowcount = 0;
+                  var rIndex,
+                    table = document.getElementById("table");
+
+                  // check the empty input
+                  function checkEmptyInput() {
+                    var isEmpty = false,
+                      code = document.getElementById("code").value,
+                      rank = document.getElementById("rank").value,
+                      accreditation = document.getElementById("accreditation").value;
+
+                    if (code === "") {
+                      alert("Code Cannot Be Empty");
+                      isEmpty = true;
+                    } else if (rank === "") {
+                      alert("Rank Cannot Be Empty");
+                      isEmpty = true;
+                    } else if (accreditation === "") {
+                      alert("Accreditation Cannot Be Empty");
+                      isEmpty = true;
+                    }
+                    return isEmpty;
+                  }
+
+                  // add Row
+                  function addHtmlTableRow() {
+                    // get the table by id
+                    // create a new row and cells
+                    // get value from input text
+                    // set the values into row cell's
+                    if (!checkEmptyInput()) {
+                      var newRow = table.insertRow(table.length),
+                        cell1 = newRow.insertCell(0),
+                        cell2 = newRow.insertCell(1),
+                        cell3 = newRow.insertCell(2),
+                        code = document.getElementById("code").value,
+                        rank = document.getElementById("rank").value,
+                        accreditation = document.getElementById("accreditation").value;
+                      console.log(rank);
+                      cell1.innerHTML = code;
+                      cell2.innerHTML = rank;
+                      cell3.innerHTML = accreditation;
+                      cell1.setAttribute('id', "code"+rowcount);
+                      cell2.setAttribute('id', "rank"+rowcount);
+                      cell3.setAttribute('id', "accreditation"+rowcount);
+                      // call the function to set the event to the new row
+                      selectedRowToInput();
+                      rowcount++;
+                    }
+                  }
+
+                  // display selected row data into input text
+                  function selectedRowToInput() {
+
+                    for (var i = 1; i < table.rows.length; i++) {
+                      table.rows[i].onclick = function () {
+                        // get the seected row index
+                        rIndex = this.rowIndex;
+                        document.getElementById("fname").value = this.cells[0].innerHTML;
+                        document.getElementById("lname").value = this.cells[1].innerHTML;
+                        document.getElementById("age").value = this.cells[2].innerHTML;
+                      };
+                    }
+                  }
+                  selectedRowToInput();
+
+                  function editHtmlTbleSelectedRow() {
+                    var fname = document.getElementById("fname").value,
+                      lname = document.getElementById("lname").value,
+                      age = document.getElementById("age").value;
+                    if (!checkEmptyInput()) {
+                      table.rows[rIndex].cells[0].innerHTML = fname;
+                      table.rows[rIndex].cells[1].innerHTML = lname;
+                      table.rows[rIndex].cells[2].innerHTML = age;
+                    }
+                  }
+
+                  function removeSelectedRow() {
+                    table.deleteRow(rIndex);
+                    // clear input text
+                    document.getElementById("fname").value = "";
+                    document.getElementById("lname").value = "";
+                    document.getElementById("age").value = "";
+                  }
+                </script>
+
+                <!--form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                   <div class="ln_solid"></div>
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Given Grade</th>
-                        <th>Priority Level</th>
-                        <!--High, Medium, Low-->
-                        <th>Status</th>
-                        <!-- Status will be No Updates or Updated Last(Date Here)-->
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Prepare requirements in advance</td>
-                        <td>
-                          Delay in giving of final report due to excessive
-                          procrastination
-                        </td>
-                        <td>2</td>
-                        <td>High</td>
-                        <td>Updated Last: June 6, 2019</td>
-                        <td>
-                          <div class="form-group">
-                            <div>
-                              <!--BUTTONS FOR EDIT AND PLAN-->
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".edit">
-                                Edit Recommendation</button><br /><br />
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".plan">
-                                Plan</button><br /><br />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </form>
+
+                  <div class="ln_solid"></div>
+                  <div class="container1">
+                      <button class="add_form_field">Add New Field &nbsp; 
+                        <span style="font-size:16px; font-weight:bold;">+ </span>
+                      </button>
+                      <div>
+                        <label>Code</label>
+                        <!CODE INPUT>
+                        <input type="text" name="code1">
+                        <label>Rank</label>
+                        <!RANK INPUT>
+                        <input type="text" name="rank1">
+                        <!HIDDEN ACCREDITATION ID INPUT>
+                        <input type="text" name="accreditationID">
+                      </div>
+                  </div>
+                </form-->
+
+
               </div>
             </div>
           </div>
@@ -109,415 +209,6 @@
       </div>
 
       <!-- /page content -->
-
-      <!--MODAL FOR PLAN-->
-      <div class="modal fade plan" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal2" value="plan">
-                <span aria-hidden="true">×</span>
-              </button>
-              <h4 class="modal-title" id="myModalLabel2">Planning</h4>
-            </div>
-            <div class="modal-body">
-              <div>
-                <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                    <li role="presentation" class="active">
-                      <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">View
-                        Plan</a>
-                    </li>
-                    <li role="presentation" class="">
-                      <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Create
-                        Plan</a>
-                    </li>
-                    <li role="presentation" class="">
-                      <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab"
-                        aria-expanded="false">Assign to Group</a>
-                    </li>
-                  </ul>
-
-                  <!--- Tab1-->
-                  <div id="myTabContent" class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                      <table id="ViewPlan" class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th>General Objective</th>
-                            <th>Measurement</th>
-                            <th>Base Formula</th>
-                            <th>Base Standard</th>
-                            <th>Quality Targets</th>
-                            <th>Group Assigned</th>
-                            <th>Priority Level</th>
-                            <!--High, Medium, Low-->
-                            <th>Cycle Time</th>
-                            <th>Procedures</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Prepare requirements in advance</td>
-                            <td>
-                              Delay in giving of final report due to excessive
-                              procrastination
-                            </td>
-                            <td>2</td>
-                            <td>Laboratories</td>
-                            <td>High</td>
-                            <td>For Checking</td>
-                            <td>For Checking</td>
-                            <td>For Checking</td>
-                            <td>For Checking</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                     <!--ViewPlan Ajax Script-->
-                      <script type="text/javascript">
-                          const recoBody= document.querySelector("#ViewPlan > tbody");
-                          console.log(recoBody);
-                          console.log("Hey");
-                          
-                          function loadPlans(){
-                              console.log("Hi");
-                              const request=new XMLHttpRequest();
-                              
-                              request.open("POST","viewplantest");
-                              request.onload = () => {
-                                  try{
-                                      const json=JSON.parse(request.responseText);
-                                      viewPlanPopulation(json);
-                                  }catch(e){
-                                      console.warn("Could not load Plans!")
-                                  }
-                              } 
-                            request.send();
-                          }
-                          function viewPlanPopulation(json){
-                              console.log("Hello");
-                          }
-                      </script>
-                     <!--End of Ajax Script for View Plan-->
-                    
-                    </div>
-                    <!---Tab2-->
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                      <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                        <div class="form-group">
-                          <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">General
-                            Objective</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="General Objective"
-                              placeholder="General Objective" required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="Quality Target"
-                            class="control-label col-md-3 col-sm-3 col-xs-12">Measurement</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="Measurement" placeholder="Measurement"
-                              required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Base Formula</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="Base Formula" placeholder="Base Formula"
-                              required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="Quality Target" placeholder="Quality Target"
-                              required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Procedures</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="Procedures" placeholder="Procedures"
-                              required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Close
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                    <!--Tab3-->
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                      <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Group<span
-                              class="required">*</span>
-                          </label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="form-control" name="role">
-                              <!--Use Area ID to retrieve groups from db-->
-                              <option>Group A</option>
-                              <option>Group B</option>
-                              <option>Group C</option>
-                              <option>Group F</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cycle Time<span
-                              class="required">*</span>
-                          </label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="form-control" name="role">
-                              <!--Use Area ID to retrieve groups from db-->
-                              <option>Group A</option>
-                              <option>Group B</option>
-                              <option>Group C</option>
-                              <option>Group F</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority Level<span
-                              class="required">*</span>
-                          </label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="form-control" name="role">
-                              <option>High</option>
-                              <option>Medium</option>
-                              <option>Low</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Base
-                            Standard</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="form-control" rows="3" id="General Objective" placeholder="Base Standard"
-                              required="required"></textarea>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Close
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Modal for Create -->
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">
-                <span aria-hidden="true">×</span>
-              </button>
-              <h4 class="modal-title" id="myModalLabel">
-                Create Recommendation
-              </h4>
-            </div>
-            <div class="modal-body">
-              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Recommendation Name<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"
-                      placeholder="Name" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
-                      class="required">*</span></label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <textarea class="form-control" rows="3" id="TaskDesc" placeholder="Description"
-                      required="required"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given Grade<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="role">
-                      <!--Must be able  retrieve grading scheme from Grade setting-->
-                      <option>A</option>
-                      <option>B</option>
-                      <option>C</option>
-                      <option>F</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority Level<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="role">
-                      <option>High</option>
-                      <option>Medium</option>
-                      <option>Low</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Modal for Edit-->
-      <div class="modal fade edit" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal2" value="Edit">
-                <span aria-hidden="true">×</span>
-              </button>
-              <h4 class="modal-title" id="myModalLabel2">
-                Edit Recommendation
-              </h4>
-            </div>
-            <div class="modal-body">
-              <form id="demo-form" data-parsley-validate class="form-horizontal form-label-left">
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Recommendation Name<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"
-                      placeholder="Name" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
-                      class="required">*</span></label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <textarea class="form-control" rows="3" id="TaskDesc" placeholder="Description"
-                      required="required"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given Grade<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="role">
-                      <!--Must be able  retrieve grading scheme from Grade setting-->
-                      <option>A</option>
-                      <option>B</option>
-                      <option>C</option>
-                      <option>F</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority Level<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="role">
-                      <option>High</option>
-                      <option>Medium</option>
-                      <option>Low</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Modal-->
-
-      <!--MODAL FOR CREATE CYCLE-->
-      <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal2" value="Edit">
-                <span aria-hidden="true">×</span>
-              </button>
-              <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
-            </div>
-            <div class="modal-body">
-              <form id="demo-form" data-parsley-validate class="form-horizontal form-label-left">
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cycle Name<span
-                      class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"
-                      placeholder="Name" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Time:<span
-                      class="required"></span>
-                  </label>
-                  <form class="form-group">
-                    <fieldset>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="controls">
-                          <div class="input-prepend input-group">
-                            <span class="add-on input-group-addon"><i
-                                class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                            <input type="text" name="reservation-time" id="reservation-time" class="form-control"
-                              value="01/01/2019 - 01/25/2019" />
-                          </div>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- footer content -->
       <footer>
@@ -530,6 +221,36 @@
       <!-- /footer content -->
     </div>
   </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var max_fields = 10;
+      var wrapper = $(".container1");
+      var add_button = $(".add_form_field");
+
+      var x = 1;
+      $(add_button).click(function (e) {
+        e.preventDefault();
+        if (x < max_fields) {
+          x++;
+          $(wrapper).append('<div><label>Code</label> <input type="text" name="grade' + x +
+            '"/> <label>Rank</label> <input type="text" name="rank' + x +
+            '"> <input type="text" name="accreditationID"> <a href="#" class="delete">Delete</a></div>'
+            ); //add input box
+        } else {
+          alert('You Reached the limits')
+        }
+      });
+
+      $(wrapper).on("click", ".delete", function (e) {
+        e.preventDefault();
+        $(this).parent('div').remove();
+        x--;
+      })
+    });
+  </script>
 
   <!-- jQuery -->
   <script src="assets/vendors/jquery/dist/jquery.min.js"></script>

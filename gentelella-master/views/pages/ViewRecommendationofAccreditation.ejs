@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Recommendations of Accreditation</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <%- include ./nav.ejs %>
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="clearfix"></div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2><%= dataC[0].accreditation_Name %></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <div class="form-group">
+                                        <p class="control-label col-md-12 col-sm-12 col-xs-12">
+                                            <%= dataC[0].accreditation_Description %></span>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Recommendations</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <!BUTTONS FOR PROCEED TO ACT AND TO FINISH CYCLE>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg" style="float: right;">
+                                            Proceed To Act Phase
+                                        </button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal"
+                                            data-target=".createCycle" style="float: right;">
+                                            Finish Cycle
+                                        </button>
+
+                                        <!view table for users>
+                                            <table class="table table-bordered">
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>SUBMISSION TITLE HERE</td>
+                                                        <td>SUBMITTED BY HERE</td>
+                                                        <td>SUBMITTED WHEN HERE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SUBMISSION WRITTEN REPORT HERE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SUBMITTED EVIDENCE FILE HERE (CLICKABLE TO DOWNLOAD</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div-->
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_content">
+
+                                    <!BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg">
+                                            Create Recommendation
+                                        </button>
+
+                                        <!view table for users>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Given Grade</th>
+                                                        <th>Priority Level</th>
+                                                        <th>Area Assigned</th>
+                                                        <th>Group Assigned</th>
+                                                        <th>Date</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% for (var recommendation of data) { 
+                                                        
+                                                        %>
+
+                                                    <tr>
+
+                                                        <td><%= recommendation.recommendation_Name %></td>
+                                                        <td><%= recommendation.recommendation_Desc %></td>
+                                                        <td><%= recommendation.recommendation_Grade %></td>
+                                                        <td><%= recommendation.priority_Level %></td>
+                                                        <td><%= recommendation.Area_Name %></td>
+                                                        <td><%= recommendation.Group_Name %></td>
+                                                        <td><%= recommendation.date_insert.toString().substring(0,15) %>
+                                                        </td>
+                                                        <td>
+
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <!BUTTONS FOR EDIT AND PLAN>
+                                                                        <% if (recommendation.Group_Name=="No Group Assigned") { %>
+                                                                        <form method="get"
+                                                                            action="AssignRecommendationToGroup">
+                                                                            <input type="hidden" name="AID"
+                                                                                value="<%= recommendation.area_ID %>">
+                                                                            <input type="hidden" name="UID"
+                                                                                value="<%= recommendation.recommendation_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Assign
+                                                                                Group</button>
+                                                                        </form>
+                                                                        <% } else { %>
+                                                                        <form method="get" action="editrecommendation">
+                                                                            <input type="hidden" name="AID"
+                                                                                value="<%= recommendation.area_ID %>">
+                                                                            <input type="hidden" name="UID"
+                                                                                value="<%= recommendation.recommendation_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Edit
+                                                                                Recommendation</button>
+                                                                        </form>
+                                                                        <% } %>
+
+                                                                        <br /><br />
+                                                                        <form method="get" action="PlanPage">
+                                                                            <input type="hidden" name="PID"
+                                                                                value="<%= recommendation.recommendation_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Add
+                                                                                Plan</button>
+                                                                        </form>
+                                                                        <br /><br />
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <!--Modal for Create -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Create Recommendation
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="CreateRecommendation" data-parsley-validate class="form-horizontal form-label-left"
+                            action="addrecommendation" method="POST">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                    for="first-name">Accreditation<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="hidden" id="accreditation" name="accreditation" 
+                                        class="form-control col-md-7 col-xs-12"
+                                        value="<%= dataC[0].accreditation_ID %>" readonly />
+                                    <input type="text" id="" name=""
+                                        class="form-control col-md-7 col-xs-12"
+                                        placeholder="<%= dataC[0].accreditation_Name %>" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Recommendation
+                                    Name<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="recommendationName" name="recommendationName"
+                                        required="required" class="form-control col-md-7 col-xs-12"
+                                        placeholder="Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Quality Target"
+                                    class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
+                                        class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <textarea class="form-control" rows="3" id="recommendationDesc"
+                                        name="recommendationDesc" placeholder="Description" required="required"
+                                        onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
+                                    Grade<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control" name="grade">
+                                        <!--Must be able  retrieve grading scheme from Grade setting-->
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority
+                                    Level<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control" name="priority">
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Assign Area<span
+                                        class="required">*</span>
+                                </label>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" placeholder="Select Area" name="SelectArea">
+
+
+                                            <!-- code for taking data from sql to show on page-->
+                                            <% for(var area of dataB){ %>
+                                            <option value=<%=area.Area_ID %>> <%= area.Area_Name %>
+                                            </option>
+                                            <% } %>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary" form="CreateRecommendation">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
+
+</body>
+
+</html>

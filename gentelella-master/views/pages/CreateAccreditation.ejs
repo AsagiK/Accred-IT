@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create Area </title>
+    <title>Create Accreditation </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Areas</h3>
+                            <h3>Accreditation</h3>
                         </div>
                     </div>
                 </div>
@@ -52,25 +52,24 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AddAccreditation">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Area
-                                            Name: <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Accreditation Name/Acronym: <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="Task Name" required="required"
+                                            <input type="text" id="accreditname" name="accreditname" required="required"
                                                 class="form-control col-md-7 col-xs-12" placeholder="Area Name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area Description <span
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Accreditation Description <span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="TaskDesc"
-                                                placeholder="Area Description" required="required" onkeyup="textAreaAdjust(this)"
-                                                style="overflow:hidden"></textarea>
+                                            <textarea class="form-control" rows="3" id="accreditdesc" name="accreditdesc"
+                                                placeholder="Area Description" required="required"
+                                                onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                         </div>
                                     </div>
 
