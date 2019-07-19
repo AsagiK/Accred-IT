@@ -614,6 +614,37 @@ module.exports = {
         });
     },
 
+    EditAccreditation: function (req, resp) {
+        var id = (req.query.AID);
+        console.log(id);
+        var values = [id];
+        connection.query("SELECT * FROM capstone.accreditation where accreditation.accreditation_ID = (?);", values, function (err, results) {
+            if (err) throw err;
+            console.log(results);
+            resp.render('./pages/EditAccreditation.ejs', {
+                data: results
+            })
+        });
+    },
+
+    AlterAccreditation: function (req, resp) {
+        var id = (req.body.AID);
+        var an = (req.body.accreditname);
+        var ad = (req.body.accreditdesc);
+        console.log(id);
+        console.log(an);
+        console.log(ad);
+        var sql = "Update capstone.accreditation set accreditation_Name = ?, accreditation_Description = ? where accreditation_ID = ? ";
+        var values = [an, ad, id];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/ViewAccreditation');
+            }
+        });
+    },
+
     CreateGrades: function (req, resp) {
         resp.render('./pages/CreateGrades.ejs');
         console.log("CREATE CUSTOM GRADES");
