@@ -17,7 +17,6 @@ server.use(session({
     resave: false,
     saveUninitialized: true
 }));
-// ---- kek
 server.use(express.static("public"));
 
 var routes = require('./routes');
