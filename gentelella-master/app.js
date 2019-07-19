@@ -46,7 +46,7 @@ server.get('/debug', function (req, resp) {
 });
 
 server.get('/debug1', function (req, resp) {
-    resp.render('./pages/ViewAllPlans.ejs');
+    resp.render('./pages/EditAccreditation.ejs');
     console.log("Testing testing");
 });
 
