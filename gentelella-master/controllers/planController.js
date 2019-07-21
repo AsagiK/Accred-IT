@@ -294,18 +294,36 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var PlanID = req.query.PID;
-            var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
-            var values = [PlanID, PlanID];
-            connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err;
+           var alert = req.query.passdata;
+        var passData
+        if (alert) {
+            if (alert == 0) {
+                passData = {
+                    goodStatus: 0,
+                    msg: "User/s not added"
+                }
+            } else {
+                passData = {
+                    goodStatus: 1,
+                    msg: "User/s added"
+                }
+            }
+        }
+        var PlanID = req.query.PID;
+        console.log(PlanID);
+        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, plans.GroupAssigned, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+        var values = [PlanID, PlanID];
+        connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            if (results) {
                 resp.render('./pages/PlanPage.ejs', {
                     data: results[0],
                     dataB: results[1],
-                    current_user: sess.user
+                    notif: passData
                 });
-                console.log(results);
-            });
+            }
+            console.log(results);
+        });
         }
     },
 
