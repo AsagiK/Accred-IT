@@ -702,7 +702,7 @@ module.exports = {
             if (err) throw err;
             console.log("Record Inserted");
         });
-        resp.redirect('/ViewAccreditation');
+        resp.redirect('/CreateGrades');
     },
 
     ViewAccreditation: function (req, resp) {
@@ -790,9 +790,15 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            resp.render('./pages/CreateGrades.ejs', {
-                current_user: sess.user
+            connection.query("SELECT * FROM capstone.accreditation ORDER BY accreditation_ID DESC LIMIT 1;", function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/CreateGrades.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
             });
+            
             console.log("CREATE CUSTOM GRADES");
         }
     },
