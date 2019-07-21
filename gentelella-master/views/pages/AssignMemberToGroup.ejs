@@ -39,6 +39,76 @@
 
 </head>
 
+<style>
+    /* Customize the label (the container) */
+.containercheckbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.containercheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.containercheckbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.containercheckbox input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.containercheckbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.containercheckbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
+
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
@@ -75,7 +145,12 @@
                                             <tbody>
                                                 <% for (var user of data) { %>
                                                 <tr>
-                                                    <td><input type='checkbox' name='record' id='<%= user.User_ID %>'>
+                                                    <td>
+                                                        <label class="containercheckbox">
+                                                                <input type='checkbox' name='record'
+                                                                id='<%= user.User_ID %>'>
+                                                                <span class="checkmark"></span>
+                                                              </label>
                                                     </td>
                                                     <td id="UID<%= user.User_ID %>" value="<%= user.User_ID %>">
                                                         <%= user.User_ID %></td>
@@ -83,7 +158,8 @@
                                                         <%= user.User_First %></td>
                                                     <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
-                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>" style="visibility:collapse;">test</td>
+                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>"
+                                                        style="visibility:collapse;">test</td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -125,12 +201,14 @@
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewGroups">
                                             <input type="hidden" name="passdata" value="1">
-                                            <button type="submit"  class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                id="backsuccess">Hi</button>
                                         </form>
-                                        
+
                                         <form method="get" action="/ViewGroups">
                                             <input type="hidden" name="passdata" value="0">
-                                            <button type="submit"  class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                id="backfail">Hi</button>
                                         </form>
                                     </div>
                                 </div>
@@ -184,9 +262,9 @@
     <!--TEST SCRIPT FOR ADDING-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $(".add-row").click(function() {
-                $("#table1 tbody").find('input[name="record"]').each(function() {
+        $(document).ready(function () {
+            $(".add-row").click(function () {
+                $("#table1 tbody").find('input[name="record"]').each(function () {
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
@@ -196,7 +274,12 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td><td id= hidden" + index + " value=" + hidden + " style='visibility:collapse'>" + hidden + "</td></tr>";
+                        var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= hidden" + index + " value=" + hidden +
+                            " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -210,8 +293,8 @@
             });
 
             // Find and remove selected table rows
-            $(".delete-row").click(function() {
-                $("#table2 tbody tr").find('input[name="record"]').each(function() {
+            $(".delete-row").click(function () {
+                $("#table2 tbody tr").find('input[name="record"]').each(function () {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
                         var UID = $('#UID' + index).attr("value");
@@ -220,7 +303,12 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td><td id= hidden" + index + " value=" + hidden + ">" + hidden + "</td></tr>";
+                        var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= hidden" + index + " value=" + hidden +
+                            " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
@@ -229,7 +317,7 @@
                 });
             });
 
-            $("#toJSON").click(function() {
+            $("#toJSON").click(function () {
 
                 var table = JSON.stringify($('#table2').tableToJSON({
                     ignoreColumns: [0, 2, 3]
@@ -241,17 +329,17 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/AssignGroupJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {
+                xhr.onload = function () {
                     console.log(xhr.responseText);
                 };
 
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4) {
                         var respData = xhr.responseText;
-                        if(respData == "OK"){
+                        if (respData == "OK") {
                             console.log("Hi");
                             backsuccess();
-                        }else{
+                        } else {
                             backfail();
                         }
                     }
@@ -261,15 +349,15 @@
                 xhr.send("table=" + table + "&table2=" + table2);
 
             });
-            
+
             function backsuccess() {
-               var button = document.getElementById('backsuccess');
+                var button = document.getElementById('backsuccess');
                 button.click();
 
             };
-            
+
             function backfail() {
-               var button = document.getElementById('backfail');
+                var button = document.getElementById('backfail');
                 button.click();
 
             };
@@ -277,7 +365,6 @@
 
 
         });
-
     </script>
 
 
