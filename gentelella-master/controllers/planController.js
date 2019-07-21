@@ -319,7 +319,8 @@ module.exports = {
                 resp.render('./pages/PlanPage.ejs', {
                     data: results[0],
                     dataB: results[1],
-                    notif: passData
+                    notif: passData,
+                    current_user: sess.user
                 });
             }
             console.log(results);
@@ -565,7 +566,7 @@ module.exports = {
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
             resp.render('./pages/ViewPlanDetails.ejs', {
-                data: results
+                data: results, current_user: sess.user
             })
             console.log(results);
         });
