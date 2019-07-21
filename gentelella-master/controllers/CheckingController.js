@@ -21,13 +21,29 @@ var sess;
 module.exports = {
 
     CheckingPage: function (req, resp) {
-        resp.render('./pages/Checking.ejs');
-        console.log("Checking");
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            resp.render('./pages/Checking.ejs', {
+                current_user: sess.user
+            });
+            console.log("Checking");
+        }
     },
 
     CheckDetails: function (req, resp) {
-        resp.render('./pages/CheckingDetailsPage.ejs');
-        console.log("Checking");
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            resp.render('./pages/CheckingDetailsPage.ejs', {
+                current_user: sess.user
+            });
+            console.log("Checking");
+        }
     },
 
 }

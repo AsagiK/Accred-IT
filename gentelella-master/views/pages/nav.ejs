@@ -13,7 +13,11 @@
               </div>
               <div class="profile_info">
                   <span>Welcome,</span>
+                  <% if(locals.current_user){ %>
+                  <h2> <%= current_user[0].User_First %> <%= current_user[0].User_Last %> </h2>
+                  <%}else{%>
                   <h2>John Doe</h2>
+                  <%}%>
               </div>
           </div>
           <!-- /menu profile quick info -->

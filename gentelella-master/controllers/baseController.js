@@ -21,7 +21,7 @@ module.exports = {
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
-        resp.redirect('/login');
+        resp.redirect('/login?status=0');
     } else {
         {
             current_user: sess.user
