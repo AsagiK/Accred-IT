@@ -34,7 +34,7 @@ module.exports = {
                     dataB: results[1],
                     current_user: sess.user
                 });
-                console.log(results);
+                console.log(sess.user);
             });
             console.log("Viewusers");
         }
@@ -94,14 +94,21 @@ module.exports = {
     },
 
     AssignTask: function (req, resp) {
-        connection.query("select users.User_ID, users.User_First, users.USer_Last from capstone.users", function (err, result, fields) {
-            if (err) throw err;
-            resp.render('./pages/AssignTask.ejs', {
-                data: result
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("select users.User_ID, users.User_First, users.USer_Last from capstone.users", function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/AssignTask.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+                console.log(result);
             });
-            console.log(result);
-        });
-        console.log("AssignTask");
+            console.log("AssignTask");
+        }
     },
 
     ViewGroups: function (req, resp) {
@@ -201,17 +208,24 @@ module.exports = {
     },
 
     edituser: function (req, resp) {
-        var id = (req.query.UID);
-        console.log(id);
-        var values = [id];
-        connection.query("SELECT * FROM capstone.users where users.User_ID = (?); SELECT * FROM capstone.roles where Role_ID > 1;", values, function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/EditUser.ejs', {
-                data: results[0],
-                dataB: results[1]
-            })
-        });
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.users where users.User_ID = (?); SELECT * FROM capstone.roles where Role_ID > 1;", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/EditUser.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                })
+            });
+        }
     },
 
     alteruser: function (req, resp) {
@@ -275,30 +289,44 @@ module.exports = {
     },
 
     Planning: function (req, resp) {
-        var PlanID = req.query.PID;
-        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
-        var values = [PlanID, PlanID];
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/PlanPage.ejs', {
-                data: results[0],
-                dataB: results[1],
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var PlanID = req.query.PID;
+            var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+            var values = [PlanID, PlanID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/PlanPage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
+        }
     },
 
     RecommendationNonAjax: function (req, resp) {
-        connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID; Select * FROM capstone.area;SELECT * FROM capstone.accreditation", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/RecommendationNonAjax.ejs', {
-                data: results[0],
-                dataB: results[1],
-                dataC: results[2]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID; Select * FROM capstone.area;SELECT * FROM capstone.accreditation", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/RecommendationNonAjax.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("RECOMMENDATION NON AJAX");
             });
-            console.log(results);
-            console.log("RECOMMENDATION NON AJAX");
-        });
+        }
     },
 
     addrecommendation: function (req, resp) {
@@ -330,13 +358,20 @@ module.exports = {
     },
 
     Viewcycle: function (req, resp) {
-        connection.query("Select * FROM capstone.cycle;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/Viewcycle.ejs', {
-                data: results
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("Select * FROM capstone.cycle;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/Viewcycle.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log("View Cycle Page");
             });
-            console.log("View Cycle Page");
-        });
+        }
     },
 
     addcycle: function (req, resp) {
@@ -360,19 +395,26 @@ module.exports = {
     },
 
     editrecommendation: function (req, resp) {
-        var RID = req.query.UID;
-        var AID = req.query.AID;
-        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, recommendation.group_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
-        var values = [RID, AID]
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/EditRecommendation.ejs', {
-                data: results[0],
-                dataB: results[1]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var RID = req.query.UID;
+            var AID = req.query.AID;
+            var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, recommendation.group_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
+            var values = [RID, AID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/EditRecommendation.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("Edit Recommendation Page");
             });
-            console.log(results);
-            console.log("Edit Recommendation Page");
-        });
+        }
     },
 
     alterrecommendation: function (req, resp) {
@@ -403,21 +445,28 @@ module.exports = {
     },
 
     assignplantogroup: function (req, resp) {
-        var id = (req.body.UID);
-        var idrecommendation = (req.body.UIDRecommendation);
-        console.log(id);
-        var values = [id, idrecommendation];
-        connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID; SELECT * FROM capstone.cycle; SELECT * FROM capstone.recommendation where recommendation_ID = ?;", values, function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/AssignPlanToGroup.ejs', {
-                data: results[0],
-                dataB: results[1],
-                dataC: results[2],
-                dataD: results[3]
-            })
-        });
-        console.log("Edit Recommendations Page");
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.body.UID);
+            var idrecommendation = (req.body.UIDRecommendation);
+            console.log(id);
+            var values = [id, idrecommendation];
+            connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID; SELECT * FROM capstone.cycle; SELECT * FROM capstone.recommendation where recommendation_ID = ?;", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/AssignPlanToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    current_user: sess.user
+                })
+            });
+            console.log("Edit Recommendations Page");
+        }
     },
 
     alterplan: function (req, resp) {
@@ -442,53 +491,81 @@ module.exports = {
     },
 
     assignmembertogroup: function (req, resp) {
-        var GID = req.query.GID;
-        var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group is null ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
-        var values = [GID];
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            console.log(results[1])
-            resp.render('./pages/AssignMemberToGroup.ejs', {
-                data: results[0],
-                dataB: results[1]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var GID = req.query.GID;
+            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group is null ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
+            var values = [GID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                console.log(results[1])
+                resp.render('./pages/AssignMemberToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log("Assign Member to Group Page");
             });
-            console.log("Assign Member to Group Page");
-        });
+        }
     },
 
     ViewAllPlans: function (req, resp) {
-        connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewAllPlans.ejs', {
-                data: results
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewAllPlans.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
-        console.log("ViewAllPlans");
+            console.log("ViewAllPlans");
+        }
     },
 
     ViewPlanDetails: function (req, resp) {
-        connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewPlanDetails.ejs', {
-                data: results
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewPlanDetails.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
-        console.log("ViewPlanDetails");
+            console.log("ViewPlanDetails");
+        }
     },
 
     edittask: function (req, resp) {
-        var id = (req.query.TID);
-        console.log(id);
-        var values = [id];
-        connection.query("SELECT * FROM capstone.tasks where tasks.task_ID = (?);", values, function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/EditTask.ejs', {
-                data: results
-            })
-        });
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.TID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.tasks where tasks.task_ID = (?);", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/EditTask.ejs', {
+                    data: results,
+                    current_user: sess.user
+                })
+            });
+        }
     },
 
     altertask: function (req, resp) {
@@ -513,19 +590,26 @@ module.exports = {
     },
 
     AssignRecommendationToGroup: function (req, resp) {
-        var RID = req.query.UID;
-        var AID = req.query.AID;
-        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
-        var values = [RID, AID]
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/AssignRecommendationToGroup.ejs', {
-                data: results[0],
-                dataB: results[1]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var RID = req.query.UID;
+            var AID = req.query.AID;
+            var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
+            var values = [RID, AID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/AssignRecommendationToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("Assign Recommendation to Group");
             });
-            console.log(results);
-            console.log("Assign Recommendation to Group");
-        });
+        }
     },
 
     makeLeader: function (req, resp) {
@@ -569,8 +653,16 @@ module.exports = {
     },
 
     CreateAccreditation: function (req, resp) {
-        resp.render('./pages/CreateAccreditation.ejs');
-        console.log("CREATE ACCREDITATION");
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            resp.render('./pages/CreateAccreditation.ejs', {
+                current_user: sess.user
+            });
+            console.log("CREATE ACCREDITATION");
+        }
     },
 
     AddAccreditation: function (req, resp) {
@@ -587,43 +679,64 @@ module.exports = {
     },
 
     ViewAccreditation: function (req, resp) {
-        connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewAccreditation.ejs', {
-                data: results
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewAccreditation.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
-        console.log("VIEW ACCREDITATION");
+            console.log("VIEW ACCREDITATION");
+        }
     },
 
     ViewRecommendationsofAccreditation: function (req, resp) {
-        var AID = req.query.AID;
-        var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID where accreditation.accreditation_ID = ?; Select * FROM capstone.area; Select * FROM capstone.accreditation where accreditation.accreditation_ID = ?;"
-        var values = [AID, AID];
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewRecommendationofAccreditation.ejs', {
-                data: results[0],
-                dataB: results[1],
-                dataC: results[2]
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var AID = req.query.AID;
+            var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID where accreditation.accreditation_ID = ?; Select * FROM capstone.area; Select * FROM capstone.accreditation where accreditation.accreditation_ID = ?;"
+            var values = [AID, AID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewRecommendationofAccreditation.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("RECOMMENDATION NON AJAX");
             });
-            console.log(results);
-            console.log("RECOMMENDATION NON AJAX");
-        });
+        }
     },
 
     EditAccreditation: function (req, resp) {
-        var id = (req.query.AID);
-        console.log(id);
-        var values = [id];
-        connection.query("SELECT * FROM capstone.accreditation where accreditation.accreditation_ID = (?);", values, function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/EditAccreditation.ejs', {
-                data: results
-            })
-        });
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.AID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.accreditation where accreditation.accreditation_ID = (?);", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/EditAccreditation.ejs', {
+                    data: results,
+                    current_user: sess.user
+                })
+            });
+        }
     },
 
     AlterAccreditation: function (req, resp) {
@@ -645,8 +758,16 @@ module.exports = {
     },
 
     CreateGrades: function (req, resp) {
-        resp.render('./pages/CreateGrades.ejs');
-        console.log("CREATE CUSTOM GRADES");
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            resp.render('./pages/CreateGrades.ejs', {
+                current_user: sess.user
+            });
+            console.log("CREATE CUSTOM GRADES");
+        }
     },
 
 }
