@@ -294,7 +294,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-           var alert = req.query.passdata;
+        var alert = req.query.passdata;
         var passData
         if (alert) {
             if (alert == 0) {
@@ -462,29 +462,31 @@ module.exports = {
         console.log("updating");
     },
 
-    assignplantogroup: function (req, resp) {
-        sess = req.session;
+
+    assignplantomembers: function (req, resp) {
+      sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var id = (req.body.UID);
-            var idrecommendation = (req.body.UIDRecommendation);
-            console.log(id);
-            var values = [id, idrecommendation];
-            connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID; SELECT * FROM capstone.cycle; SELECT * FROM capstone.recommendation where recommendation_ID = ?;", values, function (err, results) {
-                if (err) throw err;
-                console.log(results);
-                resp.render('./pages/AssignPlanToGroup.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    dataD: results[3],
-                    current_user: sess.user
-                })
-            });
-            console.log("Edit Recommendations Page");
+        var PID = (req.query.PID);
+        var GID = (req.query.GID);
+        console.log(PID);
+        console.log(GID);
+        var values = [PID, GID];
+        connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT groupdetails.Groupdetails_ID, groupdetails.Groupdetails_UserID, users.User_ID, users.User_First, users.User_Last, users.username FROM capstone.groupdetails join capstone.users on groupdetails.Groupdetails_ID = users.Group && groupdetails.Groupdetails_UserID = users.User_ID where groupdetails_ID = ?;", values, function (err, results) {
+            if (err) throw err;
+            console.log(results);
+            resp.render('./pages/AssignPlanToGroupMember.ejs', {
+                data: results[0],
+                dataB: results[1],
+              current_user: sess.user
+            })
+            console.log(results[1]);
+        });
         }
+        console.log("ASSIGN MEMBER TO PLAN");
+
     },
 
     alterplan: function (req, resp) {
@@ -531,6 +533,7 @@ module.exports = {
     },
 
     ViewAllPlans: function (req, resp) {
+
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -549,21 +552,26 @@ module.exports = {
     },
 
     ViewPlanDetails: function (req, resp) {
+
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, cycle.start_date, cycle.end_date From capstone.plans,capstone.cycle Where Plan_ID=1 and cycle_ID=1;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/ViewPlanDetails.ejs', {
-                    data: results,
-                    current_user: sess.user
-                });
-                console.log(results);
-            });
-            console.log("ViewPlanDetails");
+        var PID = (req.query.PID);
+        console.log(PID);
+        var values = [PID];
+        var sql = "SELECT plans.Plan_ID ,plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, plans.Plan_MinCycles, plans.Deadline, plans.CycleCount, cycle.start_date, cycle.cycle_Name From capstone.plans join capstone.cycle on plans.CycleTime = cycle.cycle_ID where Plan_ID = ?;"
+        connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            resp.render('./pages/ViewPlanDetails.ejs', {
+                data: results
+            })
+            console.log(results);
+        });
+        console.log("ViewPlanDetails");
         }
+
     },
 
     edittask: function (req, resp) {
