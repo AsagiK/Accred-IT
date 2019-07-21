@@ -29,7 +29,7 @@ router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
 router.route('/editrecommendation').get(planCtrl.editrecommendation);
 router.route('/alterrecommendation').post(planCtrl.alterrecommendation);
-router.route('/assignplantogroup').get(planCtrl.assignplantogroup);
+router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/AssignMemberToGroup').get(planCtrl.assignmembertogroup);
 router.route('/ViewAllPlans').get(planCtrl.ViewAllPlans);

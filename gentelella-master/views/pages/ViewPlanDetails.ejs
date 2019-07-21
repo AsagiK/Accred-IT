@@ -56,17 +56,17 @@
                                             <div class="x_title">
                                                 <div class="page-title">
                                                     <div class="title_right">
-                                                        <h2>Priority Level:<%= data[0].PriorityLevel %></h2>
+                                                        <h2>Priority Level: <%= data[0].PriorityLevel %></h2>
                                                     </div>
                                                     <div class="title_left">
-                                                        <h2>Duration:<%= data[0].start_date.toString().substring(0,15) %>-<%= data[0].end_date.toString().substring(0,15) %></h2>
+                                                        <h2>Duration: <%= data[0].start_date.toString().substring(0,15) %> %></h2>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
 
                                                     <div class="page-title">
                                                         <div class="title_left">
-                                                            <h2>Number of Days Per Cycle:<%= data[0].CycleTime %></h2>
+                                                            <h2>Cycle Name: <%= data[0].cycle_Name %></h2>
                                                         </div>
                                                     </div>
                                                 <div class="clearfix"></div>
@@ -112,11 +112,12 @@
                                                                         <h3 class="panel-title"> Procedures</h3>
                                                                     </a>
                                                                     <div id="Collapse" class="collapse" >
-                                                                        <table>
-                                                                            <thead>
+                                                                        <table style="table-layout: fixed; width: 100%">
+                                                                            <tbody>
                                                                                 <tr>
-                                                                                    <th><%= data[0].Procedures%></th>
-                                                                            </thead>
+                                                                                    <td style="word-wrap: break-word"><%= data[0].Procedures%></td>
+                                                                                </tr>
+                                                                            </tbody>
                                                                         </table>
                                                                     </div>
                                                                 </div>
@@ -126,13 +127,61 @@
                                     </div>
                             
                                         <div class="ln_solid"></div>
-                                    <div>
+                        </form>
+                        
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_content">
+                                        <br />
+                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
+                                            action="" method="" encType="multipart/form-data">
+        
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                    for="first-name">Report Title <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <!--First name Input field-->
+                                                    <input type="text" id="docname" name="DocName" required="required"
+                                                        class="form-control col-md-7 col-xs-12" placeholder="First name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
+                                                    File <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="file" id="DocFile" name="DocFile" required="required"
+                                                        class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                    for="first-name">Report Description <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <textarea id="description" name="DocDesc" required="required"
+                                                            class="form-control col-md-7 col-xs-12"
+                                                            onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                </div>
+                                            </div>
+        
+        
+        
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                             <button class="btn btn-primary" type="button">Cancel</button>
                                             <button class="btn btn-primary" type="reset">Reset</button>
                                             <button type="submit" class="btn btn-success">Submit</button>
-        
+                                        </div>
                                     </div>
-                        </form>
+        
+                                    </form>
+                                </div>
+                            </div>
+                        
                                 </div>
                             </div>
                         </div>
