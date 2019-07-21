@@ -21,6 +21,7 @@ server.use(session({
 var sess;
 
 module.exports = {
+
     AssignGroupJSON: function (req, resp) {
         var UID = req.body.table;
         UID = JSON.parse(UID);
@@ -52,5 +53,33 @@ module.exports = {
         console.log(submit);
         resp.json(submit);
     },
+
+    AssignTaskJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var pid = UID[key]["Plan ID"];
+            var uid = UID[key]["User ID"];
+            var sql = "INSERT INTO `capstone`.`plandetails` (`Plan_ID`, `Member_ID`) VALUES (? , ?) ";
+            var values = [pid, uid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
+    },
+
 
 }

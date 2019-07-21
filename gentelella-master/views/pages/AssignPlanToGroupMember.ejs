@@ -63,11 +63,11 @@
                                         <table name="table1" id="table1" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Check</th>
+                                                    <th>test</th>
                                                     <th>Username</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    
+                                                    <th style="visibility:collapse;">Plan ID</th>
                                                 </tr>
                                             </thead>
 
@@ -82,6 +82,7 @@
                                                         <%= user.User_First %></td>
                                                     <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
+                                                    <td id='hidden<%= user.User_ID %>' value="<%= data[0].Plan_ID %>" style="visibility:collapse;">test</td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -102,7 +103,7 @@
                                                     <th>User ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    
+                                                    <th style="visibility:collapse;">Plan ID</th>
                                                 </tr>
                                             </thead>
 
@@ -121,12 +122,14 @@
                                         <button class="btn btn-primary" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/PlanPage">
+                                            <input type="hidden" name="PID" value="<%= data[0].recommendation_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit"  class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                                         </form>
                                         
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/PlanPage">
+                                            <input type="hidden" name="PID" value="<%= data[0].recommendation_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit"  class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                                         </form>
@@ -141,7 +144,7 @@
 
 
                     </div>
-                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -194,7 +197,7 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td></tr>";
+                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td><td id= hidden" + index + " value=" + hidden + " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -218,7 +221,7 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td></tr>";
+                        var markup = "<tr><td><input type='checkbox' name='record' id=" + index + "></td><td id= UID" + index + " value=" + UID + ">" + UID + "</td><td id= first" + index + " value=" + first + ">" + first + "</td><td id= last" + index + " value=" + last + ">" + last + "</td><td id= hidden" + index + " value=" + hidden + " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
@@ -237,7 +240,7 @@
                 })); // 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignGroupJSON', true);
+                xhr.open('POST', '/AssignTaskJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function() {
                     console.log(xhr.responseText);
