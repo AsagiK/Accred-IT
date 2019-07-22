@@ -152,8 +152,17 @@ module.exports = {
     },
 
     Comparativeanalysis: function (req, resp) {
-        resp.render('./pages/ComparativeAnalysisAreaSelection.ejs');
-        console.log("Comparativeanalysis");
+        connection.query("SELECT scores.idScores, scores.Criteria, scores.GeneralObjective, scores.QualityTarget, scores.GroupAssigned, scores.PersonnelAssigned, scores.PriorityLevel, scores.PreviousScore from capstone.scores where PrevOrCurr=0 ; SELECT scores.idScores, scores.Criteria, scores.GeneralObjective, scores.QualityTarget, scores.GroupAssigned, scores.PersonnelAssigned, scores.PriorityLevel, scores.CurrentScore from capstone.scores where PrevOrCurr=0 ; SELECT scores.idScores, scores.Criteria, scores.GeneralObjective, scores.QualityTarget, scores.GroupAssigned, scores.PersonnelAssigned, scores.PriorityLevel, scores.PreviousScore from capstone.scores where PrevOrCurr=1 ; SELECT scores.idScores, scores.Criteria, scores.GeneralObjective, scores.QualityTarget, scores.GroupAssigned, scores.PersonnelAssigned, scores.PriorityLevel, scores.CurrentScore from capstone.scores where PrevOrCurr=1 ; SELECT cycle.cycle_Name FROM capstone.cycle;", function (err, result, fields) {
+            if (err) throw err;
+            resp.render('./pages/ComparativeAnalysisAreaSelection.ejs', {
+                data: result[0],
+                dataB: result[1],
+                dataC: result[2],
+                dataD: result[3],
+                dataE: result[4]
+            });
+            console.log("Comparative Analysis");
+        });
     },
 
     Comparativeanalysis2: function (req, resp) {
@@ -284,8 +293,18 @@ module.exports = {
             });
             console.log(results);
         });
-    },
+    }, 
 
+    ComparTablePrevious: function (req, resp) {
+        connection.query("SELECT scores.idScores, scores.Criteria, scores.GeneralObjective, scores.QualityTarget, scores.GroupAssigned, scores.PersonnelAssigned, scores.PriorityLevel, scores.PreviousScore from capstone.scores ;", function (err, result, fields) {
+            if (err) throw err;
+            resp.render('./pages/ComparativeAnalysisAreaSelection.ejs', {
+                data: result
+            });
+            console.log("Comparative Analysis");
+        });
+    }, 
+    
     RecommendationNonAjax: function (req, resp) {
         connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID; Select * FROM capstone.area;", function (err, results, fields) {
             if (err) throw err;

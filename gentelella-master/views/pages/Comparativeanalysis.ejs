@@ -86,42 +86,21 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 8/10</td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 5/10 </td>
-                            
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 9/10 </td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 6/10 </td>
-                            
-                          </tr>
-                          <tr>
-                              <th scope="row">3</th>
-                              <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                              <td>Safety Practices and Academic Efficiency </td>
-                              
-                              <td> 9/10 </td>
-                              <td> Student Services </td>
-                              <td></td>
-                              <td>9/10</td>
-                              <td> 6/10 </td>
-                              
+                          <% for (var plan of data) { %>
+                            <form method="get" action="CompareTablePrevious">
+                            <tr>
+                                <td><%= plan.idScores %></td>
+                                <td><%= plan.Criteria %></td>
+                                <td><%= plan.GeneralObjective %></td>
+                                <td><%= plan.QualityTarget %></td>
+                                <td><%= plan.GroupAssigned %></td>
+                                <td><%= plan.PersonnelAssigned %></td>
+                                <td><%= plan.PriorityLevel %></td>
+                                <td><%= plan.PreviousScore %></td>
+                                
                             </tr>
+                            </form>
+                            <% } %>
                         </tbody>
 
                     </table>

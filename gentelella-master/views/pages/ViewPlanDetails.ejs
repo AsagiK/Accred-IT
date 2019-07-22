@@ -121,7 +121,33 @@
                                                                     </div>
                                                                 </div>
             
-                                        <!--end of Group 2-->
+                                        <!--end of Group 2--> 
+
+                                        <!--Text Area for Mini Reports--> 
+
+                                        <div class="form-group">
+                                                <label for="PlanDetailsReport"
+                                                    class="control-label col-md-3 col-sm-3 col-xs-12">Plan Details Report:
+                                                    <span class="required">*</span></label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <textarea class="form-control" rows="3"
+                                                        id="PlanDetailsReport" name="PlanDetRep"
+                                                        placeholder="Plan Details Report"
+                                                        required="required"
+                                                        onkeyup="textAreaAdjust(this)"
+                                                        style="overflow:hidden"></textarea>
+                                                </div>
+                                            </div>   
+
+                                        <!--End of Text Area for Mini Reports-->  
+
+                                        <!script for dynamic text area>
+                                        <script>
+                                            function textAreaAdjust(o) {
+                                                o.style.height = "1px";
+                                                o.style.height = (25 + o.scrollHeight) + "px";
+                                            }
+                                        </script>
                                     </div>
                                     </div>
                             

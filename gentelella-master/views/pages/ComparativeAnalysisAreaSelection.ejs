@@ -35,7 +35,7 @@
 
 <body class="nav-md">
     <div class="container body"> 
-<<<<<<< HEAD
+
       <div class="main_container">
         <%- include ./nav.ejs %>
         <!-- page content -->
@@ -45,66 +45,52 @@
                     <h3> Previous Cycle Scores & Current Cycles Scores </h3>
               </div>
             </div>
-              
+
+            
+
                 <!--Div fpr Table generation-->
                 <div class="box600"> 
+                   
+                  
+                  
+                  <table class="smalltable floatleft"><!-- First Table --> 
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                          <th>General Objective</th>
+                          <!--Measurement-->
+                          <th>Quality Target</th>
+                          <!--removed base standard column-->
+                          <th>Group Assigned</th><!--Exclude to G.L-->
+                          <th>Personnel Assigned</th><!---Exclude to G.M-->
+                          <th>Priority Level</th>
+                          <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                          
+                        </tr>
+                      </thead>
+                      <tbody> 
+                        <form>
+                        <% for (var score of data) { %>
+                          
+                          <tr>
+                              <td><%= score.idScores %></td>
+                              <td><%= score.Criteria %></td>
+                              <td><%= score.GeneralObjective %></td>
+                              <td><%= score.QualityTarget %></td>
+                              <td><%= score.GroupAssigned %></td>
+                              <td><%= score.PersonnelAssigned %></td>
+                              <td><%= score.PriorityLevel %></td>
+                              <td><%= score.PreviousScore %></td>
+                              
+                          </tr>
+                          
+                          <% } %> 
+                        </form>
+                        
+                      </tbody>
                     
-                    <table class="smalltable floatleft"><!-- First Table --> 
-                      <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                            <th>General Objective</th>
-                            <!--Measurement-->
-                            <th>Quality Target</th>
-                            <!--removed base standard column-->
-                            <th>Group Assigned</th><!--Exclude to G.L-->
-                            <th>Personnel Assigned</th><!---Exclude to G.M-->
-                            <th>Priority Level</th>
-                            <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 8/10</td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 5/10 </td>
-                            
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 9/10 </td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 6/10 </td>
-                            
-                          </tr>
-                          <tr>
-                              <th scope="row">3</th>
-                              <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                              <td>Safety Practices and Academic Efficiency </td>
-                              
-                              <td> 9/10 </td>
-                              <td> Student Services </td>
-                              <td></td>
-                              <td>9/10</td>
-                              <td> 6/10 </td>
-                              
-                            </tr>
-                        </tbody>
-
-                    </table>
+                  </table>
                 
                     
                     <table class="smalltable floatleft"> <!--Second Table-->
@@ -124,45 +110,26 @@
                               
                             </tr>
                           </thead>
-                          <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                                <td>Safety Practices and Academic Efficiency </td>
+                          <tbody> 
+                              <form>
+                              <% for (var score of dataB) { %>
                                 
-                                <td> 8/10</td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                                <td>Safety Practices and Academic Efficiency </td>
-                                
-                                <td> 9/10 </td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 5/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                  <th scope="row">3</th>
-                                  <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 6/10 </td>
-                                  
+                                <tr>
+                                    <td><%= score.idScores %></td>
+                                    <td><%= score.Criteria %></td>
+                                    <td><%= score.GeneralObjective %></td>
+                                    <td><%= score.QualityTarget %></td>
+                                    <td><%= score.GroupAssigned %></td>
+                                    <td><%= score.PersonnelAssigned %></td>
+                                    <td><%= score.PriorityLevel %></td>
+                                    <td><%= score.CurrentScore %></td>
+                                    
                                 </tr>
+                                
+                                <% } %> 
+                              </form>
+                              
                             </tbody>
-
                     </table>
                     <table class="smalltable floatleft"> <!--Third Table-->
 
@@ -181,104 +148,67 @@
                               
                             </tr>
                           </thead>
-                          <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>The library has enough learnin resources that can help the student with their specific courses </td>
-                                <td>Library </td>
+                          <tbody> 
+                              <form>
+                              <% for (var score of dataC) { %>
                                 
-                                <td> 8/10</td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
-                                <td>Safety Practices and Academic Efficiency </td>
-                                
-                                <td> 9/10 </td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                  <th scope="row">3</th>
-                                  <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 6/10 </td>
-                                  
+                                <tr>
+                                    <td><%= score.idScores %></td>
+                                    <td><%= score.Criteria %></td>
+                                    <td><%= score.GeneralObjective %></td>
+                                    <td><%= score.QualityTarget %></td>
+                                    <td><%= score.GroupAssigned %></td>
+                                    <td><%= score.PersonnelAssigned %></td>
+                                    <td><%= score.PriorityLevel %></td>
+                                    <td><%= score.PreviousScore %></td>
+                                    
                                 </tr>
-                            </tbody>
-
-                    </table> 
-
-                    <table class="smalltable floatleft"> <!--Fourth Table-->  
-
-                        <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                              <th>General Objective</th>
-                              <!--measurement-->
-                              <th>Quality Target</th>
-                              <!--removed base standard column-->
-                              <th>Group Assigned</th><!--Exclude to G.L-->
-                              <th>Personnel Assigned</th><!---Exclude to G.M-->
-                              <th>Priority Level</th>
-                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                                
+                                <% } %> 
+                              </form>
                               
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <th scope="row">1</th>
-                                  <td>The library has enough learnin resources that can help the student with their specific courses </td>
-                                  <td>Library </td>
-                                  
-                                  <td> 8/10</td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 8/10 </td>
-                                  
-                                </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                  <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 7/10 </td>
-                                  
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
-                                    <td>Safety Practices and Academic Efficiency </td>
-                                    
-                                    <td> 9/10 </td>
-                                    <td> Student Services </td>
-                                    <td></td>
-                                    <td>9/10</td>
-                                    <td> 7/10 </td>
-                                    
-                                  </tr>
                             </tbody>
 
                     </table> 
+
+                    <table class="smalltable floatleft"> <!--Fourth Table-->
+
+                      <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Criteria</th>   <!-- changed to Critera instead of Task-->
+                            <th>General Objective</th>
+                            <!--measurement-->
+                            <th>Quality Target</th>
+                            <!--removed base standard column-->
+                            <th>Group Assigned</th><!--Exclude to G.L-->
+                            <th>Personnel Assigned</th><!---Exclude to G.M-->
+                            <th>Priority Level</th>
+                            <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
+                            
+                          </tr>
+                        </thead>
+                        <tbody> 
+                            <form>
+                            <% for (var score of dataD) { %>
+                              
+                              <tr>
+                                  <td><%= score.idScores %></td>
+                                  <td><%= score.Criteria %></td>
+                                  <td><%= score.GeneralObjective %></td>
+                                  <td><%= score.QualityTarget %></td>
+                                  <td><%= score.GroupAssigned %></td>
+                                  <td><%= score.PersonnelAssigned %></td>
+                                  <td><%= score.PriorityLevel %></td>
+                                  <td><%= score.CurrentScore %></td>
+                                  
+                              </tr>
+                              
+                              <% } %> 
+                            </form>
+                            
+                          </tbody>
+                  </table>
 
 
                     </div><!-- End Div for table creation -->
@@ -302,7 +232,7 @@
                           border: 1px solid #000; 
                           background-color: darkseagreen;
                           color: white;
-                          padding: 5px 7px;
+                          padding: 3px 5px;
                           }
 
                           table.smalltable td {
