@@ -81,5 +81,43 @@ module.exports = {
 
     },
 
+    AddGradesJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var acc = UID[key]["Accreditation"];
+            var code = UID[key]["Code"];
+            var rank = UID[key]["Rank"];
+            var sql = "INSERT INTO `capstone`.`grades` (`Rank`, `Code`, `Accreditation_ID`) VALUES (?, ?, ?);";
+            var values = [rank, code, acc];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                var acc2 = UID[0]["Accreditation"];
+                var sql2 = "UPDATE `capstone`.`accreditation` SET `gradesset` = '1' WHERE (`accreditation_ID` = ?);"
+                var values2 = [acc2];
+                connection.query(sql2, values2, function (err2, result2) {
+                    if (err2) callback(err);
+                    if (result2) {
+                        console.log("------Grades locked");
+                    }
+                });
+                resp.send("OK");
+            }
+
+        })
+    },
+
+
 
 }
