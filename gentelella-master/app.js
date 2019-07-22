@@ -108,14 +108,8 @@ server.get('/*', function (req, resp) {
     console.log("Testing testing");
 });
 
-
-
-
-
 const port = process.env.PORT | 9090;
 var serverclose = server.listen(port);
-
-
 
 connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, fields) {
     if (err) {

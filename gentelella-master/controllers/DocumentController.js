@@ -52,7 +52,6 @@ module.exports = {
             if (err) return console.log(err);
             else console.log("File uploaded");
         })
-
         var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
         var values = [name, path, desc, ext];
         connection.query(sql, values, function (err, result) {
