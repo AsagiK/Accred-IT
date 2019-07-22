@@ -49,7 +49,6 @@ router.route('/CreateGrades').get(planCtrl.CreateGrades);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
-router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 //--DocCtrl--

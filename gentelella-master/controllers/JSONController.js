@@ -47,13 +47,6 @@ module.exports = {
         })
     },
 
-
-    ViewPlanTest: function (req, resp) {
-        const submit = require('../public/JSONs/viewplantest.json');
-        console.log(submit);
-        resp.json(submit);
-    },
-
     AssignTaskJSON: function (req, resp) {
         var UID = req.body.table;
         UID = JSON.parse(UID);
@@ -114,7 +107,6 @@ module.exports = {
                 });
                 resp.send("OK");
             }
-
         })
     },
 
