@@ -31,9 +31,11 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet" />
-    
-    
-        <style>
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+
+    <style>
         .alert {
             padding: 20px;
             background-color: #f44336;
@@ -69,9 +71,8 @@
         .closebtn:hover {
             color: black;
         }
-
     </style>
-    
+
 </head>
 
 
@@ -82,7 +83,6 @@
         left: 15%;
         width: 80%;
     }
-
 </style>
 
 
@@ -127,10 +127,6 @@
 
                                 <div>
 
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".createCycle">
-                                        Create Cycle
-                                    </button>
 
                                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -154,6 +150,10 @@
                                             <div id="myTabContent" class="tab-content">
                                                 <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
                                                     aria-labelledby="home-tab">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target=".createCycle">
+                                                        Create Cycle
+                                                    </button>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -177,8 +177,8 @@
                                                                 <td><%= plan.PlanDescription %></td>
                                                                 <td><%= plan.Group_Name %></td>
                                                                 <td><%= plan.PriorityLevel %></td>
-                                                                <td><%= plan.CycleTime %>: <%= plan.start_Date %> -
-                                                                    <%= plan.end_Date %></td>
+                                                                <td><%= plan.cycle_Name %>: <%= plan.start_Date %> -
+                                                                    <%= plan.Deadline %></td>
 
                                                                 <td>
                                                                     <form method="get" action="assignplantomembers">
@@ -193,18 +193,104 @@
                                                                             Members</button>
                                                                     </form>
                                                                     <form method="get" action="ViewPlanDetails">
-                                                                            <input type="hidden" name="PID"
-                                                                                value="<%= plan.Plan_ID %>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">View Plan Details</button>
+                                                                        <input type="hidden" name="PID"
+                                                                            value="<%= plan.Plan_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">View Plan
+                                                                            Details</button>
                                                                     </form>
+                                                                    <a href="#my_modal" type="button"
+                                                                        class="btn btn-primary" data-toggle="modal"
+                                                                        data-book-id="<%= plan.Plan_ID %>">Assign Cycle and Deadline</a>
+
                                                                 </td>
                                                             </tr>
 
                                                             <% } %>
                                                         </tbody>
                                                     </table>
+
+                                                    <!--MODAL FOR ASSIGN CYCLE AND DEADLINE-->
+                                                    <div class="modal fade" id="my_modal" tabindex="-1" role="dialog"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal2" value="Edit">
+                                                                        <span aria-hidden="true">×</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title" id="myModalLabel2">Assign Cycle and Deadline to plan</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form id="AssignCycleandDeadline" data-parsley-validate class="form-horizontal form-label-left" action="AssignCycleandDeadline" method="POST">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><span class="required">Plan ID</span>
+                                                                            </label>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                <input type="text" id="PlanID" name="PlanID" class="form-control col-md-7 col-xs-12" value="" />
+                                                                            </div>
+                                                                           
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                    <input type="text" id="RID" name="RID" class="form-control col-md-7 col-xs-12" value="<%= dataB[0].recommendation_ID %>" />
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                                    for="first-name">Set Cycle
+                                                                                </label>
+                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                    <select class="form-control" name="cycle">
+                                                                                        <% for (var cycle of dataC) { %>
+                                                                                        <option value="<%= cycle.cycle_ID %>"><%= cycle.cycle_Name %>: <%= cycle.start_Date %></option>
+                                                                                        <% } %>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        <div class="form-group">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Plan Deadline:<span class="required"></span>
+                                                                                </label>
+                                                                                <form class="form-group">
+                                                                                        <fieldset>
+                                                                                                <div class="control-group">
+                                                                                                  <div class="controls">
+                                                                                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                                                                                      <input type="text" name="date" class="form-control has-feedback-left" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                                                                                      <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                                                                                      <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </fieldset>
+                                                                                </form>
+                                                                            </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-default"
+                                                                                data-dismiss="modal">
+                                                                                Close
+                                                                            </button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary"
+                                                                                form="AssignCycleandDeadline">
+                                                                                Submit
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <script type="text/javascript">
+
+                                                        $('#my_modal').on('show.bs.modal', function (e) {
+                                                            var PID = $(e.relatedTarget).data('book-id');
+                                                            $(e.currentTarget).find('input[name="PlanID"]').val(PID);
+                                                        });
+
+                                                    </script>
                                                 </div>
+
                                                 <!CREATE PLAN TAB>
                                                     <div role="tabpanel" class="tab-pane fade" id="tab_content2"
                                                         aria-labelledby="profile-tab">
@@ -325,6 +411,7 @@
                                                         </form>
 
                                                     </div>
+
                                             </div>
                                     </div>
                                 </div>
@@ -382,7 +469,7 @@
                                             <div class="input-prepend input-group">
                                                 <span class="add-on input-group-addon"><i
                                                         class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                <input type="text" class="form-control has-feedback-left"
+                                                <input type="text" name="date" class="form-control has-feedback-left"
                                                     id="single_cal1" placeholder="First Name"
                                                     aria-describedby="inputSuccess2Status">
                                             </div>
@@ -392,6 +479,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
+
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Close
                             </button>
@@ -406,6 +494,9 @@
     </div>
 
 
+
+
+
     <!script for dynamic text area>
         <script>
             function textAreaAdjust(o) {
@@ -413,25 +504,24 @@
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
         </script>
-    
+
         <script>
-        var close = document.getElementsByClassName("closebtn");
-        var i;
+            var close = document.getElementsByClassName("closebtn");
+            var i;
 
-        for (i = 0; i < close.length; i++) {
-            close[i].onclick = function() {
-                var div = this.parentElement;
-                div.style.opacity = "0";
-                setTimeout(function() {
-                    div.style.display = "none";
-                }, 600);
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.opacity = "0";
+                    setTimeout(function () {
+                        div.style.display = "none";
+                    }, 600);
+                }
             }
-        }
 
-    </script>
+        </script>
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->

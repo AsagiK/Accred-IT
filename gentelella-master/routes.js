@@ -25,6 +25,7 @@ router.route('/SendPlan').post(planCtrl.SendPlan);
 router.route('/PlanPage').get(planCtrl.Planning);
 router.route('/RecommendationNonAjax').get(planCtrl.RecommendationNonAjax);
 router.route('/addrecommendation').post(planCtrl.addrecommendation);
+router.route('/addrecommendationtoaccreditation').post(planCtrl.addrecommendationtoaccreditation);
 router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
 router.route('/editrecommendation').get(planCtrl.editrecommendation);
@@ -46,20 +47,25 @@ router.route('/AddAccreditation').post(planCtrl.AddAccreditation);
 router.route('/EditAccreditation').get(planCtrl.EditAccreditation);
 router.route('/AlterAccreditation').post(planCtrl.AlterAccreditation);
 router.route('/CreateGrades').get(planCtrl.CreateGrades);
+router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
+
 //--DocCtrl--
 router.route('/UploadDocument').get(DocCtrl.UploadDocument);
 router.route('/SendDocument').post(DocCtrl.SendDocument);
 router.route('/ViewDocument').get(DocCtrl.ViewDocument);
+router.route('/SubmitReport').post(DocCtrl.SubmitReport);
+
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);
 router.route('/Logout').get(SessCtrl.Logout);
+
 //--CheckCtrl
 router.route('/CheckingPage').get(CheckCtrl.CheckingPage);
 router.route('/CheckDetails').get(CheckCtrl.CheckDetails);

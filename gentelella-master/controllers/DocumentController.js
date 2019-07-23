@@ -80,4 +80,31 @@ module.exports = {
         }
     },
 
+    SubmitReport: function (req, resp) {
+        var UID = req.body.UID;
+        var PID = req.body.PID;
+        var name = req.body.RepName;
+        var filename = req.files.Evidence.name;
+        var path = 'uploads/' + req.files.Evidence.name
+        var desc = req.body.DocDesc;
+        var point = filename.lastIndexOf(".");
+        var ext = filename.substr(point);
+        var today = new Date();
+        var current = today.toISOString().split('T')[0];
+        //console.log(req.files.DocFile.md5);
+        let uploadedimg = req.files.Evidence;
+        uploadedimg.mv('public/uploads/' + req.files.Evidence.name, function (err) {
+            if (err) return console.log(err);
+            else console.log("File uploaded");
+        })
+
+        var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?); INSERT INTO `capstone`.`plansubmissions` (`Plan_ID`, `User_ID`, `Submission_Title`, `Submission_File`, `Submission_Description`, `Submission_Date`) VALUES (?, ?, ?, ?, ?, ?) "
+        var values = [name, path, desc, ext, PID, UID, name, path, desc, current];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+            resp.redirect('/ViewPlanDetails?PID=' + PID);
+        });
+    },
+
 }
