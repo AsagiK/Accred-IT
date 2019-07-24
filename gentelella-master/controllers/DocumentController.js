@@ -16,13 +16,17 @@ server.use(session({
     resave: false,
     saveUninitialized: true
 }));
-// ----
+// ---- GOOGLE API
+const readline = require('readline');
+const {google} = require('googleapis');
 
 server.use(fileUpload({
     createParentPath: true,
     safeFileNames: true,
     preserveExtension: 10
 }));
+const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const TOKEN_PATH = 'token.json';
 
 var sess
 module.exports = {
