@@ -4,3 +4,7 @@ gentelella-master/.DS_Store
 gentelella-master/public/uploads/
 gentelella-master/node_modules/
 .DS_Store
+gentelella-master/.DS_Store
+.DS_Store
+gentelella-master/credentials.json
+gentelella-master/token.json
