@@ -3,4 +3,6 @@ node_modules/
 gentelella-master/.DS_Store
 gentelella-master/public/uploads/
 gentelella-master/node_modules/
+gentelella-master/credentials.json
+gentelella-master/token.json
 .DS_Store
