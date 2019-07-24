@@ -3,7 +3,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const SCOPES = [ 'https://www.googleapis.com/auth/drive'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -73,7 +73,7 @@ function getAccessToken(oAuth2Client, callback) {
 function listFiles(auth) {
   const drive = google.drive({version: 'v3', auth});
   drive.files.list({
-    pageSize: 10,
+    pageSize: 100,
     fields: 'nextPageToken, files(id, name)',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
