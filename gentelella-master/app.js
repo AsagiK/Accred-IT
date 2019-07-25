@@ -124,5 +124,20 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
     } else {
         console.log("\x1b[32m%s\x1b[0m", "AccredIT Server has successfully connected to the database")
         console.log("\x1b[32m%s\x1b[0m", "Server active at port", port);
+        checktoken();
     }
 });
+
+function checktoken(){
+    if (fs.existsSync('token.json') && fs.existsSync('credentials.json') ) {
+    console.log("\x1b[32m%s\x1b[0m","Google Drive connection is configured");
+} else {
+    console.log("\x1b[31m", "")
+        console.log("---------------------------------------------------------------------------------")
+        console.log("AccredIT Server is not configured to back up to Google Drive")
+        console.log("Any files uploaded in this server instance will be saved locally but not remotely")
+        console.log("Configure the Google Drive connection by running `npm run driveinit' ")
+        console.log("---------------------------------------------------------------------------------")
+        console.log("\x1b[0m", "")
+}
+}

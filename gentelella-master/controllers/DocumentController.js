@@ -79,7 +79,6 @@ module.exports = {
         function uploadfile() {
             fs.readFile('credentials.json', (err, content) => {
                 if (err) return console.log('Error loading client secret file:', err);
-                // Authorize a client with credentials, then call the Google Drive API.
                 authorize(JSON.parse(content), uploadtodrive);
             });
         }
@@ -92,7 +91,6 @@ module.exports = {
             const oAuth2Client = new google.auth.OAuth2(
                 client_id, client_secret, redirect_uris[0]);
 
-            // Check if we have previously stored a token.
             fs.readFile(TOKEN_PATH, (err, token) => {
                 if (err) return getAccessToken(oAuth2Client, callback);
                 oAuth2Client.setCredentials(JSON.parse(token));
