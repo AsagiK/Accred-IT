@@ -18,15 +18,18 @@ server.use(session({
 }));
 // ---- GOOGLE API
 const readline = require('readline');
-const {google} = require('googleapis');
+const {
+    google
+} = require('googleapis');
 
 server.use(fileUpload({
     createParentPath: true,
     safeFileNames: true,
     preserveExtension: 10
 }));
-const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
 const TOKEN_PATH = 'token.json';
+var mime = require('mime-types')
 
 var sess
 module.exports = {
@@ -50,7 +53,10 @@ module.exports = {
         var desc = req.body.DocDesc;
         var point = filename.lastIndexOf(".");
         var ext = filename.substr(point);
-        console.log(req.files.DocFile.md5);
+        var fileMetadata = {
+            'name': req.files.DocFile.name
+        };
+        var media;
         let uploadedimg = req.files.DocFile;
         uploadedimg.mv('public/uploads/' + req.files.DocFile.name, function (err) {
             if (err) return console.log(err);
@@ -60,9 +66,58 @@ module.exports = {
         var values = [name, path, desc, ext];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log("Record Inserted");
-            resp.redirect('/UploadDocument');
+            if (result) {
+                console.log("Record Inserted");
+                resp.redirect('/UploadDocument');
+                media = {
+                    mimeType: mime.lookup('public/uploads/' + req.files.DocFile.name),
+                    body: fs.createReadStream('public/uploads/' + req.files.DocFile.name)
+                };
+                uploadfile();
+            }
         });
+        function uploadfile() {
+            fs.readFile('credentials.json', (err, content) => {
+                if (err) return console.log('Error loading client secret file:', err);
+                // Authorize a client with credentials, then call the Google Drive API.
+                authorize(JSON.parse(content), uploadtodrive);
+            });
+        }
+        function authorize(credentials, callback) {
+            const {
+                client_secret,
+                client_id,
+                redirect_uris
+            } = credentials.installed;
+            const oAuth2Client = new google.auth.OAuth2(
+                client_id, client_secret, redirect_uris[0]);
+
+            // Check if we have previously stored a token.
+            fs.readFile(TOKEN_PATH, (err, token) => {
+                if (err) return getAccessToken(oAuth2Client, callback);
+                oAuth2Client.setCredentials(JSON.parse(token));
+                callback(oAuth2Client);
+            });
+        }
+        function uploadtodrive(auth) {
+            console.log("hello")
+            const drive = google.drive({
+                version: 'v3',
+                auth
+            });
+            drive.files.create({
+                resource: fileMetadata,
+                media: media,
+                fields: 'id'
+            }, function (err, file) {
+                if (err) {
+                    // Handle error
+                    console.error(err);
+                } else {
+                    console.log('File Id: ', file.id);
+                }
+            });
+        }
     },
 
     ViewDocument: function (req, resp) {
