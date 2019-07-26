@@ -54,7 +54,8 @@ module.exports = {
         var point = filename.lastIndexOf(".");
         var ext = filename.substr(point);
         var fileMetadata = {
-            'name': req.files.DocFile.name
+            'name': req.files.DocFile.name,
+            'description': req.body.DocDesc
         };
         var media;
         let uploadedimg = req.files.DocFile;
@@ -98,7 +99,6 @@ module.exports = {
             });
         }
         function uploadtodrive(auth) {
-            console.log("hello")
             const drive = google.drive({
                 version: 'v3',
                 auth
@@ -109,10 +109,17 @@ module.exports = {
                 fields: 'id'
             }, function (err, file) {
                 if (err) {
-                    // Handle error
-                    console.error(err);
+                    console.log("File was not uploaded")
                 } else {
-                    console.log('File Id: ', file.id);
+                    sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
+                    values = 'uploads/' + req.files.DocFile.name;
+                    connection.query(sql, values, function (err, result) {
+                        if (err) throw err;
+                        if (result) {
+                            console.log(result);
+                            console.log(req.files.DocFile.name + " Uploaded to Google Drive")
+                        }
+                    });
                 }
             });
         }
