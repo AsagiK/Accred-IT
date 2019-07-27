@@ -129,7 +129,7 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
 });
 
 function checktoken(){
-    if (fs.existsSync('token.json') && fs.existsSync('credentials.json') ) {
+    if (fs.existsSync('token.json') && fs.existsSync('credentials.json')  ) {
     console.log("\x1b[32m%s\x1b[0m","Google Drive connection is configured");
 } else {
     console.log("\x1b[31m", "")
