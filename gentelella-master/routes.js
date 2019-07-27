@@ -69,7 +69,7 @@ router.route('/Logout').get(SessCtrl.Logout);
 //--CheckCtrl
 router.route('/CheckingPage').get(CheckCtrl.CheckingPage);
 router.route('/CheckDetails').get(CheckCtrl.CheckDetails);
-
+router.route('/PreChecking').get(CheckCtrl.PreChecking);
 
 
 module.exports = router;
