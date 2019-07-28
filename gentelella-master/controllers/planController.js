@@ -491,7 +491,6 @@ module.exports = {
         console.log("updating");
     },
 
-
     assignplantomembers: function (req, resp) {
       sess = req.session;
         if (!req.session.user) {
@@ -728,9 +727,12 @@ module.exports = {
         var values = [an, ad];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log("Record Inserted");
+            if(result){
+                resp.redirect('/CreateGrades');
+                console.log("Record Inserted");
+            }
         });
-        resp.redirect('/CreateGrades');
+        
     },
 
     ViewAccreditation: function (req, resp) {
@@ -739,11 +741,27 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Grading system not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Grading system added"
+                    }
+                }
+            }
             connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/ViewAccreditation.ejs', {
                     data: results,
-                    current_user: sess.user
+                    current_user: sess.user,
+                    notif: passData
                 });
                 console.log(results);
             });
