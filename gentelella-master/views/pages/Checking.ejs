@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -8,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Checking Plans Page</title>
+    <title>Checking Reports Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,22 +29,24 @@
     <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
+
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-            <% include ./nav %>
+            <%- include ./nav.ejs %>
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Checking Plans</h3>
+                            <h3>Checking Reports Page</h3>
 
                         </div>
                     </div>
@@ -55,76 +58,177 @@
                             <div class="x_content">
                                 <br />
 
-                                <!--view table for users-->
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Plan Name</th>
-                                            <th>Submitted By</th>
-                                            <th>Submitted</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                        <form>
-                                             
-                                            <tr>
-                                                <td>INSERT PLAN NAME HERE</td>
-                                                <td>INSERT WHO SUBMITTED HERE</td>
-                                                <td>INSERT DATE OF SUBMISSION HERE</td>
-                                                <td>
-                                                    <!CHANGE HREF TO BUTTON INORDER TO VIEW DETAILS OF SUBMISSION>
-                                                   <a href="CheckDetails" class="btn btn-primary"> View Report Details </a>
-                                                </td>
-                                            </tr>
-                                            
-                                        </form>
-                                
-                                    </tbody>
-                                </table>
-                                <div class="ln_solid"></div>
+
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2><i class="fa fa-align-left"></i>Approved Reports from Group Leader Checking</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+
+                                            <!-- start accordion    -->
+                                            <% for (var recommendation of dataC) { %>
+                                            <div class="accordion" id="accordion" role="tablist"
+                                                aria-multiselectable="true">
+                                                <div class="panel">
+                                                    <a class="panel-heading" role="tab" id="headingOne"
+                                                        data-toggle="collapse" data-parent="#accordion"
+                                                        href="#collapse<%= recommendation.recommendation_ID %>" aria-expanded="true"
+                                                        aria-controls="collapse<%= recommendation.recommendation_ID %>">
+                                                        <h4 class="panel-title">
+                                                            Recommendation: <%= recommendation.recommendation_Name %>
+                                                        </h4>
+                                                    </a>
+                                                    <div id="collapse<%= recommendation.recommendation_ID %>"
+                                                        class="panel-collapse collapse" role="tabpanel"
+                                                        aria-labelledby="headingOne">
+
+                                                        <% for (var plan of dataB) { %>
+                                                        <% if (plan.recommendation_ID == recommendation.recommendation_ID) { %>
+                                                        <div class="panel-body">
+                                                            <!--Group 1 table-->
+
+                                                            <div class="panel">
+                                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                                    data-toggle="collapse" data-parent="#headingOne"
+                                                                    href="#Collapse<%= plan.Plan_ID %>"
+                                                                    aria-expanded="true"
+                                                                    aria-controls="Collapse<%= plan.Plan_ID %>">
+                                                                    <h3 class="panel-title">
+                                                                        Plan: <%= plan.PlanName %>
+                                                                    </h3>
+                                                                </a>
+                                                                <div id="Collapse<%= plan.Plan_ID %>"
+                                                                    class="collapse">
+
+
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <th>Plan Title</th>
+                                                                            <th>Submitted By</th>
+                                                                            <th>Submitted</th>
+                                                                            <th>Status</th>
+                                                                            <th></th>
+                                                                        </thead>
+                                                                        <% for (var reports of data) { %>
+                                                                        <% if (reports.Plan_ID == plan.Plan_ID && reports.Submission_Status == 2) { %> 
+                                                                        <tbody>
+                                                                            <td><%= reports.Submission_Title %></td>
+                                                                            <td><%= reports.User_First %></td>
+                                                                            <td><%= reports.Submission_Date %></td>
+                                                                            <% if (reports.Submission_Status == "1") { %>
+                                                                            <td>For Approval</td>
+                                                                            <% } else if (reports.Submission_Status == "2") { %>
+                                                                            <td>For Checking</td>
+                                                                            <% } else { %>
+                                                                            <td>Rejected/Editable</td>
+                                                                            <% } %>
+                                                                            <form method="get" action="PreCheckingDetails">
+                                                                                <td>
+                                                                                        <label>Recommendation ID</label><input type="text" name="RID" value="<%= recommendation.recommendation_ID %>">
+                                                                                        <label>Submission ID</label><input type="text" name="SID" value="<%= reports.Submission_ID %>">
+                                                                                        <label>Plan ID</label><input type="text" name="PID" value="<%= plan.Plan_ID %>">
+                                                                                    <button type="submit" class="btn btn-primary">View Report</button>
+                                                                                </td>
+                                                                            </form>
+                                                                            
+
+                                                                        </tbody>
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                    </table>
+
+
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                        <% } %>
+                                                        <!--End of Group 1 Table -->
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                        </div>
+
+                                        <!-- end of accordion -->
+
+
+
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- jQuery -->
-            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-            <!-- Bootstrap -->
-            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- FastClick -->
-            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-            <!-- NProgress -->
-            <script src="assets/vendors/nprogress/nprogress.js"></script>
-            <!-- bootstrap-progressbar -->
-            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-            <!-- iCheck -->
-            <script src="assets/vendors/iCheck/icheck.min.js"></script>
-            <!-- bootstrap-daterangepicker -->
-            <script src="assets/vendors/moment/min/moment.min.js"></script>
-            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap-wysiwyg -->
-            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-            <!-- jQuery Tags Input -->
-            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-            <!-- Switchery -->
-            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-            <!-- Select2 -->
-            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-            <!-- Parsley -->
-            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-            <!-- Autosize -->
-            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-            <!-- jQuery autocomplete -->
-            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-            <!-- starrr -->
-            <script src="assets/vendors/starrr/dist/starrr.js"></script>
-            <!-- Custom Theme Scripts -->
-            <script src="assets/build/js/custom.min.js"></script>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!Script for dynamic text area>
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+        </script>
+
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <script src="assets/vendors/pnotify/dist/pnotify.js"></script>
+        <script src="assets/vendors/pnotify/dist/PNotifyButtons.js"></script>
+
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
 
 </body>
 
