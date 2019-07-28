@@ -201,7 +201,8 @@
                                                                     </form>
                                                                     <a href="#my_modal" type="button"
                                                                         class="btn btn-primary" data-toggle="modal"
-                                                                        data-book-id="<%= plan.Plan_ID %>">Assign Cycle and Deadline</a>
+                                                                        data-book-id="<%= plan.Plan_ID %>">Assign Cycle
+                                                                        and Deadline</a>
 
                                                                 </td>
                                                             </tr>
@@ -220,50 +221,80 @@
                                                                         data-dismiss="modal2" value="Edit">
                                                                         <span aria-hidden="true">×</span>
                                                                     </button>
-                                                                    <h4 class="modal-title" id="myModalLabel2">Assign Cycle and Deadline to plan</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel2">Assign
+                                                                        Cycle and Deadline to plan</h4>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form id="AssignCycleandDeadline" data-parsley-validate class="form-horizontal form-label-left" action="AssignCycleandDeadline" method="POST">
+                                                                    <form id="AssignCycleandDeadline"
+                                                                        data-parsley-validate
+                                                                        class="form-horizontal form-label-left"
+                                                                        action="AssignCycleandDeadline" method="POST">
                                                                         <div class="form-group">
-                                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><span class="required">Plan ID</span>
+                                                                            <label
+                                                                                class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                                for="first-name"><span
+                                                                                    class="required">Plan ID</span>
                                                                             </label>
                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                <input type="text" id="PlanID" name="PlanID" class="form-control col-md-7 col-xs-12" value="" />
+                                                                                <input type="text" id="PlanID"
+                                                                                    name="PlanID"
+                                                                                    class="form-control col-md-7 col-xs-12"
+                                                                                    value="" />
                                                                             </div>
-                                                                           
+
                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                    <input type="text" id="RID" name="RID" class="form-control col-md-7 col-xs-12" value="<%= dataB[0].recommendation_ID %>" />
-                                                                                </div>
+                                                                                <input type="text" id="RID" name="RID"
+                                                                                    class="form-control col-md-7 col-xs-12"
+                                                                                    value="<%= dataB[0].recommendation_ID %>" />
+                                                                            </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                                    for="first-name">Set Cycle
-                                                                                </label>
-                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                    <select class="form-control" name="cycle">
-                                                                                        <% for (var cycle of dataC) { %>
-                                                                                        <option value="<%= cycle.cycle_ID %>"><%= cycle.cycle_Name %>: <%= cycle.start_Date %></option>
-                                                                                        <% } %>
-                                                                                    </select>
-                                                                                </div>
+                                                                            <label
+                                                                                class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                                for="first-name">Set Cycle
+                                                                            </label>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                <select class="form-control"
+                                                                                    name="cycle">
+                                                                                    <% for (var cycle of dataC) { %>
+                                                                                    <option
+                                                                                        value="<%= cycle.cycle_ID %>">
+                                                                                        <%= cycle.cycle_Name %>:
+                                                                                        <%= cycle.start_Date %></option>
+                                                                                    <% } %>
+                                                                                </select>
                                                                             </div>
+                                                                        </div>
                                                                         <div class="form-group">
-                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Plan Deadline:<span class="required"></span>
-                                                                                </label>
-                                                                                <form class="form-group">
-                                                                                        <fieldset>
-                                                                                                <div class="control-group">
-                                                                                                  <div class="controls">
-                                                                                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                                                                                      <input type="text" name="date" class="form-control has-feedback-left" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
-                                                                                                      <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                                                                                      <span id="inputSuccess2Status2" class="sr-only">(success)</span>
-                                                                                                    </div>
-                                                                                                  </div>
-                                                                                                </div>
-                                                                                              </fieldset>
-                                                                                </form>
-                                                                            </div>
+                                                                            <label
+                                                                                class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                                for="first-name">Set Plan Deadline:<span
+                                                                                    class="required"></span>
+                                                                            </label>
+                                                                            <form class="form-group">
+                                                                                <fieldset>
+                                                                                    <div class="control-group">
+                                                                                        <div class="controls">
+                                                                                            <div
+                                                                                                class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                                                                                <input type="text"
+                                                                                                    name="date"
+                                                                                                    class="form-control has-feedback-left"
+                                                                                                    id="single_cal2"
+                                                                                                    placeholder="First Name"
+                                                                                                    aria-describedby="inputSuccess2Status2">
+                                                                                                <span
+                                                                                                    class="fa fa-calendar-o form-control-feedback left"
+                                                                                                    aria-hidden="true"></span>
+                                                                                                <span
+                                                                                                    id="inputSuccess2Status2"
+                                                                                                    class="sr-only">(success)</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </form>
+                                                                        </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
                                                                                 class="btn btn-default"
@@ -282,12 +313,11 @@
                                                         </div>
                                                     </div>
                                                     <script type="text/javascript">
-
                                                         $('#my_modal').on('show.bs.modal', function (e) {
                                                             var PID = $(e.relatedTarget).data('book-id');
-                                                            $(e.currentTarget).find('input[name="PlanID"]').val(PID);
+                                                            $(e.currentTarget).find('input[name="PlanID"]').val(
+                                                                PID);
                                                         });
-
                                                     </script>
                                                 </div>
 
@@ -469,9 +499,9 @@
                                             <div class="input-prepend input-group">
                                                 <span class="add-on input-group-addon"><i
                                                         class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                <input type="text" name="date" class="form-control has-feedback-left"
-                                                    id="single_cal1" placeholder="First Name"
-                                                    aria-describedby="inputSuccess2Status">
+                                                <input type="text" style="width: 200px" name="date"
+                                                    id="reservation" class="form-control"
+                                                    value="" />
                                             </div>
                                         </div>
                                     </div>
@@ -518,7 +548,6 @@
                     }, 600);
                 }
             }
-
         </script>
 
 
