@@ -84,7 +84,6 @@ module.exports = {
                 authorize(JSON.parse(content), uploadtodrive);
             });
         }
-
         function authorize(credentials, callback) {
             const {
                 client_secret,
@@ -120,8 +119,20 @@ module.exports = {
                         if (result) {
                             console.log(result);
                             console.log(req.files.DocFile.name + " Uploaded to Google Drive")
+                            var fileid = file.data.id;
+                            sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                            values = [fileid, 'uploads/' + req.files.DocFile.name];
+                            addID(sql, values);
                         }
                     });
+                }
+            });
+        }
+        function addID(sql, values) {
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                if (result) {
+                    console.log("ID inserted to DB");
                 }
             });
         }
@@ -166,8 +177,6 @@ module.exports = {
             if (err) return console.log(err);
             else console.log("File uploaded");
         })
-
-
         var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?); INSERT INTO `capstone`.`plansubmissions` (`Plan_ID`, `User_ID`, `Submission_Title`, `Submission_File`, `Submission_Description`, `Submission_Date`) VALUES (?, ?, ?, ?, ?, ?) "
         var values = [name, path, desc, ext, PID, UID, name, path, desc, current];
         connection.query(sql, values, function (err, result) {
@@ -188,7 +197,6 @@ module.exports = {
                 authorize(JSON.parse(content), uploadtodrive);
             });
         }
-
         function authorize(credentials, callback) {
             const {
                 client_secret,
@@ -224,8 +232,20 @@ module.exports = {
                         if (result) {
                             console.log(result);
                             console.log(req.files.Evidence.name + " Uploaded to Google Drive")
+                            var fileid = file.data.id;
+                            sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                            values = [fileid, 'uploads/' + req.files.Evidence.name];
+                            addID(sql, values);
                         }
                     });
+                }
+            });
+        }
+        function addID(sql, values) {
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                if (result) {
+                    console.log("ID inserted to DB");
                 }
             });
         }
