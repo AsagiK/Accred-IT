@@ -376,6 +376,7 @@ module.exports = {
             resp.redirect('/RecommendationNonAjax');
         });
     },
+    
     addrecommendationtoaccreditation: function (req, resp) {
         var accreditation = (req.body.accreditation);
         var recommendationName = (req.body.recommendationName);
