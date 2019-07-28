@@ -116,7 +116,7 @@ module.exports = {
                         dataC: results[2],
                         current_user: sess.user
                     });
-                    
+
                 }
             });
             console.log("Checking");
@@ -143,13 +143,12 @@ module.exports = {
                     resp.redirect('/PreChecking');
                 }
             });
-            
+
         }
 
     },
 
     CheckingDetailsInsert: function (req, resp) {
-
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -161,32 +160,29 @@ module.exports = {
             var date = req.body.date;
             var SID = req.body.SID;
             var PID = req.body.PID;
-            if (Status == "3"){
+            if (Status == "3") {
                 console.log("Insert date here")
                 var sql = "UPDATE `capstone`.`plans` SET `Deadline` = ? WHERE (`Plan_ID` = ?); UPDATE `capstone`.`plansubmissions` SET `Submission_Status` = ?, `Leader_Notes` = ? WHERE (`Submission_ID` = ?);"
                 var values = [date, PID, Status, Comment, SID];
                 connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err;
-                if (results) {
-                    console.log(results);
-                    resp.redirect('/CheckingPage');
-                }
-            });
-
-            } else{
+                    if (err) throw err;
+                    if (results) {
+                        console.log(results);
+                        resp.redirect('/CheckingPage');
+                    }
+                });
+            } else {
                 console.log("No insert date here")
                 var sql = "UPDATE `capstone`.`plansubmissions` SET `Submission_Status` = ?, `Leader_Notes` = ? WHERE (`Submission_ID` = ?);"
                 var values = [Status, Comment, SID];
                 connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err;
-                if (results) {
-                    console.log(results);
-                    resp.redirect('/CheckingPage');
-                }
-            });
-                
+                    if (err) throw err;
+                    if (results) {
+                        console.log(results);
+                        resp.redirect('/CheckingPage');
+                    }
+                });
             }
-            
         }
 
     },
