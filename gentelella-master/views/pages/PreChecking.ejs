@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Checking Reports Page</title>
+    <title>Pre-Checking Reports Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Checking Reports Page</h3>
+                            <h3>Pre-Checking Reports Page</h3>
 
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                                 <div class="col-md-12 col-sm-6 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_title">
-                                            <h2><i class="fa fa-align-left"></i>Approved Reports from Group Leader Checking</h2>
+                                            <h2><i class="fa fa-align-left"></i>Submitted Reports Group Leader Checking</h2>
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="x_content">
@@ -112,15 +112,13 @@
                                                                             <th></th>
                                                                         </thead>
                                                                         <% for (var reports of data) { %>
-                                                                        <% if (reports.Plan_ID == plan.Plan_ID && reports.Submission_Status == 2) { %> 
+                                                                        <% if (reports.Plan_ID == plan.Plan_ID) { %> 
                                                                         <tbody>
                                                                             <td><%= reports.Submission_Title %></td>
                                                                             <td><%= reports.User_First %></td>
                                                                             <td><%= reports.Submission_Date %></td>
                                                                             <% if (reports.Submission_Status == "1") { %>
                                                                             <td>For Approval</td>
-                                                                            <% } else if (reports.Submission_Status == "2") { %>
-                                                                            <td>For Checking</td>
                                                                             <% } else { %>
                                                                             <td>Rejected/Editable</td>
                                                                             <% } %>

@@ -311,7 +311,7 @@ module.exports = {
         }
         var PlanID = req.query.PID;
         console.log(PlanID);
-        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, plans.GroupAssigned, group.Group_Name, cycle.cycle_Name, plans.PriorityLevel FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?;"
+        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, plans.GroupAssigned, group.Group_Name, cycle.cycle_Name, cycle.start_Date, plans.PriorityLevel, plans.Deadline FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?; SELECT * FROM capstone.cycle;"
         var values = [PlanID, PlanID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
@@ -319,6 +319,7 @@ module.exports = {
                 resp.render('./pages/PlanPage.ejs', {
                     data: results[0],
                     dataB: results[1],
+                    dataC: results[2],
                     notif: passData,
                     current_user: sess.user
                 });
@@ -373,6 +374,33 @@ module.exports = {
             if (err) throw err;
             console.log("Record Inserted");
             resp.redirect('/RecommendationNonAjax');
+        });
+    },
+    addrecommendationtoaccreditation: function (req, resp) {
+        var accreditation = (req.body.accreditation);
+        var recommendationName = (req.body.recommendationName);
+        var recommendationDesc = (req.body.recommendationDesc);
+        var grade = (req.body.grade);
+        var priority = (req.body.priority);
+        var area = (req.body.SelectArea);
+        var today = new Date();
+        //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //var dateTime = date+' '+time;
+        var current = today.toISOString().split('T')[0];
+        console.log(today);
+        console.log(recommendationName);
+        console.log(recommendationDesc);
+        console.log(grade);
+        console.log(priority);
+        console.log(area);
+        console.log(current);
+        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`, `accreditation_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
+        var values = [recommendationName, recommendationDesc, grade, priority, current, area, accreditation];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+            resp.redirect('/ViewRecommendationsofAccreditation?AID=' + accreditation);
         });
     },
 
@@ -819,6 +847,27 @@ module.exports = {
             
             console.log("CREATE CUSTOM GRADES");
         }
+    },
+
+    AssignCycleandDeadline: function (req, resp) {
+        var RID = (req.body.RID);
+        var id = (req.body.PlanID);
+        var CID = (req.body.cycle);
+        var date = (req.body.date);
+        var deadlineDate = '';
+        var Year = date.substr(6, 4);
+        var Month = date.substr(0, 2);
+        var Day = date.substr(3, 2);
+        deadlineDate = Year + "-" + Month + "-" + Day;
+        var sql = "Update capstone.plans set CycleTime = ?, Deadline = ? where Plan_ID = ? ";
+        var values = [CID, deadlineDate, id];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/PlanPage?PID=' + RID);
+            }
+        });
     },
 
 }

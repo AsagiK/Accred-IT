@@ -31,14 +31,15 @@
 
   <!-- Custom Theme Style -->
   <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+
+  <!-- jQuery -->
+  <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <style>
-
-  #accreditation{
-    width : 150px;
+  #accreditation {
+    width: 150px;
   }
-
 </style>
 
 <body class="nav-md">
@@ -60,125 +61,78 @@
             <div class="x_panel">
               <div class="x_content">
 
-                <div class="container">
-                  <div class="tab tab-1">
-                    <table class="table table-bordered" id="table" border="1">
-                      <tr>
-                        <th>Code</th>
-                        <th>Rank</th>
-                        <th>Accreditation</th>
-                        <td id='hidden' value="" style="visibility:collapse;">test</td>
-                      </tr>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+...more buttons...
 
-                    </table>
-                  </div>
-                  <div class="tab tab-2">
-                    <!INPUT FOR CODE>
-                    <label for="code" >Code : </label> <input type="text" name="code" id="code"><br>
-                    <!INPUT FOR RANK>
-                    <label for="rank" >Rank : </label> <input type="text" name="rank" id="rank"><br>
-                    <!INPUT FOR ACCREDITATION>
-                    <label for="accreditation" >Accreditation : </label> <select class="form-control" name="accreditation" id="accreditation" stlye="width:150px;">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
 
-                      <option value="1">PAASCU</option>
-                      <option value="2">ABET</option>
-                      <option value="3">Others</option>
+$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+</script>
 
-                    </select>
-                    
-                    <br>
-                    <button onclick="addHtmlTableRow();">Add</button>
-                    <button onclick="editHtmlTbleSelectedRow();">Edit</button>
-                    <button onclick="removeSelectedRow();">Remove</button>
-                  </div>
-                </div>
+<a href="#my_modal" data-toggle="modal" data-book-id="10">Open Modal</a>
 
-                <script>
-                  var rowcount = 0;
-                  var rIndex,
-                    table = document.getElementById("table");
+<div class="modal" id="my_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Modal header</h4>
+      </div>
+      <div class="modal-body">
+        <p>some content</p>
+        <input type="text" name="bookId" value=""/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
 
-                  // check the empty input
-                  function checkEmptyInput() {
-                    var isEmpty = false,
-                      code = document.getElementById("code").value,
-                      rank = document.getElementById("rank").value,
-                      accreditation = document.getElementById("accreditation").value;
+$('#my_modal').on('show.bs.modal', function(e) {
+  var bookId = $(e.relatedTarget).data('book-id');
+  $(e.currentTarget).find('input[name="bookId"]').val(bookId);
+});
 
-                    if (code === "") {
-                      alert("Code Cannot Be Empty");
-                      isEmpty = true;
-                    } else if (rank === "") {
-                      alert("Rank Cannot Be Empty");
-                      isEmpty = true;
-                    } else if (accreditation === "") {
-                      alert("Accreditation Cannot Be Empty");
-                      isEmpty = true;
-                    }
-                    return isEmpty;
-                  }
+</script>
 
-                  // add Row
-                  function addHtmlTableRow() {
-                    // get the table by id
-                    // create a new row and cells
-                    // get value from input text
-                    // set the values into row cell's
-                    if (!checkEmptyInput()) {
-                      var newRow = table.insertRow(table.length),
-                        cell1 = newRow.insertCell(0),
-                        cell2 = newRow.insertCell(1),
-                        cell3 = newRow.insertCell(2),
-                        code = document.getElementById("code").value,
-                        rank = document.getElementById("rank").value,
-                        accreditation = document.getElementById("accreditation").value;
-                      console.log(rank);
-                      cell1.innerHTML = code;
-                      cell2.innerHTML = rank;
-                      cell3.innerHTML = accreditation;
-                      cell1.setAttribute('id', "code"+rowcount);
-                      cell2.setAttribute('id', "rank"+rowcount);
-                      cell3.setAttribute('id', "accreditation"+rowcount);
-                      // call the function to set the event to the new row
-                      selectedRowToInput();
-                      rowcount++;
-                    }
-                  }
-
-                  // display selected row data into input text
-                  function selectedRowToInput() {
-
-                    for (var i = 1; i < table.rows.length; i++) {
-                      table.rows[i].onclick = function () {
-                        // get the seected row index
-                        rIndex = this.rowIndex;
-                        document.getElementById("fname").value = this.cells[0].innerHTML;
-                        document.getElementById("lname").value = this.cells[1].innerHTML;
-                        document.getElementById("age").value = this.cells[2].innerHTML;
-                      };
-                    }
-                  }
-                  selectedRowToInput();
-
-                  function editHtmlTbleSelectedRow() {
-                    var fname = document.getElementById("fname").value,
-                      lname = document.getElementById("lname").value,
-                      age = document.getElementById("age").value;
-                    if (!checkEmptyInput()) {
-                      table.rows[rIndex].cells[0].innerHTML = fname;
-                      table.rows[rIndex].cells[1].innerHTML = lname;
-                      table.rows[rIndex].cells[2].innerHTML = age;
-                    }
-                  }
-
-                  function removeSelectedRow() {
-                    table.deleteRow(rIndex);
-                    // clear input text
-                    document.getElementById("fname").value = "";
-                    document.getElementById("lname").value = "";
-                    document.getElementById("age").value = "";
-                  }
-                </script>
 
                 <!--form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                   <div class="ln_solid"></div>
@@ -223,37 +177,7 @@
   </div>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      var max_fields = 10;
-      var wrapper = $(".container1");
-      var add_button = $(".add_form_field");
-
-      var x = 1;
-      $(add_button).click(function (e) {
-        e.preventDefault();
-        if (x < max_fields) {
-          x++;
-          $(wrapper).append('<div><label>Code</label> <input type="text" name="grade' + x +
-            '"/> <label>Rank</label> <input type="text" name="rank' + x +
-            '"> <input type="text" name="accreditationID"> <a href="#" class="delete">Delete</a></div>'
-            ); //add input box
-        } else {
-          alert('You Reached the limits')
-        }
-      });
-
-      $(wrapper).on("click", ".delete", function (e) {
-        e.preventDefault();
-        $(this).parent('div').remove();
-        x--;
-      })
-    });
-  </script>
-
-  <!-- jQuery -->
-  <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+  
   <!-- Bootstrap -->
   <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- FastClick -->

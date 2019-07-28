@@ -31,6 +31,9 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -154,11 +157,19 @@
                     reader.readAsArrayBuffer(this.files[0]);
                 }
             );
+
+            var uploadField = document.getElementById("DocFile");
+
+            uploadField.onchange = function () {
+                if (this.files[0].size > 4000000) {
+                    alert("File is too big!");
+                    this.value = "";
+                };
+            };
         </script>
 
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        
         <!--MD5 HASH SCRIPT-->
         <script src="assets/vendors/md5/md5.min.js"></script>
         <script src="assets/vendors/crypto/md5.js"></script>
