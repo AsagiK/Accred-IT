@@ -49,7 +49,8 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Create Custom Grades For Accreitations</h3>
+                            <% if(data[0].gradesset == "0"){ %>
+                            <h3>Create Custom Grades For Accreditation: <%= data[0].accreditation_Name %></h3>
                         </div>
                     </div>
                 </div>
@@ -68,12 +69,23 @@
                                                 <!INPUT FOR RANK>
                                                     <label for="rank">Rank : </label> <input type="text" readonly name="rank" id="rank" value="1"><br>
                                                     <!INPUT FOR ACCREDITATION>
-                                                    <label for="rank">Accreditation : </label> <input type="text" readonly name="" id="" value="<%= data[0].accreditation_Name %>"><br>
-                                                    <input type="hidden" name="accreditation" id="accreditation" value="<%= data[0].accreditation_ID %>"><br>
-                                                        
+                                                        <label for="rank">Accreditation : </label> <input type="text" readonly name="" id="" value="<%= data[0].accreditation_Name %>"><br>
+                                                        <input type="hidden" name="accreditation" id="accreditation" value="<%= data[0].accreditation_ID %>"><br>
+
                                                         <button onclick="addHtmlTableRow();">Add</button>
                                                         <!--button onclick="editHtmlTbleSelectedRow();">Edit</button-->
                                                         <button onclick="removeSelectedRow();">Remove</button>
+                                                        <button id="toJSON">Submit</button>
+
+                                                        <form method="get" action="/ViewAccreditation">
+                                                            <input type="hidden" name="passdata" value="1">
+                                                            <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                                                        </form>
+
+                                                        <form method="get" action="/ViewAccreditation">
+                                                            <input type="hidden" name="passdata" value="0">
+                                                            <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                                                        </form>
                                         </div>
                                     </div>
                                 </div>
@@ -90,11 +102,14 @@
                                                     <thead>
                                                         <th>Code</th>
                                                         <th>Rank</th>
-                                                        <th style="visibility:collapse;">Accreditation</th>
+                                                        <th style="display: none">Accreditation</th>
 
                                                     </thead>
 
                                                 </table>
+                                                                <%}else{%>
+                <h3 style="text-align:center;"> Grading system for this accreditation has already been set</h3>
+                <%}%>
                                             </div>
 
                                         </div>
@@ -102,6 +117,7 @@
                                 </div>
                             </div>
                 </div>
+
             </div>
 
             <!-- /page content -->
@@ -119,8 +135,8 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
         var rowcount = 0;
         var rIndex,
             table = document.getElementById("table");
@@ -168,7 +184,7 @@
                 cell1.setAttribute('value', code);
                 cell2.setAttribute('id', "rank" + rowcount);
                 cell2.setAttribute('value', rank);
-                cell3.setAttribute('style', "visibility:collapse;");
+                cell3.setAttribute('style', "display: none;");
                 cell3.setAttribute('id', "accreditation" + rowcount);
                 cell3.setAttribute('value', accreditation);
                 // call the function to set the event to the new row
@@ -208,15 +224,59 @@
         }*/
 
         function removeSelectedRow() {
-            if(document.getElementById("rank").value > 1){
-            table.deleteRow(rIndex);
-            // clear input text
-            document.getElementById("code").value = "";
-            rankmod = document.getElementById("rank");
-            var newval = parseInt(document.getElementById("rank").value) - 1;
-            rankmod.setAttribute('value', newval);
+            if (document.getElementById("rank").value > 1) {
+                table.deleteRow(rIndex);
+                // clear input text
+                document.getElementById("code").value = "";
+                rankmod = document.getElementById("rank");
+                var newval = parseInt(document.getElementById("rank").value) - 1;
+                rankmod.setAttribute('value', newval);
             }
+
         }
+
+        $("#toJSON").click(function() {
+                console.log("Hello");
+                var table = JSON.stringify($('#table').tableToJSON());
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AddGradesJSON', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    console.log(xhr.responseText);
+                };
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        var respData = xhr.responseText;
+                        if (respData == "OK") {
+                            console.log("Hi");
+                            backsuccess();
+                        } else {
+                            backfail();
+                        }
+                    }
+                };
+
+
+                xhr.send("table=" + table);
+
+            });
+
+            function backsuccess() {
+                var button = document.getElementById('backsuccess');
+                button.click();
+
+            };
+
+            function backfail() {
+                var button = document.getElementById('backfail');
+                button.click();
+
+            };
+
+
 
     </script>
 
@@ -255,6 +315,7 @@
     <script src="assets/vendors/starrr/dist/starrr.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="assets/build/js/custom.min.js"></script>
+    <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 </body>
 
 </html>

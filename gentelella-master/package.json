@@ -4,7 +4,8 @@
     "description": "Capstone Thesis Project",
     "scripts": {
         "start": "nodemon app.js",
-        "activate": "node app.js"
+        "activate": "node app.js",
+        "driveinit": "node drive.js"
     },
     "author": "Brian De Castro, Anjelo Padua, Rovi Soriano, Jericho Mendoza",
     "license": "ISC",
@@ -17,7 +18,9 @@
         "express": "^4.17.0",
         "express-fileupload": "^1.1.4",
         "express-session": "^1.16.1",
+        "googleapis": "^39.2.0",
         "md5": "^2.2.1",
+        "mime-types": "^2.1.24",
         "mongoose": "^5.5.7",
         "mysql": "2.17.1",
         "nodemon": "^1.19.1",

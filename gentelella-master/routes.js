@@ -49,8 +49,8 @@ router.route('/CreateGrades').get(planCtrl.CreateGrades);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
-router.route('/viewplantest').post(JSONCtrl.ViewPlanTest);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
+router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 //--DocCtrl--
 router.route('/UploadDocument').get(DocCtrl.UploadDocument);
 router.route('/SendDocument').post(DocCtrl.SendDocument);
@@ -63,7 +63,5 @@ router.route('/Logout').get(SessCtrl.Logout);
 //--CheckCtrl
 router.route('/CheckingPage').get(CheckCtrl.CheckingPage);
 router.route('/CheckDetails').get(CheckCtrl.CheckDetails);
-
-
 
 module.exports = router;

@@ -18,6 +18,11 @@ server.use(session({
     saveUninitialized: true
 }));
 server.use(express.static("public"));
+const readline = require('readline');
+const {
+    google
+} = require('googleapis');
+const TOKEN_PATH = 'token.json';
 
 var routes = require('./routes');
 server.use(express.json());
@@ -75,8 +80,7 @@ server.get('/home', function (req, resp) {
 
 server.get('/login', function (req, resp) {
     var status = req.query.status
-    switch (status) 
-    {
+    switch (status) {
         case "0":
             passData = {
                 goodStatus: 0,
@@ -108,14 +112,8 @@ server.get('/*', function (req, resp) {
     console.log("Testing testing");
 });
 
-
-
-
-
 const port = process.env.PORT | 9090;
 var serverclose = server.listen(port);
-
-
 
 connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, fields) {
     if (err) {
@@ -130,5 +128,20 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
     } else {
         console.log("\x1b[32m%s\x1b[0m", "AccredIT Server has successfully connected to the database")
         console.log("\x1b[32m%s\x1b[0m", "Server active at port", port);
+        checktoken();
     }
 });
+
+function checktoken() {
+    if (fs.existsSync('token.json')) {
+        console.log("\x1b[32m%s\x1b[0m", "Google Drive connection is configured");
+    } else {
+        console.log("\x1b[31m", "")
+        console.log("---------------------------------------------------------------------------------")
+        console.log("AccredIT Server is not configured to back up to Google Drive")
+        console.log("Any files uploaded in this server instance will be saved locally but not remotely")
+        console.log("Configure the Google Drive connection by running `npm run driveinit' ")
+        console.log("---------------------------------------------------------------------------------")
+        console.log("\x1b[0m", "")
+    }
+}
