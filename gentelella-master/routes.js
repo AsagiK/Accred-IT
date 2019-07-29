@@ -59,6 +59,7 @@ router.route('/UploadDocument').get(DocCtrl.UploadDocument);
 router.route('/SendDocument').post(DocCtrl.SendDocument);
 router.route('/ViewDocument').get(DocCtrl.ViewDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
+router.route('/FinalReport').get(DocCtrl.FinalReport);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);
