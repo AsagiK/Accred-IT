@@ -329,7 +329,7 @@ module.exports = {
         }
     },
 
-    RecommendationNonAjax: function (req, resp) {
+    QualityMetric: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -337,7 +337,7 @@ module.exports = {
         } else {
             connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID; Select * FROM capstone.area;SELECT * FROM capstone.accreditation", function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/RecommendationNonAjax.ejs', {
+                resp.render('./pages/QualityMetrics.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
@@ -349,7 +349,7 @@ module.exports = {
         }
     },
 
-    addrecommendation: function (req, resp) {
+    addmetric: function (req, resp) {
         var accreditation = (req.body.accreditation);
         var recommendationName = (req.body.recommendationName);
         var recommendationDesc = (req.body.recommendationDesc);
@@ -373,7 +373,7 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            resp.redirect('/RecommendationNonAjax');
+            resp.redirect('/QualityMetric');
         });
     },
     addrecommendationtoaccreditation: function (req, resp) {
@@ -443,11 +443,11 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            resp.redirect('/RecommendationNonAjax');
+            resp.redirect('/QualityMetric');
         });
     },
 
-    editrecommendation: function (req, resp) {
+    editmetric: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -470,7 +470,7 @@ module.exports = {
         }
     },
 
-    alterrecommendation: function (req, resp) {
+    altermetric: function (req, resp) {
         var id = (req.body.UID);
         var name = (req.body.recommendationName);
         var desc = (req.body.recommendationDesc);
@@ -491,7 +491,7 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
-                resp.redirect('/RecommendationNonAjax');
+                resp.redirect('/QualityMetric');
             }
         });
         console.log("updating");
@@ -712,36 +712,36 @@ module.exports = {
         console.log("updating");
     },
 
-    CreateAccreditation: function (req, resp) {
+    CreateSources: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            resp.render('./pages/CreateAccreditation.ejs', {
+            resp.render('./pages/CreateSource.ejs', {
                 current_user: sess.user
             });
-            console.log("CREATE ACCREDITATION");
+            console.log("CREATE SOURCE PAGE");
         }
     },
 
-    AddAccreditation: function (req, resp) {
+    AddSource: function (req, resp) {
         console.log(req.body);
-        var an = (req.body.accreditname);
-        var ad = (req.body.accreditdesc);
-        var sql = "INSERT INTO `capstone`.`accreditation` (`accreditation_Name`, `accreditation_Description`) VALUES (? , ?)";
+        var an = (req.body.sourcename);
+        var ad = (req.body.sourcedesc);
+        var sql = "INSERT INTO `capstone`.`source` (`source_Name`, `source_Description`) VALUES (? , ?)";
         var values = [an, ad];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             if(result){
-                resp.redirect('/CreateGrades');
+                resp.redirect('/ViewSources');
                 console.log("Record Inserted");
             }
         });
         
     },
 
-    ViewAccreditation: function (req, resp) {
+    ViewSources: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -762,31 +762,31 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.accreditation;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.source;", function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/ViewAccreditation.ejs', {
+                resp.render('./pages/ViewSource.ejs', {
                     data: results,
                     current_user: sess.user,
                     notif: passData
                 });
                 console.log(results);
             });
-            console.log("VIEW ACCREDITATION");
+            console.log("VIEW SOURCE PAGE");
         }
     },
 
-    ViewRecommendationsofAccreditation: function (req, resp) {
+    ViewMetricofSource: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var AID = req.query.AID;
-            var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID where accreditation.accreditation_ID = ?; Select * FROM capstone.area; Select * FROM capstone.accreditation where accreditation.accreditation_ID = ?;"
-            var values = [AID, AID];
+            var SID = req.query.SID;
+            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = ?; Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group;"
+            var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/ViewRecommendationofAccreditation.ejs', {
+                resp.render('./pages/ViewMetricofSource.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
@@ -798,19 +798,19 @@ module.exports = {
         }
     },
 
-    EditAccreditation: function (req, resp) {
+    EditSource: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var id = (req.query.AID);
+            var id = (req.query.SID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.accreditation where accreditation.accreditation_ID = (?);", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.source where source.source_ID = (?);", values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
-                resp.render('./pages/EditAccreditation.ejs', {
+                resp.render('./pages/EditSource.ejs', {
                     data: results,
                     current_user: sess.user
                 })
@@ -818,20 +818,20 @@ module.exports = {
         }
     },
 
-    AlterAccreditation: function (req, resp) {
-        var id = (req.body.AID);
-        var an = (req.body.accreditname);
-        var ad = (req.body.accreditdesc);
+    AlterSource: function (req, resp) {
+        var id = (req.body.SID);
+        var sn = (req.body.sourcename);
+        var sd = (req.body.sourcedesc);
         console.log(id);
         console.log(an);
         console.log(ad);
-        var sql = "Update capstone.accreditation set accreditation_Name = ?, accreditation_Description = ? where accreditation_ID = ? ";
-        var values = [an, ad, id];
+        var sql = "Update capstone.source set source_Name = ?, source_Description = ? where source_ID = ? ";
+        var values = [sn, sd, id];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
             if (result) {
-                resp.redirect('/ViewAccreditation');
+                resp.redirect('/ViewSources');
             }
         });
     },

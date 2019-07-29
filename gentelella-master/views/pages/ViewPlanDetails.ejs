@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Plan Details-<%= data[0].PlanName %> Page</title>
+    <title>View Measurement Details-<%= data[0].PlanName %> Page</title><!--Edited-->
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,9 +31,6 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -48,9 +45,9 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <div class="x_content">
-
+                            
                                 <div class="title_left">
-                                    <h1>View Plan Details-<%= data[0].PlanName %></h1>
+                                    <h1>View Measurement Details-<%= data[0].PlanName %></h1>
                                 </div>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-group">
@@ -62,17 +59,9 @@
                                                         <h2>Priority Level: <%= data[0].PriorityLevel %></h2>
                                                     </div>
                                                     <div class="title_left">
-                                                        <h2>Duration:
-                                                            <%= data[0].start_date.toString().substring(0,15) %> %></h2>
+                                                        <h2>Duration: <%= data[0].start_date.toString().substring(0,15) %> %></h2>
                                                     </div>
-                                                </div>
-                                                <div class="clearfix"></div>
-
-                                                <div class="page-title">
-                                                    <div class="title_left">
-                                                        <h2>Cycle Name: <%= data[0].cycle_Name %></h2>
-                                                    </div>
-                                                </div>
+                                                </div><!--Edited-->
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
@@ -82,15 +71,12 @@
 
                                         <div class="panel-body">
                                             <div class="panel">
-                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                    data-toggle="collapse" data-parent="#headingTwo"
-                                                    href="#FacilitiesGroupOne" aria-expanded="true"
-                                                    aria-controls="FacilitiesGroupOne">
+                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                                 </a>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th>General Objective</th>
+                                                            <!--Edited Gen Object Gone-->
                                                             <th>Measurement</th>
                                                             <th>Base Formula</th>
                                                             <th>Base Standard</th>
@@ -99,9 +85,9 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
+                                                        
                                                         <tr>
-                                                            <td><%= data[0].GenObjective %></td>
+                                                            <!--Edited-->
                                                             <td><%= data[0].Measurement%></td>
                                                             <td><%= data[0].BaseFormula%></td>
                                                             <td><%= data[0].QualityTarget%></td>
@@ -114,159 +100,133 @@
                                             <!--End of Group 1 Table -->
 
                                             <!-- Group 2 table testing -->
-                                            <div class="panel">
-                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                    data-toggle="collapse" data-parent="#headingOne" href="#Collapse"
-                                                    aria-expanded="true" aria-controls="Collapse<">
-                                                    <h3 class="panel-title"> Procedures</h3>
-                                                </a>
-                                                <div id="Collapse" class="collapse">
-                                                    <table style="table-layout: fixed; width: 100%">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="word-wrap: break-word">
-                                                                    <%= data[0].Procedures%></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                <div class="panel">
+                                                                    
+                                                                        <h3 class="panel-title"> Procedures</h3>
+                                                                    
+                                                                        <table style="table-layout: fixed; width: 100%">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td style="word-wrap: break-word"><%= data[0].Procedures%></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+            
+                                        <!--end of Group 2-->
+                                    </div>
+                                    </div>
+                            
+                                        <div class="ln_solid"></div>
+                        </form>
+                        
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_content">
+                                        <br />
+                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
+                                            action="" method="" encType="multipart/form-data">
+        
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                    for="first-name">Report Title <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <!--First name Input field-->
+                                                    <input type="text" id="docname" name="DocName" required="required"
+                                                        class="form-control col-md-7 col-xs-12" placeholder="First name">
                                                 </div>
                                             </div>
-
-                                            <!--end of Group 2-->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
+                                                    File <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="file" id="DocFile" name="DocFile" required="required"
+                                                        class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                    for="first-name">Report Description <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <textarea id="description" name="DocDesc" required="required"
+                                                            class="form-control col-md-7 col-xs-12"
+                                                            onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                </div>
+                                            </div>
+        
+        
+        
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button class="btn btn-primary" type="button">Cancel</button>
+                                            <button class="btn btn-primary" type="reset">Reset</button>
+                                            <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
                                     </div>
-
-                                    <div class="ln_solid"></div>
-                                </form>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="x_panel">
-                                        <div class="x_content">
-                                            <br />
-                                            <form id="demo-form2" data-parsley-validate
-                                                class="form-horizontal form-label-left" action="SubmitReport"
-                                                method="POST" encType="multipart/form-data">
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Title <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <!--First name Input field-->
-                                                        <input type="hidden" id="UID" name="UID" required="required"
-                                                            class="form-control col-md-7 col-xs-12"
-                                                            value="<%= current_user[0].User_ID %>">
-                                                        <input type="hidden" id="PID" name="PID" required="required"
-                                                            class="form-control col-md-7 col-xs-12"
-                                                            value="<%= data[0].Plan_ID %>">
-                                                        <input type="text" id="RepName" name="RepName"
-                                                            required="required" class="form-control col-md-7 col-xs-12"
-                                                            placeholder="Report Title">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="fileupload">Choose
-                                                        Evidence <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="file" id="Evidence" name="Evidence"
-                                                            required="required" class="form-control col-md-7 col-xs-12">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Description <span
-                                                            class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea id="RepDesc" name="RepDesc" required="required"
-                                                            class="form-control col-md-7 col-xs-12"
-                                                            onkeyup="textAreaAdjust(this)"
-                                                            style="overflow:hidden"></textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                        <button class="btn btn-primary" type="button">Cancel</button>
-                                                        <button class="btn btn-primary" type="reset">Reset</button>
-                                                        <button type="submit" class="btn btn-success">Submit</button>
-                                                    </div>
-                                                </div>
-
-                                            </form>
-
-                                        </div>
-
-
-                                    </div>
+        
+                                    </form>
                                 </div>
-
+                            </div>
+                        
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+           
 
+    <!-- /page content -->
 
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
-            </div>
+    <!-- footer content -->
+    <footer>
+        <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
         </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+    </div>
+    </div>
 
-        <script>
-            var uploadField = document.getElementById("Evidence");
-
-            uploadField.onchange = function () {
-                if (this.files[0].size > 4000000) {
-                    alert("File is too big!");
-                    this.value = "";
-                };
-            };
-        </script>
-
-        
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
 
 </body>
 

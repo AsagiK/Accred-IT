@@ -110,13 +110,10 @@
                 <div class="">
                     <div class="page-title">
                         <div class="col-md-9">
-                            <h3>Planning</h3>
-                            <h3> Recommendation Name:</h3>
+                            <h3></h3>
+                            <h3></h3>
                         </div>
-                        <div class="col-md-3">
-                            <a type="button" class="btn btn-primary btn-lg" href="/RecommendationNonAjax"
-                                style="float: right">Go Back</a><br /><br />
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -205,9 +202,9 @@
                                                                                         <% } %>
                                                                                         <form method="get" action="PreCheckingDetails">
                                                                                             <td>
-                                                                                                    <label>Recommendation ID</label><input type="text" name="RID" value="<%= recommendation.recommendation_ID %>">
-                                                                                                    <label>Submission ID</label><input type="text" name="SID" value="<%= reports.Submission_ID %>">
-                                                                                                    <label>Plan ID</label><input type="text" name="PID" value="<%= plan.Plan_ID %>">
+                                                                                                    <input type="hidden" name="RID" value="<%= recommendation.recommendation_ID %>">
+                                                                                                    <input type="hidden" name="SID" value="<%= reports.Submission_ID %>">
+                                                                                                    <input type="hidden" name="PID" value="<%= plan.Plan_ID %>">
                                                                                                 <button type="submit" class="btn btn-primary">View Report</button>
                                                                                             </td>
                                                                                         </form>

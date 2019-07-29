@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit Recommendation Page</h3>
+                            <h3>Edit Metric Page</h3>
 
                         </div>
                     </div>
@@ -59,7 +59,7 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Recommendation Name<span class="required">*</span>
+                                            for="first-name">Metric Name<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <input type="hidden" name="UID" value="<%= data[0].recommendation_ID%>">
@@ -77,21 +77,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
-                                            Grade<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="grade">
-                                                <!--Must be able  retrieve grading scheme from Grade setting-->
-                                                <option value="<%= data[0].recommendation_Grade%>"><%= data[0].recommendation_Grade%></option>
-                                                <option value="A">A</option>
-                                                <option value="B">B</option>
-                                                <option value="C">C</option>
-                                                <option value="F">F</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Priority
                                             Level<span class="required">*</span>
@@ -106,20 +91,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area<span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" name="AID" value="<%= data[0].area_ID%>">
-                                                <input type="text" id="" name=""
-                                                readonly class="form-control col-md-7 col-xs-12"
-                                                value="<%= data[0].Area_Name%>" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Choose Group To Assign: 
-                                            Level<span class="required">*</span>
+                                            for="first-name">Change Group:<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="group" id ="group">
@@ -131,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a type="button" class="btn btn-default" href="/RecommendationNonAjax">
+                                        <a type="button" class="btn btn-default" href="/QualityMetric">
                                             cancel
                                         </a>
                                         <button type="submit" class="btn btn-primary">
