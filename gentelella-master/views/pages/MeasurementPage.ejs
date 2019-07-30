@@ -111,7 +111,7 @@
                     <div class="page-title">
                         <div class="col-md-9">
                             <h3>Measurements</h3><!--Edited-->
-                            <h3> Metric Name: <%= dataB[0].recommendation_Name %></h3><!--Edited-->
+                            <h3> Metric Name: <%= dataB[0].metric_Name %></h3><!--Edited-->
                         </div>
                         <div class="col-md-3">
                             <a type="button" class="btn btn-primary btn-lg" href="/QualityMetric"
@@ -161,35 +161,23 @@
                                                                 <th>Measurement Name</th>
                                                                 <th>Measurement Description</th>
                                                                 <th>Group Assigned</th>
-                                                                <th>Priority Level</th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% for (var plan of data) { %>
+                                                            <% for (var measurement of data) { %>
 
                                                             <tr><!--Edited-->
 
 
-                                                                <td><%= plan.plan_ID %></td>
-                                                                <td><%= plan.PlanName %></td>
-                                                                <td><%= plan.PlanDescription %></td>
-                                                                <td><%= plan.Group_Name %></td>
-                                                                <td><%= plan.PriorityLevel %></td>
+                                                                <td><%= measurement.measurement_ID %></td>
+                                                                <td><%= measurement.measurement_Name %></td>
+                                                                <td><%= measurement.measurement_Description %></td>
+                                                                <td><%= measurement.Group_Name %></td>
                                                                 <td>
-                                                                    <form method="get" action="assignplantomembers">
-                                                                        <input type="hidden" name="PID"
-                                                                            value="<%= plan.Plan_ID %>">
-                                                                        <input type="hidden" name="RID"
-                                                                            value="<%= dataB[0].recommendation_ID %>">
-                                                                        <input type="hidden" name="GID"
-                                                                            value="<%= plan.GroupAssigned %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Assign
-                                                                            Members</button>
-                                                                    </form>
-                                                                    <form method="get" action="ViewPlanDetails">
-                                                                            <input type="hidden" name="PID"
-                                                                                value="<%= plan.Plan_ID %>">
+                                                                    <form method="get" action="ViewMeasurementDetails">
+                                                                            <input type="hidden" name="MID"
+                                                                                value="<%= measurement.measurement_ID %>">
                                                                             <button type="submit"
                                                                                 class="btn btn-primary">View Measurement Details</button><!--Edited-->
                                                                     </form>
@@ -200,80 +188,51 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <!CREATE PLAN TAB>
+                                                <!CREATE MEASUREMENT TAB>
                                                     <div role="tabpanel" class="tab-pane fade" id="tab_content2"
                                                         aria-labelledby="profile-tab">
                                                         <form id="create" data-parsley-validate
                                                             class="form-horizontal form-label-left" method="post"
-                                                            action="SendPlan">
+                                                            action="SendMeasurement">
 
-                                                            <!--Plan Name input field-->
+                                                            <!--Measurement Name input field-->
                                                             <div class="form-group">
-                                                                <label for="Plan Name"
+                                                                <label for="MeasurementName"
                                                                     class="control-label col-md-3 col-sm-3 col-xs-12">
                                                                     Measurement Name: <span class="required">*</span></label><!--Edited-->
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                    <input type="text" id="Plan Name" name="PlanName"
+                                                                    <input type="text" id="MeasurementName" name="MeasurementName"
                                                                         required="required"
                                                                         class="form-control col-md-7 col-xs-12"
-                                                                        placeholder="Plan Name">
+                                                                        placeholder="Measurment Name">
                                                                 </div>
                                                             </div>
 
-                                                            <!--Plan Description field-->
+                                                            <!--Measurement Description field-->
                                                             <div class="form-group">
-                                                                <label for="Plan Description"
+                                                                <label for="MeasurementDesc"
                                                                     class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
                                                                     Description:<!--Edited-->
                                                                     <span class="required">*</span></label>
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <textarea class="form-control" rows="3"
-                                                                        id="PlanDesc" name="PlanD"
-                                                                        placeholder="Plan Description"
+                                                                        id="MeasurementDesc" name="MeasurementDesc"
+                                                                        placeholder="Measurement Description"
                                                                         required="required"
                                                                         onkeyup="textAreaAdjust(this)"
                                                                         style="overflow:hidden"></textarea>
                                                                 </div>
                                                             </div>
-                                                                <!--Measurement input field-->
-                                                                <div class="form-group">
-                                                                    <label for="Quality Target"
-                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Measurement:
-                                                                        <span class="required">*</span></label>
-                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                        <textarea class="form-control" rows="3"
-                                                                            id="TaskDesc" name="PlanM"
-                                                                            placeholder="Measurement"
-                                                                            required="required"
-                                                                            onkeyup="textAreaAdjust(this)"
-                                                                            style="overflow:hidden"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <!--Base Formula input field-->
-                                                                <div class="form-group">
-                                                                    <label for="Quality Target"
-                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Base
-                                                                        Formula: </label>
-                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                        <textarea class="form-control" rows="3"
-                                                                            id="General Objective" name="BaseFormula"
-                                                                            placeholder="Base Formula"
-                                                                            onkeyup="textAreaAdjust(this)"
-                                                                            style="overflow:hidden"></textarea>
-                                                                    </div>
-                                                                </div>
                                                                 <!--Quality Target Input field-->
                                                                 <div class="form-group">
                                                                     <label for="Quality Target"
                                                                         class="control-label col-md-3 col-sm-3 col-xs-12">Quality
                                                                         Target: </label>
                                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                        <textarea class="form-control" rows="3"
-                                                                            id="Measurement"
-                                                                            placeholder="Quality Target"
-                                                                            name="QualityTarget"
-                                                                            onkeyup="textAreaAdjust(this)"
-                                                                            style="overflow:hidden"></textarea>
+                                                                            <input type="number" id="QualityTarget" name="QualityTarget"
+                                                                            required="required"
+                                                                            class="form-control col-md-7 col-xs-12"
+                                                                            placeholder="Measurment Name">
                                                                     </div>
                                                                 </div>
                                                                 <!--Procedures input field-->
@@ -283,7 +242,7 @@
                                                                     </label>
                                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                                         <textarea class="form-control" rows="3"
-                                                                            id="Quality Targets"
+                                                                            id="Procedures"
                                                                             placeholder="Procedures" name="Procedures"
                                                                             ></textarea>
                                                                     </div>
@@ -300,8 +259,8 @@
                                                                 </div>
                                                                 <input type="hidden" name="GID"
                                                                     value="<%= dataB[0].group_ID %>">
-                                                                <input type="hidden" name="RID"
-                                                                    value="<%= dataB[0].recommendation_ID %>">
+                                                                <input type="hidden" name="MID"
+                                                                    value="<%= dataB[0].metric_ID %>">
                                                         </form>
 
                                                     </div>

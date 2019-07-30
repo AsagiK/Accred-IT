@@ -68,55 +68,41 @@ c<!DOCTYPE html>
                                                     <th>Group Assigned</th>
                                                     <th>Source</th>
                                                     <th>Date</th>
+                                                    <th></th>
                                                     
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% for (var recommendation of data) { 
+                                                <% for (var metric of data) { 
                                                     
                                                     %>
 
                                                 <tr>
                                              
-                                                    <td><%= recommendation.recommendation_Name %></td>
-                                                    <td><%= recommendation.recommendation_Desc %></td>
-                                                    <td><%= recommendation.priority_Level %></td>
-                                                    <td><%= recommendation.Group_Name %></td>
-                                                    <td><%= recommendation.accreditation_Name %></td>
-                                                    <td><%= recommendation.date_insert.toString().substring(0,15) %>
+                                                    <td><%= metric.metric_Name %></td>
+                                                    <td><%= metric.metric_Desc %></td>
+                                                    <td><%= metric.priority_Level %></td>
+                                                    <td><%= metric.Group_Name %></td>
+                                                    <td><%= metric.source_Name %></td>
+                                                    <td><%= metric.date_insert.toString().substring(0,15) %>
                                                     </td>
                                                     <td>
 
                                                         <div class="form-group">
                                                             <div>
                                                                 <!BUTTONS FOR EDIT AND PLAN>
-                                                                    <% if (recommendation.Group_Name=="No Group Assigned") { %>
-                                                                    <form method="get"
-                                                                        action="AssignRecommendationToGroup">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= recommendation.area_ID %>">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Assign
-                                                                            Group</button>
-                                                                    </form>
-                                                                    <% } else { %>
+                                                                    
                                                                     <form method="get" action="editmetric">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= recommendation.area_ID %>">
                                                                         <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                            value="<%= metric.metric_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Edit
                                                                             Metric</button>
                                                                     </form>
-                                                                    <% } %>
-
                                                                     <br /><br />
-                                                                    <form method="get" action="PlanPage">
-                                                                        <input type="hidden" name="PID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                    <form method="get" action="MeasurementPage">
+                                                                        <input type="hidden" name="MID"
+                                                                            value="<%= metric.metric_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">View Measurements</button>
                                                                     </form>
@@ -154,7 +140,7 @@ c<!DOCTYPE html>
                                     </h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="CreateRecommendation" data-parsley-validate
+                                    <form id="CreateMetric" data-parsley-validate
                                         class="form-horizontal form-label-left" action="addmetric"
                                         method="POST">
                                         <div class="form-group">
@@ -162,9 +148,9 @@ c<!DOCTYPE html>
                                                 for="first-name">Source:<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="accreditation">
-                                                    <% for (var accreditation of dataC) { %>
-                                                    <option value="<%= accreditation.accreditation_ID %>"><%= accreditation.accreditation_Name %></option>
+                                                <select class="form-control" name="source">
+                                                    <% for (var source of dataB) { %>
+                                                    <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
                                                     <% } %>
                                                 </select>
                                             </div>
@@ -174,7 +160,7 @@ c<!DOCTYPE html>
                                                 for="first-name">Metric Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="text" id="recommendationName" name="recommendationName"
+                                                <input type="text" id="metricName" name="metricName"
                                                     required="required" class="form-control col-md-7 col-xs-12"
                                                     placeholder="Name" />
                                             </div>
@@ -184,8 +170,8 @@ c<!DOCTYPE html>
                                                 class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
                                                     class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <textarea class="form-control" rows="3" id="recommendationDesc"
-                                                    name="recommendationDesc" placeholder="Description"
+                                                <textarea class="form-control" rows="3" id="metricDesc"
+                                                    name="metricDesc" placeholder="Description"
                                                     required="required" onkeyup="textAreaAdjust(this)"
                                                     style="overflow:hidden"></textarea>
                                             </div>
@@ -208,9 +194,9 @@ c<!DOCTYPE html>
                                                 for="first-name">Assign Group:<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="accreditation">
-                                                    <% for (var accreditation of dataC) { %>
-                                                    <option value="<%= accreditation.accreditation_ID %>"><%= accreditation.accreditation_Name %></option>
+                                                <select class="form-control" name="group">
+                                                    <% for (var group of dataC) { %>
+                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
                                                     <% } %>
                                                 </select>
                                             </div>
@@ -219,7 +205,7 @@ c<!DOCTYPE html>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 Close
                                             </button>
-                                            <button type="submit" class="btn btn-primary" form="CreateRecommendation">
+                                            <button type="submit" class="btn btn-primary" form="CreateMetric">
                                                 Submit
                                             </button>
                                         </div>

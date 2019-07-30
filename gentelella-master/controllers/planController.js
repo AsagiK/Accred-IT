@@ -257,38 +257,24 @@ module.exports = {
         console.log("Recommendations");
     },
 
-    SendPlan: function (req, resp) {
-        var go = req.body.GenObj;
-        var me = req.body.PlanM;
-        var tn = req.body.BaseFormula;
+    SendMeasurement: function (req, resp) {
         var qt = req.body.QualityTarget;
         var pr = req.body.Procedures;
-        var pl = "High";
-        var bs = "No base standard assigned"
-        var RID = req.body.RID;
+        var MID = req.body.MID;
         var GID = req.body.GID;
-        var pn = req.body.PlanName;
-        var pd = req.body.PlanD;
-        console.log(go);
-        console.log(me);
-        console.log(tn);
-        console.log(qt);
-        console.log(pr);
-        console.log(pl);
-        console.log(bs);
-        console.log(RID);
-        console.log(pn);
-        console.log(pd);
-        var sql = "INSERT INTO `capstone`.`plans` (`GenObjective`, `Measurement`, `BaseFormula`, `QualityTarget`, `Procedures`,`PriorityLevel`,`BaseStandard`, `recommendation_ID`,`PlanName`,`PlanDescription`, `GroupAssigned`) VALUES (? , ? , ? , ?, ?, ?, ?, ?,?,?,?)";
-        var values = [go, me, tn, qt, pr, pl, bs, RID, pn, pd, GID];
+        var mn = req.body.MeasurementName;
+        var md = req.body.MeasurementDesc;
+        var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`, `Procedures`, `metric_ID`,`measurement_Name`,`measurement_Description`, `GroupAssigned`) VALUES (? , ?, ?, ?, ?, ?)";
+        var values = [qt, pr, MID, mn, md, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
-            resp.redirect('/PlanPage?PID=' + RID);
+            resp.redirect('/MeasurementPage?MID=' + MID);
         });
+        console.log("INSERTED MEASUREMENT");
     },
 
-    Planning: function (req, resp) {
+    Measurement: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -309,17 +295,16 @@ module.exports = {
                 }
             }
         }
-        var PlanID = req.query.PID;
-        console.log(PlanID);
-        var sql = "Select plans.Plan_ID, plans.PlanName, plans.PlanDescription, plans.GroupAssigned, group.Group_Name, cycle.cycle_Name, cycle.start_Date, plans.PriorityLevel, plans.Deadline FROM capstone.plans join capstone.cycle on plans.CycleTime = cycle.Cycle_ID join capstone.group on plans.GroupAssigned = group.Group_ID where recommendation_ID = ?; Select recommendation.recommendation_ID, Recommendation.group_ID, recommendation.recommendation_Name from capstone.recommendation where recommendation_ID = ?; SELECT * FROM capstone.cycle;"
-        var values = [PlanID, PlanID];
+        var MID = req.query.MID;
+        console.log(MID);
+        var sql = "Select measurement.measurement_ID, measurement.measurement_Name, measurement.measurement_Description, measurement.GroupAssigned, group.Group_Name, measurement.Deadline FROM capstone.measurement join capstone.group on measurement.GroupAssigned = group.Group_ID where metric_ID = ?; Select metric.metric_ID, metric.group_ID, metric.metric_Name from capstone.metric where metric_ID = ?;"
+        var values = [MID, MID];
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
             if (results) {
-                resp.render('./pages/PlanPage.ejs', {
+                resp.render('./pages/MeasurementPage.ejs', {
                     data: results[0],
                     dataB: results[1],
-                    dataC: results[2],
                     notif: passData,
                     current_user: sess.user
                 });
@@ -335,7 +320,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, area.Area_Name, group.Group_Name, accreditation.accreditation_Name FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID join capstone.accreditation on recommendation.accreditation_ID = accreditation.accreditation_ID; Select * FROM capstone.area;SELECT * FROM capstone.accreditation", function (err, results, fields) {
+            connection.query("Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID; SELECT * FROM capstone.source; SELECT * FROM capstone.group", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/QualityMetrics.ejs', {
                     data: results[0],
@@ -350,57 +335,54 @@ module.exports = {
     },
 
     addmetric: function (req, resp) {
-        var accreditation = (req.body.accreditation);
-        var recommendationName = (req.body.recommendationName);
-        var recommendationDesc = (req.body.recommendationDesc);
-        var grade = (req.body.grade);
+        var source = (req.body.source);
+        var metricName = (req.body.metricName);
+        var metricDesc = (req.body.metricDesc);
         var priority = (req.body.priority);
-        var area = (req.body.SelectArea);
+        var group = (req.body.group);
         var today = new Date();
         //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         //var dateTime = date+' '+time;
         var current = today.toISOString().split('T')[0];
         console.log(today);
-        console.log(recommendationName);
-        console.log(recommendationDesc);
-        console.log(grade);
+        console.log(metricName);
+        console.log(metricDesc);
         console.log(priority);
-        console.log(area);
+        console.log(group);
         console.log(current);
-        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`, `accreditation_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
-        var values = [recommendationName, recommendationDesc, grade, priority, current, area, accreditation];
+        console.log(source);
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`) VALUES (? , ? , ? , ?, ?, ?)";
+        var values = [metricName, metricDesc, priority, current, group, source];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
             resp.redirect('/QualityMetric');
         });
     },
-    addrecommendationtoaccreditation: function (req, resp) {
-        var accreditation = (req.body.accreditation);
-        var recommendationName = (req.body.recommendationName);
-        var recommendationDesc = (req.body.recommendationDesc);
-        var grade = (req.body.grade);
+    addmetrictosource: function (req, resp) {
+        var source = (req.body.source);
+        var metricName = (req.body.metricName);
+        var metricDesc = (req.body.metricDesc);
         var priority = (req.body.priority);
-        var area = (req.body.SelectArea);
+        var group = (req.body.group);
         var today = new Date();
         //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         //var dateTime = date+' '+time;
         var current = today.toISOString().split('T')[0];
         console.log(today);
-        console.log(recommendationName);
-        console.log(recommendationDesc);
-        console.log(grade);
+        console.log(metricName);
+        console.log(metricDesc);
         console.log(priority);
-        console.log(area);
+        console.log(group);
         console.log(current);
-        var sql = "INSERT INTO `capstone`.`recommendation` (`recommendation_Name`, `recommendation_Desc`, `recommendation_Grade` , `priority_Level`, `date_insert`, `area_ID`, `accreditation_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
-        var values = [recommendationName, recommendationDesc, grade, priority, current, area, accreditation];
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`) VALUES (? , ? , ? , ?, ?, ?)";
+        var values = [metricName, metricDesc, priority, current, group, source];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
-            resp.redirect('/ViewRecommendationsofAccreditation?AID=' + accreditation);
+            resp.redirect('/ViewMetricofSource?SID=' + source);
         });
     },
 
@@ -453,40 +435,36 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var RID = req.query.UID;
-            var AID = req.query.AID;
-            var sql = "Select recommendation.recommendation_ID, recommendation.recommendation_Name, recommendation.recommendation_Desc, recommendation.recommendation_Grade, recommendation.priority_Level, recommendation.date_insert, recommendation.area_ID, recommendation.group_ID, area.Area_Name, group.Group_ID, group.Group_Name, group.Area_ID  FROM capstone.recommendation join capstone.area on recommendation.area_ID = area.Area_ID join capstone.group on recommendation.group_ID = group.Group_ID where recommendation.recommendation_ID = ?; Select group.Group_ID, group.Group_Name, group.Area_ID FROM capstone.group where group.Area_ID = ?;"
-            var values = [RID, AID]
+            var MID = req.query.UID;
+            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.group_ID, group.Group_ID, group.Group_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID where metric.metric_ID = ?; Select group.Group_ID, group.Group_Name FROM capstone.group;"
+            var values = [MID]
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/EditRecommendation.ejs', {
+                resp.render('./pages/EditMetric.ejs', {
                     data: results[0],
                     dataB: results[1],
                     current_user: sess.user
                 });
                 console.log(results);
-                console.log("Edit Recommendation Page");
+                console.log("EDIT METRIC PAGE");
             });
         }
     },
 
     altermetric: function (req, resp) {
         var id = (req.body.UID);
-        var name = (req.body.recommendationName);
-        var desc = (req.body.recommendationDesc);
-        var grade = (req.body.grade);
+        var name = (req.body.metricName);
+        var desc = (req.body.metricDesc);
         var priority = (req.body.priority);
-        var AID = (req.body.AID);
         var GID = (req.body.group);
         var date = new Date();
         var current = date.toISOString().split('T')[0];
         console.log(id);
         console.log(name);
         console.log(desc);
-        console.log(grade);
         console.log(priority);
-        var sql = "Update capstone.recommendation set recommendation_Name = ?, recommendation_Desc = ?, recommendation_Grade = ?, priority_Level = ?, date_insert = ?, area_ID = ?, group_ID = ? where recommendation_ID = ?";
-        var values = [name, desc, grade, priority, current, AID, GID, id];
+        var sql = "Update capstone.metric set metric_Name = ?, metric_Desc = ?, priority_Level = ?, date_insert = ?, group_ID = ? where metric_ID = ?";
+        var values = [name, desc, priority, current, GID, id];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -585,25 +563,25 @@ module.exports = {
         }
     },
 
-    ViewPlanDetails: function (req, resp) {
+    ViewMeasurementDetails: function (req, resp) {
 
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-        var PID = (req.query.PID);
-        console.log(PID);
-        var values = [PID];
-        var sql = "SELECT plans.Plan_ID ,plans.GenObjective, plans.Measurement, plans.BaseFormula, plans.BaseStandard, plans.QualityTarget, plans.Procedures, plans.CycleTime, plans.PriorityLevel, plans.PlanName, plans.Plan_MinCycles, plans.Deadline, plans.CycleCount, cycle.start_date, cycle.cycle_Name From capstone.plans join capstone.cycle on plans.CycleTime = cycle.cycle_ID where Plan_ID = ?;"
+        var MID = (req.query.MID);
+        console.log(MID);
+        var values = [MID];
+        var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?;"
         connection.query(sql, values, function (err, results, fields) {
             if (err) throw err;
-            resp.render('./pages/ViewPlanDetails.ejs', {
+            resp.render('./pages/ViewMeasurementDetails.ejs', {
                 data: results, current_user: sess.user
             })
             console.log(results);
         });
-        console.log("ViewPlanDetails");
+        console.log("VIEW MEASUREMENT DETAILS");
         }
 
     },
@@ -823,8 +801,8 @@ module.exports = {
         var sn = (req.body.sourcename);
         var sd = (req.body.sourcedesc);
         console.log(id);
-        console.log(an);
-        console.log(ad);
+        console.log(sn);
+        console.log(sd);
         var sql = "Update capstone.source set source_Name = ?, source_Description = ? where source_ID = ? ";
         var values = [sn, sd, id];
         connection.query(sql, values, function (err, result) {
