@@ -71,7 +71,6 @@
         .closebtn:hover {
             color: black;
         }
-
     </style>
 </head>
 <% if(locals.notif){ %>
@@ -119,7 +118,6 @@
         padding: 10px;
         text-align: left;
     }
-
 </style>
 
 <body class="nav-md">
@@ -134,38 +132,208 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <div class="x_content">
+                                
+                                    <div class="title_left">
+                                        <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                    </div>
+                                    <br />
 
-                                <div class="title_left">
-                                    <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
-                                </div>
-                                <br />
-
-                                <div class="col-md-12 col-sm-6 col-xs-12">
-                                    <div class="x_panel">
-                                        <div class="x_title">
-                                            <div class="page-title">
-                                                <div class="title_right">
-                                                    <h2>Procedures: </h2>
+                                    <div class="col-md-12 col-sm-6 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <div class="page-title">
+                                                    <div class="title_right">
+                                                        <h2>Procedures: </h2>
+                                                    </div>
+                                                    <div class="title_left">
+                                                        <h2>Quality Target: <%= data[0].QualityTarget %></h2>
+                                                    </div>
                                                 </div>
-                                                <div class="title_left">
-                                                    <h2>Quality Target: <%= data[0].QualityTarget %></h2>
-                                                </div>
+                                                <!--Edited-->
+                                                <div class="clearfix"></div>
                                             </div>
-                                            <!--Edited-->
-                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="x_content">
+                                    <!BUTTONS FOR CREATE OF ACTIVITIES>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg">
+                                        Create Activities
+                                    </button>
 
-                                    <div class="panel-body">
+                                    <div class="x_content">
+
+                                        <div class="panel-body">
+                                            <div class="panel">
+                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                    data-toggle="collapse" data-parent="#headingTwo"
+                                                    href="#FacilitiesGroupOne" aria-expanded="true"
+                                                    aria-controls="FacilitiesGroupOne">
+                                                </a>
+                                                
+                                                <br>
+
+                                                <div class="ln_solid"></div>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th></th>
+                                                            <th>Activity Name</th>
+                                                            <th>Description</th>
+                                                            <th>Target</th>
+                                                            <th></th>
+                                                            <th style="display: none">Code</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for (activities of dataB) { %>
+                                                            <tr>
+                                                                <% if (activities.code == "0") { %>
+                                                                <td><input type="checkbox" onclick="return false;"/></td>
+                                                                <% } else { %>
+                                                                <td>NOT A CHECKBOX</td>
+                                                                <% } %>
+                                                                <td><%= activities.activity_name %></td>
+                                                                <td><%= activities.description %></td>
+                                                                <td><%= activities.target %></td>
+                                                            </tr>
+                                                            <% } %>
+                                                    </tbody>
+                                                </table>
+                                                <!SUBMIT BUTTON HERE>
+                                                    <button type="button" class="btn btn-success"
+                                                        id="">SUBMIT</button>
+                                            </div>
+
+                                            <!--End of Group 1 Table -->
+
+                                        </div>
+                                    </div>
+
+                                    <div class="ln_solid"></div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_content">
+                                                <br />
+                                                <form id="demo-form2" data-parsley-validate
+                                                    class="form-horizontal form-label-left" action="" method=""
+                                                    encType="multipart/form-data">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                            for="first-name">Report Title <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <!--First name Input field-->
+                                                            <input type="text" id="docname" name="DocName"
+                                                                required="required"
+                                                                class="form-control col-md-7 col-xs-12"
+                                                                placeholder="First name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                            for="fileupload">Choose
+                                                            File <span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="file" id="DocFile" name="DocFile"
+                                                                required="required"
+                                                                class="form-control col-md-7 col-xs-12"
+                                                                onchange="md5Generate(event)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                            for="first-name">Report Description <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <textarea id="description" name="DocDesc"
+                                                                required="required"
+                                                                class="form-control col-md-7 col-xs-12"
+                                                                onkeyup="textAreaAdjust(this)"
+                                                                style="overflow:hidden"></textarea>
+                                                        </div>
+                                                    </div>
+
+
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                                    <button class="btn btn-primary" type="reset">Reset</button>
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    var close = document.getElementsByClassName("closebtn");
+                    var i;
+
+                    for (i = 0; i < close.length; i++) {
+                        close[i].onclick = function () {
+                            var div = this.parentElement;
+                            div.style.opacity = "0";
+                            setTimeout(function () {
+                                div.style.display = "none";
+                            }, 600);
+                        }
+                    }
+                </script>
+
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <!--Modal for Create -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Create Activities
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="panel-body">
                                         <div class="panel">
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                            <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                data-toggle="collapse" data-parent="#headingTwo"
+                                                href="#FacilitiesGroupOne" aria-expanded="true"
+                                                aria-controls="FacilitiesGroupOne">
                                             </a>
                                             <div class="title_left">
-                                                <button type="button" class="btn btn-default" id="check">Check</button>
-                                                <button type="button" class="btn btn-default" id="count">Count</button>
+                                                <button type="button" class="btn btn-default"
+                                                    id="check">Check</button>
+                                                <button type="button" class="btn btn-default"
+                                                    id="count">Count</button>
                                             </div>
                                             <br>
 
@@ -176,9 +344,13 @@
                                                 <br>
                                                 <label for="descriptioncheck">Description</label>
                                                 <br>
-                                                <textarea id="descriptioncheck" name="descriptioncheck" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                <textarea id="descriptioncheck" name="descriptioncheck"
+                                                    required="required" class="form-control col-md-7 col-xs-12"
+                                                    onkeyup="textAreaAdjust(this)"
+                                                    style="overflow:hidden"></textarea>
                                                 <br>
-                                                <input type="hidden" name="targetcheck" id="targetcheck" value="100">
+                                                <input type="hidden" name="targetcheck" id="targetcheck"
+                                                    value="100">
                                                 <br><br>
                                                 <button type="button" class="btn btn-default add-row">Add</button>
                                             </div>
@@ -189,7 +361,10 @@
                                                 <br>
                                                 <label for="descriptioncount">Description</label>
                                                 <br>
-                                                <textarea id="descriptioncount" name="descriptioncount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                <textarea id="descriptioncount" name="descriptioncount"
+                                                    required="required" class="form-control col-md-7 col-xs-12"
+                                                    onkeyup="textAreaAdjust(this)"
+                                                    style="overflow:hidden"></textarea>
                                                 <br>
                                                 <label for="target">Target</label>
                                                 <br>
@@ -220,23 +395,27 @@
                                                 </tbody>
                                             </table>
                                             <!SUBMIT BUTTON HERE>
-                                                <button type="button" class="btn btn-success" id="toJSON">SUBMIT</button>
+                                                <button type="button" class="btn btn-success"
+                                                    id="toJSON">SUBMIT</button>
                                         </div>
 
 
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="passdata" value="1">
                                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                id="backsuccess">Hi</button>
                                         </form>
 
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="passdata" value="0">
                                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                id="backfail">Hi</button>
                                         </form>
 
-                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>"
+                                            id="mid">
 
                                         <!--End of Group 1 Table -->
 
@@ -246,105 +425,24 @@
 
 
                                 <script>
-                                    $(document).ready(function() {
-                                        $("#check").click(function() {
+                                    $(document).ready(function () {
+                                        $("#check").click(function () {
                                             $("#checkbox").toggle();
                                         });
-                                        $("#count").click(function() {
+                                        $("#count").click(function () {
                                             $("#countbox").toggle();
                                         });
                                     });
-
                                 </script>
-
-                                <div class="ln_solid"></div>
-
-
-
-
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="x_panel">
-                                        <div class="x_content">
-                                            <br />
-                                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="" method="" encType="multipart/form-data">
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Title <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <!--First name Input field-->
-                                                        <input type="text" id="docname" name="DocName" required="required" class="form-control col-md-7 col-xs-12" placeholder="First name">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
-                                                        File <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="file" id="DocFile" name="DocFile" required="required" class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Description <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea id="description" name="DocDesc" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                    </div>
-                                                </div>
-
-
-
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                <button class="btn btn-primary" type="button">Cancel</button>
-                                                <button class="btn btn-primary" type="reset">Reset</button>
-                                                <button type="submit" class="btn btn-success">Submit</button>
-                                            </div>
-                                        </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
                 </div>
-                <script>
-                    var close = document.getElementsByClassName("closebtn");
-                    var i;
-
-                    for (i = 0; i < close.length; i++) {
-                        close[i].onclick = function() {
-                            var div = this.parentElement;
-                            div.style.opacity = "0";
-                            setTimeout(function() {
-                                div.style.display = "none";
-                            }, 600);
-                        }
-                    }
-
-                </script>
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
             </div>
-        </div>
 
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".add-row").click(function() {
+            $(document).ready(function () {
+                $(".add-row").click(function () {
                     if (!checkEmptyInputcheck()) {
                         console.log("testing add button");
                         var activity = $("#activitycheck").val();
@@ -358,7 +456,7 @@
                     }
                 });
 
-                $(".add-row2").click(function() {
+                $(".add-row2").click(function () {
                     if (!checkEmptyInputcount()) {
                         console.log("testing add button");
                         var activity = $("#activitycount").val();
@@ -406,7 +504,7 @@
                 r.closest("tr").remove();
             }
 
-            $("#toJSON").click(function() {
+            $("#toJSON").click(function () {
                 console.log("Hello");
                 var table = JSON.stringify($('#table').tableToJSON());
                 var mid = document.getElementById("mid").value
@@ -414,11 +512,11 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/AddActivitiesJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {
+                xhr.onload = function () {
                     console.log(xhr.responseText);
                 };
 
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4) {
                         var respData = xhr.responseText;
                         if (respData == "OK") {
@@ -446,16 +544,16 @@
                 button.click();
 
             };
-
         </script>
-        
-        <script>
-                function textAreaAdjust(o) {
-                    o.style.height = "1px";
-                    o.style.height = (25 + o.scrollHeight) + "px";
-                }
-            </script>
 
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+        </script>
+
+        
 
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
