@@ -280,37 +280,37 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-        var alert = req.query.passdata;
-        var passData
-        if (alert) {
-            if (alert == 0) {
-                passData = {
-                    goodStatus: 0,
-                    msg: "User/s not added"
-                }
-            } else {
-                passData = {
-                    goodStatus: 1,
-                    msg: "User/s added"
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "User/s not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "User/s added"
+                    }
                 }
             }
-        }
-        var MID = req.query.MID;
-        console.log(MID);
-        var sql = "Select measurement.measurement_ID, measurement.measurement_Name, measurement.measurement_Description, measurement.GroupAssigned, group.Group_Name, measurement.Deadline FROM capstone.measurement join capstone.group on measurement.GroupAssigned = group.Group_ID where metric_ID = ?; Select metric.metric_ID, metric.group_ID, metric.metric_Name from capstone.metric where metric_ID = ?;"
-        var values = [MID, MID];
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            if (results) {
-                resp.render('./pages/MeasurementPage.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    notif: passData,
-                    current_user: sess.user
-                });
-            }
-            console.log(results);
-        });
+            var MID = req.query.MID;
+            console.log(MID);
+            var sql = "Select measurement.measurement_ID, measurement.measurement_Name, measurement.measurement_Description, measurement.GroupAssigned, group.Group_Name, measurement.Deadline FROM capstone.measurement join capstone.group on measurement.GroupAssigned = group.Group_ID where metric_ID = ?; Select metric.metric_ID, metric.group_ID, metric.metric_Name from capstone.metric where metric_ID = ?;"
+            var values = [MID, MID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/MeasurementPage.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        notif: passData,
+                        current_user: sess.user
+                    });
+                }
+                console.log(results);
+            });
         }
     },
 
@@ -477,26 +477,26 @@ module.exports = {
     },
 
     assignplantomembers: function (req, resp) {
-      sess = req.session;
+        sess = req.session;
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-        var PID = (req.query.PID);
-        var GID = (req.query.GID);
-        console.log(PID);
-        console.log(GID);
-        var values = [PID, GID];
-        connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT groupdetails.Groupdetails_ID, groupdetails.Groupdetails_UserID, users.User_ID, users.User_First, users.User_Last, users.username FROM capstone.groupdetails join capstone.users on groupdetails.Groupdetails_ID = users.Group && groupdetails.Groupdetails_UserID = users.User_ID where groupdetails_ID = ?;", values, function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            resp.render('./pages/AssignPlanToGroupMember.ejs', {
-                data: results[0],
-                dataB: results[1],
-              current_user: sess.user
-            })
-            console.log(results[1]);
-        });
+            var PID = (req.query.PID);
+            var GID = (req.query.GID);
+            console.log(PID);
+            console.log(GID);
+            var values = [PID, GID];
+            connection.query("SELECT * FROM capstone.plans where plans.Plan_ID = ?; SELECT groupdetails.Groupdetails_ID, groupdetails.Groupdetails_UserID, users.User_ID, users.User_First, users.User_Last, users.username FROM capstone.groupdetails join capstone.users on groupdetails.Groupdetails_ID = users.Group && groupdetails.Groupdetails_UserID = users.User_ID where groupdetails_ID = ?;", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/AssignPlanToGroupMember.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                })
+                console.log(results[1]);
+            });
         }
         console.log("ASSIGN MEMBER TO PLAN");
 
@@ -571,18 +571,35 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-        var MID = (req.query.MID);
-        console.log(MID);
-        var values = [MID];
-        var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?;"
-        connection.query(sql, values, function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/ViewMeasurementDetails.ejs', {
-                data: results, current_user: sess.user
-            })
-            console.log(results);
-        });
-        console.log("VIEW MEASUREMENT DETAILS");
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Activity/Activities not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Activity/Activities added"
+                    }
+                }
+            }
+            var MID = (req.query.MID);
+            console.log(MID);
+            var values = [MID];
+            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?;"
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewMeasurementDetails.ejs', {
+                    data: results,
+                    current_user: sess.user,
+                    notif: passData
+                })
+                console.log(results);
+            });
+            console.log("VIEW MEASUREMENT DETAILS");
         }
 
     },
@@ -712,12 +729,12 @@ module.exports = {
         var values = [an, ad];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            if(result){
+            if (result) {
                 resp.redirect('/ViewSources');
                 console.log("Record Inserted");
             }
         });
-        
+
     },
 
     ViewSources: function (req, resp) {
@@ -829,7 +846,7 @@ module.exports = {
                     current_user: sess.user
                 });
             });
-            
+
             console.log("CREATE CUSTOM GRADES");
         }
     },

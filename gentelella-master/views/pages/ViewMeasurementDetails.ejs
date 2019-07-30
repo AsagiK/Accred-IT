@@ -35,7 +35,58 @@
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
 </head>
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
 
 <style>
     #checkbox {
@@ -68,6 +119,7 @@
         padding: 10px;
         text-align: left;
     }
+
 </style>
 
 <body class="nav-md">
@@ -109,9 +161,7 @@
 
                                     <div class="panel-body">
                                         <div class="panel">
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                                data-parent="#headingTwo" href="#FacilitiesGroupOne"
-                                                aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                             </a>
                                             <div class="title_left">
                                                 <button type="button" class="btn btn-default" id="check">Check</button>
@@ -120,107 +170,73 @@
                                             <br>
 
                                             <div id="checkbox">
-                                                <label for="activity">Activity</label>
+                                                <label for="activitycheck">Activity</label>
+                                                <br>
                                                 <input type="text" name="activitycheck" id="activitycheck" value="">
+                                                <br>
+                                                <label for="descriptioncheck">Description</label>
+                                                <br>
+                                                <textarea id="descriptioncheck" name="descriptioncheck" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                <br>
                                                 <input type="hidden" name="targetcheck" id="targetcheck" value="100">
+                                                <br><br>
                                                 <button type="button" class="btn btn-default add-row">Add</button>
                                             </div>
                                             <div id="countbox">
-                                                <label for="activity">Activity</label>
+                                                <label for="activitycount">Activity</label>
+                                                <br>
                                                 <input type="text" name="activitycount" id="activitycount" value="">
-                                                <label for="target">Activity</label>
+                                                <br>
+                                                <label for="descriptioncount">Description</label>
+                                                <br>
+                                                <textarea id="descriptioncount" name="descriptioncount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                <br>
+                                                <label for="target">Target</label>
+                                                <br>
                                                 <input type="number" name="targetcount" id="targetcount" value="">
+                                                <br><br>
                                                 <button type="button" class="btn btn-default add-row2">Add</button>
                                             </div>
 
 
 
                                             <div class="ln_solid"></div>
-                                            <table>
+                                            <table id="table">
                                                 <thead>
                                                     <tr>
 
                                                         <th></th>
                                                         <th>Activity Name</th>
+                                                        <th>Description</th>
                                                         <th>Target</th>
                                                         <th></th>
+                                                        <th style="display: none">Code</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                    <tr>
-                                                        
 
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                             <!SUBMIT BUTTON HERE>
-                                            <button type="button" class="btn btn-success">SUBMIT</button>
+                                                <button type="button" class="btn btn-success" id="toJSON">SUBMIT</button>
                                         </div>
 
-                                        <script type="text/javascript">
-                                            $(document).ready(function () {
-                                                $(".add-row").click(function () {
-                                                    if(!checkEmptyInputcheck()){
-                                                        console.log("testing add button");
-                                                        var activity = $("#activitycheck").val();
-                                                        var target = $("#targetcheck").val();
-                                                        var markup =
-                                                            "<tr><td><i class='fa fa-check-square'></i></td><td>" +
-                                                            activity + "</td><td>" + target +
-                                                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                                                        $("table tbody").append(markup);
-                                                    }
-                                                });
 
-                                                $(".add-row2").click(function () {
-                                                if(!checkEmptyInputcount()){
-                                                    console.log("testing add button");
-                                                    var activity = $("#activitycount").val();
-                                                    var target = $("#targetcount").val();
-                                                    var markup = "<tr><td></td><td>" + activity +
-                                                        "</td><td>" + target +
-                                                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                                                    $("table tbody").append(markup);
-                                                }
-                                                });
-                                            });
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="passdata" value="1">
+                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                            <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                                        </form>
 
-                                            function checkEmptyInputcheck() {
-                                                var isEmpty = false,
-                                                    activitycheck = document.getElementById("activitycheck").value,
-                                                    targetcheck = document.getElementById("targetcheck").value;
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="passdata" value="0">
+                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                            <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                                        </form>
 
-                                                if (activitycheck === "") {
-                                                    alert("Activity Cannot Be Empty");
-                                                    isEmpty = true;
-                                                } else if (targetcheck === "") {
-                                                    alert("Target Cannot Be Empty");
-                                                    isEmpty = true;
-                                                }
-                                                return isEmpty;
-                                            }
-
-                                            function checkEmptyInputcount() {
-                                                var isEmpty = false,
-                                                    activitycount = document.getElementById("activitycount").value,
-                                                    targetcount = document.getElementById("targetcount").value;
-
-                                                if (activitycount === "") {
-                                                    alert("Activity Cannot Be Empty");
-                                                    isEmpty = true;
-                                                } else if (targetcount === "") {
-                                                    alert("Target Cannot Be Empty");
-                                                    isEmpty = true;
-                                                }
-                                                return isEmpty;
-                                            }
-
-                                            function deleteRow(r) {
-                                                r.closest("tr").remove();
-                                            }
-                                        </script>
+                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
 
                                         <!--End of Group 1 Table -->
 
@@ -230,59 +246,49 @@
 
 
                                 <script>
-                                    $(document).ready(function () {
-                                        $("#check").click(function () {
+                                    $(document).ready(function() {
+                                        $("#check").click(function() {
                                             $("#checkbox").toggle();
                                         });
-                                        $("#count").click(function () {
+                                        $("#count").click(function() {
                                             $("#countbox").toggle();
                                         });
                                     });
+
                                 </script>
 
                                 <div class="ln_solid"></div>
+
+
 
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_content">
                                             <br />
-                                            <form id="demo-form2" data-parsley-validate
-                                                class="form-horizontal form-label-left" action="" method=""
-                                                encType="multipart/form-data">
+                                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="" method="" encType="multipart/form-data">
 
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Title <span class="required">*</span>
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Title <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         <!--First name Input field-->
-                                                        <input type="text" id="docname" name="DocName"
-                                                            required="required" class="form-control col-md-7 col-xs-12"
-                                                            placeholder="First name">
+                                                        <input type="text" id="docname" name="DocName" required="required" class="form-control col-md-7 col-xs-12" placeholder="First name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="fileupload">Choose
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
                                                         File <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="file" id="DocFile" name="DocFile"
-                                                            required="required" class="form-control col-md-7 col-xs-12"
-                                                            onchange="md5Generate(event)">
+                                                        <input type="file" id="DocFile" name="DocFile" required="required" class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Description <span
-                                                            class="required">*</span>
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Description <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea id="description" name="DocDesc" required="required"
-                                                            class="form-control col-md-7 col-xs-12"
-                                                            onkeyup="textAreaAdjust(this)"
-                                                            style="overflow:hidden"></textarea>
+                                                        <textarea id="description" name="DocDesc" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                                     </div>
                                                 </div>
 
@@ -306,7 +312,21 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    var close = document.getElementsByClassName("closebtn");
+                    var i;
 
+                    for (i = 0; i < close.length; i++) {
+                        close[i].onclick = function() {
+                            var div = this.parentElement;
+                            div.style.opacity = "0";
+                            setTimeout(function() {
+                                div.style.display = "none";
+                            }, 600);
+                        }
+                    }
+
+                </script>
 
                 <!-- /page content -->
 
@@ -322,6 +342,119 @@
         </div>
 
 
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".add-row").click(function() {
+                    if (!checkEmptyInputcheck()) {
+                        console.log("testing add button");
+                        var activity = $("#activitycheck").val();
+                        var target = $("#targetcheck").val();
+                        var description = $("#descriptioncheck").val();
+                        var markup =
+                            "<tr><td><i class='fa fa-check-square'></i></td><td>" +
+                            activity + "</td><td>" + description + "</td><td>" + target +
+                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>0<td></tr>";
+                        $("table tbody").append(markup);
+                    }
+                });
+
+                $(".add-row2").click(function() {
+                    if (!checkEmptyInputcount()) {
+                        console.log("testing add button");
+                        var activity = $("#activitycount").val();
+                        var target = $("#targetcount").val();
+                        var description = $("#descriptioncount").val();
+                        var markup = "<tr><td></td><td>" + activity +
+                            "</td><td>" + description + "</td><td>" + target +
+                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
+                        $("table tbody").append(markup);
+                    }
+                });
+            });
+
+            function checkEmptyInputcheck() {
+                var isEmpty = false,
+                    activitycheck = document.getElementById("activitycheck").value,
+                    targetcheck = document.getElementById("targetcheck").value;
+
+                if (activitycheck === "") {
+                    alert("Activity Cannot Be Empty");
+                    isEmpty = true;
+                } else if (targetcheck === "") {
+                    alert("Target Cannot Be Empty");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+
+            function checkEmptyInputcount() {
+                var isEmpty = false,
+                    activitycount = document.getElementById("activitycount").value,
+                    targetcount = document.getElementById("targetcount").value;
+
+                if (activitycount === "") {
+                    alert("Activity Cannot Be Empty");
+                    isEmpty = true;
+                } else if (targetcount === "") {
+                    alert("Target Cannot Be Empty");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+
+            function deleteRow(r) {
+                r.closest("tr").remove();
+            }
+
+            $("#toJSON").click(function() {
+                console.log("Hello");
+                var table = JSON.stringify($('#table').tableToJSON());
+                var mid = document.getElementById("mid").value
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AddActivitiesJSON', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    console.log(xhr.responseText);
+                };
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        var respData = xhr.responseText;
+                        if (respData == "OK") {
+                            console.log("Hi");
+                            backsuccess();
+                        } else {
+                            backfail();
+                        }
+                    }
+                };
+
+
+                xhr.send("table=" + table + "&mid=" + mid);
+
+            });
+
+            function backsuccess() {
+                var button = document.getElementById('backsuccess');
+                button.click();
+
+            };
+
+            function backfail() {
+                var button = document.getElementById('backfail');
+                button.click();
+
+            };
+
+        </script>
+        
+        <script>
+                function textAreaAdjust(o) {
+                    o.style.height = "1px";
+                    o.style.height = (25 + o.scrollHeight) + "px";
+                }
+            </script>
 
 
         <!-- Bootstrap -->
@@ -357,6 +490,7 @@
         <script src="assets/vendors/starrr/dist/starrr.js"></script>
         <!-- Custom Theme Scripts -->
         <script src="assets/build/js/custom.min.js"></script>
+        <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 
 </body>
 

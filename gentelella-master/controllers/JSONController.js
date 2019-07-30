@@ -109,5 +109,35 @@ module.exports = {
             }
         })
     },
-    
+
+    AddActivitiesJSON: function (req, resp) {
+        var UID = req.body.table;
+        var MID = req.body.mid;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var an = UID[key]["Activity Name"];
+            var tar = UID[key]["Target"];
+            var code = UID[key]["Code"];
+            var desc = UID[key]["Description"];
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `code`, `description`, `measurement_ID`) VALUES (?, ?, ?, ?, ?);";
+            var values = [an, tar, code, desc, MID];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
+    },
+
 }
