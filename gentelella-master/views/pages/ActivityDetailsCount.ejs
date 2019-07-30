@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Submit Evidence</title>
+    <title>Submit Evidence Count</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Submit Evidence</h3>
+                            <h3>Submit Evidence Count</h3>
 
                         </div>
                     </div>
@@ -90,9 +90,14 @@
                                                         <td><%= data[0].activity_description %></td>
                                                     </tr>
                                                     <tr>
+                                                            <td>Set Quality Measure/Target</td>
+                                                            <td><input type="number" name="target" multiple></td>
+                                                        
+                                                    <tr>
+                                                    <tr>
                                                             <td>Choose Evidences</td>
                                                             <td><input type="file" name="evidence" multiple></td>
-                                                        </tr>
+                                                        
                                                     <tr>
                                                         <td></td>
                                                         <td><button type="submit">Submit Evidence</button></td>

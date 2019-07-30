@@ -294,4 +294,24 @@ module.exports = {
         }
     },
 
+    ActivityDetails: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.description FROM capstone.approved_activities where approved_activities.code = 0 AND approved_activities.activity_ID=(?);", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/ActivityDetails.ejs', {
+                    data: results,
+                    current_user: sess.user
+                })
+            });
+        }
+    },
+
 }

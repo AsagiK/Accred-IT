@@ -44,7 +44,7 @@ router.route('/MeasurementPage').get(planCtrl.Measurement);
 router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
-router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
+
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
@@ -87,7 +87,8 @@ router.route('/SendDocument').post(DocCtrl.SendDocument);
 router.route('/ViewDocument').get(DocCtrl.ViewDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/FinalReport').get(DocCtrl.FinalReport);
-
+router.route('/ActivityDetailsCheck').get(DocCtrl.ActivityDetails);
+router.route('/ActivityDetailsCount').get(DocCtrl.ActivityDetailsCount);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);

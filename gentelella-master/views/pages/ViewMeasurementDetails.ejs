@@ -203,7 +203,7 @@
                                                                 <td><%= activities.target %></td> 
                                                                 <% if (activities.code == "0") {  %>
                                                                 <td>
-                                                                    <form method="get" action="ActivityDetails">
+                                                                    <form method="get" action="ActivityDetailsCheck">
                                                                             <input type="hidden" name="UID"
                                                                             value="<%= activities.activity_ID %>">
                                                                         <button type="submit"
@@ -214,7 +214,15 @@
                                                                 </td>
 
                                                                 <% } else { %> 
-                                                                <td>N/A</td>
+                                                                <td>
+                                                                    <form method="get" action="ActivityDetailsCount">
+                                                                        <input type="hidden" name="UID"
+                                                                        value="<%= activities.activity_ID %>">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Submit Evidence
+                                                                        </button>
+                                                                    </form> 
+                                                                </td>
                                                                 <% } %>
                                                                 
                                                                 
@@ -234,7 +242,7 @@
 
                                     <div class="ln_solid"></div>
 
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <!--div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_content">
                                                 <br />
@@ -248,7 +256,7 @@
                                                                 class="required">*</span>
                                                         </label>
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <!--First name Input field-->
+                                                            <!--First name Input field>
                                                             <input type="text" id="docname" name="DocName"
                                                                 required="required"
                                                                 class="form-control col-md-7 col-xs-12"
@@ -295,7 +303,7 @@
 
                                             </form>
                                         </div>
-                                    </div>
+                                    </div-->
 
                             </div>
                         </div>
