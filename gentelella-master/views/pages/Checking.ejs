@@ -126,9 +126,9 @@
                                                                             <% } %>
                                                                             <form method="get" action="CheckDetails">
                                                                                 <td>
-                                                                                        <label>Recommendation ID</label><input type="text" name="RID" value="<%= recommendation.recommendation_ID %>">
-                                                                                        <label>Submission ID</label><input type="text" name="SID" value="<%= reports.Submission_ID %>">
-                                                                                        <label>Plan ID</label><input type="text" name="PID" value="<%= plan.Plan_ID %>">
+                                                                                        <input type="hidden" name="RID" value="<%= recommendation.recommendation_ID %>">
+                                                                                        <input type="hidden" name="SID" value="<%= reports.Submission_ID %>">
+                                                                                        <input type="hidden" name="PID" value="<%= plan.Plan_ID %>">
                                                                                     <button type="submit" class="btn btn-primary">View Report</button>
                                                                                 </td>
                                                                             </form>

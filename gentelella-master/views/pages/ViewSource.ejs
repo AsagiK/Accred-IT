@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Edit Accreditation </title>
+    <title>View Sources Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="assests/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -31,18 +31,73 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+     <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
 </head>
+
+
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
 
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-            <%- include ./nav.ejs %>
+            <% include ./nav %>
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Edit Accreditation</h3>
+
+                            <h3>View Sources Page</h3>
+
                         </div>
                     </div>
                 </div>
@@ -52,64 +107,62 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AlterAccreditation">
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Accreditation Name/Acronym: <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" id="AID" name="AID" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name" value="<%= data[0].accreditation_ID %>">
-                                            <input type="text" id="accreditname" name="accreditname" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name" value="<%= data[0].accreditation_Name %>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Accreditation Description <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="accreditdesc" name="accreditdesc"
-                                                placeholder="Area Description" required="required"
-                                                onkeyup="textAreaAdjust(this)" style="overflow:hidden" value="<%= data[0].accreditation_Description %>"><%= data[0].accreditation_Description %></textarea>
-                                        </div>
-                                    </div>
+                                <!--view table for users-->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Source ID</th>
+                                            <th>Source Name</th>
+                                            <th>Source Description</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
 
-                                </form>
+                                        <% for (var source of data) { %>
+                                        <tr>
+                                            <td><%= source.source_ID %></td>
+                                            <td><%= source.source_Name %></td>
+                                            <td><%= source.source_Description %></td>
+                                            <td>
+                                                <form method="get" action="ViewMetricofSource">
+                                                    <input type="hidden" name="SID" value="<%= source.source_ID %>">
+                                                    <button class="btn btn-primary" type="submit">View Quality Metrics</button>
+                                                </form>
+                                                <form method="get" action="EditSource">
+                                                    <input type="hidden" name="SID" value="<%= source.source_ID %>">
+                                                    <button class="btn btn-primary" type="submit">Edit source</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+
+
+                                    </tbody>
+                                </table>
+                                <div class="ln_solid"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
             </div>
-        </div>
 
-        <!script for dynamic text area>
             <script>
-                function textAreaAdjust(o) {
-                    o.style.height = "1px";
-                    o.style.height = (25 + o.scrollHeight) + "px";
+                var close = document.getElementsByClassName("closebtn");
+                var i;
+
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function() {
+                        var div = this.parentElement;
+                        div.style.opacity = "0";
+                        setTimeout(function() {
+                            div.style.display = "none";
+                        }, 600);
+                    }
                 }
+
             </script>
 
             <!-- jQuery -->

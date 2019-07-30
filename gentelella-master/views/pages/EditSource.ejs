@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create Accreditation </title>
+    <title>Edit Source </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Accreditation</h3>
+                            <h3>Edit Source</h3>
                         </div>
                     </div>
                 </div>
@@ -52,24 +52,26 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AddAccreditation">
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AlterSource">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Accreditation Name/Acronym: <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Source Name/Acronym: <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="accreditname" name="accreditname" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name">
+                                                <input type="hidden" id="SID" name="SID" required="required"
+                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name" value="<%= data[0].source_ID %>">
+                                            <input type="text" id="sourcename" name="sourcename" required="required"
+                                                class="form-control col-md-7 col-xs-12" placeholder="Area Name" value="<%= data[0].source_Name %>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Accreditation Description <span
+                                            class="control-label col-md-3 col-sm-3 col-xs-12">Source Description <span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="accreditdesc" name="accreditdesc"
+                                            <textarea class="form-control" rows="3" id="sourcedesc" name="sourcedesc"
                                                 placeholder="Area Description" required="required"
-                                                onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                onkeyup="textAreaAdjust(this)" style="overflow:hidden" value="<%= data[0].source_Description %>"><%= data[0].source_Description %></textarea>
                                         </div>
                                     </div>
 

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Measurements Page</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet" />
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet" />
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+    
+    
+        <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
+    
+</head>
+
+
+<style>
+    .myAlert-top {
+        position: fixed;
+        top: 5px;
+        left: 15%;
+        width: 80%;
+    }
+
+</style>
+
+
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
+
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <%- include ./nav.ejs %>
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="col-md-9">
+                            <h3>Measurements</h3><!--Edited-->
+                            <h3> Metric Name: <%= dataB[0].metric_Name %></h3><!--Edited-->
+                        </div>
+                        <div class="col-md-3">
+                            <a type="button" class="btn btn-primary btn-lg" href="/QualityMetric"
+                                style="float: right">Go Back</a><br /><br />
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+
+                                <div>
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target=".createCycle">
+                                        Create Cycle
+                                    </button>
+
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                            <li role="presentation" class="">
+                                                <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
+                                                    aria-expanded="true">View
+                                                    Measurements</a><!--Edited-->
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab"
+                                                    aria-expanded="false">Create measurement
+                                                </a><!--Edited-->
+                                            </li>
+                                            <!--li role="presentation" class="">
+                                                <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab"
+                                                    aria-expanded="false">Assign to Group</a>
+                                            </li-->
+                                        </ul>
+
+                                        <!VIEW PLANS TAB>
+                                            <div id="myTabContent" class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
+                                                    aria-labelledby="home-tab">
+                                                    <table class="table table-bordered">
+                                                        <thead><!--Edited-->
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Measurement Name</th>
+                                                                <th>Measurement Description</th>
+                                                                <th>Group Assigned</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for (var measurement of data) { %>
+
+                                                            <tr><!--Edited-->
+
+
+                                                                <td><%= measurement.measurement_ID %></td>
+                                                                <td><%= measurement.measurement_Name %></td>
+                                                                <td><%= measurement.measurement_Description %></td>
+                                                                <td><%= measurement.Group_Name %></td>
+                                                                <td>
+                                                                    <form method="get" action="ViewMeasurementDetails">
+                                                                            <input type="hidden" name="MID"
+                                                                                value="<%= measurement.measurement_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">View Measurement Details</button><!--Edited-->
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+
+                                                            <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!CREATE MEASUREMENT TAB>
+                                                    <div role="tabpanel" class="tab-pane fade" id="tab_content2"
+                                                        aria-labelledby="profile-tab">
+                                                        <form id="create" data-parsley-validate
+                                                            class="form-horizontal form-label-left" method="post"
+                                                            action="SendMeasurement">
+
+                                                            <!--Measurement Name input field-->
+                                                            <div class="form-group">
+                                                                <label for="MeasurementName"
+                                                                    class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                    Measurement Name: <span class="required">*</span></label><!--Edited-->
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="text" id="MeasurementName" name="MeasurementName"
+                                                                        required="required"
+                                                                        class="form-control col-md-7 col-xs-12"
+                                                                        placeholder="Measurment Name">
+                                                                </div>
+                                                            </div>
+
+                                                            <!--Measurement Description field-->
+                                                            <div class="form-group">
+                                                                <label for="MeasurementDesc"
+                                                                    class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
+                                                                    Description:<!--Edited-->
+                                                                    <span class="required">*</span></label>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <textarea class="form-control" rows="3"
+                                                                        id="MeasurementDesc" name="MeasurementDesc"
+                                                                        placeholder="Measurement Description"
+                                                                        required="required"
+                                                                        onkeyup="textAreaAdjust(this)"
+                                                                        style="overflow:hidden"></textarea>
+                                                                </div>
+                                                            </div>
+                                                                <!--Quality Target Input field-->
+                                                                <div class="form-group">
+                                                                    <label for="Quality Target"
+                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Quality
+                                                                        Target: </label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                            <input type="number" id="QualityTarget" name="QualityTarget"
+                                                                            required="required"
+                                                                            class="form-control col-md-7 col-xs-12"
+                                                                            placeholder="Measurment Name">
+                                                                    </div>
+                                                                </div>
+                                                                <!--Procedures input field-->
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        class="control-label col-md-3 col-sm-3 col-xs-12">Procedures:
+                                                                    </label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <textarea class="form-control" rows="3"
+                                                                            id="Procedures"
+                                                                            placeholder="Procedures" name="Procedures"
+                                                                            ></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--Buttons to submit-->
+
+                                                                <div
+                                                                    class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                                    <button class="btn btn-primary"
+                                                                        type="reset">Reset</button>
+                                                                    <button type="submit" form="create"
+                                                                        class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                                <input type="hidden" name="GID"
+                                                                    value="<%= dataB[0].group_ID %>">
+                                                                <input type="hidden" name="MID"
+                                                                    value="<%= dataB[0].metric_ID %>">
+                                                        </form>
+
+                                                    </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by
+                    <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!--MODAL FOR CREATE CYCLE-->
+    <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal2" value="Edit">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left"
+                        action="addcycle" method="POST">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cycle
+                                Name<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="first-name" name="cycleName" required="required"
+                                    class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Start
+                                Date:<span class="required"></span>
+                            </label>
+                            <form class="form-group">
+                                <fieldset>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="controls">
+                                            <div class="input-prepend input-group">
+                                                <span class="add-on input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                <input type="text" class="form-control has-feedback-left"
+                                                    id="single_cal1" placeholder="First Name"
+                                                    aria-describedby="inputSuccess2Status">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary" form="CreateCycle">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!script for dynamic text area>
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+        </script>
+    
+        <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function() {
+                    div.style.display = "none";
+                }, 600);
+            }
+        }
+
+    </script>
+
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
+</body>
+
+</html>
