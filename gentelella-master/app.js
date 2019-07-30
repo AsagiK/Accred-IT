@@ -40,7 +40,7 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/Recommendations');
+    resp.redirect('/TestPage');
 
     console.log("Testing testing");
 });

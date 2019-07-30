@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+c<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Recommendations Page</title>
+    <title>Quality Metrics Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -42,7 +42,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Recommendations Non Ajax Page</h3>
+                            <h3>Quality Metrics Page</h3>
                         </div>
                     </div>
                 </div>
@@ -55,73 +55,56 @@
                                 <!BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME>
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target=".bs-example-modal-lg">
-                                        Create Recommendation
+                                        Create Metrics
                                     </button>
 
                                     <!view table for users>
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Accreditation</th>
                                                     <th>Name</th>
                                                     <th>Description</th>
-                                                    <th>Given Grade</th>
                                                     <th>Priority Level</th>
-                                                    <th>Area Assigned</th>
                                                     <th>Group Assigned</th>
+                                                    <th>Source</th>
                                                     <th>Date</th>
                                                     <th></th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% for (var recommendation of data) { 
+                                                <% for (var metric of data) { 
                                                     
                                                     %>
 
                                                 <tr>
-                                                    <td><%= recommendation.accreditation_Name %></td>
-                                                    <td><%= recommendation.recommendation_Name %></td>
-                                                    <td><%= recommendation.recommendation_Desc %></td>
-                                                    <td><%= recommendation.recommendation_Grade %></td>
-                                                    <td><%= recommendation.priority_Level %></td>
-                                                    <td><%= recommendation.Area_Name %></td>
-                                                    <td><%= recommendation.Group_Name %></td>
-                                                    <td><%= recommendation.date_insert.toString().substring(0,15) %>
+                                             
+                                                    <td><%= metric.metric_Name %></td>
+                                                    <td><%= metric.metric_Desc %></td>
+                                                    <td><%= metric.priority_Level %></td>
+                                                    <td><%= metric.Group_Name %></td>
+                                                    <td><%= metric.source_Name %></td>
+                                                    <td><%= metric.date_insert.toString().substring(0,15) %>
                                                     </td>
                                                     <td>
 
                                                         <div class="form-group">
                                                             <div>
                                                                 <!BUTTONS FOR EDIT AND PLAN>
-                                                                    <% if (recommendation.Group_Name=="No Group Assigned") { %>
-                                                                    <form method="get"
-                                                                        action="AssignRecommendationToGroup">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= recommendation.area_ID %>">
+                                                                    
+                                                                    <form method="get" action="editmetric">
                                                                         <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Assign
-                                                                            Group</button>
-                                                                    </form>
-                                                                    <% } else { %>
-                                                                    <form method="get" action="editrecommendation">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= recommendation.area_ID %>">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                            value="<%= metric.metric_ID %>">
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Edit
-                                                                            Recommendation</button>
+                                                                            Metric</button>
                                                                     </form>
-                                                                    <% } %>
-
                                                                     <br /><br />
-                                                                    <form method="get" action="PlanPage">
-                                                                        <input type="hidden" name="PID"
-                                                                            value="<%= recommendation.recommendation_ID %>">
+                                                                    <form method="get" action="MeasurementPage">
+                                                                        <input type="hidden" name="MID"
+                                                                            value="<%= metric.metric_ID %>">
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">View Plans</button>
+                                                                            class="btn btn-primary">View Measurements</button>
                                                                     </form>
                                                                     <br /><br />
                                                             </div>
@@ -139,73 +122,6 @@
                 </div>
             </div>
 
-            <!START RECOMMENDATIONS VIEW OF GROUP LEADER>
-                <div class="right_col" role="main">
-
-                    <div class="">
-                        <div class="page-title">
-                            <div class="title_left">
-                                <h3>Recommendations Non Ajax Page Group Leader View</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_content">
-
-
-                                    <!--BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME-->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".bs-example-modal-lg">
-                                        Create Recommendation
-                                    </button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".createCycle">
-                                        Create Cycle
-                                    </button>
-
-                                    <!--view table for users-->
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Description</th>
-                                                <th>Given Grade</th>
-                                                <th>Priority Level</th>
-                                                <!--High, Medium, Low-->
-                                                <th>Status</th>
-                                                <!-- Status will be No Updates or Updated Last(Date Here)-->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Prepare requirements in advance</td>
-                                                <td>Delay in giving of final report due to excessive procrastination
-                                                </td>
-                                                <td>2</td>
-                                                <td>High</td>
-                                                <td>Updated Last: June 6, 2019</td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <div>
-                                                            <!BUTTONS FOR PLAN PAGE>
-                                                                <a type="button" class="btn btn-primary"
-                                                                    href="/PlanPage">
-                                                                    Click Here To add Plan</a><br /><br />
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div-->
 
                     <!-- /page content -->
 
@@ -220,31 +136,31 @@
                                         <span aria-hidden="true">×</span>
                                     </button>
                                     <h4 class="modal-title" id="myModalLabel">
-                                        Create Recommendation
+                                        Create Metric
                                     </h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="CreateRecommendation" data-parsley-validate
-                                        class="form-horizontal form-label-left" action="addrecommendation"
+                                    <form id="CreateMetric" data-parsley-validate
+                                        class="form-horizontal form-label-left" action="addmetric"
                                         method="POST">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Accreditation<span class="required">*</span>
+                                                for="first-name">Source:<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="accreditation">
-                                                    <% for (var accreditation of dataC) { %>
-                                                    <option value="<%= accreditation.accreditation_ID %>"><%= accreditation.accreditation_Name %></option>
+                                                <select class="form-control" name="source">
+                                                    <% for (var source of dataB) { %>
+                                                    <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
                                                     <% } %>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Recommendation Name<span class="required">*</span>
+                                                for="first-name">Metric Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="text" id="recommendationName" name="recommendationName"
+                                                <input type="text" id="metricName" name="metricName"
                                                     required="required" class="form-control col-md-7 col-xs-12"
                                                     placeholder="Name" />
                                             </div>
@@ -254,25 +170,10 @@
                                                 class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
                                                     class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <textarea class="form-control" rows="3" id="recommendationDesc"
-                                                    name="recommendationDesc" placeholder="Description"
+                                                <textarea class="form-control" rows="3" id="metricDesc"
+                                                    name="metricDesc" placeholder="Description"
                                                     required="required" onkeyup="textAreaAdjust(this)"
                                                     style="overflow:hidden"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Given
-                                                Grade<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="grade">
-                                                    <!--Must be able  retrieve grading scheme from Grade setting-->
-                                                    <option value="A">A</option>
-                                                    <option value="B">B</option>
-                                                    <option value="C">C</option>
-                                                    <option value="F">F</option>
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -289,30 +190,22 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Assign Area<span
-                                                    class="required">*</span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                for="first-name">Assign Group:<span class="required">*</span>
                                             </label>
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <select class="form-control" placeholder="Select Area"
-                                                        name="SelectArea">
-
-
-                                                        <!-- code for taking data from sql to show on page-->
-                                                        <% for(var area of dataB){ %>
-                                                        <option value=<%=area.Area_ID %>> <%= area.Area_Name %>
-                                                        </option>
-                                                        <% } %>
-
-                                                    </select>
-                                                </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select class="form-control" name="group">
+                                                    <% for (var group of dataC) { %>
+                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                    <% } %>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 Close
                                             </button>
-                                            <button type="submit" class="btn btn-primary" form="CreateRecommendation">
+                                            <button type="submit" class="btn btn-primary" form="CreateMetric">
                                                 Submit
                                             </button>
                                         </div>

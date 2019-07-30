@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Edit Recommendation Page</title>
+    <title>Edit Metric Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit Recommendation Page</h3>
+                            <h3>Edit Metric Page</h3>
 
                         </div>
                     </div>
@@ -55,16 +55,16 @@
                             <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
-                                    action="alterrecommendation" method="POST">
+                                    action="altermetric" method="POST">
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Recommendation Name<span class="required">*</span>
+                                            for="first-name">Metric Name<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" name="UID" value="<%= data[0].recommendation_ID%>">
-                                            <input type="text" id="recommendationName" name="recommendationName" required="required"
-                                                class="form-control col-md-7 col-xs-12" value="<%= data[0].recommendation_Name%>" />
+                                                <input type="hidden" name="UID" value="<%= data[0].metric_ID%>">
+                                            <input type="text" id="metricName" name="metricName" required="required"
+                                                class="form-control col-md-7 col-xs-12" value="<%= data[0].metric_Name%>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -72,23 +72,8 @@
                                             class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="recommendationDesc" name="recommendationDesc"
-                                            value="<%= data[0].recommendation_Desc%>" required="required"><%= data[0].recommendation_Desc%></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Given
-                                            Grade<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="grade">
-                                                <!--Must be able  retrieve grading scheme from Grade setting-->
-                                                <option value="<%= data[0].recommendation_Grade%>"><%= data[0].recommendation_Grade%></option>
-                                                <option value="A">A</option>
-                                                <option value="B">B</option>
-                                                <option value="C">C</option>
-                                                <option value="F">F</option>
-                                            </select>
+                                            <textarea class="form-control" rows="3" id="metricDesc" name="metricDesc"
+                                            value="<%= data[0].metric_Desc%>" required="required"><%= data[0].metric_Desc%></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -106,20 +91,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Area<span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" name="AID" value="<%= data[0].area_ID%>">
-                                                <input type="text" id="" name=""
-                                                readonly class="form-control col-md-7 col-xs-12"
-                                                value="<%= data[0].Area_Name%>" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Choose Group To Assign: 
-                                            Level<span class="required">*</span>
+                                            for="first-name">Change Group:<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="group" id ="group">
@@ -131,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a type="button" class="btn btn-default" href="/RecommendationNonAjax">
+                                        <a type="button" class="btn btn-default" href="/QualityMetric">
                                             cancel
                                         </a>
                                         <button type="submit" class="btn btn-primary">
