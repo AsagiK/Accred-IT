@@ -53,16 +53,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <div class="form-group"> 
-                                    <% for (var activity of data)  { %>
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label>
-                                    <p><%= activity.activity_ID %></p> 
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: <%= activity.activity_name %>   </label> 
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: <%= activity.description %>  </label> 
-                                    <input type="file" multiple>
-                                    <br> </br>
-                                    <% } %>
-                                </div>
+                                
                                 
                                 <div class="x_content">
                                         <br />
@@ -87,7 +78,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
-                                                        <td><%= data[0].activity_description %></td>
+                                                        <td><%= data[0].description %></td>
                                                     </tr>
                                                     <tr>
                                                             <td>Set Quality Measure/Target</td>
