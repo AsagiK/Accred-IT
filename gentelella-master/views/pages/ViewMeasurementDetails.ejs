@@ -189,7 +189,10 @@
                                                     </thead>
                                                     <tbody>
                                                         <% for (activities of dataB) { %>
-                                                            <tr>
+                                                            <tr> 
+
+                                                               
+
                                                                 <% if (activities.code == "0") { %>
                                                                 <td><input type="checkbox" onclick="return false;"/></td>
                                                                 <% } else { %>
@@ -197,7 +200,24 @@
                                                                 <% } %>
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
-                                                                <td><%= activities.target %></td>
+                                                                <td><%= activities.target %></td> 
+                                                                <% if (activities.code == "0") {  %>
+                                                                <td>
+                                                                    <form method="get" action="ActivityDetails">
+                                                                            <input type="hidden" name="UID"
+                                                                            value="<%= activities.activity_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Submit Evidence
+                                                                            </button>
+                                                                    </form> 
+
+                                                                </td>
+
+                                                                <% } else { %> 
+                                                                <td>N/A</td>
+                                                                <% } %>
+                                                                
+                                                                
                                                             </tr>
                                                             <% } %>
                                                     </tbody>
