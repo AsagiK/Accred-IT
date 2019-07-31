@@ -320,12 +320,13 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID; SELECT * FROM capstone.source; SELECT * FROM capstone.group", function (err, results, fields) {
+            connection.query("Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/QualityMetrics.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
+                    dataD: results[3],
                     current_user: sess.user
                 });
                 console.log(results);
