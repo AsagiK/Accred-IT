@@ -49,14 +49,15 @@ DROP TABLE IF EXISTS `approved_activities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `approved_activities` (
-  `activitiy_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `activity_ID` int(11) NOT NULL AUTO_INCREMENT,
   `activity_name` varchar(45) NOT NULL,
   `target` int(11) NOT NULL,
   `code` tinyint(1) NOT NULL,
   `description` mediumtext,
   `measurement_ID` int(11) NOT NULL,
-  PRIMARY KEY (`activitiy_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `current_score` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`activity_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +66,7 @@ CREATE TABLE `approved_activities` (
 
 LOCK TABLES `approved_activities` WRITE;
 /*!40000 ALTER TABLE `approved_activities` DISABLE KEYS */;
-INSERT INTO `approved_activities` VALUES (1,'123',23,1,NULL,7),(2,'123',100,0,NULL,7),(3,'123',100,0,'234',7),(4,'123',12,1,'234',7),(5,'123',100,0,'234',7),(6,'123',12,1,'234',7);
+INSERT INTO `approved_activities` VALUES (1,'123',23,1,NULL,7,0),(2,'123',100,0,NULL,7,0),(3,'123',100,0,'234',7,0),(4,'123',12,1,'234',7,0),(5,'123',100,0,'234',7,0),(6,'123',12,1,'234',7,0),(7,'Do stuff here',100,0,'Do more stuff here',8,0),(8,'Do stuff here',70,1,'Do more stuff here',8,0),(9,'Do stuff here',100,0,'Do more stuff here',8,0),(10,'Do stuff here',70,1,'Do more stuff here',8,0);
 /*!40000 ALTER TABLE `approved_activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +136,7 @@ CREATE TABLE `documents` (
   `InDrive` tinyint(1) NOT NULL DEFAULT '0',
   `DriveID` varchar(40) DEFAULT '0',
   PRIMARY KEY (`Document_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +145,6 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES (33,'Tesr','uploads/114134761.pdf','hi','.pdf',0,'0'),(34,'123','uploads/114134761.pdf','234','.pdf',0,'0'),(35,'123','uploads/07-01-01-30-48-2019.jpg','234','.jpg',0,'0'),(36,'123','uploads/05-23-00-49-53-2019.jpg','345','.jpg',0,'0'),(37,'123','uploads/07-01-01-16-33-2019.jpg','234','.jpg',0,'0'),(38,'234','uploads/07-02-00-02-14-2019.png','456','.png',0,'0'),(39,'Test','uploads/07-03-00-54-47-2019.jpg','234','.jpg',0,'0'),(40,'234','uploads/07-03-01-15-35-2019.jpg','Hi','.jpg',0,'0'),(41,'3425','uploads/07-05-00-08-16-2019.png','123','.png',1,'0'),(42,'Puta gumagana na','uploads/07-04-22-21-16-2019.png','Test','.png',0,'0'),(43,'Please work','uploads/07-03-00-19-37-2019.jpg','Spaghetti','.jpg',0,'0'),(44,'Test','uploads/MOSHED-2019-4-26-11-32-40.gif','Hi','.gif',0,'0'),(45,'Haruhi','uploads/C74GoromenzYasuiRiosukeManatsunoYorunoYumenoMataYumenoMataYumeSuzumiyaHaruhinoYuuutsuEnglish.rar','Test','.rar',0,'0'),(46,'Kaguya','uploads/04-23-09-43-51-2019.png','she','.png',0,'0'),(47,'Heh','uploads/04-20-05-54-29-2019.png','heh','.png',0,'0'),(48,'Hehe','uploads/04-20-06-53-02-2019.png','123','.png',0,'0'),(49,'Hrhrhr','uploads/04-20-06-54-08-2019.jpg','1234','.jpg',1,'0'),(50,'Kaguya cute','uploads/04-21-08-11-54-2019.png','Very cute','.png',0,'0'),(51,'She','uploads/04-19-05-08-09-2019.jpg','O kawaii koto','.jpg',0,'0'),(52,'She','uploads/04-23-09-29-22-2019.png','mommy','.png',0,'0'),(53,'hhh','uploads/04-20-06-40-03-2019.png','im love','.png',1,'0'),(54,'Aaaaaa','uploads/237.mp3','Beethoven','.mp3',1,'0'),(55,'Test','uploads/07-05-16-16-45-2019.png','test','.png',1,'0'),(56,'Fuck','uploads/07-03-00-54-38-2019.jpg','Hi','.jpg',1,'0'),(57,'Test','uploads/07-01-01-03-39-2019.jpg','Maho','.jpg',1,'0'),(58,'Hi','uploads/07-01-01-07-05-2019.jpg','123','.jpg',1,'0'),(59,'Test','uploads/07-03-00-54-49-2019.jpg','She','.jpg',1,'0'),(60,'Test','uploads/07-06-01-24-48-2019.jpg','234','.jpg',1,'0'),(61,'234','uploads/07-05-00-08-16-2019.png','H','.png',1,'0'),(62,'Test','uploads/06-06-22-39-10-2019.png','123','.png',1,'0'),(63,'Test','uploads/06-09-15-40-27-2019.png','H','.png',1,'0'),(64,'Test','uploads/06-03-20-53-01-2019.png','Shge','.png',1,'0'),(65,'43534','uploads/06-11-02-47-18-2019.png','235','.png',1,'0'),(66,'435346','uploads/06-12-08-16-37-2019.png','234','.png',1,'0'),(67,'Test','uploads/06-15-21-55-44-2019.png','Anzu','.png',1,'1RdtWEoinKYSvy8aTOoV8qNJnAWZbI24P'),(68,'1234325','uploads/06-09-09-00-33-2019.png','Zetsubou Billy','.png',1,'1Q7sUB9GooO0u8wLUhr3Fjeg-B5_HTc3L'),(69,'645','uploads/06-01-01-45-57-2019.png','634','.png',1,'1peyZdIH9788B-Qqe-wusxMLxB6LX54S3'),(70,'Aaaaaa','uploads/06-17-17-44-06-2019.png','She','.png',1,'1jsbHskZ1FjPlrW2yUix35yZKDIpTNzNT');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -631,4 +631,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-30 21:16:49
+-- Dump completed on 2019-07-31 23:48:40
