@@ -357,12 +357,14 @@ module.exports = {
                                 callback();
                             }
                         });
+
                         function uploadfile() {
                             fs.readFile('credentials.json', (err, content) => {
                                 if (err) return console.log('Error loading client secret file:', err);
                                 authorize(JSON.parse(content), uploadtodrive);
                             });
                         }
+
                         function authorize(credentials, callback) {
                             const {
                                 client_secret,
@@ -378,6 +380,7 @@ module.exports = {
                                 callback(oAuth2Client);
                             });
                         }
+
                         function uploadtodrive(auth) {
                             const drive = google.drive({
                                 version: 'v3',
@@ -408,6 +411,7 @@ module.exports = {
                                 }
                             });
                         }
+
                         function addID(sql, values) {
                             connection.query(sql, values, function (err, result) {
                                 if (err) throw err;
@@ -456,12 +460,14 @@ module.exports = {
                             resp.redirect('/ViewDocument')
                         }
                     });
+
                     function uploadfile() {
                         fs.readFile('credentials.json', (err, content) => {
                             if (err) return console.log('Error loading client secret file:', err);
                             authorize(JSON.parse(content), uploadtodrive);
                         });
                     }
+
                     function authorize(credentials, callback) {
                         const {
                             client_secret,
@@ -489,7 +495,7 @@ module.exports = {
                                 fields: 'id'
                             }, function (err, file) {
                                 count = count + 1;
-                                console.log("File " + count + " of 1";
+                                console.log("File " + count + " of 1");
                                     if (err) {
                                         console.log(files.name + "Was not uploaded to Google Drive")
                                     } else {
@@ -508,6 +514,7 @@ module.exports = {
                                     }
                                 });
                         }
+
                         function addID(sql, values) {
                             connection.query(sql, values, function (err, result) {
                                 if (err) throw err;
