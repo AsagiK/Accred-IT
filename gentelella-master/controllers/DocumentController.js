@@ -339,6 +339,7 @@ module.exports = {
                     console.log(results);
                 });
                 console.log(files.length);
+
                 if (files.length) {
                     async.forEachOf(files, function (value, key, callback) {
                         var name = files[key].name;
@@ -563,3 +564,4 @@ module.exports = {
             },
 
         }
+
