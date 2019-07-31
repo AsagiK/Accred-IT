@@ -112,7 +112,7 @@
                                                                                             <th>Description</th>
                                                                                             <th>Term Result</th>
                                                                                             <th>Quality Target</th>
-                                                                                            <th></th>
+                                                                                            <th>Activities</th>
 
                                                                                         </tr>
                                                                                     </thead>
@@ -132,18 +132,21 @@
                                                                                             </td>
                                                                                             <td>
                                                                                                 <table class="table table-bordered" id="TM<%= measure.measurement_ID %>">
+                                                                                                    <thead>
+                                                                                                        <th>Activity Name</th>
+                                                                                                        <th>Score</th>
+                                                                                                        <th>Target</th>
+                                                                                                    </thead>
                                                                                                     <tbody>
                                                                                                         <% for (var activities of dataF) { %>
                                                                                                         <% if (activities.measurement_ID == measure.measurement_ID) { %>
                                                                                                         <tr>
                                                                                                             <td>
-                                                                                                                <label>Score</label>
+                                                                                                                <%= activities.activity_name %>
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <input type="text" name="score<%=activities.activity_ID %>" id="score<%=activities.activity_ID %>" value="<%=activities.current_Score %>">
-                                                                                                                <input type="text" id="length" name="length" value="<%= dataE.length %>" </td> <td>
-                                                                                                                <label>Target</label>
-                                                                                                            </td>
+                                                                                                                <input type="hidden" id="length" name="length" value="<%= dataE.length %>" >
                                                                                                             <td>
                                                                                                                 <input type="text" name="target<%=activities.activity_ID %>" id="target<%=activities.activity_ID %>" value="<%=activities.target %>">
                                                                                                             </td>
@@ -152,29 +155,9 @@
                                                                                                         <% } %>
                                                                                                     </tbody>
                                                                                                 </table>
+                                                                                                <label>Final Score</label>
                                                                                                 <input id="ID<%= measure.measurement_ID %>">
 
-                                                                                            </td>
-                                                                                            <td>
-
-                                                                                                <div class="form-group">
-                                                                                                    <div>
-                                                                                                        <!BUTTONS FOR EDIT AND PLAN>
-
-                                                                                                            <form method="get" action="editmetric">
-                                                                                                                <input type="hidden" name="UID" value="<%= metric.metric_ID %>">
-                                                                                                                <button type="submit" class="btn btn-primary">Edit
-                                                                                                                    Metric</button>
-                                                                                                            </form>
-                                                                                                            <br /><br />
-                                                                                                            <form method="get" action="MeasurementPage">
-                                                                                                                <input type="hidden" name="MID" value="<%= metric.metric_ID %>">
-                                                                                                                <button type="submit" class="btn btn-primary">View
-                                                                                                                    Measurements</button>
-                                                                                                            </form>
-                                                                                                            <br /><br />
-                                                                                                    </div>
-                                                                                                </div>
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>
