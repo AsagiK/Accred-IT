@@ -203,7 +203,7 @@
                                                                 <td><%= activities.target %></td> 
                                                                 <% if (activities.code == "0") {  %>
                                                                 <td>
-                                                                    <form method="get" action="ActivityDetailsCheck">
+                                                                    <form method="get" action="ActivityDetails">
                                                                             <input type="hidden" name="UID"
                                                                             value="<%= activities.activity_ID %>">
                                                                         <button type="submit"
@@ -215,7 +215,7 @@
 
                                                                 <% } else { %> 
                                                                 <td>
-                                                                    <form method="get" action="ActivityDetailsCount">
+                                                                    <form method="get" action="ActivityDetails">
                                                                         <input type="hidden" name="UID"
                                                                         value="<%= activities.activity_ID %>">
                                                                     <button type="submit"

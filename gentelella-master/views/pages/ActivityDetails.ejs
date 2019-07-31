@@ -66,7 +66,7 @@
 
                                 <div class="x_content">
                                     <br />
-                                    <form action="SendDocuments" method="post" encType="multipart/form-data">
+                                    <form action="SendDocuments" method="get" encType="multipart/form-data">
                                         <!--view table for users-->
                                         <table class="table table-bordered">
                                             <thead>
@@ -75,6 +75,7 @@
 
                                                 </tr>
                                             </thead>
+                                            <% if (data[0].code == "0") { %>
                                             <tbody>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
@@ -99,6 +100,37 @@
                                                 </tr>
 
                                             </tbody>
+                                            <% } else { %>
+                                            <tbody>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
+                                                    <td><%= data[0].activity_ID %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
+                                                    <td><%= data[0].activity_name %></td>
+                                                        
+                                                </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
+                                                    <td><%= data[0].description %></td>
+                                                </tr>
+                                                <tr>
+                                                        <td>Set Quality Measure/Target</td>
+                                                        <td><input type="number" name="target" multiple></td>
+                                                    
+                                                <tr>
+                                                <tr>
+                                                        <td>Choose Evidences</td>
+                                                        <td><input type="file" name="evidence" multiple></td>
+                                                    
+                                                <tr>
+                                                    <td></td>
+                                                    <td><button type="submit">Submit Evidence</button></td>
+                                                </tr>
+                                            
+                                        </tbody>
+                                        <% } %>
                                         </table>
                                     </form>
                                     <div class="ln_solid"></div>
