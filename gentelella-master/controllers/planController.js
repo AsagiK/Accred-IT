@@ -330,7 +330,7 @@ module.exports = {
                     current_user: sess.user
                 });
                 console.log(results);
-                console.log("RECOMMENDATION NON AJAX");
+                console.log("QUALITY METRICS NON AJAX");
             });
         }
     },
