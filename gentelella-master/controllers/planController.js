@@ -589,12 +589,13 @@ module.exports = {
             var MID = (req.query.MID);
             console.log(MID);
             var values = [MID, MID];
-            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID FROM capstone.approved_activities where approved_activities.measurement_ID = ?"
+            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID FROM capstone.approved_activities where approved_activities.measurement_ID = ?; SELECT * FROM capstone.pending_activities;"
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/ViewMeasurementDetails.ejs', {
                     data: results[0],
                     dataB: results[1],
+                    dataC: results[2],
                     current_user: sess.user,
                     notif: passData
                 })

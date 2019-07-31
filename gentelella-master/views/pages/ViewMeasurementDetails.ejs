@@ -166,6 +166,8 @@
                                         <div class="panel-body">
                                             <div class="panel">
 
+                                                    <h2>Activities Table</h2>
+
                                                 <a class="panel-heading" role="tab" id="HeadGroupOne"
                                                     data-toggle="collapse" data-parent="#headingTwo"
                                                     href="#FacilitiesGroupOne" aria-expanded="true"
@@ -180,6 +182,7 @@
                                                             <tr>
 
                                                                 <th></th>
+                                                                <th>ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
                                                                 <th>Target</th>
@@ -200,10 +203,10 @@
                                                                 <% } else { %>
                                                                 <td>NOT A CHECKBOX</td>
                                                                 <% } %>
+                                                                <td><%= activities.activity_ID %></td>
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
                                                                 <td><%= activities.target %></td>
-                                                                <% if (activities.code == "0") {  %>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
                                                                         <input type="hidden" name="UID"
@@ -215,21 +218,6 @@
                                                                     </form>
 
                                                                 </td>
-
-                                                                <% } else { %>
-                                                                <td>
-                                                                    <form method="get" action="ActivityDetails">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= activities.activity_ID %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Submit
-                                                                            Evidence
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                                <% } %>
-
-
                                                             </tr>
                                                             <% } %>
                                                         </tbody>
@@ -244,68 +232,75 @@
 
                                 <div class="ln_solid"></div>
 
-                                <!--div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="x_panel">
-                                            <div class="x_content">
-                                                <br />
-                                                <form id="demo-form2" data-parsley-validate
-                                                    class="form-horizontal form-label-left" action="" method=""
-                                                    encType="multipart/form-data">
+                                <div class="x_content">
+    
+                                            <div class="panel-body">
+                                                <div class="panel">
 
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                            for="first-name">Report Title <span
-                                                                class="required">*</span>
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <!--First name Input field>
-                                                            <input type="text" id="docname" name="DocName"
-                                                                required="required"
-                                                                class="form-control col-md-7 col-xs-12"
-                                                                placeholder="First name">
-                                                        </div>
+                                                    <h2>Pending Table</h2>
+    
+                                                    <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                        data-toggle="collapse" data-parent="#headingTwo"
+                                                        href="#FacilitiesGroupOne" aria-expanded="true"
+                                                        aria-controls="FacilitiesGroupOne"> 
+                                                    </a>
+    
+                                                    <br>
+                                                    <div>
+                                                        
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+    
+                                                                    <th></th>
+                                                                    <th>ID</th>
+                                                                    <th>Activity Name</th>
+                                                                    <th>Description</th>
+                                                                    <th>Target</th>
+                                                                    <th></th>
+                                                                    <th style="display: none">Code</th>
+    
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% for (activities of dataC) { %>
+                                                                <tr>
+    
+    
+    
+                                                                    <% if (activities.code == "0") { %>
+                                                                    <td><input type="checkbox" onclick="return false;" />
+                                                                    </td>
+                                                                    <% } else { %>
+                                                                    <td>NOT A CHECKBOX</td>
+                                                                    <% } %>
+                                                                    <td><%= activities.activity_ID %></td>
+                                                                    <td><%= activities.activity_name %></td>
+                                                                    <td><%= activities.description %></td>
+                                                                    <td><%= activities.target %></td>
+                                                                    
+                                                                    <td>
+                                                                        <form method="get" action="ActivityPendingDetails">
+                                                                            <input type="hidden" name="UID"
+                                                                                value="<%= activities.activity_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">View
+                                                                                Evidence
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+    
+                                                                </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                            for="fileupload">Choose
-                                                            File <span class="required">*</span>
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <input type="file" id="DocFile" name="DocFile"
-                                                                required="required"
-                                                                class="form-control col-md-7 col-xs-12"
-                                                                onchange="md5Generate(event)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                            for="first-name">Report Description <span
-                                                                class="required">*</span>
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <textarea id="description" name="DocDesc"
-                                                                required="required"
-                                                                class="form-control col-md-7 col-xs-12"
-                                                                onkeyup="textAreaAdjust(this)"
-                                                                style="overflow:hidden"></textarea>
-                                                        </div>
-                                                    </div>
-
-
-
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                                    <button class="btn btn-primary" type="reset">Reset</button>
-                                                    <button type="submit" class="btn btn-success">Submit</button>
                                                 </div>
+    
+                                                <!--End of Group 1 Table -->
+    
                                             </div>
-
-                                            </form>
-                                        </div>
-                                    </div-->
+                                    </div>
 
                             </div>
                         </div>

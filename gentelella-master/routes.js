@@ -89,6 +89,7 @@ router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/FinalReport').get(DocCtrl.FinalReport);
 router.route('/ActivityDetails').get(DocCtrl.ActivityDetails);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
+router.route('/ActivityPendingDetails').get(DocCtrl.ActivityPendingDetails);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);

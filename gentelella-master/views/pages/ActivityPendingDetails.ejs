@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Submit Evidence</title>
+    <title>Approve/Disapprove Evidence</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Submit Evidence</h3>
+                            <h3>Approve/Disapprove Evidence</h3>
 
                         </div>
                     </div>
@@ -96,13 +96,19 @@
                                                         class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
-                                                    <td>Choose Evidences</td>
-                                                    <td><input type="file" name="DocFile" multiple></td>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current
+                                                            Score </label></td>
+                                                    <td><%= data[0].current_Score %></td>
+                                                    <input type="hidden" name="currentScore"
+                                                        value="<%= data[0].current_Score %>"
+                                                        class="form-control col-md-7 col-xs-12">
+                                                <tr>
+                                                <tr>
+                                                    <td>Evidences</td>
+                                                    <td>LIST OF EVIDENCES</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="hidden" name="score" value="100"
-                                                            class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" name="MID"
                                                             value="<%= data[0].measurement_ID %>"
                                                             class="form-control col-md-7 col-xs-12">
@@ -148,14 +154,16 @@
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current
-                                                            Value: </label></td>
-                                                    <td><input type="number" name="score"></td>
-
+                                                            Score </label></td>
+                                                    <td><%= data[0].current_Score %></td>
+                                                    <input type="hidden" name="currentScore"
+                                                        value="<%= data[0].current_Score %>"
+                                                        class="form-control col-md-7 col-xs-12">
                                                 <tr>
                                                 <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">
                                                             Evdences: </label></td>
-                                                    <td><input type="file" name="DocFile" multiple></td>
+                                                    <td>List of evidences</td>
 
                                                 <tr>
                                                     <td>
@@ -167,7 +175,10 @@
                                                         <input type="hidden" name="code" value="<%= data[0].code %>"
                                                             class="form-control col-md-7 col-xs-12">
                                                     </td>
-                                                    <td><button type="submit">Submit Evidence</button></td>
+                                                    <td>
+                                                        <button type="submit">Approve Evidence</button>
+                                                        <button type="submit">Disapprove Evidence</button>
+                                                    </td>
                                                 </tr>
 
                                             </tbody>
