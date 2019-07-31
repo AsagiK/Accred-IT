@@ -333,5 +333,9 @@ module.exports = {
             });
         }
     },
+    
+    SendDocuments: function (req, resp){
+        console.log(req.files)
+    },
 
 }

@@ -53,55 +53,56 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <div class="form-group"> 
+                                <div class="form-group">
                                     <% for (var activity of data)  { %>
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label>
-                                    <p><%= activity.activity_ID %></p> 
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: <%= activity.activity_name %>   </label> 
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: <%= activity.description %>  </label> 
+                                    <p><%= activity.activity_ID %></p>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: <%= activity.activity_name %> </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: <%= activity.description %> </label>
                                     <input type="file" multiple>
                                     <br> </br>
                                     <% } %>
                                 </div>
-                                
+
                                 <div class="x_content">
-                                        <br />
-        
+                                    <br />
+                                    <form action="SendDocuments" method="post" encType="multipart/form-data">
                                         <!--view table for users-->
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    
-        
+
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                    <tr>
-                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
-                                                        <td><%= data[0].activity_ID %></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
-                                                        <td><%= data[0].activity_name %></td>
-                                                            
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
-                                                        <td><%= data[0].description %></td>
-                                                    </tr>
-                                                    <tr>
-                                                            <td>Choose Evidences</td>
-                                                            <td><input type="file" name="evidence" multiple></td>
-                                                        </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td><button type="submit">Submit Evidence</button></td>
-                                                    </tr>
-                                                
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
+                                                    <td><%= data[0].activity_ID %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
+                                                    <td><%= data[0].activity_name %></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
+                                                    <td><%= data[0].description %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Choose Evidences</td>
+                                                    <td><input type="file" name="evidence" multiple></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><button type="submit" >Submit Evidence</button></td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
-                                        <div class="ln_solid"></div>
-                                    </div>
+                                    </form>
+                                    <div class="ln_solid"></div>
+                                </div>
 
                             </div>
                         </div>
