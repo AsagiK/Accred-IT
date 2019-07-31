@@ -278,18 +278,18 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var sql = "SELECT plansubmissions.Submission_ID, plansubmissions.Plan_ID, plansubmissions.User_ID, plansubmissions.Submission_Title, plansubmissions.Submission_File, plansubmissions.Submission_Description, plansubmissions.Submission_Date, plansubmissions.Submission_Status, plans.PlanName, users.User_First, recommendation.recommendation_ID, recommendation.recommendation_Name FROM capstone.plansubmissions JOIN capstone.plans ON plansubmissions.Plan_ID = plans.Plan_ID JOIN capstone.users ON plansubmissions.User_ID = users.User_ID JOIN capstone.recommendation ON recommendation.recommendation_ID = plans.recommendation_ID; Select * FROM capstone.plans; Select * FROM capstone.recommendation;"
-            connection.query(sql, function(err, results, fields){
+            connection.query(sql, function (err, results, fields) {
                 if (err) throw err;
-                if(results){
-                resp.render('./pages/FinalReportGroupLeader.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results [2],
-                    current_user: sess.user
-                });
+                if (results) {
+                    resp.render('./pages/FinalReportGroupLeader.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    });
                 }
             });
-            
+
             console.log("FINAL REPORT GROUP LEADER PAGE");
         }
     },
@@ -313,9 +313,18 @@ module.exports = {
             });
         }
     },
-    
-    SendDocuments: function (req, resp){
-        console.log(req.files)
+
+
+    SendDocuments: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            console.log(req.files.DocFile.length)
+            var files = req.files.DocFile;
+            console.log(files[0].name)
+        }
     },
 
 }
