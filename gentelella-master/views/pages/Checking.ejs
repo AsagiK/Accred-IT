@@ -79,21 +79,14 @@
 
                                                         <!-- start accordion    -->
                                                         <% for (var cycle of dataD) { %>
-                                                        <div class="accordion" id="accordion" role="tablist"
-                                                            aria-multiselectable="true">
+                                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                             <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingOne"
-                                                                    data-toggle="collapse" data-parent="#accordion"
-                                                                    href="#collapse<%= cycle.cycle_ID %>"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="collapse<%= cycle.cycle_ID %>">
+                                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= cycle.cycle_ID %>" aria-expanded="true" aria-controls="collapse<%= cycle.cycle_ID %>">
                                                                     <h4 class="panel-title">
                                                                         CYCLE NAME: <%= cycle.cycle_Name %>
                                                                     </h4>
                                                                 </a>
-                                                                <div id="collapse<%= cycle.cycle_ID %>"
-                                                                    class="panel-collapse collapse" role="tabpanel"
-                                                                    aria-labelledby="headingOne">
+                                                                <div id="collapse<%= cycle.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                                     <% for (var metric of data) { %>
                                                                     <% if (metric.cycle_ID == cycle.cycle_ID) { %>
 
@@ -102,19 +95,13 @@
 
                                                                         <div class="panel">
 
-                                                                            <a class="panel-heading" role="tab"
-                                                                                id="HeadGroupOne" data-toggle="collapse"
-                                                                                data-parent="#headingOne"
-                                                                                href="#Collapse<%= metric.metric_ID %>"
-                                                                                aria-expanded="true"
-                                                                                aria-controls="Collapse<%= metric.metric_ID %>">
+                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
                                                                                 <h3 class="panel-title">
                                                                                     GOALS AND METRICS:
                                                                                     <%= metric.metric_Name %>
                                                                                 </h3>
                                                                             </a>
-                                                                            <div id="Collapse<%= metric.metric_ID %>"
-                                                                                class="collapse">
+                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
 
 
                                                                                 <table class="table table-bordered">
@@ -153,20 +140,12 @@
                                                                                                                 <label>Score</label>
                                                                                                             </td>
                                                                                                             <td>
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    name="score<%=activities.activity_ID %>"
-                                                                                                                    value="<%=activities.current_Score %>">
-                                                                                                                <input type="text" id="length" name="length" value="<%= dataE.length %>"
-                                                                                                            </td>
-                                                                                                            <td>
+                                                                                                                <input type="text" name="score<%=activities.activity_ID %>" id="score<%=activities.activity_ID %>" value="<%=activities.current_Score %>">
+                                                                                                                <input type="text" id="length" name="length" value="<%= dataE.length %>" </td> <td>
                                                                                                                 <label>Target</label>
                                                                                                             </td>
                                                                                                             <td>
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    name="target<%=activities.activity_ID %>"
-                                                                                                                    value="<%=activities.target %>">
+                                                                                                                <input type="text" name="target<%=activities.activity_ID %>" id="target<%=activities.activity_ID %>" value="<%=activities.target %>">
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                         <% } %>
@@ -180,33 +159,17 @@
 
                                                                                                 <div class="form-group">
                                                                                                     <div>
-                                                                                                        <!BUTTONS FOR
-                                                                                                            EDIT AND
-                                                                                                            PLAN>
+                                                                                                        <!BUTTONS FOR EDIT AND PLAN>
 
-                                                                                                            <form
-                                                                                                                method="get"
-                                                                                                                action="editmetric">
-                                                                                                                <input
-                                                                                                                    type="hidden"
-                                                                                                                    name="UID"
-                                                                                                                    value="<%= metric.metric_ID %>">
-                                                                                                                <button
-                                                                                                                    type="submit"
-                                                                                                                    class="btn btn-primary">Edit
+                                                                                                            <form method="get" action="editmetric">
+                                                                                                                <input type="hidden" name="UID" value="<%= metric.metric_ID %>">
+                                                                                                                <button type="submit" class="btn btn-primary">Edit
                                                                                                                     Metric</button>
                                                                                                             </form>
                                                                                                             <br /><br />
-                                                                                                            <form
-                                                                                                                method="get"
-                                                                                                                action="MeasurementPage">
-                                                                                                                <input
-                                                                                                                    type="hidden"
-                                                                                                                    name="MID"
-                                                                                                                    value="<%= metric.metric_ID %>">
-                                                                                                                <button
-                                                                                                                    type="submit"
-                                                                                                                    class="btn btn-primary">View
+                                                                                                            <form method="get" action="MeasurementPage">
+                                                                                                                <input type="hidden" name="MID" value="<%= metric.metric_ID %>">
+                                                                                                                <button type="submit" class="btn btn-primary">View
                                                                                                                     Measurements</button>
                                                                                                             </form>
                                                                                                             <br /><br />
@@ -276,26 +239,60 @@
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
+
         </script>
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 var measurelength = parseInt(document.getElementById("length").value, 10);
-                //alert(measurelength);
+                var rowindex = [];
 
-                for (var x = 1; x<=measurelength;x++) {
-                    var rows = document.getElementById("TM"+x).getElementsByTagName("tr").length;
-                    document.getElementById("ID"+x).value = rows;
-                    //alert(rows);
 
+                for (var x = 1; x <= measurelength; x++) {
+                    var rows = document.getElementById("TM" + x).getElementsByTagName("tr").length;
+                    document.getElementById("ID" + x).value = rows;
+                    rowindex.push(rows);
+                    var finalscore = [];
+                    var computedscore = 0;
+                    //console.log(rowindex)
+                    for (var y = 1; y <= rowindex[x - 1]; y++) {
+                       // console.log(y + "and" +  rowindex[x - 1]);
+                        if (rowindex.length < 2) {
+                           // console.log("hi")
+                            var temp = (parseInt(document.getElementById("score" + y).value) / parseInt(document.getElementById("target" + y).value)) / rowindex[x - 1];
+                            finalscore.push(temp);
+
+                        } else {
+                           
+                            var adjustedindex = 0;
+                            for (var f = 0; f < rowindex.length - 1; f++) {
+                                adjustedindex = adjustedindex + rowindex[f];
+                            }
+                            console.log(y);
+                            console.log(adjustedindex);
+                            console.log("score" + (parseInt(y) + parseInt(adjustedindex)));
+                            var temp = (parseInt(document.getElementById("score" + (parseInt(y) + parseInt(adjustedindex))).value) / parseInt(document.getElementById("target" + (parseInt(y) + parseInt(adjustedindex))).value)) / rowindex[x - 1];
+                            
+                            finalscore.push(temp);
+                        }
+                        
+                    }
+                    //console.log(computedscore);
+                    for (var z = 0; z < finalscore.length; z++) {
+                        computedscore = computedscore + finalscore[z];
+                        //console.log(finalscore[z]);
+                    }
+
+                    document.getElementById("ID" + x).value = (computedscore) * 100;
                 }
-                    
-                    
-               
+
+
+
             });
+
         </script>
 
-        
+
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
