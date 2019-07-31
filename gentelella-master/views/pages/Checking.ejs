@@ -268,9 +268,6 @@
                             for (var f = 0; f < rowindex.length - 1; f++) {
                                 adjustedindex = adjustedindex + rowindex[f];
                             }
-                            console.log(y);
-                            console.log(adjustedindex);
-                            console.log("score" + (parseInt(y) + parseInt(adjustedindex)));
                             var temp = (parseInt(document.getElementById("score" + (parseInt(y) + parseInt(adjustedindex))).value) / parseInt(document.getElementById("target" + (parseInt(y) + parseInt(adjustedindex))).value)) / rowindex[x - 1];
                             
                             finalscore.push(temp);
