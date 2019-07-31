@@ -1,4 +1,5 @@
-c<!DOCTYPE html>
+c
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -57,6 +58,11 @@ c<!DOCTYPE html>
                                         data-target=".bs-example-modal-lg">
                                         Create Metrics
                                     </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target=".createCycle">
+                                        Create Cycle
+                                    </button>
+
 
                                     <!view table for users>
                                         <table class="table table-bordered">
@@ -69,7 +75,7 @@ c<!DOCTYPE html>
                                                     <th>Source</th>
                                                     <th>Date</th>
                                                     <th></th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -78,7 +84,7 @@ c<!DOCTYPE html>
                                                     %>
 
                                                 <tr>
-                                             
+
                                                     <td><%= metric.metric_Name %></td>
                                                     <td><%= metric.metric_Desc %></td>
                                                     <td><%= metric.priority_Level %></td>
@@ -91,7 +97,7 @@ c<!DOCTYPE html>
                                                         <div class="form-group">
                                                             <div>
                                                                 <!BUTTONS FOR EDIT AND PLAN>
-                                                                    
+
                                                                     <form method="get" action="editmetric">
                                                                         <input type="hidden" name="UID"
                                                                             value="<%= metric.metric_ID %>">
@@ -104,7 +110,8 @@ c<!DOCTYPE html>
                                                                         <input type="hidden" name="MID"
                                                                             value="<%= metric.metric_ID %>">
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">View Measurements</button>
+                                                                            class="btn btn-primary">View
+                                                                            Measurements</button>
                                                                     </form>
                                                                     <br /><br />
                                                             </div>
@@ -123,154 +130,203 @@ c<!DOCTYPE html>
             </div>
 
 
-                    <!-- /page content -->
+            <!-- /page content -->
 
 
 
-                    <!--Modal for Create -->
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        <span aria-hidden="true">×</span>
+            <!--Modal for Create -->
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Create Metric
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="CreateMetric" data-parsley-validate class="form-horizontal form-label-left"
+                                action="addmetric" method="POST">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                        for="first-name">Source:<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="source">
+                                            <% for (var source of dataB) { %>
+                                            <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Metric
+                                        Name<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="metricName" name="metricName" required="required"
+                                            class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Quality Target"
+                                        class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea class="form-control" rows="3" id="metricDesc" name="metricDesc"
+                                            placeholder="Description" required="required" onkeyup="textAreaAdjust(this)"
+                                            style="overflow:hidden"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority
+                                        Level<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="priority">
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Assign
+                                        Group:<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="group">
+                                            <% for (var group of dataC) { %>
+                                            <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
                                     </button>
-                                    <h4 class="modal-title" id="myModalLabel">
-                                        Create Metric
-                                    </h4>
+                                    <button type="submit" class="btn btn-primary" form="CreateMetric">
+                                        Submit
+                                    </button>
                                 </div>
-                                <div class="modal-body">
-                                    <form id="CreateMetric" data-parsley-validate
-                                        class="form-horizontal form-label-left" action="addmetric"
-                                        method="POST">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Source:<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="source">
-                                                    <% for (var source of dataB) { %>
-                                                    <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Metric Name<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="text" id="metricName" name="metricName"
-                                                    required="required" class="form-control col-md-7 col-xs-12"
-                                                    placeholder="Name" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Quality Target"
-                                                class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
-                                                    class="required">*</span></label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <textarea class="form-control" rows="3" id="metricDesc"
-                                                    name="metricDesc" placeholder="Description"
-                                                    required="required" onkeyup="textAreaAdjust(this)"
-                                                    style="overflow:hidden"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Priority
-                                                Level<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="priority">
-                                                    <option value="High">High</option>
-                                                    <option value="Medium">Medium</option>
-                                                    <option value="Low">Low</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Assign Group:<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select class="form-control" name="group">
-                                                    <% for (var group of dataC) { %>
-                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="submit" class="btn btn-primary" form="CreateMetric">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-
-                    
-                    <!-- footer content -->
-                    <footer>
-                        <div class="pull-right">
-                            Gentelella - Bootstrap Admin Template by
-                            <a href="https://colorlib.com">Colorlib</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </footer>
-                    <!-- /footer content -->
                 </div>
+            </div>
+
+            <!--MODAL FOR CREATE CYCLE-->
+            <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal2" value="Edit">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left"
+                                action="addcycle" method="POST">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cycle
+                                        Name<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="first-name" name="cycleName" required="required"
+                                            class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle
+                                        Start
+                                        Date:<span class="required"></span>
+                                    </label>
+                                    <form class="form-group">
+                                        <fieldset>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="controls">
+                                                    <div class="input-prepend input-group">
+                                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                            <input type="text" style="width: 200px" name="date" id="reservation" class="form-control" value="" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" form="CreateCycle">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by
+                    <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
         </div>
+    </div>
 
-        <!script for dynamic text area>
-            <script>
-                function textAreaAdjust(o) {
-                    o.style.height = "1px";
-                    o.style.height = (25 + o.scrollHeight) + "px";
-                }
-            </script>
+    <!script for dynamic text area>
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+        </script>
 
-            <!-- jQuery -->
-            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-            <!-- Bootstrap -->
-            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- FastClick -->
-            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-            <!-- NProgress -->
-            <script src="assets/vendors/nprogress/nprogress.js"></script>
-            <!-- bootstrap-progressbar -->
-            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-            <!-- iCheck -->
-            <script src="assets/vendors/iCheck/icheck.min.js"></script>
-            <!-- bootstrap-daterangepicker -->
-            <script src="assets/vendors/moment/min/moment.min.js"></script>
-            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap-wysiwyg -->
-            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-            <!-- jQuery Tags Input -->
-            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-            <!-- Switchery -->
-            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-            <!-- Select2 -->
-            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-            <!-- Parsley -->
-            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-            <!-- Autosize -->
-            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-            <!-- jQuery autocomplete -->
-            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-            <!-- starrr -->
-            <script src="assets/vendors/starrr/dist/starrr.js"></script>
-            <!-- Custom Theme Scripts -->
-            <script src="assets/build/js/custom.min.js"></script>
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
 </body>
 
 </html>

@@ -304,7 +304,7 @@ module.exports = {
             var id = (req.query.UID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.description, approved_activities.code  FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
                 resp.render('./pages/ActivityDetails.ejs', {
@@ -323,8 +323,21 @@ module.exports = {
         } else {
             var files = req.files.DocFile;
             var max = files.length;
+            var AID = req.body.activityID;
+            var name = req.body.activityName;
+            var target = req.body.target;
+            var code = req.body.code;
+            var description = req.body.activityDesc;
+            var MID = req.body.MID;
+            var score = req.body.score;
+            var values2 = [AID, name, target, code, description, MID, score];
             var count = 0;
-            console.log(files.length);
+            console.log(files.length + "----------");
+            var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+            connection.query(sql2, values2, function (err, results, fields) {
+                if (err) throw err;
+                console.log(results);
+            });
             async.forEachOf(files, function (value, key, callback) {
                 console.log(files[key].name);
                 var name = files[key].name;

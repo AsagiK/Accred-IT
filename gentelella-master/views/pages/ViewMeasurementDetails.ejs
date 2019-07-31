@@ -132,117 +132,119 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <div class="x_content">
-                                
-                                    <div class="title_left">
-                                        <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
-                                    </div>
-                                    <br />
 
-                                    <div class="col-md-12 col-sm-6 col-xs-12">
-                                        <div class="x_panel">
-                                            <div class="x_title">
-                                                <div class="page-title">
-                                                    <div class="title_right">
-                                                        <h2>Procedures: </h2>
-                                                    </div>
-                                                    <div class="title_left">
-                                                        <h2>Quality Target: <%= data[0].QualityTarget %></h2>
-                                                    </div>
+                                <div class="title_left">
+                                    <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                </div>
+                                <br />
+
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <div class="page-title">
+                                                <div class="title_right">
+                                                    <h2>Procedures: </h2>
                                                 </div>
-                                                <!--Edited-->
-                                                <div class="clearfix"></div>
+                                                <div class="title_left">
+                                                    <h2>Quality Target: <%= data[0].QualityTarget %></h2>
+                                                </div>
                                             </div>
+                                            <!--Edited-->
+                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="x_content">
 
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".bs-example-modal-lg">
-                                        Create Activities
-                                    </button>
-
-                                    <div class="x_content">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg">
+                                            Create Activities
+                                        </button>
 
                                         <div class="panel-body">
                                             <div class="panel">
+
                                                 <a class="panel-heading" role="tab" id="HeadGroupOne"
                                                     data-toggle="collapse" data-parent="#headingTwo"
                                                     href="#FacilitiesGroupOne" aria-expanded="true"
                                                     aria-controls="FacilitiesGroupOne">
                                                 </a>
-                                                
+
                                                 <br>
+                                                <div>
+                                                    
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
 
-                                                <div class="ln_solid"></div>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
+                                                                <th></th>
+                                                                <th>Activity Name</th>
+                                                                <th>Description</th>
+                                                                <th>Target</th>
+                                                                <th></th>
+                                                                <th style="display: none">Code</th>
 
-                                                            <th></th>
-                                                            <th>Activity Name</th>
-                                                            <th>Description</th>
-                                                            <th>Target</th>
-                                                            <th></th>
-                                                            <th style="display: none">Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for (activities of dataB) { %>
+                                                            <tr>
 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <% for (activities of dataB) { %>
-                                                            <tr> 
 
-                                                               
 
                                                                 <% if (activities.code == "0") { %>
-                                                                <td><input type="checkbox" onclick="return false;"/></td>
+                                                                <td><input type="checkbox" onclick="return false;" />
+                                                                </td>
                                                                 <% } else { %>
                                                                 <td>NOT A CHECKBOX</td>
                                                                 <% } %>
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
-                                                                <td><%= activities.target %></td> 
+                                                                <td><%= activities.target %></td>
                                                                 <% if (activities.code == "0") {  %>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
-                                                                            <input type="hidden" name="UID"
+                                                                        <input type="hidden" name="UID"
                                                                             value="<%= activities.activity_ID %>">
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Submit Evidence
-                                                                            </button>
-                                                                    </form> 
+                                                                            class="btn btn-primary">Submit
+                                                                            Evidence
+                                                                        </button>
+                                                                    </form>
 
                                                                 </td>
 
-                                                                <% } else { %> 
+                                                                <% } else { %>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
                                                                         <input type="hidden" name="UID"
-                                                                        value="<%= activities.activity_ID %>">
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Submit Evidence
+                                                                            value="<%= activities.activity_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Submit
+                                                                            Evidence
                                                                         </button>
-                                                                    </form> 
+                                                                    </form>
                                                                 </td>
                                                                 <% } %>
-                                                                
-                                                                
+
+
                                                             </tr>
                                                             <% } %>
-                                                    </tbody>
-                                                </table>
-                                                <!SUBMIT BUTTON HERE>
-                                                    <button type="button" class="btn btn-success"
-                                                        id="">SUBMIT</button>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
 
                                             <!--End of Group 1 Table -->
 
                                         </div>
-                                    </div>
+                                </div>
 
-                                    <div class="ln_solid"></div>
+                                <div class="ln_solid"></div>
 
-                                    <!--div class="col-md-12 col-sm-12 col-xs-12">
+                                <!--div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_content">
                                                 <br />
@@ -339,284 +341,276 @@
 
         <!--Modal for Create -->
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                Create Activities
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                                <div class="panel-body">
-                                        <div class="panel">
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                data-toggle="collapse" data-parent="#headingTwo"
-                                                href="#FacilitiesGroupOne" aria-expanded="true"
-                                                aria-controls="FacilitiesGroupOne">
-                                            </a>
-                                            <div class="title_left">
-                                                <button type="button" class="btn btn-default"
-                                                    id="check">Check</button>
-                                                <button type="button" class="btn btn-default"
-                                                    id="count">Count</button>
-                                            </div>
-                                            <br>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Create Activities
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body">
+                            <div class="panel">
+                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                    data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
+                                    aria-controls="FacilitiesGroupOne">
+                                </a>
+                                <div class="title_left">
+                                    <button type="button" class="btn btn-default" id="check">Check</button>
+                                    <button type="button" class="btn btn-default" id="count">Count</button>
+                                </div>
+                                <br>
 
-                                            <div id="checkbox">
-                                                <label for="activitycheck">Activity</label>
-                                                <br>
-                                                <input type="text" name="activitycheck" id="activitycheck" value="">
-                                                <br>
-                                                <label for="descriptioncheck">Description</label>
-                                                <br>
-                                                <textarea id="descriptioncheck" name="descriptioncheck"
-                                                    required="required" class="form-control col-md-7 col-xs-12"
-                                                    onkeyup="textAreaAdjust(this)"
-                                                    style="overflow:hidden"></textarea>
-                                                <br>
-                                                <input type="hidden" name="targetcheck" id="targetcheck"
-                                                    value="100">
-                                                <br><br>
-                                                <button type="button" class="btn btn-default add-row">Add</button>
-                                            </div>
-                                            <div id="countbox">
-                                                <label for="activitycount">Activity</label>
-                                                <br>
-                                                <input type="text" name="activitycount" id="activitycount" value="">
-                                                <br>
-                                                <label for="descriptioncount">Description</label>
-                                                <br>
-                                                <textarea id="descriptioncount" name="descriptioncount"
-                                                    required="required" class="form-control col-md-7 col-xs-12"
-                                                    onkeyup="textAreaAdjust(this)"
-                                                    style="overflow:hidden"></textarea>
-                                                <br>
-                                                <label for="target">Target</label>
-                                                <br>
-                                                <input type="number" name="targetcount" id="targetcount" value="">
-                                                <br><br>
-                                                <button type="button" class="btn btn-default add-row2">Add</button>
-                                            </div>
-
-
-
-                                            <div class="ln_solid"></div>
-                                            <table id="table">
-                                                <thead>
-                                                    <tr>
-
-                                                        <th></th>
-                                                        <th>Activity Name</th>
-                                                        <th>Description</th>
-                                                        <th>Target</th>
-                                                        <th></th>
-                                                        <th style="display: none">Code</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-
-                                                </tbody>
-                                            </table>
-                                            <!SUBMIT BUTTON HERE>
-                                                <button type="button" class="btn btn-success"
-                                                    id="toJSON">SUBMIT</button>
-                                        </div>
-
-
-                                        <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="passdata" value="1">
-                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-success" style="display: none;"
-                                                id="backsuccess">Hi</button>
-                                        </form>
-
-                                        <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="passdata" value="0">
-                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-success" style="display: none;"
-                                                id="backfail">Hi</button>
-                                        </form>
-
-                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>"
-                                            id="mid">
-
-                                        <!--End of Group 1 Table -->
-
-                                    </div>
+                                <div id="checkbox">
+                                    <label for="activitycheck">Activity</label>
+                                    <br>
+                                    <input type="text" name="activitycheck" id="activitycheck" value="">
+                                    <br>
+                                    <label for="descriptioncheck">Description</label>
+                                    <br>
+                                    <textarea id="descriptioncheck" name="descriptioncheck" required="required"
+                                        class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                        style="overflow:hidden"></textarea>
+                                    <br>
+                                    <input type="hidden" name="targetcheck" id="targetcheck" value="100">
+                                    <br><br>
+                                    <button type="button" class="btn btn-default add-row">Add</button>
+                                </div>
+                                <div id="countbox">
+                                    <label for="activitycount">Activity</label>
+                                    <br>
+                                    <input type="text" name="activitycount" id="activitycount" value="">
+                                    <br>
+                                    <label for="descriptioncount">Description</label>
+                                    <br>
+                                    <textarea id="descriptioncount" name="descriptioncount" required="required"
+                                        class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                        style="overflow:hidden"></textarea>
+                                    <br>
+                                    <label for="target">Target</label>
+                                    <br>
+                                    <input type="number" name="targetcount" id="targetcount" value="">
+                                    <br><br>
+                                    <button type="button" class="btn btn-default add-row2">Add</button>
                                 </div>
 
 
 
-                                <script>
-                                    $(document).ready(function () {
-                                        $("#check").click(function () {
-                                            $("#checkbox").toggle();
-                                        });
-                                        $("#count").click(function () {
-                                            $("#countbox").toggle();
-                                        });
-                                    });
-                                </script>
+                                <div class="ln_solid"></div>
+                                <table id="table">
+                                    <thead>
+                                        <tr>
+
+                                            <th></th>
+                                            <th>Activity Name</th>
+                                            <th>Description</th>
+                                            <th>Target</th>
+                                            <th></th>
+                                            <th style="display: none">Code</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                                <!SUBMIT BUTTON HERE>
+                                    <button type="button" class="btn btn-success" id="toJSON">SUBMIT</button>
+                            </div>
+
+
+                            <form method="get" action="/ViewMeasurementDetails">
+                                <input type="hidden" name="passdata" value="1">
+                                <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <button type="submit" class="btn btn-success" style="display: none;"
+                                    id="backsuccess">Hi</button>
+                            </form>
+
+                            <form method="get" action="/ViewMeasurementDetails">
+                                <input type="hidden" name="passdata" value="0">
+                                <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <button type="submit" class="btn btn-success" style="display: none;"
+                                    id="backfail">Hi</button>
+                            </form>
+
+                            <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+
+                            <!--End of Group 1 Table -->
+
                         </div>
                     </div>
+
+
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#check").click(function () {
+                                $("#checkbox").toggle();
+                            });
+                            $("#count").click(function () {
+                                $("#countbox").toggle();
+                            });
+                        });
+                    </script>
                 </div>
             </div>
+        </div>
+    </div>
 
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".add-row").click(function () {
-                    if (!checkEmptyInputcheck()) {
-                        console.log("testing add button");
-                        var activity = $("#activitycheck").val();
-                        var target = $("#targetcheck").val();
-                        var description = $("#descriptioncheck").val();
-                        var markup =
-                            "<tr><td><i class='fa fa-check-square'></i></td><td>" +
-                            activity + "</td><td>" + description + "</td><td>" + target +
-                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>0<td></tr>";
-                        $("table tbody").append(markup);
-                    }
-                });
-
-                $(".add-row2").click(function () {
-                    if (!checkEmptyInputcount()) {
-                        console.log("testing add button");
-                        var activity = $("#activitycount").val();
-                        var target = $("#targetcount").val();
-                        var description = $("#descriptioncount").val();
-                        var markup = "<tr><td></td><td>" + activity +
-                            "</td><td>" + description + "</td><td>" + target +
-                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
-                        $("table tbody").append(markup);
-                    }
-                });
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".add-row").click(function () {
+                if (!checkEmptyInputcheck()) {
+                    console.log("testing add button");
+                    var activity = $("#activitycheck").val();
+                    var target = $("#targetcheck").val();
+                    var description = $("#descriptioncheck").val();
+                    var markup =
+                        "<tr><td><i class='fa fa-check-square'></i></td><td>" +
+                        activity + "</td><td>" + description + "</td><td>" + target +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>0<td></tr>";
+                    $("table tbody").append(markup);
+                }
             });
 
-            function checkEmptyInputcheck() {
-                var isEmpty = false,
-                    activitycheck = document.getElementById("activitycheck").value,
-                    targetcheck = document.getElementById("targetcheck").value;
-
-                if (activitycheck === "") {
-                    alert("Activity Cannot Be Empty");
-                    isEmpty = true;
-                } else if (targetcheck === "") {
-                    alert("Target Cannot Be Empty");
-                    isEmpty = true;
+            $(".add-row2").click(function () {
+                if (!checkEmptyInputcount()) {
+                    console.log("testing add button");
+                    var activity = $("#activitycount").val();
+                    var target = $("#targetcount").val();
+                    var description = $("#descriptioncount").val();
+                    var markup = "<tr><td></td><td>" + activity +
+                        "</td><td>" + description + "</td><td>" + target +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
+                    $("table tbody").append(markup);
                 }
-                return isEmpty;
-            }
-
-            function checkEmptyInputcount() {
-                var isEmpty = false,
-                    activitycount = document.getElementById("activitycount").value,
-                    targetcount = document.getElementById("targetcount").value;
-
-                if (activitycount === "") {
-                    alert("Activity Cannot Be Empty");
-                    isEmpty = true;
-                } else if (targetcount === "") {
-                    alert("Target Cannot Be Empty");
-                    isEmpty = true;
-                }
-                return isEmpty;
-            }
-
-            function deleteRow(r) {
-                r.closest("tr").remove();
-            }
-
-            $("#toJSON").click(function () {
-                console.log("Hello");
-                var table = JSON.stringify($('#table').tableToJSON());
-                var mid = document.getElementById("mid").value
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AddActivitiesJSON', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function () {
-                    console.log(xhr.responseText);
-                };
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
-                        var respData = xhr.responseText;
-                        if (respData == "OK") {
-                            console.log("Hi");
-                            backsuccess();
-                        } else {
-                            backfail();
-                        }
-                    }
-                };
-
-
-                xhr.send("table=" + table + "&mid=" + mid);
-
             });
+        });
 
-            function backsuccess() {
-                var button = document.getElementById('backsuccess');
-                button.click();
+        function checkEmptyInputcheck() {
+            var isEmpty = false,
+                activitycheck = document.getElementById("activitycheck").value,
+                targetcheck = document.getElementById("targetcheck").value;
 
-            };
-
-            function backfail() {
-                var button = document.getElementById('backfail');
-                button.click();
-
-            };
-        </script>
-
-        <script>
-            function textAreaAdjust(o) {
-                o.style.height = "1px";
-                o.style.height = (25 + o.scrollHeight) + "px";
+            if (activitycheck === "") {
+                alert("Activity Cannot Be Empty");
+                isEmpty = true;
+            } else if (targetcheck === "") {
+                alert("Target Cannot Be Empty");
+                isEmpty = true;
             }
-        </script>
+            return isEmpty;
+        }
 
-        
+        function checkEmptyInputcount() {
+            var isEmpty = false,
+                activitycount = document.getElementById("activitycount").value,
+                targetcount = document.getElementById("targetcount").value;
 
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
-        <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+            if (activitycount === "") {
+                alert("Activity Cannot Be Empty");
+                isEmpty = true;
+            } else if (targetcount === "") {
+                alert("Target Cannot Be Empty");
+                isEmpty = true;
+            }
+            return isEmpty;
+        }
+
+        function deleteRow(r) {
+            r.closest("tr").remove();
+        }
+
+        $("#toJSON").click(function () {
+            console.log("Hello");
+            var table = JSON.stringify($('#table').tableToJSON());
+            var mid = document.getElementById("mid").value
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/AddActivitiesJSON', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+            };
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    var respData = xhr.responseText;
+                    if (respData == "OK") {
+                        console.log("Hi");
+                        backsuccess();
+                    } else {
+                        backfail();
+                    }
+                }
+            };
+
+
+            xhr.send("table=" + table + "&mid=" + mid);
+
+        });
+
+        function backsuccess() {
+            var button = document.getElementById('backsuccess');
+            button.click();
+
+        };
+
+        function backfail() {
+            var button = document.getElementById('backfail');
+            button.click();
+
+        };
+    </script>
+
+    <script>
+        function textAreaAdjust(o) {
+            o.style.height = "1px";
+            o.style.height = (25 + o.scrollHeight) + "px";
+        }
+    </script>
+
+
+
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
+    <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 
 </body>
 

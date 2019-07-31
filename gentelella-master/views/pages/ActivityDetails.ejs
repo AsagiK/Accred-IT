@@ -53,16 +53,6 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <div class="form-group">
-                                    <% for (var activity of data)  { %>
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label>
-                                    <p><%= activity.activity_ID %></p>
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: <%= activity.activity_name %> </label>
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: <%= activity.description %> </label>
-                                    <input type="file" multiple>
-                                    <br> </br>
-                                    <% } %>
-                                </div>
 
                                 <div class="x_content">
                                     <br />
@@ -81,22 +71,29 @@
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
                                                     <td><%= data[0].activity_ID %></td>
+                                                    <input type="hidden" name="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12" >
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
                                                     <td><%= data[0].activity_name %></td>
-
+                                                    <input type="hidden" name="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12" >
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
                                                     <td><%= data[0].description %></td>
+                                                    <input type="hidden" name="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12" >
                                                 </tr>
                                                 <tr>
                                                     <td>Choose Evidences</td>
                                                     <td><input type="file" name="DocFile" multiple></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="text" id="DocName" value="<%= data[0].description %>"></td>
+                                                    <td>
+                                                        <input type="hidden" name="score" value="100" class="form-control col-md-7 col-xs-12" >
+                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12" >
+                                                        <input type="hidden" name="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12" >
+                                                        <input type="hidden" name="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12" >
+                                                    </td>
                                                     <td><button type="submit">Submit Evidence</button></td>
                                                 </tr>
 
@@ -105,31 +102,36 @@
                                     <% } else { %>
                                     <form action="SendDocuments" method="post" encType="multipart/form-data">
                                         <tbody>
+                                                <tr>
+                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
+                                                        <td><%= data[0].activity_ID %></td>
+                                                        <input type="hidden" name="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12" >
+                                                    </tr>
+                                                    <tr>
+                                                            <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
+                                                            <td><%= data[0].activity_name %></td>
+                                                            <input type="hidden" name="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12" >
+                                                        </tr>
+                                                        <tr>
+                                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
+                                                                <td><%= data[0].description %></td>
+                                                                <input type="hidden" name="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12" >
+                                                            </tr>
                                             <tr>
-                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity ID: </label></td>
-                                                <td><%= data[0].activity_ID %></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Name: </label></td>
-                                                <td><%= data[0].activity_name %></td>
+                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current Value: </label></td>
+                                                <td><input type="number" name="score"></td>
 
-                                            </tr>
-                                            <tr>
-                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity Description: </label></td>
-                                                <td><%= data[0].description %></td>
-                                                <input type="text" id="DocName" value="<%= data[0].description %>">
-                                            </tr>
-                                            <tr>
-                                                <td>Set Quality Measure/Target</td>
-                                                <td><input type="number" name="target" multiple></td>
-
                                             <tr>
                                             <tr>
-                                                <td>Choose Evidences</td>
+                                                <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Evdences: </label></td>
                                                 <td><input type="file" name="DocFile" multiple></td>
 
                                             <tr>
-                                                <td> <input type="hidden" id="DocName" value="<%= data[0].description %>"></td>
+                                                <td>
+                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12" >
+                                                        <input type="hidden" name="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12" >
+                                                        <input type="hidden" name="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12" >
+                                                </td>
                                                 <td><button type="submit">Submit Evidence</button></td>
                                             </tr>
 
