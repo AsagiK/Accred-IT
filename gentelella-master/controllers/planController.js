@@ -341,6 +341,7 @@ module.exports = {
         var metricDesc = (req.body.metricDesc);
         var priority = (req.body.priority);
         var group = (req.body.group);
+        var cycle = (req.body.cycle);
         var today = new Date();
         //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -353,8 +354,8 @@ module.exports = {
         console.log(group);
         console.log(current);
         console.log(source);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`) VALUES (? , ? , ? , ?, ?, ?)";
-        var values = [metricName, metricDesc, priority, current, group, source];
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`, `cycle_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
+        var values = [metricName, metricDesc, priority, current, group, source, cycle];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -875,6 +876,46 @@ module.exports = {
         });
     }, 
 
+    doPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "1"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
     
+    checkPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "2"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
+    
+    actPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "3"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
 
 }
