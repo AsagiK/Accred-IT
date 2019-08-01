@@ -33,6 +33,9 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 
@@ -59,109 +62,139 @@
                                 <br />
 
 
-                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">
-                                        <div class="x_title">
-                                            <h2><i class="fa fa-align-left"></i>Approved Reports from Group Leader Checking</h2>
-                                            <div class="clearfix"></div>
-                                        </div>
                                         <div class="x_content">
+                                            <br />
 
-                                            <!-- start accordion    -->
-                                            <% for (var recommendation of dataC) { %>
-                                            <div class="accordion" id="accordion" role="tablist"
-                                                aria-multiselectable="true">
-                                                <div class="panel">
-                                                    <a class="panel-heading" role="tab" id="headingOne"
-                                                        data-toggle="collapse" data-parent="#accordion"
-                                                        href="#collapse<%= recommendation.recommendation_ID %>" aria-expanded="true"
-                                                        aria-controls="collapse<%= recommendation.recommendation_ID %>">
-                                                        <h4 class="panel-title">
-                                                            Recommendation: <%= recommendation.recommendation_Name %>
-                                                        </h4>
-                                                    </a>
-                                                    <div id="collapse<%= recommendation.recommendation_ID %>"
-                                                        class="panel-collapse collapse" role="tabpanel"
-                                                        aria-labelledby="headingOne">
 
-                                                        <% for (var plan of dataB) { %>
-                                                        <% if (plan.recommendation_ID == recommendation.recommendation_ID) { %>
-                                                        <div class="panel-body">
-                                                            <!--Group 1 table-->
+                                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h2><i class="fa fa-align-left"></i>Checking Phase
+                                                        </h2>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
 
+                                                        <!-- start accordion    -->
+                                                        <% for (var cycle of dataD) { %>
+                                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                             <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                                    data-toggle="collapse" data-parent="#headingOne"
-                                                                    href="#Collapse<%= plan.Plan_ID %>"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="Collapse<%= plan.Plan_ID %>">
-                                                                    <h3 class="panel-title">
-                                                                        Plan: <%= plan.PlanName %>
-                                                                    </h3>
+                                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= cycle.cycle_ID %>" aria-expanded="true" aria-controls="collapse<%= cycle.cycle_ID %>">
+                                                                    <h4 class="panel-title">
+                                                                        CYCLE NAME: <%= cycle.cycle_Name %>
+                                                                    </h4>
                                                                 </a>
-                                                                <div id="Collapse<%= plan.Plan_ID %>"
-                                                                    class="collapse">
+                                                                <div id="collapse<%= cycle.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <% for (var metric of data) { %>
+                                                                    <% if (metric.cycle_ID == cycle.cycle_ID) { %>
+
+                                                                    <div class="panel-body">
+                                                                        <!--Group 1 table-->
+
+                                                                        <div class="panel">
+
+                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
+                                                                                <h3 class="panel-title">
+                                                                                    GOALS AND METRICS:
+                                                                                    <%= metric.metric_Name %>
+                                                                                </h3>
+                                                                            </a>
+                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
 
 
-                                                                    <table class="table table-bordered">
-                                                                        <thead>
-                                                                            <th>Plan Title</th>
-                                                                            <th>Submitted By</th>
-                                                                            <th>Submitted</th>
-                                                                            <th>Status</th>
-                                                                            <th></th>
-                                                                        </thead>
-                                                                        <% for (var reports of data) { %>
-                                                                        <% if (reports.Plan_ID == plan.Plan_ID && reports.Submission_Status == 2) { %> 
-                                                                        <tbody>
-                                                                            <td><%= reports.Submission_Title %></td>
-                                                                            <td><%= reports.User_First %></td>
-                                                                            <td><%= reports.Submission_Date %></td>
-                                                                            <% if (reports.Submission_Status == "1") { %>
-                                                                            <td>For Approval</td>
-                                                                            <% } else if (reports.Submission_Status == "2") { %>
-                                                                            <td>For Checking</td>
-                                                                            <% } else { %>
-                                                                            <td>Rejected/Editable</td>
-                                                                            <% } %>
-                                                                            <form method="get" action="PreCheckingDetails">
-                                                                                <td>
-                                                                                        <input type="hidden" name="RID" value="<%= recommendation.recommendation_ID %>">
-                                                                                        <input type="hidden" name="SID" value="<%= reports.Submission_ID %>">
-                                                                                        <input type="hidden" name="PID" value="<%= plan.Plan_ID %>">
-                                                                                    <button type="submit" class="btn btn-primary">View Report</button>
-                                                                                </td>
-                                                                            </form>
-                                                                            
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Measruement ID</th>
+                                                                                            <th>Measure Name</th>
+                                                                                            <th>Description</th>
+                                                                                            <th>Term Result</th>
+                                                                                            <th>Quality Target</th>
+                                                                                            <th>Activities</th>
 
-                                                                        </tbody>
-                                                                        <% } %>
-                                                                        <% } %>
-                                                                    </table>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+
+                                                                                        <% for (var measure of dataE) { %>
+                                                                                        <% if (measure.metric_ID == metric.metric_ID) { %>
+                                                                                        <tr>
+                                                                                            <td><%= measure.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td><%= measure.measurement_Description %>
+                                                                                            </td>
+                                                                                            <td>FINAL SCORE</td>
+                                                                                            <td><%= measure.QualityTarget %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <table class="table table-bordered" id="TM<%= measure.measurement_ID %>">
+                                                                                                    <thead>
+                                                                                                        <th>Activity Name</th>
+                                                                                                        <th>Score</th>
+                                                                                                        <th>Target</th>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <% for (var activities of dataF) { %>
+                                                                                                        <% if (activities.measurement_ID == measure.measurement_ID) { %>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <%= activities.activity_name %>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <input type="text" name="score<%=activities.activity_ID %>" id="score<%=activities.activity_ID %>" value="<%=activities.current_Score %>">
+                                                                                                                <input type="hidden" id="length" name="length" value="<%= dataE.length %>" >
+                                                                                                            <td>
+                                                                                                                <input type="text" name="target<%=activities.activity_ID %>" id="target<%=activities.activity_ID %>" value="<%=activities.target %>">
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <% } %>
+                                                                                                        <% } %>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                                <label>Final Score</label>
+                                                                                                <input id="ID<%= measure.measurement_ID %>">
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                        <% } %>
+
+                                                                                    </tbody>
+                                                                                </table>
 
 
 
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--End of Group 1 Table -->
+                                                                    <% } %>
+                                                                    <% } %>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                         <% } %>
-                                                        <% } %>
-                                                        <!--End of Group 1 Table -->
-
-
                                                     </div>
+
+                                                    <!-- end of accordion -->
+
+
+
                                                 </div>
                                             </div>
-                                            <% } %>
                                         </div>
-
-                                        <!-- end of accordion -->
-
 
 
                                     </div>
                                 </div>
+
+
                             </div>
 
 
@@ -189,10 +222,57 @@
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
+
         </script>
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var measurelength = parseInt(document.getElementById("length").value, 10);
+                var rowindex = [];
+
+
+                for (var x = 1; x <= measurelength; x++) {
+                    var rows = document.getElementById("TM" + x).getElementsByTagName("tr").length;
+                    document.getElementById("ID" + x).value = rows;
+                    rowindex.push(rows);
+                    var finalscore = [];
+                    var computedscore = 0;
+                    //console.log(rowindex)
+                    for (var y = 1; y <= rowindex[x - 1]; y++) {
+                       // console.log(y + "and" +  rowindex[x - 1]);
+                        if (rowindex.length < 2) {
+                           // console.log("hi")
+                            var temp = (parseInt(document.getElementById("score" + y).value) / parseInt(document.getElementById("target" + y).value)) / rowindex[x - 1];
+                            finalscore.push(temp);
+
+                        } else {
+                           
+                            var adjustedindex = 0;
+                            for (var f = 0; f < rowindex.length - 1; f++) {
+                                adjustedindex = adjustedindex + rowindex[f];
+                            }
+                            var temp = (parseInt(document.getElementById("score" + (parseInt(y) + parseInt(adjustedindex))).value) / parseInt(document.getElementById("target" + (parseInt(y) + parseInt(adjustedindex))).value)) / rowindex[x - 1];
+                            
+                            finalscore.push(temp);
+                        }
+                        
+                    }
+                    //console.log(computedscore);
+                    for (var z = 0; z < finalscore.length; z++) {
+                        computedscore = computedscore + finalscore[z];
+                        //console.log(finalscore[z]);
+                    }
+
+                    document.getElementById("ID" + x).value = (computedscore) * 100;
+                }
+
+
+
+            });
+
+        </script>
+
+
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->

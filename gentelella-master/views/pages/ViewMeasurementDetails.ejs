@@ -35,7 +35,57 @@
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
 </head>
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
 
 <style>
     #checkbox {
@@ -107,206 +157,169 @@
 
                                 <div class="x_content">
 
-                                    <div class="panel-body">
-                                        <div class="panel">
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                                data-parent="#headingTwo" href="#FacilitiesGroupOne"
-                                                aria-expanded="true" aria-controls="FacilitiesGroupOne">
-                                            </a>
-                                            <div class="title_left">
-                                                <button type="button" class="btn btn-default" id="check">Check</button>
-                                                <button type="button" class="btn btn-default" id="count">Count</button>
+                                    <!BUTTONS FOR CREATE OF ACTIVITIES>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg">
+                                            Create Activities
+                                        </button>
+
+                                        <div class="panel-body">
+                                            <div class="panel">
+
+                                                    <h2>Activities Table</h2>
+
+                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                    data-toggle="collapse" data-parent="#headingTwo"
+                                                    href="#FacilitiesGroupOne" aria-expanded="true"
+                                                    aria-controls="FacilitiesGroupOne">
+                                                </a>
+
+                                                <br>
+                                                <div>
+                                                    
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th></th>
+                                                                <th>ID</th>
+                                                                <th>Activity Name</th>
+                                                                <th>Description</th>
+                                                                <th>Target</th>
+                                                                <th></th>
+                                                                <th style="display: none">Code</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for (activities of dataB) { %>
+                                                            <tr>
+
+
+
+                                                                <% if (activities.code == "0") { %>
+                                                                <td><input type="checkbox" onclick="return false;" />
+                                                                </td>
+                                                                <% } else { %>
+                                                                <td>NOT A CHECKBOX</td>
+                                                                <% } %>
+                                                                <td><%= activities.activity_ID %></td>
+                                                                <td><%= activities.activity_name %></td>
+                                                                <td><%= activities.description %></td>
+                                                                <td><%= activities.target %></td>
+                                                                <td>
+                                                                    <form method="get" action="ActivityDetails">
+                                                                        <input type="hidden" name="UID"
+                                                                            value="<%= activities.activity_ID %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Submit
+                                                                            Evidence
+                                                                        </button>
+                                                                    </form>
+
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <br>
 
-                                            <div id="checkbox">
-                                                <label for="activity">Activity</label>
-                                                <input type="text" name="activitycheck" id="activitycheck" value="">
-                                                <input type="hidden" name="targetcheck" id="targetcheck" value="100">
-                                                <button type="button" class="btn btn-default add-row">Add</button>
-                                            </div>
-                                            <div id="countbox">
-                                                <label for="activity">Activity</label>
-                                                <input type="text" name="activitycount" id="activitycount" value="">
-                                                <label for="target">Activity</label>
-                                                <input type="number" name="targetcount" id="targetcount" value="">
-                                                <button type="button" class="btn btn-default add-row2">Add</button>
-                                            </div>
+                                            <!--End of Group 1 Table -->
 
-
-
-                                            <div class="ln_solid"></div>
-                                            <table>
-                                                <thead>
-                                                    <tr>
-
-                                                        <th></th>
-                                                        <th>Activity Name</th>
-                                                        <th>Target</th>
-                                                        <th></th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                    <tr>
-                                                        
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <!SUBMIT BUTTON HERE>
-                                            <button type="button" class="btn btn-success">SUBMIT</button>
                                         </div>
-
-                                        <script type="text/javascript">
-                                            $(document).ready(function () {
-                                                $(".add-row").click(function () {
-                                                    if(!checkEmptyInputcheck()){
-                                                        console.log("testing add button");
-                                                        var activity = $("#activitycheck").val();
-                                                        var target = $("#targetcheck").val();
-                                                        var markup =
-                                                            "<tr><td><i class='fa fa-check-square'></i></td><td>" +
-                                                            activity + "</td><td>" + target +
-                                                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                                                        $("table tbody").append(markup);
-                                                    }
-                                                });
-
-                                                $(".add-row2").click(function () {
-                                                if(!checkEmptyInputcount()){
-                                                    console.log("testing add button");
-                                                    var activity = $("#activitycount").val();
-                                                    var target = $("#targetcount").val();
-                                                    var markup = "<tr><td></td><td>" + activity +
-                                                        "</td><td>" + target +
-                                                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                                                    $("table tbody").append(markup);
-                                                }
-                                                });
-                                            });
-
-                                            function checkEmptyInputcheck() {
-                                                var isEmpty = false,
-                                                    activitycheck = document.getElementById("activitycheck").value,
-                                                    targetcheck = document.getElementById("targetcheck").value;
-
-                                                if (activitycheck === "") {
-                                                    alert("Activity Cannot Be Empty");
-                                                    isEmpty = true;
-                                                } else if (targetcheck === "") {
-                                                    alert("Target Cannot Be Empty");
-                                                    isEmpty = true;
-                                                }
-                                                return isEmpty;
-                                            }
-
-                                            function checkEmptyInputcount() {
-                                                var isEmpty = false,
-                                                    activitycount = document.getElementById("activitycount").value,
-                                                    targetcount = document.getElementById("targetcount").value;
-
-                                                if (activitycount === "") {
-                                                    alert("Activity Cannot Be Empty");
-                                                    isEmpty = true;
-                                                } else if (targetcount === "") {
-                                                    alert("Target Cannot Be Empty");
-                                                    isEmpty = true;
-                                                }
-                                                return isEmpty;
-                                            }
-
-                                            function deleteRow(r) {
-                                                r.closest("tr").remove();
-                                            }
-                                        </script>
-
-                                        <!--End of Group 1 Table -->
-
-                                    </div>
                                 </div>
-
-
-
-                                <script>
-                                    $(document).ready(function () {
-                                        $("#check").click(function () {
-                                            $("#checkbox").toggle();
-                                        });
-                                        $("#count").click(function () {
-                                            $("#countbox").toggle();
-                                        });
-                                    });
-                                </script>
 
                                 <div class="ln_solid"></div>
 
+                                <div class="x_content">
+    
+                                            <div class="panel-body">
+                                                <div class="panel">
 
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="x_panel">
-                                        <div class="x_content">
-                                            <br />
-                                            <form id="demo-form2" data-parsley-validate
-                                                class="form-horizontal form-label-left" action="" method=""
-                                                encType="multipart/form-data">
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Title <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <!--First name Input field-->
-                                                        <input type="text" id="docname" name="DocName"
-                                                            required="required" class="form-control col-md-7 col-xs-12"
-                                                            placeholder="First name">
+                                                    <h2>Pending Table</h2>
+    
+                                                    <a class="panel-heading" role="tab" id="HeadGroupOne"
+                                                        data-toggle="collapse" data-parent="#headingTwo"
+                                                        href="#FacilitiesGroupOne" aria-expanded="true"
+                                                        aria-controls="FacilitiesGroupOne"> 
+                                                    </a>
+    
+                                                    <br>
+                                                    <div>
+                                                        
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+    
+                                                                    <th></th>
+                                                                    <th>ID</th>
+                                                                    <th>Activity Name</th>
+                                                                    <th>Description</th>
+                                                                    <th>Target</th>
+                                                                    <th></th>
+                                                                    <th style="display: none">Code</th>
+    
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% for (activities of dataC) { %>
+                                                                <tr>
+    
+    
+    
+                                                                    <% if (activities.code == "0") { %>
+                                                                    <td><input type="checkbox" onclick="return false;" />
+                                                                    </td>
+                                                                    <% } else { %>
+                                                                    <td>NOT A CHECKBOX</td>
+                                                                    <% } %>
+                                                                    <td><%= activities.activity_ID %></td>
+                                                                    <td><%= activities.activity_name %></td>
+                                                                    <td><%= activities.description %></td>
+                                                                    <td><%= activities.target %></td>
+                                                                    
+                                                                    <td>
+                                                                        <form method="get" action="ActivityPendingDetails">
+                                                                            <input type="hidden" name="UID"
+                                                                                value="<%= activities.activity_ID %>">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">View
+                                                                                Evidence
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+    
+                                                                </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="fileupload">Choose
-                                                        File <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input type="file" id="DocFile" name="DocFile"
-                                                            required="required" class="form-control col-md-7 col-xs-12"
-                                                            onchange="md5Generate(event)">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                        for="first-name">Report Description <span
-                                                            class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea id="description" name="DocDesc" required="required"
-                                                            class="form-control col-md-7 col-xs-12"
-                                                            onkeyup="textAreaAdjust(this)"
-                                                            style="overflow:hidden"></textarea>
-                                                    </div>
-                                                </div>
-
-
-
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                <button class="btn btn-primary" type="button">Cancel</button>
-                                                <button class="btn btn-primary" type="reset">Reset</button>
-                                                <button type="submit" class="btn btn-success">Submit</button>
+    
+                                                <!--End of Group 1 Table -->
+    
                                             </div>
-                                        </div>
-
-                                        </form>
                                     </div>
-                                </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    var close = document.getElementsByClassName("closebtn");
+                    var i;
 
+                    for (i = 0; i < close.length; i++) {
+                        close[i].onclick = function () {
+                            var div = this.parentElement;
+                            div.style.opacity = "0";
+                            setTimeout(function () {
+                                div.style.display = "none";
+                            }, 600);
+                        }
+                    }
+                </script>
 
                 <!-- /page content -->
 
@@ -321,42 +334,278 @@
             </div>
         </div>
 
+        <!--Modal for Create -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Create Activities
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body">
+                            <div class="panel">
+                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                    data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
+                                    aria-controls="FacilitiesGroupOne">
+                                </a>
+                                <div class="title_left">
+                                    <button type="button" class="btn btn-default" id="check">Check</button>
+                                    <button type="button" class="btn btn-default" id="count">Count</button>
+                                </div>
+                                <br>
+
+                                <div id="checkbox">
+                                    <label for="activitycheck">Activity</label>
+                                    <br>
+                                    <input type="text" name="activitycheck" id="activitycheck" value="">
+                                    <br>
+                                    <label for="descriptioncheck">Description</label>
+                                    <br>
+                                    <textarea id="descriptioncheck" name="descriptioncheck" required="required"
+                                        class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                        style="overflow:hidden"></textarea>
+                                    <br>
+                                    <input type="hidden" name="targetcheck" id="targetcheck" value="100">
+                                    <br><br>
+                                    <button type="button" class="btn btn-default add-row">Add</button>
+                                </div>
+                                <div id="countbox">
+                                    <label for="activitycount">Activity</label>
+                                    <br>
+                                    <input type="text" name="activitycount" id="activitycount" value="">
+                                    <br>
+                                    <label for="descriptioncount">Description</label>
+                                    <br>
+                                    <textarea id="descriptioncount" name="descriptioncount" required="required"
+                                        class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                        style="overflow:hidden"></textarea>
+                                    <br>
+                                    <label for="target">Target</label>
+                                    <br>
+                                    <input type="number" name="targetcount" id="targetcount" value="">
+                                    <br><br>
+                                    <button type="button" class="btn btn-default add-row2">Add</button>
+                                </div>
 
 
 
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+                                <div class="ln_solid"></div>
+                                <table id="table">
+                                    <thead>
+                                        <tr>
+
+                                            <th></th>
+                                            <th>Activity Name</th>
+                                            <th>Description</th>
+                                            <th>Target</th>
+                                            <th></th>
+                                            <th style="display: none">Code</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                                <!SUBMIT BUTTON HERE>
+                                    <button type="button" class="btn btn-success" id="toJSON">SUBMIT</button>
+                            </div>
+
+
+                            <form method="get" action="/ViewMeasurementDetails">
+                                <input type="hidden" name="passdata" value="1">
+                                <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <button type="submit" class="btn btn-success" style="display: none;"
+                                    id="backsuccess">Hi</button>
+                            </form>
+
+                            <form method="get" action="/ViewMeasurementDetails">
+                                <input type="hidden" name="passdata" value="0">
+                                <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <button type="submit" class="btn btn-success" style="display: none;"
+                                    id="backfail">Hi</button>
+                            </form>
+
+                            <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+
+                            <!--End of Group 1 Table -->
+
+                        </div>
+                    </div>
+
+
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#check").click(function () {
+                                $("#checkbox").toggle();
+                            });
+                            $("#count").click(function () {
+                                $("#countbox").toggle();
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".add-row").click(function () {
+                if (!checkEmptyInputcheck()) {
+                    console.log("testing add button");
+                    var activity = $("#activitycheck").val();
+                    var target = $("#targetcheck").val();
+                    var description = $("#descriptioncheck").val();
+                    var markup =
+                        "<tr><td><i class='fa fa-check-square'></i></td><td>" +
+                        activity + "</td><td>" + description + "</td><td>" + target +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>0<td></tr>";
+                    $("table tbody").append(markup);
+                }
+            });
+
+            $(".add-row2").click(function () {
+                if (!checkEmptyInputcount()) {
+                    console.log("testing add button");
+                    var activity = $("#activitycount").val();
+                    var target = $("#targetcount").val();
+                    var description = $("#descriptioncount").val();
+                    var markup = "<tr><td></td><td>" + activity +
+                        "</td><td>" + description + "</td><td>" + target +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
+                    $("table tbody").append(markup);
+                }
+            });
+        });
+
+        function checkEmptyInputcheck() {
+            var isEmpty = false,
+                activitycheck = document.getElementById("activitycheck").value,
+                targetcheck = document.getElementById("targetcheck").value;
+
+            if (activitycheck === "") {
+                alert("Activity Cannot Be Empty");
+                isEmpty = true;
+            } else if (targetcheck === "") {
+                alert("Target Cannot Be Empty");
+                isEmpty = true;
+            }
+            return isEmpty;
+        }
+
+        function checkEmptyInputcount() {
+            var isEmpty = false,
+                activitycount = document.getElementById("activitycount").value,
+                targetcount = document.getElementById("targetcount").value;
+
+            if (activitycount === "") {
+                alert("Activity Cannot Be Empty");
+                isEmpty = true;
+            } else if (targetcount === "") {
+                alert("Target Cannot Be Empty");
+                isEmpty = true;
+            }
+            return isEmpty;
+        }
+
+        function deleteRow(r) {
+            r.closest("tr").remove();
+        }
+
+        $("#toJSON").click(function () {
+            console.log("Hello");
+            var table = JSON.stringify($('#table').tableToJSON());
+            var mid = document.getElementById("mid").value
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/AddActivitiesJSON', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+            };
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    var respData = xhr.responseText;
+                    if (respData == "OK") {
+                        console.log("Hi");
+                        backsuccess();
+                    } else {
+                        backfail();
+                    }
+                }
+            };
+
+
+            xhr.send("table=" + table + "&mid=" + mid);
+
+        });
+
+        function backsuccess() {
+            var button = document.getElementById('backsuccess');
+            button.click();
+
+        };
+
+        function backfail() {
+            var button = document.getElementById('backfail');
+            button.click();
+
+        };
+    </script>
+
+    <script>
+        function textAreaAdjust(o) {
+            o.style.height = "1px";
+            o.style.height = (25 + o.scrollHeight) + "px";
+        }
+    </script>
+
+
+
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
+    <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 
 </body>
 

@@ -45,6 +45,7 @@ router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 
+
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
@@ -53,7 +54,9 @@ router.route('/Viewcycle').get(planCtrl.Viewcycle);
 router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
 
 
-
+router.route('/doPhase').post(planCtrl.doPhase);
+router.route('/checkPhase').post(planCtrl.checkPhase);
+router.route('/actPhase').post(planCtrl.actPhase);
 
 
 
@@ -77,6 +80,7 @@ router.route('/ViewAllPlans').get(planCtrl.ViewAllPlans);
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
+router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 
 
 //--DocCtrl--
@@ -85,7 +89,10 @@ router.route('/SendDocument').post(DocCtrl.SendDocument);
 router.route('/ViewDocument').get(DocCtrl.ViewDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/FinalReport').get(DocCtrl.FinalReport);
-
+router.route('/ActivityDetails').get(DocCtrl.ActivityDetails);
+router.route('/SendDocuments').post(DocCtrl.SendDocuments);
+router.route('/ActivityPendingDetails').get(DocCtrl.ActivityPendingDetails);
+router.route('/PreCheck').post(DocCtrl.PreCheck);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);
@@ -99,6 +106,8 @@ router.route('/CheckingPage').get(CheckCtrl.CheckingPage);
 router.route('/CheckDetails').get(CheckCtrl.CheckDetails);
 router.route('/PreChecking').get(CheckCtrl.PreChecking);
 router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
+router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
+router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
 
 module.exports = router;

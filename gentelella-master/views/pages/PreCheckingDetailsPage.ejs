@@ -109,7 +109,7 @@
 
                                     <!view table for users>
                                         <table class="table table-bordered">
-
+                                            <form method="post" action="PreCheckingDetailsInsert">
                                             <tbody>
                                                 <tr>
                                                     <td>SUBMISSION TITLE: </td>
@@ -152,10 +152,11 @@
                                                     </tr>
                                                 <tr>
                                                     <td></td>
+                                                        <input type="hidden" name="SID" value="<%= data[0].Submission_ID %>">
                                                     <td><button type="submit" class="btn btn-primary">Submit</button></td>
                                                 </tr>
                                             </tbody>
-
+                                                </form>
                                         </table>
 
                                 </div>

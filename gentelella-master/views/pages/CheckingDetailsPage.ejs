@@ -31,7 +31,17 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
+
+<style>
+    #deadline {
+        display: none;
+    }
+
+</style>
 
 <body class="nav-md">
     <div class="container body">
@@ -53,8 +63,7 @@
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                                aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li><a href="#">Settings 1</a>
                                                 </li>
@@ -89,8 +98,7 @@
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                                aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li><a href="#">Settings 1</a>
                                                 </li>
@@ -109,53 +117,67 @@
 
                                     <!view table for users>
                                         <table class="table table-bordered">
-
-                                            <tbody>
-                                                <tr>
-                                                    <td>SUBMISSION TITLE: </td>
-                                                    <td><%= data[0].Submission_Title %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>SUBMITTED BY: </td>
-                                                    <td><%= data[0].User_First %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>SUBMITTED: </td>
-                                                    <td><%= data[0].Submission_Date %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>DETAILS: </td>
-                                                    <td><%= data[0].Submission_Description %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>EVIDENCE</td>
-                                                    <td><a href="<%= data[0].Submission_File %>"
-                                                            download><%= data[0].Submission_File %></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>COMMENT: </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="3" id="Comment" name="Comment"
-                                                        placeholder="Comment" onkeyup="textAreaAdjust(this)"
-                                                        style="overflow:hidden"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                        <td>SET STATUS</td>
+                                            <form method="post" action="CheckingDetailsInsert">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>SUBMISSION TITLE: </td>
+                                                        <td><%= data[0].Submission_Title %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SUBMITTED BY: </td>
+                                                        <td><%= data[0].User_First %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SUBMITTED: </td>
+                                                        <td><%= data[0].Submission_Date %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>DETAILS: </td>
+                                                        <td><%= data[0].Submission_Description %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>EVIDENCE</td>
+                                                        <td><a href="<%= data[0].Submission_File %>" download><%= data[0].Submission_File %></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>COMMENT: </td>
                                                         <td>
-                                                                <select class="form-control" name="Status">
-                                                                        <option value="-1">Set Status...</option>
-                                                                        <option value="0">Reject</option>
-                                                                        <option value="2">For Checking</option>
-                                                                    </select>
+                                                            <textarea class="form-control" rows="3" id="Comment" name="Comment" placeholder="Comment" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                                         </td>
                                                     </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td><button type="submit" class="btn btn-primary">Submit</button></td>
-                                                </tr>
-                                            </tbody>
+                                                    <tr>
+                                                        <td>SET STATUS</td>
+                                                        <td>
+                                                            <select class="form-control" name="Status" id="Status">
+                                                                <option value="-1">Set Status...</option>
+                                                                <option value="4">Done</option>
+                                                                <option value="3">For Act Phase</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <input type="hidden" name="SID" value="<%= data[0].Submission_ID %>">
+                                                    <input type="hidden" name="PID" value="<%= data[0].Plan_ID %>">
+                                                    <tr name="deadline" id="deadline">
 
+                                                        <td>SET ACT DEADLINE</td>
+                                                        <td>
+                                                            <div class="input-prepend input-group">
+                                                                <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                                <input type="text" name="date" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                                                
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        
+                                                        <td></td>
+                                                        <td><button type="submit" class="btn btn-primary">Submit</button></td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </form>
                                         </table>
 
                                 </div>
@@ -174,6 +196,8 @@
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
                     <div class="clearfix"></div>
+
+
                 </footer>
                 <!-- /footer content -->
             </div>
@@ -185,10 +209,24 @@
                     o.style.height = "1px";
                     o.style.height = (25 + o.scrollHeight) + "px";
                 }
+
             </script>
 
-            <!-- jQuery -->
-            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#Status').change(function() {
+                        if (this.value == "3") {
+                            $('#deadline').show();
+                        } else {
+                            $('#deadline').hide();
+                        }
+
+                    });
+                });
+
+            </script>
+
+
             <!-- Bootstrap -->
             <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
             <!-- FastClick -->
