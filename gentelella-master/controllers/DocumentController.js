@@ -132,7 +132,7 @@ module.exports = {
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
                             if (result) {
-                                console.log(result);
+                              //  console.log(result);
                                 console.log(req.files.DocFile.name + " Uploaded to Google Drive")
                                 var fileid = file.data.id;
                                 sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
@@ -258,7 +258,7 @@ module.exports = {
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
                             if (result) {
-                                console.log(result);
+                               // console.log(result);
                                 console.log(req.files.Evidence.name + " Uploaded to Google Drive")
                                 var fileid = file.data.id;
                                 sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
@@ -345,7 +345,7 @@ module.exports = {
             var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
             connection.query(sql2, values2, function (err, results, fields) {
                 if (err) throw err;
-                console.log(results);
+               // console.log(results);
             });
             if (files.length) {
                 async.forEachOf(files, function (value, key, callback) {
