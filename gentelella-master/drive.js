@@ -95,7 +95,6 @@ function listFiles(auth) {
                 // Handle error
                 console.error(err);
             } else {
-                console.log('Folder Id: ', file.data.id);
                 fs.writeFile(UPLOAD_PATH, JSON.stringify(file), (err) => {
                     if (err) return console.error(err);
                     console.log("Accredit Uploads folder created at connected account");
