@@ -30,8 +30,11 @@ server.use(fileUpload({
 }));
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 const TOKEN_PATH = 'token.json';
-var mime = require('mime-types')
-
+var mime = require('mime-types');
+var UPLOAD_PATH = '';
+if(fs.existsSync('accredit.json')){
+UPLOAD_PATH = require('../accredit.json');
+}
 var sess
 module.exports = {
 
@@ -44,6 +47,7 @@ module.exports = {
             resp.render('./pages/UploadDocument.ejs', {
                 current_user: sess.user
             });
+            console.log(UPLOAD_PATH.data.id);
         }
     },
 
@@ -59,9 +63,11 @@ module.exports = {
             var desc = req.body.DocDesc;
             var point = filename.lastIndexOf(".");
             var ext = filename.substr(point);
+            var folderId = UPLOAD_PATH.data.id;
             var fileMetadata = {
                 'name': req.files.DocFile.name,
-                'description': req.body.DocDesc
+                'description': req.body.DocDesc,
+                 parents : [folderId]
             };
             var media;
             let uploadedimg = req.files.DocFile;
@@ -185,8 +191,10 @@ module.exports = {
             var today = new Date();
             var current = today.toISOString().split('T')[0];
             let uploadedimg = req.files.Evidence;
+            var folderId = UPLOAD_PATH.data.id;
             var fileMetadata = {
-                'name': req.files.Evidence.name
+                'name': req.files.Evidence.name,
+                parents: [folderId]
             };
             var media;
 
@@ -347,8 +355,10 @@ module.exports = {
                     var desc = req.body.DocDesc;
                     var point = filename.lastIndexOf(".");
                     var ext = filename.substr(point);
+                    var folderId = UPLOAD_PATH.data.id;
                     var fileMetadata = {
-                        'name': files[key].name
+                        'name': files[key].name,
+                        'parents': [folderId]
                     };
                     var media;
                     let uploadedimg = files[key];
@@ -464,8 +474,10 @@ module.exports = {
                 var desc = req.body.DocDesc;
                 var point = filename.lastIndexOf(".");
                 var ext = filename.substr(point);
+                var folderId = UPLOAD_PATH.data.id
                 var fileMetadata = {
-                    'name': files.name
+                    'name': files.name,
+                    parents : [folderId]
                 };
                 var media;
                 let uploadedimg = files;
