@@ -70,6 +70,10 @@ router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/edittask').get(planCtrl.edittask);
 router.route('/ViewAllPlans').get(planCtrl.ViewAllPlans);
 
+router.route('/ViewDocument').get(planCtrl.ViewDocument);
+router.route('/UploadDocument').get(planCtrl.UploadDocument);
+router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
+router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
@@ -79,14 +83,9 @@ router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 
 
 //--DocCtrl--
-router.route('/UploadDocument').get(DocCtrl.UploadDocument);
 router.route('/SendDocument').post(DocCtrl.SendDocument);
-router.route('/ViewDocument').get(DocCtrl.ViewDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
-router.route('/FinalReport').get(DocCtrl.FinalReport);
-router.route('/ActivityDetails').get(DocCtrl.ActivityDetails);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
-router.route('/ActivityPendingDetails').get(DocCtrl.ActivityPendingDetails);
 router.route('/PreCheck').post(DocCtrl.PreCheck);
 
 //--SessCtrl
