@@ -105,7 +105,7 @@
                                             <div class="thumbnail">
 
 
-                                                    <div class="image view view-first">
+                                                <div class="image view view-first">
                                                     <% if (filext == "0"){ %>
                                                     <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
                                                     <% } if (filext == "1"){ %>
@@ -127,71 +127,104 @@
                                                             <a href="#"><i class="fa fa-times"></i></a>
                                                         </div>
                                                     </div>
-                                                    </div>
-                                                    <div class="caption">
-                                                        <p><strong><%= doc.Document_Name %></strong></p>
-                                                        <p><%= doc.Document_Desc %></p>
-                                                        <hr style="color: #f00;">
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                           <%} else {%>
-                                                <div class="thumbnail">
+                                                </div>
+                                                <div class="caption">
+                                                    <p><strong><%= doc.Document_Name %></strong></p>
+                                                    <p><%= doc.Document_Desc %></p>
+                                                    <hr style="color: #f00;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%} else {%>
+                                        <div class="thumbnail">
 
-                                                    <div class="image view view-first">
-                                                    <% if (filext == "0"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                    <% } if (filext == "1"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "2"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "3"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "4"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "5"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } %>
+                                            <div class="image view view-first">
+                                                <% if (filext == "0"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
+                                                <% } if (filext == "1"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                <% } if (filext == "2"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                <% } if (filext == "3"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                <% } if (filext == "4"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                <% } if (filext == "5"){ %>
+                                                <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                <% } %>
 
-                                                    <div class="mask no-caption">
-                                                        <div class="tools tools-bottom">
-                                                            <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
-                                                            <a href="#"><i class="fa fa-pencil"></i></a>
-                                                            <a href="#"><i class="fa fa-times"></i></a>
-                                                        </div>
+                                                <div class="mask no-caption">
+                                                    <div class="tools tools-bottom">
+                                                        <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                        <a href="#"><i class="fa fa-times"></i></a>
                                                     </div>
-                                                    </div>
-                                                    <div class="caption">
-                                                        <p><strong><%= doc.Document_Name %></strong></p>
-                                                        <p><%= doc.Document_Desc %></p>
-                                                        <hr style="color: #f00;">
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                            <%}%>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p><strong><%= doc.Document_Name %></strong></p>
+                                                <p><%= doc.Document_Desc %></p>
+                                                <hr style="color: #f00;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
                                         <% } %>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /page content -->
-
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
         </div>
-    </div>
+        <!-- /page content -->
 
-    <!-- jQuery -->
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+            $.ajax({
+                url: "/DocumentViewJSON",
+                type: "GET",
+                dataType: "json",
+                complete: function() {
+                    console.log('process complete');
+                },
+
+                success: function(data) {
+                    processimages(data)
+                    console.log('process sucess');
+                },
+
+                error: function() {
+                    console.log('process error');
+                },
+            });
+            function processimages(ajaxresp){
+                console.log("Hello I can process")
+                console.log(ajaxresp.length);
+                var images = []
+                for(var route of ajaxresp){
+                    images.push(route.Document_Route)
+                }
+                console.log(images);
+            }
+        })
+
+    </script>
+    <!-- jQuery 
+        -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
