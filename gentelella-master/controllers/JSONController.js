@@ -141,13 +141,14 @@ module.exports = {
     },
 
     DocumentViewJSON: function (req, resp) {
+        console.log("Called");
         connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
             if (err){
                 resp.status(400).send({message: 'This is an error!'});
             }
             if(results){
             resp.send(results);
-            console.log(results)
+            //console.log(results)
             }
         });
 
