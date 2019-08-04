@@ -59,58 +59,6 @@ module.exports = {
         }
     },
 
-    Viewtasks: function (req, resp) {
-        connection.query("Select * from capstone.tasks", function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-
-            resp.render('./pages/Viewtasks.ejs', {
-                data: result
-            });
-        });
-        console.log("Viewtasks");
-    },
-
-    CreateTask: function (req, resp) {
-        resp.render('./pages/CreateTask.ejs');
-        console.log("CreateTask");
-    },
-
-    SubmitTask: function (req, resp) {
-        var TN = req.body.TaskName;
-        var TD = req.body.TaskDesc;
-        var GO = req.body.GenObj;
-        var ME = req.body.Measurement;
-        var QT = req.body.QT;
-        var BS = req.body.BS;
-        var PL = req.body.priority;
-        var sql = "INSERT INTO `capstone`.`tasks` (`Task_Name`, `Task_Desc`, `GenObj`, `Measurement`, `QT`, `BaseStandard`, `Level` ) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        var values = [TN, TD, GO, ME, QT, BS, PL];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            console.log("Record Inserted");
-            resp.redirect("/Viewtasks")
-        });
-    },
-
-    AssignTask: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            connection.query("select users.User_ID, users.User_First, users.USer_Last from capstone.users", function (err, result, fields) {
-                if (err) throw err;
-                resp.render('./pages/AssignTask.ejs', {
-                    data: result,
-                    current_user: sess.user
-                });
-                console.log(result);
-            });
-            console.log("AssignTask");
-        }
-    },
-
     ViewGroups: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
@@ -547,25 +495,6 @@ module.exports = {
         }
     },
 
-    ViewAllPlans: function (req, resp) {
-
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            connection.query("SELECT * FROM capstone.plans;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/ViewAllPlans.ejs', {
-                    data: results,
-                    current_user: sess.user
-                });
-                console.log(results);
-            });
-            console.log("ViewAllPlans");
-        }
-    },
-
     ViewMeasurementDetails: function (req, resp) {
 
         sess = req.session;
@@ -606,47 +535,6 @@ module.exports = {
             console.log("VIEW MEASUREMENT DETAILS");
         }
 
-    },
-
-    edittask: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var id = (req.query.TID);
-            console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.tasks where tasks.task_ID = (?);", values, function (err, results) {
-                if (err) throw err;
-                console.log(results);
-                resp.render('./pages/EditTask.ejs', {
-                    data: results,
-                    current_user: sess.user
-                })
-            });
-        }
-    },
-
-    altertask: function (req, resp) {
-        var ID = req.body.taskID;
-        var TN = req.body.TaskName;
-        var TD = req.body.TaskDesc;
-        var GO = req.body.GenObj;
-        var ME = req.body.Measurement;
-        var QT = req.body.QT;
-        var BS = req.body.BS;
-        var PL = req.body.priority;
-        var sql = "Update capstone.tasks set Task_Name = ?, Task_Desc = ?, GenObj = ?, Measurement= ?, QT = ?, BaseStandard = ?, Level = ? where task_ID = ? ";
-        var values = [TN, TD, GO, ME, QT, BS, PL, ID];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            if (result) {
-                resp.redirect('/Viewtasks');
-            }
-            console.log(result);
-        });
-        console.log("updating");
     },
 
     AssignRecommendationToGroup: function (req, resp) {
@@ -917,5 +805,84 @@ module.exports = {
             }
         });
     }, 
+
+    UploadDocument: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            resp.render('./pages/UploadDocument.ejs', {
+                current_user: sess.user
+            });
+            console.log(UPLOAD_PATH.data.id);
+        }
+    },
+
+    ViewDocument: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
+                if (err) throw err;
+                if (results){
+                    resp.render('./pages/ViewDocument.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    });
+                //console.log(results);
+                }
+            });
+            console.log("ViewDocument");
+        }
+    },
+
+    ActivityDetails: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
+                if (err) throw err;
+                if(results){
+                    console.log(results);
+                    resp.render('./pages/ActivityDetails.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    },
+
+    ActivityPendingDetails: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?);", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results);
+                    resp.render('./pages/ActivityPendingDetails.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    },
+
+    
 
 }
