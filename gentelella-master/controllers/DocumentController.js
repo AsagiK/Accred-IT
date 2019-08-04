@@ -531,8 +531,6 @@ module.exports = {
         }
     },
 
-    
-
     PreCheck: function (req, resp) {
         console.log(req.body);
         if (req.body.subtype == "1") {
