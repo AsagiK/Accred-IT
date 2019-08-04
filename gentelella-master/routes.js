@@ -62,19 +62,18 @@ router.route('/actPhase').post(planCtrl.actPhase);
 
 //OTHERS
 router.route('/TestPage').get(planCtrl.Recommendations);
-router.route('/Viewtasks').get(planCtrl.Viewtasks);
-router.route('/CreateTask').get(planCtrl.CreateTask);
-router.route('/SubmitTask').post(planCtrl.SubmitTask);
-router.route('/AssignTask').get(planCtrl.AssignTask);
 router.route('/CreateGrades').get(planCtrl.CreateGrades);
 router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
 router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/edittask').get(planCtrl.edittask);
-router.route('/altertask').post(planCtrl.altertask);
 router.route('/ViewAllPlans').get(planCtrl.ViewAllPlans);
 
+router.route('/ViewDocument').get(planCtrl.ViewDocument);
+router.route('/UploadDocument').get(planCtrl.UploadDocument);
+router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
+router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
@@ -85,14 +84,9 @@ router.route('/DocumentViewJSON').get(JSONCtrl.DocumentViewJSON);
 
 
 //--DocCtrl--
-router.route('/UploadDocument').get(DocCtrl.UploadDocument);
 router.route('/SendDocument').post(DocCtrl.SendDocument);
-router.route('/ViewDocument').get(DocCtrl.ViewDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
-router.route('/FinalReport').get(DocCtrl.FinalReport);
-router.route('/ActivityDetails').get(DocCtrl.ActivityDetails);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
-router.route('/ActivityPendingDetails').get(DocCtrl.ActivityPendingDetails);
 router.route('/PreCheck').post(DocCtrl.PreCheck);
 
 //--SessCtrl

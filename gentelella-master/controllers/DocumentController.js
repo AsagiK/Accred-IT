@@ -38,19 +38,6 @@ UPLOAD_PATH = require('../accredit.json');
 var sess
 module.exports = {
 
-    UploadDocument: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-            resp.render('./pages/UploadDocument.ejs', {
-                current_user: sess.user
-            });
-            console.log(UPLOAD_PATH.data.id);
-        }
-    },
-
     SendDocument: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
@@ -156,23 +143,7 @@ module.exports = {
         }
     },
 
-    ViewDocument: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login');
-        } else {
-            connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/ViewDocument.ejs', {
-                    data: results,
-                    current_user: sess.user
-                });
-                //console.log(results);
-            });
-            console.log("ViewDocument");
-        }
-    },
+    
 
     SubmitReport: function (req, resp) {
         sess = req.session;
@@ -301,26 +272,6 @@ module.exports = {
             });
 
             console.log("FINAL REPORT GROUP LEADER PAGE");
-        }
-    },
-
-    ActivityDetails: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var id = (req.query.UID);
-            console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
-                if (err) throw err;
-                console.log(results);
-                resp.render('./pages/ActivityDetails.ejs', {
-                    data: results,
-                    current_user: sess.user
-                })
-            });
         }
     },
 
@@ -577,26 +528,6 @@ module.exports = {
                 }
 
             }
-        }
-    },
-
-    ActivityPendingDetails: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var id = (req.query.UID);
-            console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?);", values, function (err, results) {
-                if (err) throw err;
-                console.log(results);
-                resp.render('./pages/ActivityPendingDetails.ejs', {
-                    data: results,
-                    current_user: sess.user
-                })
-            });
         }
     },
 
