@@ -827,11 +827,13 @@ module.exports = {
         } else {
             connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/ViewDocument.ejs', {
-                    data: results,
-                    current_user: sess.user
-                });
+                if (results){
+                    resp.render('./pages/ViewDocument.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    });
                 //console.log(results);
+                }
             });
             console.log("ViewDocument");
         }
@@ -848,11 +850,13 @@ module.exports = {
             var values = [id];
             connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
                 if (err) throw err;
-                console.log(results);
-                resp.render('./pages/ActivityDetails.ejs', {
-                    data: results,
-                    current_user: sess.user
-                })
+                if(results){
+                    console.log(results);
+                    resp.render('./pages/ActivityDetails.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    })
+                }
             });
         }
     },
@@ -868,11 +872,13 @@ module.exports = {
             var values = [id];
             connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?);", values, function (err, results) {
                 if (err) throw err;
+                if (results){
                 console.log(results);
-                resp.render('./pages/ActivityPendingDetails.ejs', {
-                    data: results,
-                    current_user: sess.user
-                })
+                    resp.render('./pages/ActivityPendingDetails.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    })
+                }
             });
         }
     },
