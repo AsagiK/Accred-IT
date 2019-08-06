@@ -670,18 +670,21 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var SID = req.query.SID;
-            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = ?; Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group;"
+            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = (?); Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;"
             var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/ViewMetricofSource.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user
-                });
-                console.log(results);
-                console.log("RECOMMENDATION NON AJAX");
+                if (results){
+                    resp.render('./pages/ViewMetricofSource.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        current_user: sess.user
+                    });
+                    console.log(results);
+                    console.log("RECOMMENDATION NON AJAX");
+                }
             });
         }
     },
