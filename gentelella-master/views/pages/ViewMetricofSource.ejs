@@ -81,79 +81,272 @@
                     </div>
 
 
+                    <!-- Start -->
 
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_content">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
 
-                                    <!BUTTONS FOR CREATE OF QUALITYMETRIC AND CYCLE TIME>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target=".bs-example-modal-lg">
-                                            Create Metric
-                                        </button>
+                                <!BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle">
+                                        Create Cycle
+                                    </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        Create Metrics
+                                    </button>
 
-                                        <!view table for users>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Description</th>
-                                                        <th>Priority Level</th>
-                                                        <th>Group Assigned</th>
-                                                        <th>Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <% for (var metric of data) { 
-                                                        
-                                                        %>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_content">
+                                                <br />
 
-                                                    <tr>
 
-                                                        <td><%= metric.metric_Name %></td>
-                                                        <td><%= metric.metric_Desc %></td>
-                                                        <td><%= metric.priority_Level %></td>
-                                                        <td><%= metric.Group_Name %></td>
-                                                        <td><%= metric.date_insert.toString().substring(0,15) %></td>
-                                                        <td>
+                                                <div class="col-md-12 col-sm-6 col-xs-12">
 
-                                                            <div class="form-group">
-                                                                <div>
-                                                                    <!BUTTONS FOR EDIT AND PLAN>
-                                                                        <form method="get" action="editmetric">
-                                                                            <input type="hidden" name="UID"
-                                                                                value="<%= metric.metric_ID %>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Edit
-                                                                                Metric</button>
-                                                                        </form>
+                                                    <div class="x_title">
+                                                        <h2><i class="fa fa-align-left"></i>Cycles and Metrics
+                                                        </h2>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
 
-                                                                        <br /><br />
-                                                                        <form method="get" action="PlanPage">
-                                                                            <input type="hidden" name="PID"
-                                                                                value="<%= metric.metric_ID %>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Add
-                                                                                Measurement</button>
-                                                                        </form>
-                                                                        <br /><br />
+                                                        <!-- start accordion    -->
+                                                        <% for (var cycle of dataD) { %>
+                                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                                            <div class="panel">
+                                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= cycle.cycle_ID %>" aria-expanded="true" aria-controls="collapse<%= cycle.cycle_ID %>">
+                                                                    <h4 class="panel-title">
+                                                                        CYCLE NAME: <%= cycle.cycle_Name %> - Status: 
+                                                                        <% if ( cycle.status == 0) { %> Planning Phase 
+                                                                        <% } else if( cycle.status  == 1) { %> Do Phase 
+                                                                        <% } else if( cycle.status  == 2) { %> Check Phase 
+                                                                        <% } else if( cycle.status  == 3) { %> Act Phase <% } %>
+                                                                    </h4>
+
+                                                                </a>
+
+                                                                <div id="collapse<%= cycle.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <% if(cycle.status  == 0) { %>
+                                                                    <form action="doPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Start Do Phase</button>
+
+                                                                    </form>
+                                                                    <% } else if (cycle.status  == 1) { %>
+                                                                    <form action="checkPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Start Check Phase</button>
+
+                                                                    </form>
+                                                                    <% } else if (cycle.status  == 2) { %>
+                                                                    <form action="actPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Start Act Phase</button>
+
+                                                                    </form>
+                                                                    <% } %> %>
+                                                                    
+
+                                                                    <br>
+                                                                    <% for (var metric of data) { %>
+                                                                    <% if (metric.cycle_ID == cycle.cycle_ID) { %>
+
+                                                                    <div class="panel-body">
+                                                                        <!--Group 1 table-->
+
+                                                                        <div class="panel">
+
+                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
+                                                                                <h3 class="panel-title">
+                                                                                    GOALS AND METRICS: <%= metric.metric_Name %>
+                                                                                </h3>
+                                                                            </a>
+                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
+
+
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Name</th>
+                                                                                            <th>Description</th>
+                                                                                            <th>Priority Level</th>
+                                                                                            <th>Group Assigned</th>
+                                                                                            <th>Source</th>
+                                                                                            <th>Date</th>
+                                                                                            <th></th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+
+
+                                                                                        <tr>
+
+                                                                                            <td><%= metric.metric_Name %></td>
+                                                                                            <td><%= metric.metric_Desc %></td>
+                                                                                            <td><%= metric.priority_Level %></td>
+                                                                                            <td><%= metric.Group_Name %></td>
+                                                                                            <td><%= metric.source_Name %></td>
+                                                                                            <td><%= metric.date_insert.toString().substring(0,15) %>
+                                                                                            </td>
+                                                                                            <td>
+
+                                                                                                <div class="form-group">
+                                                                                                    <div>
+                                                                                                        <!BUTTONS FOR EDIT AND PLAN>
+
+                                                                                                            <form method="get" action="editmetric">
+                                                                                                                <input type="hidden" name="UID" value="<%= metric.metric_ID %>">
+                                                                                                                <button type="submit" class="btn btn-primary">Edit
+                                                                                                                    Metric</button>
+                                                                                                            </form>
+                                                                                                            <br /><br />
+                                                                                                            <form method="get" action="MeasurementPage">
+                                                                                                                <input type="hidden" name="MID" value="<%= metric.metric_ID %>">
+                                                                                                                <button type="submit" class="btn btn-primary">View
+                                                                                                                    Measurements</button>
+                                                                                                            </form>
+                                                                                                            <br /><br />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
+                                                                                    </tbody>
+                                                                                </table>
+
+
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--End of Group 1 Table -->
+                                                                    <% } %>
+                                                                    <% } %>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                        <% } %>
+                                                    </div>
 
-                                                    <% } %>
-                                                </tbody>
-                                            </table>
+                                                    <!-- end of accordion -->
 
-                                </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
+            </div>
+
+
+            <!-- /page content -->
+
+
+
+            <!--Modal for Create -->
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Create Metric
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="CreateMetric" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Source:<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="source">
+                                            <% for (var source of dataB) { %>
+                                            <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Metric
+                                        Name<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="metricName" name="metricName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Description<span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea class="form-control" rows="3" id="metricDesc" name="metricDesc" placeholder="Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority
+                                        Level<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="priority">
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Assign
+                                        Group:<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="group">
+                                            <% for (var group of dataC) { %>
+                                            <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Assign
+                                        Group:<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="cycle">
+                                            <% for (var cycle of dataD) { %>
+                                            <option value="<%= cycle.cycle_ID %>"><%= cycle.cycle_Name %>: <%= cycle.start_Date %>-<%= cycle.end_Date %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" form="CreateMetric">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
 
                 <!-- /page content -->
