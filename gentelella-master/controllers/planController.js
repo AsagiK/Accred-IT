@@ -674,15 +674,17 @@ module.exports = {
             var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                resp.render('./pages/ViewMetricofSource.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    dataD: results[3],
-                    current_user: sess.user
-                });
-                console.log(results);
-                console.log("RECOMMENDATION NON AJAX");
+                if (results){
+                    resp.render('./pages/ViewMetricofSource.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        current_user: sess.user
+                    });
+                    console.log(results);
+                    console.log("RECOMMENDATION NON AJAX");
+                }
             });
         }
     },
