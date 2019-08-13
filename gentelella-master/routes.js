@@ -57,6 +57,7 @@ router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
 router.route('/doPhase').post(planCtrl.doPhase);
 router.route('/checkPhase').post(planCtrl.checkPhase);
 router.route('/actPhase').post(planCtrl.actPhase);
+router.route('/planPhase').post(planCtrl.planPhase);
 
 
 

@@ -96,11 +96,24 @@
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Start Do Phase</button>
 
-                                                                    </form>
+                                                                    </form> 
+
                                                                     <% } else if (cycle.status  == 1) { %>
                                                                     <form action="checkPhase" method="post">
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Start Check Phase</button>
+
+                                                                    </form> 
+
+                                                                    <form action="planPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Back to Plan Phase</button>
+
+                                                                    </form>
+
+                                                                    <form action="doPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Back to Do Phase</button>
 
                                                                     </form>
                                                                     <% } else if (cycle.status  == 2) { %>
@@ -108,9 +121,23 @@
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Start Act Phase</button>
 
-                                                                    </form>
-                                                                    <% } %> %>
-                                                                    
+                                                                    </form> 
+
+                                                                    <form action="doPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">Back to Do Phase</button>
+
+                                                                    </form> 
+
+                                                                    <% } else if (cycle.status  == 3) { %>
+                                                                        <form action="checkPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Back to Check Phase</button>
+    
+                                                                        </form> 
+
+                                                                    <% } %> %> 
+
 
                                                                     <br>
                                                                     <% for (var metric of data) { %>
