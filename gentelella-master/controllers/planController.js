@@ -809,6 +809,20 @@ module.exports = {
         });
     }, 
 
+    planPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "0"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
+
     UploadDocument: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
