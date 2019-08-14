@@ -519,8 +519,8 @@ module.exports = {
             }
             var MID = (req.query.MID);
             console.log(MID);
-            var values = [MID, MID];
-            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID FROM capstone.approved_activities where approved_activities.measurement_ID = ?; SELECT * FROM capstone.pending_activities;"
+            var values = [MID, MID, MID];
+            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID FROM capstone.approved_activities where approved_activities.measurement_ID = ?;SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;"
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/ViewMeasurementDetails.ejs', {
@@ -798,6 +798,20 @@ module.exports = {
     actPhase: function (req, resp) {
         var CID = (req.body.CID);
         var status = "3"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
+
+    planPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "0"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
