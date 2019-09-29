@@ -898,8 +898,48 @@ module.exports = {
                 }
             });
         }
+    }, 
+
+    EditUserByUser: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.users where users.User_ID = (?);", values, function (err, results) {
+                if (err) throw err;
+                console.log(results);
+                resp.render('./pages/EditUserbyUser.ejs', {
+                    data: results,
+                    current_user: sess.user
+                })
+            });
+        }
     },
 
-    
+    alteruserbyuser: function (req, resp) {
+        var id = (req.body.UID);
+        var ea = (req.body.emailadd);
+        var un = (req.body.username);
+        var pw = (req.body.password);
+        var co = (req.body.contact);
+        console.log(id);
+        console.log(ea);
+        console.log(un);
+        console.log(pw);
+        console.log(co);
+        var sql = "Update capstone.users set email_address = ?, username = ?, passwd = ?, ContactNo = ? where User_ID = ? ";
+        var values = [ea, un, pw, co, id];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/EditUserbyUser?UID=' + id);
+            }
+        });
+    },
 
 }

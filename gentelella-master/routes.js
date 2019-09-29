@@ -12,6 +12,8 @@ router.route('/Createusers').get(planCtrl.Createusers);
 router.route('/adduser').post(planCtrl.adduser);
 router.route('/edituser').get(planCtrl.edituser);
 router.route('/alteruser').post(planCtrl.alteruser);
+router.route('/EditUserbyUser').get(planCtrl.EditUserbyUser);
+router.route('/alteruserbyuser').post(planCtrl.alteruserbyuser);
 
 
 //GROUPS ROUTES
