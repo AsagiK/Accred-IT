@@ -49,11 +49,7 @@ router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
-
-
 router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
-
-
 router.route('/doPhase').post(planCtrl.doPhase);
 router.route('/checkPhase').post(planCtrl.checkPhase);
 router.route('/actPhase').post(planCtrl.actPhase);
@@ -66,8 +62,8 @@ router.route('/TestPage').get(planCtrl.Recommendations);
 router.route('/CreateGrades').get(planCtrl.CreateGrades);
 router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
-router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
-router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
+//router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
+//router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 
 
 router.route('/ViewDocument').get(planCtrl.ViewDocument);

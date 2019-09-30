@@ -59,83 +59,7 @@ module.exports = {
         }
     },
 
-    ViewGroups: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var alert = req.query.passdata;
-            var passData
-            if (alert) {
-                if (alert == 0) {
-                    passData = {
-                        goodStatus: 0,
-                        msg: "User/s not added"
-                    }
-                } else {
-                    passData = {
-                        goodStatus: 1,
-                        msg: "User/s added"
-                    }
-                }
-            }
-            connection.query("Select * From (Select area.Area_ID, area.Area_Name, count(group.group_ID) as GroupCount from area left join capstone.`group` on area.Area_ID = group.Area_ID group by area.Area_ID) as A Join (SELECT group.Group_ID, group.Area_ID, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group where area_ID > 0 group by area_ID ) as B on A.Area_ID = B.Area_ID; SELECT group.Group_ID, group.Area_ID, group.Group_Name, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group group by group_ID; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
-                if (err) throw err;
-
-                resp.render('./pages/ViewGroups.ejs', {
-                    dataA: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user,
-                    notif: passData
-                });
-                console.log(results);
-            });
-            console.log("ViewGroups");
-        }
-    },
-
-    CreateGroup: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
-                if (err) throw err;
-                resp.render('./pages/CreateGroup.ejs', {
-                    data: result,
-                    current_user: sess.user
-                });
-            });
-            console.log("CreateGroup");
-        }
-    },
-
-    Comparativeanalysis: function (req, resp) {
-        resp.render('./pages/ComparativeAnalysisAreaSelection.ejs');
-        console.log("Comparativeanalysis");
-    },
-
-    Comparativeanalysis2: function (req, resp) {
-        resp.render('./pages/Comparativeanalysis.ejs');
-        console.log("Comparativeanalysis2");
-    },
-
-    addgroup: function (req, resp) {
-        var gn = (req.body.GroupName);
-        var sa = (req.body.SelectArea);
-        var gd = (req.body.GroupDesc);
-        var sql = "INSERT INTO `capstone`.`group` (`Group_Name`, `Area_ID`) VALUES (? , ?)";
-        var values = [gn, sa];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            console.log("Record Inserted");
-        });
-        resp.redirect('/CreateGroup');
-    },
-
+    
     adduser: function (req, resp) {
         console.log(req.body);
         var fn = (req.body.firstname);
@@ -199,6 +123,83 @@ module.exports = {
             }
         });
     },
+
+    ViewGroups: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "User/s not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "User/s added"
+                    }
+                }
+            }
+            connection.query("Select * From (Select area.Area_ID, area.Area_Name, count(group.group_ID) as GroupCount from area left join capstone.`group` on area.Area_ID = group.Area_ID group by area.Area_ID) as A Join (SELECT group.Group_ID, group.Area_ID, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group where area_ID > 0 group by area_ID ) as B on A.Area_ID = B.Area_ID; SELECT group.Group_ID, group.Area_ID, group.Group_Name, count(users.Group) as UserCount FROM capstone.`group` left join capstone.users on group.Group_ID = users.Group group by group_ID; SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username, roles.Role_Name, groupdetails.Groupdetails_Position FROM capstone.users join capstone.roles on users.Role = roles.Role_ID join capstone.groupdetails on groupdetails.Groupdetails_ID = users.Group && users.User_ID = groupdetails.Groupdetails_UserID", function (err, results, fields) {
+                if (err) throw err;
+
+                resp.render('./pages/ViewGroups.ejs', {
+                    dataA: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user,
+                    notif: passData
+                });
+                console.log(results);
+            });
+            console.log("ViewGroups");
+        }
+    },
+
+    CreateGroup: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT * FROM capstone.area;", function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/CreateGroup.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+            });
+            console.log("CreateGroup");
+        }
+    },
+
+    addgroup: function (req, resp) {
+        var gn = (req.body.GroupName);
+        var sa = (req.body.SelectArea);
+        var gd = (req.body.GroupDesc);
+        var sql = "INSERT INTO `capstone`.`group` (`Group_Name`, `Area_ID`) VALUES (? , ?)";
+        var values = [gn, sa];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+        });
+        resp.redirect('/CreateGroup');
+    },
+
+    /*Comparativeanalysis: function (req, resp) {
+        resp.render('./pages/ComparativeAnalysisAreaSelection.ejs');
+        console.log("Comparativeanalysis");
+    },
+
+    Comparativeanalysis2: function (req, resp) {
+        resp.render('./pages/Comparativeanalysis.ejs');
+        console.log("Comparativeanalysis2");
+    },*/
 
     Recommendations: function (req, resp) {
         resp.render('./pages/Recommendations.ejs');
@@ -336,50 +337,7 @@ module.exports = {
             resp.redirect('/ViewMetricofSource?SID=' + source);
         });
     },
-
-    Viewcycle: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            connection.query("Select * FROM capstone.cycle;", function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/Viewcycle.ejs', {
-                    data: results,
-                    current_user: sess.user
-                });
-                console.log("View Cycle Page");
-            });
-        }
-    },
-
-    addcycle: function (req, resp) {
-        var cyclename = (req.body.cycleName);
-        var date = (req.body.date);
-        var startDate = '';
-        var startYear = date.substr(6, 4);
-        var startMonth = date.substr(0, 2);
-        var startDay = date.substr(3, 2);
-        var endDate = '';
-        var endYear = date.substr(19, 4);
-        var endMonth = date.substr(13, 2);
-        var endDay = date.substr(16, 2);
-        console.log(cyclename);
-        console.log(date);
-        startDate = startYear + "-" + startMonth + "-" + startDay;
-        endDate = endYear + "-" + endMonth + "-" + endDay;
-        console.log("Start Date: " + startDate);
-        console.log("End Date: " + endDate);
-        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
-        var values = [cyclename, startDate, endDate];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            console.log("Record Inserted");
-            resp.redirect('/QualityMetric');
-        });
-    },
-
+    
     editmetric: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
@@ -424,6 +382,49 @@ module.exports = {
             }
         });
         console.log("updating");
+    },
+
+    Viewcycle: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("Select * FROM capstone.cycle;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/Viewcycle.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log("View Cycle Page");
+            });
+        }
+    },
+
+    addcycle: function (req, resp) {
+        var cyclename = (req.body.cycleName);
+        var date = (req.body.date);
+        var startDate = '';
+        var startYear = date.substr(6, 4);
+        var startMonth = date.substr(0, 2);
+        var startDay = date.substr(3, 2);
+        var endDate = '';
+        var endYear = date.substr(19, 4);
+        var endMonth = date.substr(13, 2);
+        var endDay = date.substr(16, 2);
+        console.log(cyclename);
+        console.log(date);
+        startDate = startYear + "-" + startMonth + "-" + startDay;
+        endDate = endYear + "-" + endMonth + "-" + endDay;
+        console.log("Start Date: " + startDate);
+        console.log("End Date: " + endDate);
+        var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
+        var values = [cyclename, startDate, endDate];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Record Inserted");
+            resp.redirect('/QualityMetric');
+        });
     },
 
     assignplantomembers: function (req, resp) {
