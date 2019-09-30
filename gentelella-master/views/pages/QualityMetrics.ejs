@@ -42,7 +42,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Quality Metrics Page</h3>
+                            <h3>Quality Management</h3>
                         </div>
                     </div>
                 </div>
@@ -56,10 +56,6 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle">
                                         Create Cycle
                                     </button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
-                                        Create Metrics
-                                    </button>
-
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_content">
@@ -69,7 +65,7 @@
                                                 <div class="col-md-12 col-sm-6 col-xs-12">
 
                                                     <div class="x_title">
-                                                        <h2><i class="fa fa-align-left"></i>Cycles and Metrics
+                                                        <h2><i class="fa fa-align-left"></i>Quality Cycles
                                                         </h2>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -89,8 +85,11 @@
                                                                     </h4>
 
                                                                 </a>
-
+                                                                
                                                                 <div id="collapse<%= cycle.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        Create Goals
+                                    </button>
                                                                     <% if(cycle.status  == 0) { %>
                                                                     <form action="doPhase" method="post">
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
@@ -138,11 +137,11 @@
 
                                                                     <% } %> %> 
 
-
+                                                                    
                                                                     <br>
                                                                     <% for (var metric of data) { %>
                                                                     <% if (metric.cycle_ID == cycle.cycle_ID) { %>
-
+                                                                     
                                                                     <div class="panel-body">
                                                                         <!--Group 1 table-->
 
@@ -190,13 +189,13 @@
                                                                                                             <form method="get" action="editmetric">
                                                                                                                 <input type="hidden" name="UID" value="<%= metric.metric_ID %>">
                                                                                                                 <button type="submit" class="btn btn-primary">Edit
-                                                                                                                    Metric</button>
+                                                                                                                    Goals</button> <!-- Cannot be editable once do phase starts-->
                                                                                                             </form>
                                                                                                             <br /><br />
                                                                                                             <form method="get" action="MeasurementPage">
                                                                                                                 <input type="hidden" name="MID" value="<%= metric.metric_ID %>">
                                                                                                                 <button type="submit" class="btn btn-primary">View
-                                                                                                                    Measurements</button>
+                                                                                                                   Quality Metrics</button>
                                                                                                             </form>
                                                                                                             <br /><br />
                                                                                                     </div>
@@ -274,29 +273,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Metric
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
                                         Name<span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" id="metricName" name="metricName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Description<span class="required">*</span></label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea class="form-control" rows="3" id="metricDesc" name="metricDesc" placeholder="Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Priority
-                                        Level<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select class="form-control" name="priority">
-                                            <option value="High">High</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="Low">Low</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -371,7 +352,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Start
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Duration
                                 Date:<span class="required"></span>
                             </label>
                             <form class="form-group">
