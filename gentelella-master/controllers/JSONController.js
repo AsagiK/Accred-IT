@@ -140,6 +140,7 @@ module.exports = {
 
     },
 
+
     DocumentViewJSON: function (req, resp) {
         console.log("Called");
         connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
@@ -154,4 +155,33 @@ module.exports = {
 
     },
 
+    AddMeetingJSON: function (req, resp) {
+        var DATA = req.body;
+        console.log(DATA);
+
+        async.forEachOf(UID, function (value, key, callback) {
+            var a = DATA[key]["Activity Name"];
+            var b = DATA[key]["Target"];
+            var c = DATA[key]["Code"];
+            var d = DATA[key]["Description"];
+            var sql = "";
+            var values = [a, b, c, d];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
+
+    }
 }
