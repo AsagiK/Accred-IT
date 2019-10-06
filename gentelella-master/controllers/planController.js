@@ -16,6 +16,9 @@ server.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 // ----
 var sess;
 module.exports = {
@@ -47,7 +50,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
-            connection.query("SELECT * FROM capstone.roles where Role_ID > 3; Select users.User_ID from capstone.users;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.roles where Role_ID > 1; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
                     data: results[0],
@@ -57,6 +60,8 @@ module.exports = {
                 console.log(results)
             });
         }
+
+
     },
 
     ViewGroups: function (req, resp) {
@@ -140,19 +145,22 @@ module.exports = {
         console.log(req.body);
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
+        var pass = (req.body.password);
         var em = (req.body.email);
         var rl = (req.body.role);
         var co = (req.body.contact);
         var count = parseInt(req.body.count) + 1;
         var un = fn + ln + count;
         console.log(un);
-        var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`) VALUES (? , ? , ? , ? , ?, ?)";
-        var values = [fn, ln, em, rl, co, un];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            console.log("Record Inserted");
+        bcrypt.hash(pass, saltRounds, function (err, hash) {
+            var sql = "INSERT INTO `capstone`.`users` (`User_First`, `User_Last`, `email_address` , `Role`, `ContactNo`, `username`, `passwd`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            var values = [fn, ln, em, rl, co, un, hash];
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                console.log("Record Inserted");
+            });
+            resp.redirect('/Createusers');
         });
-        resp.redirect('/Createusers');
     },
 
     edituser: function (req, resp) {
@@ -900,7 +908,7 @@ module.exports = {
         }
     }, 
 
-    EditUserByUser: function (req, resp) {
+    EditUserAccount: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -915,13 +923,15 @@ module.exports = {
                 resp.render('./pages/EditUserbyUser.ejs', {
                     data: results,
                     current_user: sess.user
-                })
-            });
+            })
+        });
         }
     },
 
     alteruserbyuser: function (req, resp) {
         var id = (req.body.UID);
+        var first = (req.body.first);
+        var last = (req.body.last);
         var ea = (req.body.emailadd);
         var un = (req.body.username);
         var pw = (req.body.password);
@@ -931,14 +941,16 @@ module.exports = {
         console.log(un);
         console.log(pw);
         console.log(co);
-        var sql = "Update capstone.users set email_address = ?, username = ?, passwd = ?, ContactNo = ? where User_ID = ? ";
-        var values = [ea, un, pw, co, id];
-        connection.query(sql, values, function (err, result) {
-            if (err) throw err;
-            console.log(result);
-            if (result) {
-                resp.redirect('/EditUserbyUser?UID=' + id);
-            }
+        bcrypt.hash(pw, saltRounds, function (err, hash) {
+            var sql = "Update capstone.users set User_First = ?, User_Last = ?, email_address = ?, username = ?, passwd = ?, ContactNo = ? where User_ID = ? ";
+            var values = [first, last, ea, un, hash, co, id];
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                console.log(result);
+                if (result) {
+                    resp.redirect('/EditUserbyUser?UID=' + id);
+                }
+            });
         });
     },
 

@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit User <%= data.User_First %> <%= data.User_Last %></h3>
+                            <h3>Edit User - <%= data[0].User_First %> <%= data[0].User_Last %></h3>
 
                         </div>
                     </div>
@@ -55,14 +55,27 @@
                             <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="alteruserbyuser" method="POST">
-                                    
+                                    <div class="form-group">
+                                                <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <!--First Name Input field-->
+                                                    <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="first" value="<%= data[0].User_First %>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                    <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <!--Last Name Input field-->
+                                                        <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="last" value="<%= data[0].User_Last %>">
+                                                    </div>
+                                                </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Email Address
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Email Address Input-->
-                                            <input type="hidden" name="UID" value="<%= data.User_ID %>">
-                                            <input type="email" id="email-address" name="emailadd" class="form-control col-md-7 col-xs-12" value="<%= data.email_address %>">
+                                            <input type="hidden" name="UID" value="<%= data[0].User_ID %>">
+                                            <input type="email" id="email-address" name="emailadd" class="form-control col-md-7 col-xs-12" value="<%= data[0].email_address %>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -70,14 +83,14 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Contact Number Input-->
-                                            <input type="text" id="contact-number" name="contact" class="form-control col-md-7 col-xs-12" value="<%= data.ContactNo %>">
+                                            <input type="text" id="contact-number" name="contact" class="form-control col-md-7 col-xs-12" value="<%= data[0].ContactNo %>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">Username</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Email Input field-->
-                                            <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="username" value="<%= data.username %>">
+                                            <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="username" value="<%= data[0].username %>">
                                         </div>
                                     </div>
                                     <!-- Password Input-->
@@ -86,7 +99,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Password-->
-                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" value="<%= data.passwd %>">
+                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" value="">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
