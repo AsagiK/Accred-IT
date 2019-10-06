@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create User Page</title>
+    <title>Edit User</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Create User</h3>
+                            <h3>Edit User - <%= data[0].User_First %> <%= data[0].User_Last %></h3>
 
                         </div>
                     </div>
@@ -54,59 +54,53 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="adduser" method="POST">
-
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="alteruserbyuser" method="POST">
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+                                                <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <!--First Name Input field-->
+                                                    <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="first" value="<%= data[0].User_First %>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                    <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <!--Last Name Input field-->
+                                                        <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="last" value="<%= data[0].User_Last %>">
+                                                    </div>
+                                                </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Email Address
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--First name Input field-->
-                                            <input type="text" id="first-name" name="firstname" required="required" class="form-control col-md-7 col-xs-12" placeholder="First name" name=>
+                                            <!--Email Address Input-->
+                                            <input type="hidden" name="UID" value="<%= data[0].User_ID %>">
+                                            <input type="email" id="email-address" name="emailadd" class="form-control col-md-7 col-xs-12" value="<%= data[0].email_address %>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="contact-number">Contact Number <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--Last name input field-->
-                                            <input type="text" id="last-name" name="lastname" required="required" class="form-control col-md-7 col-xs-12" placeholder="Last Name">
+                                            <!--Contact Number Input-->
+                                            <input type="text" id="contact-number" name="contact" class="form-control col-md-7 col-xs-12" value="<%= data[0].ContactNo %>">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="username" class="control-label col-md-3 col-sm-3 col-xs-12">Username</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--Email Input field-->
+                                            <input id="username" class="form-control col-md-7 col-xs-12" type="text" name="username" value="<%= data[0].username %>">
+                                        </div>
+                                    </div>
+                                    <!-- Password Input-->
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Password <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--Password input field-->
-                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" placeholder="1234" value="1234" readonly>
+                                            <!--Password-->
+                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" value="">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12">Email Addess</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--Email Input field-->
-                                            <input id="email" class="form-control col-md-7 col-xs-12" type="email" name="email">
-                                        </div>
-                                    </div>
-                                    <!--options list of position-->
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Role</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="role">
-                                                <option value="-1">Choose Role...</option>
-                                                <% for (var role of data){ %>
-                                                <option value="<%= role.Role_ID %>"><%= role.Role_Name %></option>
-                                                <% } %>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Contact Number <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--Last name input field-->
-                                            <input type="number" id="contact" name="contact" required="required" class="form-control col-md-7 col-xs-12" placeholder="Cellphone or Contact Number" maxlength="11">
-                                        </div>
-                                        <input type="hidden" name="count" value="<%= dataB.length%>">
                                     </div>
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
@@ -115,6 +109,7 @@
                                             <button class="btn btn-primary" type="reset">Reset</button>
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
+                                        
                                     </div>
 
                                 </form>

@@ -40,9 +40,9 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/TestPage');
+    resp.redirect('/login');
 
-    console.log("Testing testing");
+    console.log("Login Page");
 });
 
 server.get('/debug', function (req, resp) {

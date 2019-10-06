@@ -105,7 +105,7 @@ module.exports = {
                         console.log("User validated");
 
 
-                        var sessql = "SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.role, users.group, users.ContactNo FROM capstone.users where binary username = ?"
+                        var sessql = "SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.role, users.group, users.ContactNo, users.username FROM capstone.users where binary username = ?"
                         var sesvalues = [user];
 
                         connection.query(sessql, sesvalues, function (err2, result2, fields2) {
