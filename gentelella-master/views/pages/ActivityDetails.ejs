@@ -170,7 +170,6 @@
                                                                 <tr>
                                                                     <th>Check</th>
                                                                     <th>Document ID</th>
-                                                                    <th>IMG</th>
                                                                     <th>File Name</th>
                                                                     <th>Routes</th>
                                                                     <th style="visibility:collapse;">Group ID</th>
@@ -183,6 +182,7 @@
                 
                 
                                                         </table>
+                                                        <button type="button" class="delete-row">Delete Row</button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -241,7 +241,6 @@
                             <tr>
                                 <th>Check</th>
                                 <th>Document ID</th>
-                                <th>IMG</th>
                                 <th>File Name</th>
                                 <th>Routes</th>
                                 <th style="visibility:collapse;">Group ID</th>
@@ -249,56 +248,7 @@
                         </thead>
 
                         <tbody>
-                            <% for (var doc of dataB) {
-                                var filext = 0;
-                                var imgtype = '';
-                                var x = doc.Document_Ext;
-                                
-                              switch(x){ 
-                              case ".docx": 
-                                filext = 1
-                                imgtype = "images/docx.png"
-                                break;
-                              case ".doc": 
-                                filext = 1
-                                imgtype = "images/docx.png"
-                                break;
-                              case ".odt": 
-                                filext = 2
-                                imgtype = "images/odt.png"
-                                break;
-                              case ".pdf": 
-                                filext = 3
-                                imgtype = "images/pdf.png"
-                                break;
-                              case ".txt": 
-                                filext = 4
-                                imgtype = "images/txt.jpg"
-                                break;
-                              case ".pptx": 
-                                filext = 5
-                                imgtype = "images/pptx.png"
-                              case ".mp4": 
-                                filext = 6
-                                imgtype = "images/mp4.png"
-                              case ".m4a": 
-                                filext = 6
-                                imgtype = "images/mp4.png"
-                              case ".7z": 
-                                filext = 7
-                                imgtype = "images/zip.png"
-                              case ".rar": 
-                                filext = 7
-                                imgtype = "images/zip.png"
-                              case ".zip": 
-                                filext = 7
-                                imgtype = "images/zip.png"
-                              break;
-                                default:
-                                filext = 0
-                                break;
-                              } 
-                              %>
+                            <% for (var doc of dataB) { %>
                             <tr>
                                 <td>
                                     <label class="containercheckbox">
@@ -309,51 +259,9 @@
                                 </td>
                                 <td id="DID<%= doc.Document_ID %>" value="<%= doc.Document_ID %>">
                                     <%= doc.Document_ID %></td>
-                                <td style="width:250px; height:250px;">
-                      
-
-
-
-                                        
-                                            <% if (doc.InDrive != 1){ %>
-                                            
-
-
-                                                    
-                                                    <% if (filext == "0"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                    <% } if (filext == "1"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "2"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "3"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "4"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "5"){ %>
-                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } %>
-                                           <%} else {%>
-                                
-                                                    <% if (filext == "0"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                    <% } if (filext == "1"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "2"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "3"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "4"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } if (filext == "5"){ %>
-                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                    <% } %>
-
-                                            <%}%>
-                                </td>
-                                <td id="Doc<%= doc.Document_Name %>" value="<%= doc.Document_Name %>">
+                                <td id="Doc" value="<%= doc.Document_Name %>">
                                     <%= doc.Document_Name %></td>
-                                <td id='<%= doc.Document_Route %>' value="<%= doc.Document_Route %>">
+                                <td id="Route" value="<%= doc.Document_Route %>">
                                     <%= doc.Document_Route %></td>
                                 <td id='hidden' value=""
                                     style="visibility:collapse;">test</td>
@@ -365,7 +273,7 @@
                     </table>
                 </div>
                     <button type="button" class="add-row">Add Row</button>
-                    <button type="button" class="delete-row">Delete Row</button>
+                    
             </div>
         </div>
     </div>
@@ -380,15 +288,15 @@
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
                         var DID = $('#DID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
-                        // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        var Doc = $('#Doc').attr("value");
+                        //console.log(Doc);
+                        var Route = $("#Route").attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
+                            "</td><td id= Route" + " value=" + Route + ">" + Route +
                             "</td><td id= hidden" + index + " value=" + hidden +
                             " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table2 tbody").append(markup);
@@ -403,19 +311,19 @@
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
                         var DID = $('#DID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
+                        var Doc = $('#Doc').attr("value");
                         // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        var Route = $("#Route").attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
+                            "</td><td id= Route" + " value=" + Route + ">" + Route +
                             "</td><td id= hidden" + index + " value=" + hidden +
                             " style='visibility:collapse'>" + hidden + "</td></tr>";
                         $("#table1 tbody").append(markup);
-                        $(this).parents("tr").remove();
+                        $(this).closest("tr").remove();
 
 
                     }
