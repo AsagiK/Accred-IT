@@ -120,7 +120,7 @@
                                         <form action="SendDocuments" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
-                                                    <td><label
+                                                    <td style="width:200px;"><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             ID: </label></td>
                                                     <td><%= data[0].activity_ID %></td>
@@ -156,7 +156,35 @@
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
                                                             Evdences: </label></td>
                                                     <td><input type="file" name="DocFile" multiple></td>
-
+                                                </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
+                                                            Evdences from system: </label></td>
+                                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".chooseEvidence">Choose Evidence</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="width=100%; height=100%;">
+                                                        <table id="table2" class="table table-striped table-bordered" style="width=100%; height=100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Check</th>
+                                                                    <th>Document ID</th>
+                                                                    <th>IMG</th>
+                                                                    <th>File Name</th>
+                                                                    <th>Routes</th>
+                                                                    <th style="visibility:collapse;">Group ID</th>
+                                                                </tr>
+                                                            </thead>
+                
+                                                            <tbody>
+                
+                                                            </tbody>
+                
+                
+                                                        </table>
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td>
                                                         <input type="hidden" name="MID"
@@ -196,6 +224,206 @@
                 <!-- /footer content -->
             </div>
         </div>
+
+        <!--MODAL FOR CHOOSE EVIDENCE-->
+    <div class="modal fade chooseEvidence" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal2" value="Edit">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">Choose Evidence</h4>
+                </div>
+                <div class="modal-body">
+                    <table name="table1" id="table1" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Check</th>
+                                <th>Document ID</th>
+                                <th>IMG</th>
+                                <th>File Name</th>
+                                <th>Routes</th>
+                                <th style="visibility:collapse;">Group ID</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% for (var doc of dataB) {
+                                var filext = 0;
+                                var imgtype = '';
+                                var x = doc.Document_Ext;
+                                
+                              switch(x){ 
+                              case ".docx": 
+                                filext = 1
+                                imgtype = "images/docx.png"
+                                break;
+                              case ".doc": 
+                                filext = 1
+                                imgtype = "images/docx.png"
+                                break;
+                              case ".odt": 
+                                filext = 2
+                                imgtype = "images/odt.png"
+                                break;
+                              case ".pdf": 
+                                filext = 3
+                                imgtype = "images/pdf.png"
+                                break;
+                              case ".txt": 
+                                filext = 4
+                                imgtype = "images/txt.jpg"
+                                break;
+                              case ".pptx": 
+                                filext = 5
+                                imgtype = "images/pptx.png"
+                              case ".mp4": 
+                                filext = 6
+                                imgtype = "images/mp4.png"
+                              case ".m4a": 
+                                filext = 6
+                                imgtype = "images/mp4.png"
+                              case ".7z": 
+                                filext = 7
+                                imgtype = "images/zip.png"
+                              case ".rar": 
+                                filext = 7
+                                imgtype = "images/zip.png"
+                              case ".zip": 
+                                filext = 7
+                                imgtype = "images/zip.png"
+                              break;
+                                default:
+                                filext = 0
+                                break;
+                              } 
+                              %>
+                            <tr>
+                                <td>
+                                    <label class="containercheckbox">
+                                            <input type='checkbox' name='record'
+                                            id='<%= doc.Document_ID %>'>
+                                            <span class="checkmark"></span>
+                                          </label>
+                                </td>
+                                <td id="DID<%= doc.Document_ID %>" value="<%= doc.Document_ID %>">
+                                    <%= doc.Document_ID %></td>
+                                <td style="width:250px; height:250px;">
+                      
+
+
+
+                                        
+                                            <% if (doc.InDrive != 1){ %>
+                                            
+
+
+                                                    
+                                                    <% if (filext == "0"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
+                                                    <% } if (filext == "1"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "2"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "3"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "4"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "5"){ %>
+                                                    <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } %>
+                                           <%} else {%>
+                                
+                                                    <% if (filext == "0"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
+                                                    <% } if (filext == "1"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "2"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "3"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "4"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } if (filext == "5"){ %>
+                                                    <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                    <% } %>
+
+                                            <%}%>
+                                </td>
+                                <td id="Doc<%= doc.Document_Name %>" value="<%= doc.Document_Name %>">
+                                    <%= doc.Document_Name %></td>
+                                <td id='<%= doc.Document_Route %>' value="<%= doc.Document_Route %>">
+                                    <%= doc.Document_Route %></td>
+                                <td id='hidden' value=""
+                                    style="visibility:collapse;">test</td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+
+
+                    </table>
+                </div>
+                    <button type="button" class="add-row">Add Row</button>
+                    <button type="button" class="delete-row">Delete Row</button>
+            </div>
+        </div>
+    </div>
+
+    <!--TEST SCRIPT FOR ADDING-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".add-row").click(function () {
+                $("#table1 tbody").find('input[name="record"]').each(function () {
+                    //console.log('test');
+                    if ($(this).is(":checked")) {
+                        var index = $(this).attr("id");
+                        var DID = $('#DID' + index).attr("value");
+                        var first = $('#first' + index).attr("value");
+                        // console.log(first);
+                        var last = $("#last" + index).attr("value");
+                        //console.log(last);
+                        var hidden = $('#hidden' + index).attr("value");
+                        var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                            index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= hidden" + index + " value=" + hidden +
+                            " style='visibility:collapse'>" + hidden + "</td></tr>";
+                        $("#table2 tbody").append(markup);
+                        $(this).parents("tr").remove();
+                    }
+                });
+            });
+
+            // Find and remove selected table rows
+            $(".delete-row").click(function () {
+                $("#table2 tbody tr").find('input[name="record"]').each(function () {
+                    if ($(this).is(":checked")) {
+                        var index = $(this).attr("id");
+                        var DID = $('#DID' + index).attr("value");
+                        var first = $('#first' + index).attr("value");
+                        // console.log(first);
+                        var last = $("#last" + index).attr("value");
+                        //console.log(last);
+                        var hidden = $('#hidden' + index).attr("value");
+                        var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                            index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= hidden" + index + " value=" + hidden +
+                            " style='visibility:collapse'>" + hidden + "</td></tr>";
+                        $("#table1 tbody").append(markup);
+                        $(this).parents("tr").remove();
+
+
+                    }
+                });
+            }); 
+        });
+    </script>
+
 
         <!-- jQuery -->
         <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
