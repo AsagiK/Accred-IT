@@ -70,6 +70,7 @@ router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
 router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
+router.route('/ActionPlan').get(planCtrl.ActionPlan);
 
 
 router.route('/ViewDocument').get(planCtrl.ViewDocument);
