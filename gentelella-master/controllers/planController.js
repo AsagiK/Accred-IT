@@ -962,6 +962,7 @@ module.exports = {
         } else {
             connection.query("Select * FROM capstone.approved_activities; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT measurement.measurement_ID, measurement_Name FROM capstone.measurement ;", function (err, results, fields) {
                 if (err) throw err;
+                if(results){
                 resp.render('./pages/ActionPlan.ejs', {
                     data: results[0],
                     dataB: results[1],
@@ -972,6 +973,7 @@ module.exports = {
                 });
                 console.log(results);
                 console.log("Action Plan test");
+                }
             });
         }
     },
