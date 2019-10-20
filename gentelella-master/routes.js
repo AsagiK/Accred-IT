@@ -47,6 +47,9 @@ router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 
+//ACTIVITY ROUTES
+router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
+
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);

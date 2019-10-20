@@ -187,6 +187,7 @@
                                                                 <th>Description</th>
                                                                 <th>Target</th>
                                                                 <th></th>
+                                                                <th>Assign member button</th>
                                                                 <th style="display: none">Code</th>
 
                                                             </tr>
@@ -217,6 +218,17 @@
                                                                         </button>
                                                                     </form>
 
+                                                                </td>
+                                                                <td>
+                                                                    <form method="get" action="AssignActivityToMember">
+                                                                        <input type="hidden" name="AID"
+                                                                            value="<%= activities.activity_ID %>">
+                                                                        <input type="hidden" name="GID"
+                                                                            value="<%= data[0].GroupAssigned %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Assign Members
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                             <% } %>
