@@ -840,7 +840,7 @@ module.exports = {
             resp.render('./pages/UploadDocument.ejs', {
                 current_user: sess.user
             });
-            console.log(UPLOAD_PATH.data.id);
+            console.log("kek");
         }
     },
 
@@ -873,12 +873,13 @@ module.exports = {
             var id = (req.query.UID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?);", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents", values, function (err, results) {
                 if (err) throw err;
                 if(results){
                     console.log(results);
                     resp.render('./pages/ActivityDetails.ejs', {
-                        data: results,
+                        data: results[0],
+                        dataB: results[1],
                         current_user: sess.user
                     })
                 }
