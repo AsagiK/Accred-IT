@@ -986,7 +986,7 @@ module.exports = {
         } else {
             var AID = req.query.AID;
             var GID = req.query.GID;
-            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?);"
+            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?);"
             var values = [GID, AID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
