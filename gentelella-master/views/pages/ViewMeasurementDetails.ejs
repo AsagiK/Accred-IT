@@ -470,6 +470,7 @@
 
 
     <script type="text/javascript">
+    var total=0;
         $(document).ready(function () {
             $(".add-row").click(function () {
                 if (!checkEmptyInputcheck()) {
@@ -491,10 +492,20 @@
                     var activity = $("#activitycount").val();
                     var target = $("#targetcount").val();
                     var description = $("#descriptioncount").val();
-                    var markup = "<tr><td></td><td>" + activity +
+                    total = +total + +target;
+                    alert(total + " 1st");
+                    if(total<=100){
+                        var markup = "<tr><td></td><td>" + activity +
                         "</td><td>" + description + "</td><td>" + target +
                         "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
-                    $("table tbody").append(markup);
+                        $("table tbody").append(markup);
+                        alert(total + " 2nd");
+                    }else{
+                        total = +total - +target;
+                        alert("Total is above 100");
+                        alert(total + " 3rd");
+                    }
+                    
                 }
             });
         });

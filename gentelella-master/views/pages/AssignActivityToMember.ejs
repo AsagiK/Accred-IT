@@ -295,11 +295,11 @@
                     ignoreColumns: [0, 2, 3]
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3, 4]
+                    ignoreColumns: [0, 2, 3]
                 })); // 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignGroupJSON', true);
+                xhr.open('POST', '/AssignActivityJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     console.log(xhr.responseText);

@@ -140,6 +140,32 @@ module.exports = {
 
     },
 
+    AssignActivityJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var aid = UID[key]["Activity ID"];
+            var uid = UID[key]["User ID"];
+            var mid = UID[key]["Measurement ID"];
+            var sql = "INSERT INTO `capstone`.`assigned_activities` (`activity_ID`, `activity_member`, `measurement_ID`) VALUES (? , ?, ?); ";
+            var values = [aid, uid, mid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
     
 
 }
