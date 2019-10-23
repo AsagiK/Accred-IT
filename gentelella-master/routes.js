@@ -71,6 +71,7 @@ router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationTo
 router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/ActionPlan').get(planCtrl.ActionPlan);
+router.route('/home').get(planCtrl.Dashboards);
 
 
 router.route('/ViewDocument').get(planCtrl.ViewDocument);

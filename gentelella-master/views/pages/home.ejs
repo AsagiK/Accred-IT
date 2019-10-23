@@ -62,11 +62,11 @@
                 <!-- /top tiles -->
 
                 <div class="row">
-                    <!CALENDAR>
+                    <!MEASUREMENT>
                         <div class="col-md-6">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Calendar Events <small>Sessions</small></h2>
+                                    <h2>MEASUREMENTS</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
@@ -85,94 +85,139 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
+                                    <!--METRIC TABLE-->  
+                                <% for (var mes of data) { %>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Metric Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                    <div id='calendar'></div>
+
+                                            <tr>
+                                                <td> <%= mes.metric_Name %> </td>
+                                                <td><%= mes.metric_Desc %> </td>
+                                                <td><button type="submit" class="btn btn-primary">View Details</button></td> 
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+                                    <% } %>
+                                    
 
                                 </div>
                             </div>
                         </div>
 
-                        <!ACTIVE TASKS>
-                            <div class="col-md-6">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>To Do List <small>Sample tasks</small></h2>
-                                        <ul class="nav navbar-right panel_toolbox">
-                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                            </li>
-                                            <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Settings 1</a>
-                                                    </li>
-                                                    <li><a href="#">Settings 2</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                            </li>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="x_content">
-
-                                        <div class="">
-                                            <ul class="to_do">
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Schedule meeting with new
-                                                        client </p>
+                        <!METRIC>
+                        <div class="col-md-6">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>MEASUREMENTS</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
                                                 </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Create email address for
-                                                        new intern</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Have IT fix the network
-                                                        printer</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Copy backups to offsite
-                                                        location</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Food truck fixie locavors
-                                                        mcsweeney</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Food truck fixie locavors
-                                                        mcsweeney</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Create email address for
-                                                        new intern</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Have IT fix the network
-                                                        printer</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Copy backups to offsite
-                                                        location</p>
-                                                </li>
-                                                <li>
-                                                    <p>
-                                                        <input type="checkbox" class="flat"> Copy backups to offsite
-                                                        location</p>
+                                                <li><a href="#">Settings 2</a>
                                                 </li>
                                             </ul>
-                                        </div>
-                                    </div>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <!--MEASRUEMENTS-->  
+                                <% for (var meas of dataB) { %>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Measurement Name</th>
+                                                <th>Description</th> 
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                            <tr>
+                                                <td> <%= mes.measurement_Name %> </td>
+                                                <td><%= mes.measurement_Desc %> </td> 
+                                                <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+                                    <% } %>
+                                    
+
                                 </div>
                             </div>
+                        </div> 
+
+                        <!ACTIVITIES>
+                        <div class="col-md-6">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>MEASUREMENTS</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <!--METRIC TABLE-->  
+                                <% for (var app of dataC) { %>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Activity Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                            <tr>
+                                                <td> <%= app.activity_name %> </td>
+                                                <td><%= app.description %> </td> 
+                                                <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+                                    <% } %>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
                 </div>
 
                 <!-- /page content -->
