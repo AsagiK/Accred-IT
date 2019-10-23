@@ -201,13 +201,15 @@
                                         <button class="btn btn-primary" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
                                         </form>
 
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>
@@ -312,6 +314,7 @@
                             console.log("Hi");
                             backsuccess();
                         } else {
+                            console.log("Not Hi");
                             backfail();
                         }
                     }
