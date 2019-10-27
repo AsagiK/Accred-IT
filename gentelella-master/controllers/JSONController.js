@@ -117,11 +117,12 @@ module.exports = {
         console.log(UID);
         async.forEachOf(UID, function (value, key, callback) {
             var an = UID[key]["Activity Name"];
-            var tar = UID[key]["Target"];
-            var code = UID[key]["Code"];
+            var tar = UID[key]["Weight"];
             var desc = UID[key]["Description"];
-            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `code`, `description`, `measurement_ID`) VALUES (?, ?, ?, ?, ?);";
-            var values = [an, tar, code, desc, MID];
+            console.log(an);
+        
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`) VALUES (?, ?, ?, ?);";
+            var values = [an, tar, desc, MID];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
@@ -139,5 +140,38 @@ module.exports = {
         })
 
     },
+
+    AssignActivityJSON: function (req, resp) {
+        var UID = req.body.table;
+        console.log(UID);
+        UID = JSON.parse(UID);
+        
+        async.forEachOf(UID, function (value, key, callback) {
+            var aid = UID[key]["Activity ID"];
+            var uid = UID[key]["User ID"];
+            var mid = UID[key]["Measurement ID"];
+            console.log(aid);
+            console.log(uid);
+            console.log(mid);
+            var sql = "INSERT INTO `capstone`.`activity_members` (`activity_ID`, `activity_Member`, `measurement_ID`) VALUES (? , ?, ?); ";
+            var values = [aid, uid, mid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
+    
 
 }
