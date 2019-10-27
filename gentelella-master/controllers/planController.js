@@ -531,6 +531,7 @@ module.exports = {
             var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID FROM capstone.approved_activities where approved_activities.measurement_ID = ?;SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;"
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
+                if(results){
                 resp.render('./pages/ViewMeasurementDetails.ejs', {
                     data: results[0],
                     dataB: results[1],
@@ -539,6 +540,7 @@ module.exports = {
                     notif: passData
                 })
                 console.log(results);
+                }
             });
             console.log("VIEW MEASUREMENT DETAILS");
         }
@@ -991,12 +993,14 @@ module.exports = {
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
+                if(results){
                 resp.render('./pages/AssignActivityToMember.ejs', {
                     data: results[0],
                     dataB: results[1],
                     current_user: sess.user
                 });
                 console.log("Assign Activity to Member Page");
+                }
             });
         }
     },
