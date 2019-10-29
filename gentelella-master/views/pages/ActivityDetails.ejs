@@ -66,7 +66,7 @@
                                             </tr>
                                         </thead>
                                         <% if (data[0].code == "0") { %>
-                                        <form action="SendDocuments" method="post" encType="multipart/form-data">
+                                        <form id="Form" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
@@ -103,7 +103,7 @@
                                             </tbody>
                                         </form>
                                         <% } else { %>
-                                        <form action="SendDocuments" method="post" encType="multipart/form-data">
+                                        <form id="Form" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
                                                     <td style="width:200px;"><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
@@ -331,6 +331,30 @@
 
                     xhr.send("table=" + table + "&mid=" + mid);
 
+                });
+
+                $('#Form').on('click', function() {
+                    var form_data = new FormData();
+                    var ins = document.getElementById('multiFiles').files.length;
+                    for (var x = 0; x < ins; x++) {
+                        form_data.append("files[]", document.getElementById('multiFiles').files[x]);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: 'SendDocumentsJSON', // point to server-side PHP script 
+                        dataType: 'text', // what to expect back from the PHP script
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        type: 'post',
+                        success: function(response) {
+                            console.log("Hi")
+                        },
+                        error: function(response) {
+                            console.log("Not Hi")
+                        }
+                    });
                 });
 
             });
