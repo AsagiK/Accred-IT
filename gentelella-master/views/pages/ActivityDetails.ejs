@@ -333,7 +333,7 @@
 
                 });
 
-                $('#Form').on('click', function() {
+                $(document).on('submit', '#Form', function() {
                     var form_data = new FormData();
                     var ins = document.getElementById('multiFiles').files.length;
                     for (var x = 0; x < ins; x++) {
@@ -341,13 +341,12 @@
                     }
                     $.ajax({
                         type: 'POST',
-                        url: 'SendDocumentsJSON', // point to server-side PHP script 
-                        dataType: 'text', // what to expect back from the PHP script
+                        url: 'SendDocumentsJSON',
+                        dataType: 'text',
                         cache: false,
                         contentType: false,
                         processData: false,
                         data: form_data,
-                        type: 'post',
                         success: function(response) {
                             console.log("Hi")
                         },
