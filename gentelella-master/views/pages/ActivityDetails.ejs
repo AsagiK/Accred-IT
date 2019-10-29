@@ -334,7 +334,8 @@
                 });
 
                 $(document).on('submit', '#Form', function() {
-                    var form_data = new FormData();
+                    var form = document.getElementById("Form")
+                    var form_data = new FormData(form);
                     var ins = document.getElementById('multiFiles').files.length;
                     for (var x = 0; x < ins; x++) {
                         form_data.append("files[]", document.getElementById('multiFiles').files[x]);
