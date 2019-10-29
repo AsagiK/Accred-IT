@@ -66,36 +66,36 @@
                                             </tr>
                                         </thead>
                                         <% if (data[0].code == "0") { %>
-                                        <form id="Form" method="post" encType="multipart/form-data">
+                                        <form action="SendDocuments" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             ID: </label></td>
                                                     <td><%= data[0].activity_ID %></td>
-                                                    <input type="hidden" id="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12">
+                                                    <input type="hidden" name="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             Name: </label></td>
                                                     <td><%= data[0].activity_name %></td>
-                                                    <input type="hidden" id="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12">
+                                                    <input type="hidden" name="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             Description: </label></td>
                                                     <td><%= data[0].description %></td>
-                                                    <input type="hidden" id="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12">
+                                                    <input type="hidden" name="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
                                                     <td>Choose Evidences</td>
-                                                    <td><input type="file" id="DocFile" multiple></td>
+                                                    <td><input type="file" name="DocFile" multiple></td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="hidden" id="score" value="100" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" id="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="score" value="100" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
                                                     </td>
                                                     <td><button type="submit">Submit Evidence</button></td>
                                                 </tr>
