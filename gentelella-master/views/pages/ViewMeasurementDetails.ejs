@@ -185,6 +185,7 @@
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
                                                                 <th>Target</th>
+                                                                <th>Deadline</th>
                                                                 <th></th>
                                                                 <th></th>
 
@@ -383,7 +384,23 @@
                                     <label for="target">Weight</label>
                                     <br>
                                     <input type="number" name="targetcount" id="targetcount" value="">
+                                    <br>
+                                    <!--div class='col-sm-4'>
+                                        Only Date Picker
+                                        <div class="form-group">
+                                            <div class='input-group date' id='myDatepicker2'>
+                                                <input type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                   <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div-->
+                                    <label> Deadline
+                                    <br>
+                                    <input type="date" name="deadline" id="deadline" value="">
                                     <br><br>
+
                                     <button type="button" class="btn btn-default add-row2">Add</button>
                                 <!--/div-->
 
@@ -397,6 +414,7 @@
                                             <th>Activity Name</th>
                                             <th>Description</th>
                                             <th>Weight</th>
+                                            <th>Deadline</th>
                                             <th></th>
 
                                         </tr>
@@ -470,17 +488,19 @@
             });*/
 
             $(".add-row2").click(function test() {
-                console.log("testing test");
+                //console.log("testing test");
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
                     var target = $("#targetcount").val();
                     var description = $("#descriptioncount").val();
+                    var dead = $("#deadline").val();
+                    console.log(dead);
                     total = +total + +target;
                     console.log(total + " 1st");
                     if(total<=100){
                         var markup = "<tr><td>" + activity +
-                        "</td><td>" + description + "</td><td>" + target +
+                        "</td><td>" + description + "</td><td>" + target + "</td><td>" + dead +
                         "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
                         var table = document.getElementById("tableactivities")
                         $(table).append(markup);
@@ -599,6 +619,8 @@
             o.style.height = "1px";
             o.style.height = (25 + o.scrollHeight) + "px";
         }
+
+        
     </script>
 
 

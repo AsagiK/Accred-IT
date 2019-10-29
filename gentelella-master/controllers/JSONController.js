@@ -119,10 +119,11 @@ module.exports = {
             var an = UID[key]["Activity Name"];
             var tar = UID[key]["Weight"];
             var desc = UID[key]["Description"];
+            var dead  = UID[key]["Deadline"];
             console.log(an);
         
-            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`) VALUES (?, ?, ?, ?);";
-            var values = [an, tar, desc, MID];
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?, ?);";
+            var values = [an, tar, desc, MID, dead];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
