@@ -166,7 +166,7 @@
                                         <div class="panel-body">
                                             <div class="panel">
 
-                                                    <h2>Activities Table</h2>
+                                                <h2>Activities Table</h2>
 
                                                 <a class="panel-heading" role="tab" id="HeadGroupOne"
                                                     data-toggle="collapse" data-parent="#headingTwo"
@@ -176,7 +176,7 @@
 
                                                 <br>
                                                 <div>
-                                                    
+
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -208,6 +208,102 @@
                                                                             Evidence
                                                                         </button>
                                                                     </form>
+                                                                    <br>
+
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        data-toggle="modal"
+                                                                        data-id="<%= activities.activity_ID %>"
+                                                                        data-target=".bs-example-modal-lg-exoutputs"
+                                                                        value="<%= activities.activity_ID %>">
+                                                                        Add expected output/s -
+                                                                        <%= activities.activity_ID %>
+                                                                    </button>
+
+                                                                    <br>
+
+                                                                    <a href="#my_modal" data-toggle="modal"
+                                                                        data-book-id="<%= activities.activity_ID %>">Open Modal</a>
+
+                                                                    <div class="modal fade" id="my_modal">
+                                                                        <div class="modal-dialog modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                                        Adding Expected Outputs
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="panel-body">
+                                                                                        <div class="panel">
+                                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                                                                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
+                                                                                                aria-controls="FacilitiesGroupOne">
+                                                                                            </a>
+                                                                
+                                                                                            <br>
+                                                                
+                                                                                            <label for="activityID">Activity ID</label>
+                                                                                            <br>
+                                                                                            <input type="text" name="activityID" id="activityID" required="required"
+                                                                                                class="form-control col-md-7 col-xs-12">
+                                                                                            <br>
+                                                                                            <label for="activityoutput">Expected Output</label>
+                                                                                            <br>
+                                                                                            <textarea id="activityoutput" name="activityoutput" required="required"
+                                                                                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                                                                                style="overflow:hidden"></textarea>
+                                                                                            <br>
+                                                                
+                                                                
+                                                                                            <button type="button" class="btn btn-default add-row-exoutputs">Add</button>
+                                                                
+                                                                                            <div class="ln_solid"></div>
+                                                                                            <table id="tableoutputs">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                
+                                                                                                        <th>Activity ID</th>
+                                                                                                        <th>Output</th>
+                                                                
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                
+                                                                
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <!SUBMIT BUTTON HERE>
+                                                                                                <button type="button" class="btn btn-success" id="toJSON"
+                                                                                                    style="display: none;">SUBMIT</button>
+                                                                                                <!--button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button-->
+                                                                                        </div>
+                                                                
+                                                                
+                                                                                        <form method="get" action="/ViewMeasurementDetails">
+                                                                                            <input type="hidden" name="passdata" value="1">
+                                                                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                                                                id="backsuccess">Hi</button>
+                                                                                        </form>
+                                                                
+                                                                                        <form method="get" action="/ViewMeasurementDetails">
+                                                                                            <input type="hidden" name="passdata" value="0">
+                                                                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                            <button type="submit" class="btn btn-success" style="display: none;"
+                                                                                                id="backfail">Hi</button>
+                                                                                        </form>
+                                                                
+                                                                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+                                                                
+                                                                                        <!--End of Group 1 Table -->
+                                                                
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>                                                                    </div>
 
                                                                 </td>
                                                                 <td>
@@ -236,66 +332,64 @@
                                 <div class="ln_solid"></div>
 
                                 <div class="x_content">
-    
-                                            <div class="panel-body">
-                                                <div class="panel">
 
-                                                    <h2>Pending Table</h2>
-    
-                                                    <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                        data-toggle="collapse" data-parent="#headingTwo"
-                                                        href="#FacilitiesGroupOne" aria-expanded="true"
-                                                        aria-controls="FacilitiesGroupOne"> 
-                                                    </a>
-    
-                                                    <br>
-                                                    <div>
-                                                        
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-    
-                                                                    <!--th></th-->
-                                                                    <th>ID</th>
-                                                                    <th>Activity Name</th>
-                                                                    <th>Description</th>
-                                                                    <th>Target</th>
-                                                                    <th></th>
-                                                                    <!--th style="display: none">Code</th-->
-    
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <% for (activities of dataC) { %>
-                                                                <tr>
+                                    <div class="panel-body">
+                                        <div class="panel">
 
-                                                                    <td><%= activities.activity_ID %></td>
-                                                                    <td><%= activities.activity_name %></td>
-                                                                    <td><%= activities.description %></td>
-                                                                    <td><%= activities.target %></td>
-                                                                    
-                                                                    <td>
-                                                                        <form method="get" action="ActivityPendingDetails">
-                                                                            <input type="hidden" name="UID"
-                                                                                value="<%= activities.activity_ID %>">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">View
-                                                                                Evidence
-                                                                            </button>
-                                                                        </form>
-                                                                    </td>
-    
-                                                                </tr>
-                                                                <% } %>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-    
-                                                <!--End of Group 1 Table -->
-    
+                                            <h2>Pending Table</h2>
+
+                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                                data-parent="#headingTwo" href="#FacilitiesGroupOne"
+                                                aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                            </a>
+
+                                            <br>
+                                            <div>
+
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <!--th></th-->
+                                                            <th>ID</th>
+                                                            <th>Activity Name</th>
+                                                            <th>Description</th>
+                                                            <th>Target</th>
+                                                            <th></th>
+                                                            <!--th style="display: none">Code</th-->
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for (activities of dataC) { %>
+                                                        <tr>
+
+                                                            <td><%= activities.activity_ID %></td>
+                                                            <td><%= activities.activity_name %></td>
+                                                            <td><%= activities.description %></td>
+                                                            <td><%= activities.target %></td>
+
+                                                            <td>
+                                                                <form method="get" action="ActivityPendingDetails">
+                                                                    <input type="hidden" name="UID"
+                                                                        value="<%= activities.activity_ID %>">
+                                                                    <button type="submit" class="btn btn-primary">View
+                                                                        Evidence
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+
+                                                        </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
                                             </div>
+                                        </div>
+
+                                        <!--End of Group 1 Table -->
+
                                     </div>
+                                </div>
 
                             </div>
                         </div>
@@ -329,7 +423,7 @@
             </div>
         </div>
 
-        <!--Modal for Create -->
+        <!--Modal for Create Activities -->
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -370,22 +464,23 @@
                                     <button type="button" class="btn btn-default add-row">Add</button>
                                 </div-->
                                 <!--div id="countbox"-->
-                                    <label for="activitycount">Activity</label>
-                                    <br>
-                                    <textarea type="text" name="activitycount" id="activitycount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                <label for="activitycount">Activity</label>
+                                <br>
+                                <textarea type="text" name="activitycount" id="activitycount" required="required"
+                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
                                     style="overflow:hidden"></textarea>
-                                    <br>
-                                    <label for="descriptioncount">Description</label>
-                                    <br>
-                                    <textarea id="descriptioncount" name="descriptioncount" required="required"
-                                        class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                        style="overflow:hidden"></textarea>
-                                    <br>
-                                    <label for="target">Weight</label>
-                                    <br>
-                                    <input type="number" name="targetcount" id="targetcount" value="">
-                                    <br>
-                                    <!--div class='col-sm-4'>
+                                <br>
+                                <label for="descriptioncount">Description</label>
+                                <br>
+                                <textarea id="descriptioncount" name="descriptioncount" required="required"
+                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                    style="overflow:hidden"></textarea>
+                                <br>
+                                <label for="target">Weight</label>
+                                <br>
+                                <input type="number" name="targetcount" id="targetcount" value="">
+                                <br>
+                                <!--div class='col-sm-4'>
                                         Only Date Picker
                                         <div class="form-group">
                                             <div class='input-group date' id='myDatepicker2'>
@@ -396,37 +491,38 @@
                                             </div>
                                         </div>
                                     </div-->
-                                    <label> Deadline
+                                <label> Deadline
                                     <br>
                                     <input type="date" name="deadline" id="deadline" value="">
                                     <br><br>
 
                                     <button type="button" class="btn btn-default add-row2">Add</button>
-                                <!--/div-->
+                                    <!--/div-->
 
 
 
-                                <div class="ln_solid"></div>
-                                <table id="tableactivities">
-                                    <thead>
-                                        <tr>
+                                    <div class="ln_solid"></div>
+                                    <table id="tableactivities">
+                                        <thead>
+                                            <tr>
 
-                                            <th>Activity Name</th>
-                                            <th>Description</th>
-                                            <th>Weight</th>
-                                            <th>Deadline</th>
-                                            <th></th>
+                                                <th>Activity Name</th>
+                                                <th>Description</th>
+                                                <th>Weight</th>
+                                                <th>Deadline</th>
+                                                <th></th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
 
-                                    </tbody>
-                                </table>
-                                <!SUBMIT BUTTON HERE>
-                                    <button type="button" class="btn btn-success" id="toJSON" style="display: none;">SUBMIT</button>
-                                    <button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button>
+                                        </tbody>
+                                    </table>
+                                    <!SUBMIT BUTTON HERE>
+                                        <button type="button" class="btn btn-success" id="toJSON"
+                                            style="display: none;">SUBMIT</button>
+                                        <button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button>
                             </div>
 
 
@@ -450,7 +546,7 @@
 
                         </div>
                     </div>
- 
+
 
 
                     <!--script>
@@ -469,9 +565,94 @@
     </div>
 
 
+    <!--MODAL FOR ADDING EXPECTED OUTPUTS FOR ACTIVITIES -->
+    <div class="modal fade test"  tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Adding Expected Outputs
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="panel">
+                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
+                                aria-controls="FacilitiesGroupOne">
+                            </a>
+
+                            <br>
+
+                            <label for="activityID">Activity ID</label>
+                            <br>
+                            <input type="text" name="activityID" id="activityID" required="required"
+                                class="form-control col-md-7 col-xs-12">
+                            <br>
+                            <label for="activityoutput">Expected Output</label>
+                            <br>
+                            <textarea id="activityoutput" name="activityoutput" required="required"
+                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                style="overflow:hidden"></textarea>
+                            <br>
+
+
+                            <button type="button" class="btn btn-default add-row-exoutputs">Add</button>
+
+                            <div class="ln_solid"></div>
+                            <table id="tableoutputs">
+                                <thead>
+                                    <tr>
+
+                                        <th>Activity ID</th>
+                                        <th>Output</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                </tbody>
+                            </table>
+                            <!SUBMIT BUTTON HERE>
+                                <button type="button" class="btn btn-success" id="toJSON"
+                                    style="display: none;">SUBMIT</button>
+                                <!--button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button-->
+                        </div>
+
+
+                        <form method="get" action="/ViewMeasurementDetails">
+                            <input type="hidden" name="passdata" value="1">
+                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <button type="submit" class="btn btn-success" style="display: none;"
+                                id="backsuccess">Hi</button>
+                        </form>
+
+                        <form method="get" action="/ViewMeasurementDetails">
+                            <input type="hidden" name="passdata" value="0">
+                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <button type="submit" class="btn btn-success" style="display: none;"
+                                id="backfail">Hi</button>
+                        </form>
+
+                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+
+                        <!--End of Group 1 Table -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <script type="text/javascript">
-    var total=0;
-    var checkingtotal = 0;
+        var total = 0;
+        var checkingtotal = 0;
         $(document).ready(function () {
             /*$(".add-row").click(function () {
                 if (!checkEmptyInputcheck()) {
@@ -498,24 +679,24 @@
                     console.log(dead);
                     total = +total + +target;
                     console.log(total + " 1st");
-                    if(total<=100){
+                    if (total <= 100) {
                         var markup = "<tr><td>" + activity +
-                        "</td><td>" + description + "</td><td>" + target + "</td><td>" + dead +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                            "</td><td>" + description + "</td><td>" + target + "</td><td>" + dead +
+                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
                         var table = document.getElementById("tableactivities")
                         $(table).append(markup);
                         console.log(total + " 2nd");
-                    }else{
+                    } else {
                         total = +total - +target;
                         alert("Total is above 100, please adjust weight");
                         console.log(total + " 3rd");
                     }
-                    
+
                 }
             });
         });
 
-        function checkEmptyInputcheck() {
+        /*function checkEmptyInputcheck() {
             var isEmpty = false,
                 activitycheck = document.getElementById("activitycheck").value,
                 targetcheck = document.getElementById("targetcheck").value;
@@ -528,7 +709,7 @@
                 isEmpty = true;
             }
             return isEmpty;
-        }
+        }*/
 
         function checkEmptyInputcount() {
             var isEmpty = false,
@@ -549,10 +730,10 @@
             r.closest("tr").remove();
             var table = document.getElementById("tableactivities");
             var val = r.closest("tr").cells[2].innerHTML;
-            console.log("cell weight: "+ val);
-            
-            total=+total - +val;
-            console.log("Minused total: "+total);
+            console.log("cell weight: " + val);
+
+            total = +total - +val;
+            console.log("Minused total: " + total);
         }
 
         $("#toJSON").click(function () {
@@ -584,11 +765,11 @@
 
         });
 
-        $("#checkTotal").click(function(){
-            console.log("Total for submission: "+total);
-            if(total<100){
+        $("#checkTotal").click(function () {
+            console.log("Total for submission: " + total);
+            if (total < 100) {
                 alert("Activities weight insufficient please add more or adjust the weights of the current activities")
-            }else{
+            } else {
                 alert("success");
                 addsuccess();
             }
@@ -607,11 +788,53 @@
 
         };
 
-        function addsuccess(){
+        function addsuccess() {
             var button = document.getElementById('toJSON');
             button.click();
         }
-        
+        $(document).ready(function () {
+            $(".add-row-exoutputs").click(function test() {
+                //console.log("testing test");
+                if (!checkEmptyInput()) {
+                    //console.log("testing add button");
+                    var activity = $("#activityID").val();
+                    var output = $("#activityoutput").val();
+
+                    var markup = "<tr><td>" + activity +
+                        "</td><td>" + output + "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    var table = document.getElementById("tableoutputs")
+                    $(table).append(markup);
+
+
+                }
+            });
+        });
+
+        function checkEmptyInput() {
+            var isEmpty = false,
+                activityID = document.getElementById("activityID").value,
+                activityOutput = document.getElementById("activityoutput").value;
+
+            if (activityID === "") {
+                alert("Activity ID cannot Be Empty");
+                isEmpty = true;
+            } else if (activityOutput === "") {
+                alert("Expected Output Cannot Be Empty");
+                isEmpty = true;
+            }
+            return isEmpty;
+        }
+
+        $('#bs-example-modal-lg-exoutputs').on('modal fade bs-example-modal-lg-exoutputs', function (e) {
+            var id = $(e.relatedTarget).data('id');
+            $(e.currentTarget).find('input[name="activityID"]').val(id);
+        });
+
+        $('#my_modal').on('show.bs.modal.fade.test', function (e) {
+            var bookId = $(e.relatedTarget).data('book-id');
+            $(e.currentTarget).find('input[name="activityID"]').val(bookId);
+        });
+
     </script>
 
     <script>
@@ -620,7 +843,7 @@
             o.style.height = (25 + o.scrollHeight) + "px";
         }
 
-        
+
     </script>
 
 
