@@ -184,7 +184,8 @@
                                                                 <th>ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
-                                                                <th>Target</th>
+                                                                <th>Weight</th>
+                                                                <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
                                                                 <th></th>
                                                                 <th></th>
@@ -199,6 +200,16 @@
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
                                                                 <td><%= activities.target %></td>
+                                                                <td>
+
+                                                                    <% for (outputs of dataD){ %>
+                                                                        <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                            <%= outputs.output_ID %> - <%= outputs.output %> <br>
+                                                                        <% } %>
+                                                                    <% } %>
+
+                                                                </td>
+                                                                <td><%= activities.deadline %></td>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
                                                                         <input type="hidden" name="UID"
@@ -260,7 +271,7 @@
                                                             <th>ID</th>
                                                             <th>Activity Name</th>
                                                             <th>Description</th>
-                                                            <th>Target</th>
+                                                            <th>Weight</th>
                                                             <th></th>
                                                             <!--th style="display: none">Code</th-->
 
