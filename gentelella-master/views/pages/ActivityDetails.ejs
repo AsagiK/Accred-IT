@@ -65,8 +65,8 @@
 
                                             </tr>
                                         </thead>
-                                        <% if (data[0].code == "0") { %>
-                                        <form action="SendDocuments" method="post" encType="multipart/form-data">
+                                        
+                                        <!--form action="SendDocuments" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
                                                     <td><label
@@ -115,8 +115,8 @@
                                                 </tr>
 
                                             </tbody>
-                                        </form>
-                                        <% } else { %>
+                                        </form-->
+                                       
                                         <form action="SendDocuments" method="post" encType="multipart/form-data">
                                             <tbody>
                                                 <tr>
@@ -146,12 +146,12 @@
                                                         value="<%= data[0].description %>"
                                                         class="form-control col-md-7 col-xs-12">
                                                 </tr>
-                                                <tr>
+                                                <!--tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current
                                                             Value: </label></td>
                                                     <td><input type="number" name="score"></td>
 
-                                                <tr>
+                                                <tr-->
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
                                                             Evdences: </label></td>
@@ -200,7 +200,7 @@
 
                                             </tbody>
                                         </form>
-                                        <% } %>
+                                        
                                     </table>
 
                                     <div class="ln_solid"></div>

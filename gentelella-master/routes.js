@@ -88,6 +88,7 @@ router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
+router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 
 
 //--DocCtrl--

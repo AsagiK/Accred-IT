@@ -209,102 +209,8 @@
                                                                         </button>
                                                                     </form>
                                                                     <br>
-
-                                                                    <button type="button" class="btn btn-primary"
-                                                                        data-toggle="modal"
-                                                                        data-id="<%= activities.activity_ID %>"
-                                                                        data-target=".bs-example-modal-lg-exoutputs"
-                                                                        value="<%= activities.activity_ID %>">
-                                                                        Add expected output/s -
-                                                                        <%= activities.activity_ID %>
-                                                                    </button>
-
-                                                                    <br>
-
-                                                                    <a href="#my_modal" data-toggle="modal"
-                                                                        data-book-id="<%= activities.activity_ID %>">Open Modal</a>
-
-                                                                    <div class="modal fade" id="my_modal">
-                                                                        <div class="modal-dialog modal-lg">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <button type="button" class="close" data-dismiss="modal">
-                                                                                        <span aria-hidden="true">×</span>
-                                                                                    </button>
-                                                                                    <h4 class="modal-title" id="myModalLabel">
-                                                                                        Adding Expected Outputs
-                                                                                    </h4>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="panel-body">
-                                                                                        <div class="panel">
-                                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                                                                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
-                                                                                                aria-controls="FacilitiesGroupOne">
-                                                                                            </a>
-                                                                
-                                                                                            <br>
-                                                                
-                                                                                            <label for="activityID">Activity ID</label>
-                                                                                            <br>
-                                                                                            <input type="text" name="activityID" id="activityID" required="required"
-                                                                                                class="form-control col-md-7 col-xs-12">
-                                                                                            <br>
-                                                                                            <label for="activityoutput">Expected Output</label>
-                                                                                            <br>
-                                                                                            <textarea id="activityoutput" name="activityoutput" required="required"
-                                                                                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                                                                                style="overflow:hidden"></textarea>
-                                                                                            <br>
-                                                                
-                                                                
-                                                                                            <button type="button" class="btn btn-default add-row-exoutputs">Add</button>
-                                                                
-                                                                                            <div class="ln_solid"></div>
-                                                                                            <table id="tableoutputs">
-                                                                                                <thead>
-                                                                                                    <tr>
-                                                                
-                                                                                                        <th>Activity ID</th>
-                                                                                                        <th>Output</th>
-                                                                
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                
-                                                                
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                            <!SUBMIT BUTTON HERE>
-                                                                                                <button type="button" class="btn btn-success" id="toJSON"
-                                                                                                    style="display: none;">SUBMIT</button>
-                                                                                                <!--button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button-->
-                                                                                        </div>
-                                                                
-                                                                
-                                                                                        <form method="get" action="/ViewMeasurementDetails">
-                                                                                            <input type="hidden" name="passdata" value="1">
-                                                                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                                                                            <button type="submit" class="btn btn-success" style="display: none;"
-                                                                                                id="backsuccess">Hi</button>
-                                                                                        </form>
-                                                                
-                                                                                        <form method="get" action="/ViewMeasurementDetails">
-                                                                                            <input type="hidden" name="passdata" value="0">
-                                                                                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                                                                            <button type="submit" class="btn btn-success" style="display: none;"
-                                                                                                id="backfail">Hi</button>
-                                                                                        </form>
-                                                                
-                                                                                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
-                                                                
-                                                                                        <!--End of Group 1 Table -->
-                                                                
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>                                                                    </div>
-
+                                                                    <button class="btn btn-primary" href="#my_modal" data-toggle="modal"
+                                                                        data-book-id="<%= activities.activity_ID %>">Add expected output/s - <%= activities.activity_ID %></button>
                                                                 </td>
                                                                 <td>
                                                                     <form method="get" action="AssignActivityToMember">
@@ -566,8 +472,7 @@
 
 
     <!--MODAL FOR ADDING EXPECTED OUTPUTS FOR ACTIVITIES -->
-    <div class="modal fade test"  tabindex="-1" role="dialog"
-        aria-hidden="true">
+    <div class="modal fade" id="my_modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -619,8 +524,7 @@
                                 </tbody>
                             </table>
                             <!SUBMIT BUTTON HERE>
-                                <button type="button" class="btn btn-success" id="toJSON"
-                                    style="display: none;">SUBMIT</button>
+                                <button type="button" class="btn btn-success" id="toJSONoutputs">SUBMIT</button>
                                 <!--button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button-->
                         </div>
 
@@ -646,8 +550,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>                                                                    
     </div>
+
     </div>
 
     <script type="text/javascript">
@@ -825,9 +730,33 @@
             return isEmpty;
         }
 
-        $('#bs-example-modal-lg-exoutputs').on('modal fade bs-example-modal-lg-exoutputs', function (e) {
-            var id = $(e.relatedTarget).data('id');
-            $(e.currentTarget).find('input[name="activityID"]').val(id);
+        $("#toJSONoutputs").click(function () {
+            console.log("Hello");
+            var table = JSON.stringify($('#tableoutputs').tableToJSON());
+            var mid = document.getElementById("mid").value
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/AddOutputsJSON', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+            };
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    var respData = xhr.responseText;
+                    if (respData == "OK") {
+                        console.log("Hi");
+                        backsuccess();
+                    } else {
+                        backfail();
+                    }
+                }
+            };
+
+
+            xhr.send("table=" + table + "&mid=" + mid);
+
         });
 
         $('#my_modal').on('show.bs.modal.fade.test', function (e) {

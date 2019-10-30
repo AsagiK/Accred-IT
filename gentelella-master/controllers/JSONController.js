@@ -173,6 +173,35 @@ module.exports = {
         })
     },
 
-    
+    AddOutputsJSON: function (req, resp) {
+        var UID = req.body.table;
+        var MID = req.body.mid;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var ai = UID[key]["Activity ID"];
+            var eo = UID[key]["Output"];
+            console.log(ai);
+            console.log(eo);
+        
+            var sql = "INSERT INTO `capstone`.`activity_outputs` (`activity_ID`, `output`) VALUES (?, ?);";
+            var values = [ai, eo];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
+    },
 
 }
