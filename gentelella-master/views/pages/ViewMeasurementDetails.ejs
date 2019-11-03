@@ -181,13 +181,12 @@
                                                         <thead>
                                                             <tr>
 
-                                                                <th></th>
                                                                 <th>ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
                                                                 <th>Target</th>
                                                                 <th></th>
-                                                                <th style="display: none">Code</th>
+                                                                <th></th>
 
                                                             </tr>
                                                         </thead>
@@ -195,14 +194,6 @@
                                                             <% for (activities of dataB) { %>
                                                             <tr>
 
-
-
-                                                                <% if (activities.code == "0") { %>
-                                                                <td><input type="checkbox" onclick="return false;" />
-                                                                </td>
-                                                                <% } else { %>
-                                                                <td>NOT A CHECKBOX</td>
-                                                                <% } %>
                                                                 <td><%= activities.activity_ID %></td>
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
@@ -217,6 +208,17 @@
                                                                         </button>
                                                                     </form>
 
+                                                                </td>
+                                                                <td>
+                                                                    <form method="get" action="AssignActivityToMember">
+                                                                        <input type="hidden" name="AID"
+                                                                            value="<%= activities.activity_ID %>">
+                                                                        <input type="hidden" name="GID"
+                                                                            value="<%= data[0].GroupAssigned %>">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Assign Members
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                             <% } %>
@@ -252,28 +254,20 @@
                                                             <thead>
                                                                 <tr>
     
-                                                                    <th></th>
+                                                                    <!--th></th-->
                                                                     <th>ID</th>
                                                                     <th>Activity Name</th>
                                                                     <th>Description</th>
                                                                     <th>Target</th>
                                                                     <th></th>
-                                                                    <th style="display: none">Code</th>
+                                                                    <!--th style="display: none">Code</th-->
     
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <% for (activities of dataC) { %>
                                                                 <tr>
-    
-    
-    
-                                                                    <% if (activities.code == "0") { %>
-                                                                    <td><input type="checkbox" onclick="return false;" />
-                                                                    </td>
-                                                                    <% } else { %>
-                                                                    <td>NOT A CHECKBOX</td>
-                                                                    <% } %>
+
                                                                     <td><%= activities.activity_ID %></td>
                                                                     <td><%= activities.activity_name %></td>
                                                                     <td><%= activities.description %></td>
@@ -353,13 +347,13 @@
                                     data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
                                     aria-controls="FacilitiesGroupOne">
                                 </a>
-                                <div class="title_left">
+                                <!--div class="title_left">
                                     <button type="button" class="btn btn-default" id="check">Check</button>
                                     <button type="button" class="btn btn-default" id="count">Count</button>
-                                </div>
+                                </div-->
                                 <br>
 
-                                <div id="checkbox">
+                                <!--div id="checkbox">
                                     <label for="activitycheck">Activity</label>
                                     <br>
                                     <input type="text" name="activitycheck" id="activitycheck" value="">
@@ -373,11 +367,12 @@
                                     <input type="hidden" name="targetcheck" id="targetcheck" value="100">
                                     <br><br>
                                     <button type="button" class="btn btn-default add-row">Add</button>
-                                </div>
-                                <div id="countbox">
+                                </div-->
+                                <!--div id="countbox"-->
                                     <label for="activitycount">Activity</label>
                                     <br>
-                                    <input type="text" name="activitycount" id="activitycount" value="">
+                                    <textarea type="text" name="activitycount" id="activitycount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                                    style="overflow:hidden"></textarea>
                                     <br>
                                     <label for="descriptioncount">Description</label>
                                     <br>
@@ -385,26 +380,24 @@
                                         class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
                                         style="overflow:hidden"></textarea>
                                     <br>
-                                    <label for="target">Target</label>
+                                    <label for="target">Weight</label>
                                     <br>
                                     <input type="number" name="targetcount" id="targetcount" value="">
                                     <br><br>
                                     <button type="button" class="btn btn-default add-row2">Add</button>
-                                </div>
+                                <!--/div-->
 
 
 
                                 <div class="ln_solid"></div>
-                                <table id="table">
+                                <table id="tableactivities">
                                     <thead>
                                         <tr>
 
-                                            <th></th>
                                             <th>Activity Name</th>
                                             <th>Description</th>
-                                            <th>Target</th>
+                                            <th>Weight</th>
                                             <th></th>
-                                            <th style="display: none">Code</th>
 
                                         </tr>
                                     </thead>
@@ -414,7 +407,8 @@
                                     </tbody>
                                 </table>
                                 <!SUBMIT BUTTON HERE>
-                                    <button type="button" class="btn btn-success" id="toJSON">SUBMIT</button>
+                                    <button type="button" class="btn btn-success" id="toJSON" style="display: none;">SUBMIT</button>
+                                    <button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button>
                             </div>
 
 
@@ -438,10 +432,10 @@
 
                         </div>
                     </div>
+ 
 
 
-
-                    <script>
+                    <!--script>
                         $(document).ready(function () {
                             $("#check").click(function () {
                                 $("#checkbox").toggle();
@@ -450,7 +444,7 @@
                                 $("#countbox").toggle();
                             });
                         });
-                    </script>
+                    </script-->
                 </div>
             </div>
         </div>
@@ -458,8 +452,10 @@
 
 
     <script type="text/javascript">
+    var total=0;
+    var checkingtotal = 0;
         $(document).ready(function () {
-            $(".add-row").click(function () {
+            /*$(".add-row").click(function () {
                 if (!checkEmptyInputcheck()) {
                     console.log("testing add button");
                     var activity = $("#activitycheck").val();
@@ -471,18 +467,30 @@
                         "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>0<td></tr>";
                     $("table tbody").append(markup);
                 }
-            });
+            });*/
 
-            $(".add-row2").click(function () {
+            $(".add-row2").click(function test() {
+                console.log("testing test");
                 if (!checkEmptyInputcount()) {
-                    console.log("testing add button");
+                    //console.log("testing add button");
                     var activity = $("#activitycount").val();
                     var target = $("#targetcount").val();
                     var description = $("#descriptioncount").val();
-                    var markup = "<tr><td></td><td>" + activity +
+                    total = +total + +target;
+                    console.log(total + " 1st");
+                    if(total<=100){
+                        var markup = "<tr><td>" + activity +
                         "</td><td>" + description + "</td><td>" + target +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none'>1<td></tr>";
-                    $("table tbody").append(markup);
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                        var table = document.getElementById("tableactivities")
+                        $(table).append(markup);
+                        console.log(total + " 2nd");
+                    }else{
+                        total = +total - +target;
+                        alert("Total is above 100, please adjust weight");
+                        console.log(total + " 3rd");
+                    }
+                    
                 }
             });
         });
@@ -519,11 +527,17 @@
 
         function deleteRow(r) {
             r.closest("tr").remove();
+            var table = document.getElementById("tableactivities");
+            var val = r.closest("tr").cells[2].innerHTML;
+            console.log("cell weight: "+ val);
+            
+            total=+total - +val;
+            console.log("Minused total: "+total);
         }
 
         $("#toJSON").click(function () {
             console.log("Hello");
-            var table = JSON.stringify($('#table').tableToJSON());
+            var table = JSON.stringify($('#tableactivities').tableToJSON());
             var mid = document.getElementById("mid").value
 
             var xhr = new XMLHttpRequest();
@@ -550,6 +564,17 @@
 
         });
 
+        $("#checkTotal").click(function(){
+            console.log("Total for submission: "+total);
+            if(total<100){
+                alert("Activities weight insufficient please add more or adjust the weights of the current activities")
+            }else{
+                alert("success");
+                addsuccess();
+            }
+
+        });
+
         function backsuccess() {
             var button = document.getElementById('backsuccess');
             button.click();
@@ -561,6 +586,12 @@
             button.click();
 
         };
+
+        function addsuccess(){
+            var button = document.getElementById('toJSON');
+            button.click();
+        }
+        
     </script>
 
     <script>

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Assign Member to Group </title>
+    <title>Assign Member to Activity </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -118,9 +118,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Area: <%= dataB[0].Area_Name %></h3>
-                            <h3>Group: <%= dataB[0].Group_Name %></h3>
-                            <input type="hidden" id="GID" value="<%= dataB[0].Group_ID %>">
+                            <h3>Acivity Name: <%= dataB[0].activity_name %></h3>
                         </div>
                     </div>
                 </div>
@@ -138,7 +136,8 @@
                                                     <th>User ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Group ID</th>
+                                                    <th>Activity ID</th>
+                                                    <th>Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -158,8 +157,10 @@
                                                         <%= user.User_First %></td>
                                                     <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
-                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>"
-                                                        style="display: none;"><%= dataB[0].Group_ID %></td>
+                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                        ><%= dataB[0].activity_ID %></td>
+                                                    <td id='measure<%= user.User_ID %>' value="<%= dataB[0].measurement_ID %>"
+                                                        ><%= dataB[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -180,7 +181,8 @@
                                                     <th>User ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Group ID</th>
+                                                    <th>Activity ID</th>
+                                                    <th>Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -199,13 +201,15 @@
                                         <button class="btn btn-primary" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
                                         </form>
 
-                                        <form method="get" action="/ViewGroups">
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>
@@ -248,12 +252,13 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
+                        var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
                             "</td><td id= first" + index + " value=" + first + ">" + first +
                             "</td><td id= last" + index + " value=" + last + ">" + last +
                             "</td><td id= hidden" + index + " value=" + hidden +
-                            ">" + hidden + "</td></tr>";
+                            ">" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -271,12 +276,13 @@
                         var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
+                        var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
                             "</td><td id= first" + index + " value=" + first + ">" + first +
                             "</td><td id= last" + index + " value=" + last + ">" + last +
                             "</td><td id= hidden" + index + " value=" + hidden +
-                            ">" + hidden + "</td></tr>";
+                            " >" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
@@ -291,11 +297,11 @@
                     ignoreColumns: [0, 2, 3]
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3, 4]
+                    ignoreColumns: [0, 2, 3]
                 })); // 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignGroupJSON', true);
+                xhr.open('POST', '/AssignActivityJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     console.log(xhr.responseText);
@@ -308,6 +314,7 @@
                             console.log("Hi");
                             backsuccess();
                         } else {
+                            console.log("Not Hi");
                             backfail();
                         }
                     }

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Action Plan</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <%- include ./nav.ejs %> 
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="clearfix"></div>
+                <div role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+
+                                <h3>ACTION PLAN  </h3> 
+
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_content">
+
+                                    <!-- start accordion    --> 
+
+                                    <% for (var goal of data) { %> 
+                                        
+                                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel">
+                                            <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= goal.metric_ID %>" aria-expanded="true" aria-controls="collapse<%= goal.metric_ID %>">
+                                                <h4 class="panel-title"> 
+                                                    <!--CHANGED TO GOAL NAME-->
+                                                    GOAL NAME:  <%= goal.metric_Name %> 
+                                                </h4>
+
+                                            </a>      
+                                            <div id="collapse<%= goal.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <input type="hidden" name="MID" value="<%= goal.metric_ID %>">   
+                                                
+                                                <br>
+                                                <% for (var meas of dataB) { %>
+                                                <% if (meas.metric_ID == goal.metric_ID) { %>
+                                                 
+                                                <div class="panel-body">
+                                                    <!--Group 1 table-->
+
+                                                    <div class="panel">
+
+                                                        <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= meas.measurement_ID %>" aria-expanded="true" aria-controls="Collapse<%= meas.measurement_ID %>">
+                                                            <h3 class="panel-title">
+                                                                Measurement: <%= meas.measurement_Name %>
+                                                            </h3>
+                                                        </a>
+                                                        <div id="Collapse<%= meas.measurement_ID %>" class="collapse">
+
+                                                            <!-- Activity Table changed to Measurement Table -->
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Measurement Name</th>
+                                                                        <th>Metric</th>
+                                                                        <th>Quality Target</th> 
+                                                                        <th>Accumulated Value</th>
+                                                                        <th> Value Per Term</th>   
+                                                                        <th></th>
+                                                                        
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+
+                                                                    <tr>
+                                                                        <!-- MEASUREMENT TABLE :  -->
+                                                                        <td> <%= meas.measurement_Name %> </td>
+                                                                        <td> 
+                                                                            
+                                                                        </td>
+                                                                        <td><%= meas.QualityTarget %> </td> 
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                                    </tr>
+
+
+                                                                </tbody>
+                                                            </table>
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!--End of Group 1 Table -->
+                                                <% } %> 
+                                                <% } %>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div> 
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /page content -->
+
+                    <!--Modal for Create Action Plan -->
+                    <div class="modal fade cap" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal3" value="Edit">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel3">Create Action Plan</h4>
+                                </div>
+                                <div class="modal-body"> 
+                                    <!-- Add controller for action "addActionPlan"-->
+                                    <form id="CreateActionPlan" data-parsley-validate class="form-horizontal form-label-left" action="addActionPlan" method="POST">
+                                    <!--Text Area for Action Steps-->
+                                    <div class="form-group">
+                                        <label for="actionPlan" class="control-label col-md-3 col-sm-3 col-xs-12">Action Plan Steps:
+                                            <span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea class="form-control" rows="3" id="actionPlan" name="actionPlan" placeholder="Insert Steps Here" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                        </div>
+                                    </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" form="CreateCycle">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- footer content -->
+                    <footer>
+                        <div class="pull-right">
+                            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+                </div>
+            </div>
+
+            <!script for dynamic text area>
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+
+        </script>
+
+            <!-- jQuery -->
+            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            <!-- Bootstrap -->
+            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- FastClick -->
+            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+            <!-- NProgress -->
+            <script src="assets/vendors/nprogress/nprogress.js"></script>
+            <!-- bootstrap-progressbar -->
+            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+            <!-- iCheck -->
+            <script src="assets/vendors/iCheck/icheck.min.js"></script>
+            <!-- bootstrap-daterangepicker -->
+            <script src="assets/vendors/moment/min/moment.min.js"></script>
+            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- bootstrap-wysiwyg -->
+            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+            <!-- jQuery Tags Input -->
+            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+            <!-- Switchery -->
+            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+            <!-- Select2 -->
+            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+            <!-- Parsley -->
+            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+            <!-- Autosize -->
+            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+            <!-- jQuery autocomplete -->
+            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+            <!-- starrr -->
+            <script src="assets/vendors/starrr/dist/starrr.js"></script>
+            <!-- Custom Theme Scripts -->
+            <script src="assets/build/js/custom.min.js"></script>
+
+</body>
+
+</html>

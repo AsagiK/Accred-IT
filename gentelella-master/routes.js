@@ -12,6 +12,8 @@ router.route('/Createusers').get(planCtrl.Createusers);
 router.route('/adduser').post(planCtrl.adduser);
 router.route('/edituser').get(planCtrl.edituser);
 router.route('/alteruser').post(planCtrl.alteruser);
+router.route('/EditUserbyUser').get(planCtrl.EditUserAccount);
+router.route('/alteruserbyuser').post(planCtrl.alteruserbyuser);
 
 
 //GROUPS ROUTES
@@ -47,6 +49,9 @@ router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 //router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 router.route('/QualityMetrics').get(planCtrl.Measurement);
 
+//ACTIVITY ROUTES
+router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
+
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
@@ -68,6 +73,8 @@ router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
 router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
+router.route('/ActionPlan').get(planCtrl.ActionPlan);
+router.route('/home').get(planCtrl.Dashboards);
 
 
 router.route('/ViewDocument').get(planCtrl.ViewDocument);
@@ -80,6 +87,7 @@ router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
+router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 
 
 //--DocCtrl--

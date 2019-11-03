@@ -40,9 +40,9 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/TestPage');
+    resp.redirect('/login');
 
-    console.log("Testing testing");
+    console.log("Login Page");
 });
 
 server.get('/debug', function (req, resp) {
@@ -65,7 +65,7 @@ server.get('/RegisterAdminPage', function (req, resp) {
     console.log("Testing testing");
 });
 
-server.get('/home', function (req, resp) {
+/*server.get('/home', function (req, resp) {
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
@@ -76,7 +76,7 @@ server.get('/home', function (req, resp) {
         });
         console.log(sess.user);
     }
-});
+});*/
 
 server.get('/login', function (req, resp) {
     var status = req.query.status
