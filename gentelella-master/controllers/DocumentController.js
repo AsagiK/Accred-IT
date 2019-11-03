@@ -278,16 +278,17 @@ module.exports = {
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else {
+        } else if (files != null) {
             var files = req.files.DocFile;
+            console.log(req.files)
             var max = files.length;
             var AID = req.body.activityID;
             var name = req.body.activityName;
             var code = req.body.code;
-            var description = req.body.activityDesc;
+            var description = req.body.subdesc;
             var MID = req.body.MID;
 
-            var values2 = [AID, name, code, description, MID,]
+            var values2 = [AID, name, code, description, MID, ]
             var count = 0;
             console.log(files.length);
             var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`) VALUES (? , ? , ?, ?, ?);"
@@ -525,6 +526,8 @@ module.exports = {
                 }
 
             }
+        }else{
+            resp.redirect('/ViewDocument')
         }
     },
 
@@ -566,8 +569,44 @@ module.exports = {
 
     SendDocumentsJSON: function (req, resp) {
         console.log(req.body);
-
+        var AID = req.body.AID;
+        var name = req.body.name;
+        var code = req.body.code;
+        var description = req.body.description;
+        var MID = req.body.MID;
+        var values2 = [AID, name, code, description, MID, ]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`) VALUES (? , ? , ?, ?, ?);"
+        connection.query(sql2, values2, function (err, results, fields) {
+            if (err) throw err;
+            // console.log(results);
+        });
+        var Doc = req.body.table
+        Doc = JSON.parse(Doc)
+        if (Object.keys(Doc).length == 0) {
+            console.log("Empty");
+            resp.send("OK");
+        } else {
+            async.forEachOf(Doc, function (value, key, callback) {
+                var did = Doc[key]["Document ID"];
+                var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?); ";
+                var values = [AID, did];
+                connection.query(sql, values, function (err, result) {
+                    if (err) callback(err);
+                    if (result) {
+                        callback();
+                    }
+                });
+            }, function (err) {
+                if (err) {
+                    console.log("Failed");
+                    resp.send("Not OK")
+                } else {
+                    console.log("Passed");
+                    resp.send("OK");
+                }
+            })
+        }
     },
-    
+
 
 }
