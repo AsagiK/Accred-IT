@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET utf8mb4
 USE `capstone`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: capstone
+-- Host: localhost    Database: capstone
 -- ------------------------------------------------------
 -- Server version	8.0.16
 
@@ -60,8 +60,33 @@ CREATE TABLE `activity_members` (
 
 LOCK TABLES `activity_members` WRITE;
 /*!40000 ALTER TABLE `activity_members` DISABLE KEYS */;
-INSERT INTO `activity_members` VALUES (1,47,1),(1,48,1),(1,49,1),(1,50,1),(1,51,1),(1,47,1),(1,48,1),(1,49,1),(1,50,1),(1,51,1),(1,47,1),(1,48,1),(1,49,1),(1,51,1),(1,50,1);
 /*!40000 ALTER TABLE `activity_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_outputs`
+--
+
+DROP TABLE IF EXISTS `activity_outputs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `activity_outputs` (
+  `output_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `activity_ID` int(11) NOT NULL,
+  `output` varchar(45) NOT NULL,
+  `output_Status` int(11) DEFAULT '0',
+  PRIMARY KEY (`output_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_outputs`
+--
+
+LOCK TABLES `activity_outputs` WRITE;
+/*!40000 ALTER TABLE `activity_outputs` DISABLE KEYS */;
+INSERT INTO `activity_outputs` VALUES (1,18,'test',0),(2,18,'Image of Building',0),(3,18,'Blueprints of building',0);
+/*!40000 ALTER TABLE `activity_outputs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -75,12 +100,13 @@ CREATE TABLE `approved_activities` (
   `activity_ID` int(11) NOT NULL AUTO_INCREMENT,
   `activity_name` varchar(45) NOT NULL,
   `target` int(11) NOT NULL,
-  `code` tinyint(1) NOT NULL,
-  `description` mediumtext,
+  `code` tinyint(1) DEFAULT NULL,
+  `description` mediumtext NOT NULL,
   `measurement_ID` int(11) NOT NULL,
   `current_Score` int(11) NOT NULL DEFAULT '0',
+  `deadline` date NOT NULL,
   PRIMARY KEY (`activity_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +115,7 @@ CREATE TABLE `approved_activities` (
 
 LOCK TABLES `approved_activities` WRITE;
 /*!40000 ALTER TABLE `approved_activities` DISABLE KEYS */;
-INSERT INTO `approved_activities` VALUES (1,'123',23,1,'test count',1,5),(2,'123',100,0,'test check',1,100),(3,'123',100,0,'234',1,0),(4,'123',12,1,'234',1,0),(5,'123',100,0,'234',1,0),(6,'123',12,1,'234',1,0),(7,'test',10,1,'test description',2,5),(8,'test 2',15,0,'test description number 2',2,7),(9,'Atesting new measure',50,1,'testing new measure',3,25),(10,'testing new measure part two',60,1,'testing new measure part 2',4,33),(11,'TESTING ACTIVITY',45,1,'TESTING ACTIVITY',14,25),(12,'Checking Activity',100,0,'do stuff here',15,100),(13,'Number of computers that have',50,1,'-photoshop\n-8gb ram',15,0),(14,'Number of Computers that have over * gb ram',80,1,'Table Report',15,0),(15,'Do the Computers have Photoshop installed?',100,0,'Table Report',15,0),(16,'testing',30,1,'testiung',1,0),(17,'testing',30,1,'testiung',1,0),(18,'2',33,1,'WIDTH OF LS BUIILDING',16,0),(19,'1',34,1,'HEIGHT OF LS BUILDING',16,0),(20,'2',33,1,'AREA OF LS BUIILDING',16,0);
+INSERT INTO `approved_activities` VALUES (1,'123',23,1,'test count',1,5,'0000-00-00'),(2,'123',100,0,'test check',1,100,'0000-00-00'),(3,'123',100,0,'234',1,0,'0000-00-00'),(4,'123',12,1,'234',1,0,'0000-00-00'),(5,'123',100,0,'234',1,0,'0000-00-00'),(6,'123',12,1,'234',1,0,'0000-00-00'),(7,'test',10,1,'test description',2,5,'0000-00-00'),(8,'test 2',15,0,'test description number 2',2,7,'0000-00-00'),(9,'Atesting new measure',50,1,'testing new measure',3,25,'0000-00-00'),(10,'testing new measure part two',60,1,'testing new measure part 2',4,33,'0000-00-00'),(11,'TESTING ACTIVITY',45,1,'TESTING ACTIVITY',14,25,'0000-00-00'),(12,'Checking Activity',100,0,'do stuff here',15,100,'0000-00-00'),(13,'Number of computers that have',50,1,'-photoshop\n-8gb ram',15,0,'0000-00-00'),(14,'Number of Computers that have over * gb ram',80,1,'Table Report',15,0,'0000-00-00'),(15,'Do the Computers have Photoshop installed?',100,0,'Table Report',15,0,'0000-00-00'),(16,'testing',30,1,'testiung',1,0,'0000-00-00'),(17,'testing',30,1,'testiung',1,0,'0000-00-00'),(18,'2',33,1,'WIDTH OF LS BUIILDING',16,0,'0000-00-00'),(19,'1',34,1,'HEIGHT OF LS BUILDING',16,0,'0000-00-00'),(20,'2',33,1,'AREA OF LS BUIILDING',16,0,'0000-00-00'),(21,'testing',10,0,'testing',17,0,'0000-00-00'),(22,'testing1',90,0,'testing1',17,0,'0000-00-00'),(23,'testing date',100,NULL,'testing date',16,0,'2019-10-31');
 /*!40000 ALTER TABLE `approved_activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +322,7 @@ CREATE TABLE `measurement` (
   `measurement_Description` varchar(200) NOT NULL,
   `Deadline` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`measurement_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +331,7 @@ CREATE TABLE `measurement` (
 
 LOCK TABLES `measurement` WRITE;
 /*!40000 ALTER TABLE `measurement` DISABLE KEYS */;
-INSERT INTO `measurement` VALUES (1,123,'123',1,18,'123','123',NULL),(2,123,'SYLLABUS, PHOTO EVIDENCES OF CLASS, ACTIVITIES DONE IN THE CLASS WITH SERVICE LEARNING',1,18,'NO OF COURSES WITH SERVICE LEARNING','KEEP COUNT OF THE NUMBER OF COURSES THAT HAVE SERVICE LEARNING',NULL),(3,123,'ASD',1,20,'MEASUREMENT 1','% OF CURRICULUM AND SYLLABI REVISED BASED ON LEARNER CENTERED PHILOSOPHY AND LSALLIAN GUIDING PRINCIPLES',NULL),(4,123,'EVIDENCES = SYLLABI',1,20,'MEASUREMENT 2','% OF CURRICULUM AND SYLLABI REVISED BASED ON LEARNER CENTERED PHILOSOPHY AND LSALLIAN GUIDING PRINCIPLES',NULL),(5,100,'TESTING INSERT MEASUREMENT UNDER METRIC',20,22,'TESTING INSERT MEASUREMENT UNDER METRIC','TESTING INSERT MEASUREMENT UNDER METRIC',NULL),(14,80,'testing',1,23,'testing','testing',NULL),(15,50,'Steps on how to accomplish this pleasee submit photos of specifications and layouts',21,24,'Status of hardware in Computer Labs','Status of hardware',NULL),(16,100,'TEST',21,25,'LS BUILDING MEASUREMENTS','HOW TALL IS SAINT LA SALLE BUILDING FROM LOWEST TO  HIGHEST POINT',NULL);
+INSERT INTO `measurement` VALUES (1,123,'123',1,18,'123','123',NULL),(2,123,'SYLLABUS, PHOTO EVIDENCES OF CLASS, ACTIVITIES DONE IN THE CLASS WITH SERVICE LEARNING',1,18,'NO OF COURSES WITH SERVICE LEARNING','KEEP COUNT OF THE NUMBER OF COURSES THAT HAVE SERVICE LEARNING',NULL),(3,123,'ASD',1,20,'MEASUREMENT 1','% OF CURRICULUM AND SYLLABI REVISED BASED ON LEARNER CENTERED PHILOSOPHY AND LSALLIAN GUIDING PRINCIPLES',NULL),(4,123,'EVIDENCES = SYLLABI',1,20,'MEASUREMENT 2','% OF CURRICULUM AND SYLLABI REVISED BASED ON LEARNER CENTERED PHILOSOPHY AND LSALLIAN GUIDING PRINCIPLES',NULL),(5,100,'TESTING INSERT MEASUREMENT UNDER METRIC',20,22,'TESTING INSERT MEASUREMENT UNDER METRIC','TESTING INSERT MEASUREMENT UNDER METRIC',NULL),(14,80,'testing',1,23,'testing','testing',NULL),(15,50,'Steps on how to accomplish this pleasee submit photos of specifications and layouts',21,24,'Status of hardware in Computer Labs','Status of hardware',NULL),(16,100,'TEST',21,25,'LS BUILDING MEASUREMENTS','HOW TALL IS SAINT LA SALLE BUILDING FROM LOWEST TO  HIGHEST POINT',NULL),(17,100,'TESTING ACTIVITIES',21,25,'TESTING ACTIVITIES','TESTING ACTIVITIES',NULL),(18,80,'test',21,25,'test','test',NULL);
 /*!40000 ALTER TABLE `measurement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,6 +403,8 @@ CREATE TABLE `metric` (
   `group_ID` int(11) DEFAULT '0',
   `source_ID` int(11) DEFAULT NULL,
   `cycle_ID` int(11) NOT NULL DEFAULT '0',
+  `duration` varchar(200) NOT NULL,
+  `cycle_Status` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`metric_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -387,7 +415,7 @@ CREATE TABLE `metric` (
 
 LOCK TABLES `metric` WRITE;
 /*!40000 ALTER TABLE `metric` DISABLE KEYS */;
-INSERT INTO `metric` VALUES (18,'123','123','High','2019-07-21 00:00:00',1,1,0),(19,'To fully integrate the learner-centered pedagogy and Lasallian guiding principles','to apply these things in all curricular and co-curricular programs','High','2019-07-29 00:00:00',0,1,0),(20,'GOAL TITLE','TO FULLY INTEGRATE THE LEARNER CENTERED PEDAGOGY AND LASALLIAN GUIDING PRINCIPLES IN ALL CURRICULAR AND CO-CURRICULAR PROGRAMS','High','2019-07-29 00:00:00',1,1,0),(21,'TEST METRIC ADD EDIT','TESTING METRIC ADD EDIT','Medium','2019-07-30 00:00:00',19,19,0),(22,'ADDING METRIC UNDER A SOURCE','ADDING METRIC UNDER SOURCE','Low','2019-07-30 00:00:00',20,19,0),(23,'TESTING NEW INSERT','TESTING','Medium','2019-07-31 00:00:00',1,2,10),(24,'To Provide State of the art facilities for learning and research','Quality of hardware in Computer Laboratories','Medium','2019-08-01 00:00:00',21,20,11),(25,'HOW TALL BUILDINGS ARE IN DLSU',NULL,NULL,'2019-10-23 00:00:00',21,20,11);
+INSERT INTO `metric` VALUES (18,'123','123','High','2019-07-21 00:00:00',1,1,0,'',NULL),(19,'To fully integrate the learner-centered pedagogy and Lasallian guiding principles','to apply these things in all curricular and co-curricular programs','High','2019-07-29 00:00:00',0,1,0,'',NULL),(20,'GOAL TITLE','TO FULLY INTEGRATE THE LEARNER CENTERED PEDAGOGY AND LASALLIAN GUIDING PRINCIPLES IN ALL CURRICULAR AND CO-CURRICULAR PROGRAMS','High','2019-07-29 00:00:00',1,1,0,'',NULL),(21,'TEST METRIC ADD EDIT','TESTING METRIC ADD EDIT','Medium','2019-07-30 00:00:00',19,19,0,'',NULL),(22,'ADDING METRIC UNDER A SOURCE','ADDING METRIC UNDER SOURCE','Low','2019-07-30 00:00:00',20,19,0,'',NULL),(23,'TESTING NEW INSERT','TESTING','Medium','2019-07-31 00:00:00',1,2,10,'',NULL),(24,'To Provide State of the art facilities for learning and research','Quality of hardware in Computer Laboratories','Medium','2019-08-01 00:00:00',21,20,11,'',NULL),(25,'HOW TALL BUILDINGS ARE IN DLSU',NULL,NULL,'2019-10-23 00:00:00',21,20,11,'',NULL);
 /*!40000 ALTER TABLE `metric` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,4 +648,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-23 16:26:02
+-- Dump completed on 2019-11-03 21:44:48

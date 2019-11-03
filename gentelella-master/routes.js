@@ -88,6 +88,7 @@ router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
+router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 
 
 //--DocCtrl--
@@ -95,6 +96,7 @@ router.route('/SendDocument').post(DocCtrl.SendDocument);
 router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
 router.route('/PreCheck').post(DocCtrl.PreCheck);
+router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);
