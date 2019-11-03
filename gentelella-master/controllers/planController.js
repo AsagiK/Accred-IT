@@ -215,17 +215,15 @@ module.exports = {
 
     SendMeasurement: function (req, resp) {
         var qt = req.body.QualityTarget;
-        var pr = req.body.Procedures;
-        var MID = req.body.MID;
-        var GID = req.body.GID;
         var mn = req.body.MeasurementName;
         var md = req.body.MeasurementDesc;
-        var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`, `Procedures`, `metric_ID`,`measurement_Name`,`measurement_Description`, `GroupAssigned`) VALUES (? , ?, ?, ?, ?, ?)";
-        var values = [qt, pr, MID, mn, md, GID];
+        var gid = req.body.GoalID;
+        var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`,`measurement_Name`,`measurement_Description`, `metric_ID`) VALUES (? , ?, ?, ?)";
+        var values = [qt, mn, md, gid ];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
-            resp.redirect('/MeasurementPage?MID=' + MID);
+            resp.redirect('/QualityMetric');
         });
         console.log("INSERTED MEASUREMENT");
     },
@@ -276,15 +274,18 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement;", function (err, results, fields) {
                 if (err) throw err;
+                if(results){
                 resp.render('./pages/QualityMetrics.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
                     dataD: results[3],
+                    dataE: results[4],
                     current_user: sess.user
                 });
+                }
                 console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
@@ -295,23 +296,14 @@ module.exports = {
         var source = (req.body.source);
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
-        var priority = (req.body.priority);
-        var group = (req.body.group);
-        var cycle = (req.body.cycle);
-        var today = new Date();
-        //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        //var dateTime = date+' '+time;
-        var current = today.toISOString().split('T')[0];
-        console.log(today);
+        var duration = (req.body.duration);
+        var startStatus ="Active"
         console.log(metricName);
         console.log(metricDesc);
-        console.log(priority);
-        console.log(group);
-        console.log(current);
         console.log(source);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`, `cycle_ID`) VALUES (? , ? , ? , ?, ?, ?, ?)";
-        var values = [metricName, metricDesc, priority, current, group, source, cycle];
+        console.log(duration);
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `duration`, `cycle_Status`) VALUES ( ?, ?, ?, ?, ?)";
+        var values = [metricName, metricDesc, source, duration, startStatus];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -361,8 +353,7 @@ module.exports = {
             });
         }
     },
-
-    addcycle: function (req, resp) {
+ addcycle: function (req, resp) {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
         var startDate = '';
@@ -387,6 +378,67 @@ module.exports = {
             resp.redirect('/QualityMetric');
         });
     },
+//addduration: function (req, resp) {
+  //      var durationname = (req.body.durationName);
+    //   var date = (req.body.txtDate);
+     //   console.log(durationname);
+       // console.log(date);
+        //var sql = "INSERT INTO `capstone`.`duration` (`duration_Name`, `duration_End`) VALUES (? , ?)";
+        //var values = [durationname, date];
+        //connection.query(sql, values, function (err, result) {
+        //    if (err) throw err;
+          //  console.log("Record Inserted");
+        //    resp.redirect('/QualityMetric');
+        //});
+    //},
+
+//10/08/2019 12:00 AM - 11/28/2019 12:00 AM
+    //addcycle: function (req, resp) {
+      //  var cyclename = (req.body.cycleName);
+        //var date = (req.body.date);
+        //var startDate = '';
+    //    var startTimeHour= date.substr(11,2);
+      //  console.log(req.body);
+        //var startTimeMin= date.substr(14,2);
+        //var startTimeAPM= date.substr(17,2);
+        //var startYear = date.substr(6, 4);
+        //var startMonth = date.substr(0, 2);
+        //var startDay = date.substr(3, 2);
+        //var endDate = '';
+        //var endTimeHour= date.substr(33,2);
+        //var endTimeMin= date.substr(36,2);
+        //var endTimeAPM= date.substr(39,2);
+        //var endYear = date.substr(28, 4);
+        //var endMonth = date.substr(22, 2);
+        //var endDay = date.substr(25, 2);
+        //console.log(cyclename);
+        //console.log(date);
+        //if(startTimeAPM=="PM"){
+        //    var startTimeHourFin=parseInt(startTimeHour)+12;
+          //  console.log("Nag plus na!");
+       // }else if(endTimeAPM=="PM"){
+         //   var endTimeHourFin=parseInt(endTimeHour)+12;
+           // console.log("Nag plus na!!");
+        //} 
+        //if(startTimeAPM=="AM"){
+          //  var startTimeHourFin=parseInt(startTimeHour);
+        //    console.log("Walang ng yari");
+        //}else if(endTimeAPM=="PM"){
+          //  var endTimeHourFin=parseInt(endTimeHour);
+        //    console.log("Walang ng yari!!");
+        //}
+        //startDate = startYear + "-" + startMonth + "-" + startDay +" "+ startTimeHourFin +":"+ startTimeMin;
+        //endDate = endYear + "-" + endMonth + "-" + endDay +" "+ endTimeHourFin+":"+ endTimeMin;
+        //console.log("Start Date: " + startDate);
+        //console.log("End Date: " + endDate);
+        //var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
+        //var values = [cyclename, startDate, endDate];
+        //connection.query(sql, values, function (err, result) {
+          //  if (err) throw err;
+            //console.log("Record Inserted");
+            //resp.redirect('/QualityMetric');
+        //});
+   // },
 
     editmetric: function (req, resp) {
         sess = req.session;
@@ -528,7 +580,9 @@ module.exports = {
             var MID = (req.query.MID);
             console.log(MID);
             var values = [MID, MID, MID];
+
             var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities where approved_activities.measurement_ID = ?;SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs;"
+
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 if(results){
@@ -777,6 +831,20 @@ module.exports = {
             }
         });
     }, 
+    
+    planPhase: function (req, resp) {
+        var CID = (req.body.CID);
+        var status = "0"
+        var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
+        var values = [status, CID];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result) {
+                resp.redirect('/QualityMetric');
+            }
+        });
+    }, 
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
@@ -819,10 +887,11 @@ module.exports = {
             }
         });
     }, 
-
-    planPhase: function (req, resp) {
+    
+    
+    endPhase: function (req, resp) {
         var CID = (req.body.CID);
-        var status = "0"
+        var status = "4"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
@@ -833,6 +902,8 @@ module.exports = {
             }
         });
     }, 
+
+    
 
     UploadDocument: function (req, resp) {
         sess = req.session;
@@ -987,7 +1058,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities JOIN capstone.measurement WHERE approved_activities.measurement_ID = measurement.measurement_ID; SELECT * FROM capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 if(results){
                     resp.render('./pages/home.ejs', {
@@ -1020,6 +1091,8 @@ module.exports = {
                 resp.render('./pages/AssignActivityToMember.ejs', {
                     data: results[0],
                     dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
                     current_user: sess.user
                 });
                 console.log("Assign Activity to Member Page");
