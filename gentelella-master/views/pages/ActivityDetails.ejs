@@ -146,7 +146,7 @@
                                                         <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
                                                     </td>
-                                                    <td><button type="submit">Submit Evidence</button></td>
+                                                    <button type="submit">Submit Evidence</button>
                                                 </tr>
 
                                             </tbody>
@@ -283,13 +283,11 @@
                 $("#toJSON").click(function() {
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
-                    var AID = document.getElementById("mid").value
-                    var name = document.getElementById("mid").value
-                    var target = document.getElementById("mid").value
-                    var code = document.getElementById("mid").value
-                    var description = document.getElementById("mid").value
-                    var MID = document.getElementById("mid").value
-                    var score = document.getElementById("mid").value
+                    var AID = document.getElementById("activity_ID").value
+                    var name = document.getElementById("activityName").value
+                    var code = document.getElementById("code").value
+                    var description = document.getElementById("subdesc").value
+                    var MID = document.getElementById("MID").value
 
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
@@ -311,39 +309,10 @@
                     };
 
 
-                    xhr.send("table=" + table + "&mid=" + mid);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID);
 
                 });
 
-                $(document).on('submit', '#Form', function() {
-                    alert("1");
-                    var form = document.getElementById("Form");
-                    alert("2");
-                    var form_data = new FormData(form); 
-                    alert("3");
-                    /*var ins = document.getElementById('multiFiles').files.length;
-                    
-                    for (var x = 0; x < ins; x++) {
-                        form_data.append("files[]", document.getElementById('multiFiles').files[x]);
-                    }*/
-                    //var form_data= "Hello";
-                    
-                    $.ajax({
-                        type: 'POST',
-                        url: '/SendDocJSON',
-                        dataType: 'text',
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: form_data,
-                        success: function(response) {
-                            console.log("Hi")
-                        },
-                        error: function(response) {
-                            console.log("Not Hi")
-                        }
-                    });
-                });
                 
             });
         </script>

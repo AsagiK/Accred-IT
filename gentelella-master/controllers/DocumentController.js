@@ -283,15 +283,14 @@ module.exports = {
             var max = files.length;
             var AID = req.body.activityID;
             var name = req.body.activityName;
-            var target = req.body.target;
             var code = req.body.code;
             var description = req.body.activityDesc;
             var MID = req.body.MID;
-            var score = req.body.score;
-            var values2 = [AID, name, target, code, description, MID, score]
+
+            var values2 = [AID, name, code, description, MID,]
             var count = 0;
             console.log(files.length);
-            var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+            var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`) VALUES (? , ? , ?, ?, ?);"
             connection.query(sql2, values2, function (err, results, fields) {
                 if (err) throw err;
                 // console.log(results);
@@ -565,8 +564,8 @@ module.exports = {
         }
     },
 
-    SendDocJSON: function (req, resp) {
-        console.log("Hello");
+    SendDocumentsJSON: function (req, resp) {
+        console.log(req.body);
 
     },
     
