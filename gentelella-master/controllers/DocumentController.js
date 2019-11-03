@@ -278,7 +278,7 @@ module.exports = {
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else if (files != null) {
+        } else if (req.files != null) {
             var files = req.files.DocFile;
             console.log(req.files)
             var max = files.length;
@@ -288,14 +288,9 @@ module.exports = {
             var description = req.body.subdesc;
             var MID = req.body.MID;
 
-            var values2 = [AID, name, code, description, MID, ]
+
             var count = 0;
             console.log(files.length);
-            var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`) VALUES (? , ? , ?, ?, ?);"
-            connection.query(sql2, values2, function (err, results, fields) {
-                if (err) throw err;
-                // console.log(results);
-            });
             if (files.length) {
                 async.forEachOf(files, function (value, key, callback) {
                     var name = files[key].name;
@@ -593,6 +588,7 @@ module.exports = {
                 connection.query(sql, values, function (err, result) {
                     if (err) callback(err);
                     if (result) {
+                        console.log("Document linked to DB");
                         callback();
                     }
                 });
