@@ -32,8 +32,8 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 const TOKEN_PATH = 'token.json';
 var mime = require('mime-types');
 var UPLOAD_PATH = '';
-if(fs.existsSync('accredit.json')){
-UPLOAD_PATH = require('../accredit.json');
+if (fs.existsSync('accredit.json')) {
+    UPLOAD_PATH = require('../accredit.json');
 }
 var sess
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
             var fileMetadata = {
                 'name': req.files.DocFile.name,
                 'description': req.body.DocDesc,
-                 parents : [folderId]
+                parents: [folderId]
             };
             var media;
             let uploadedimg = req.files.DocFile;
@@ -119,7 +119,7 @@ module.exports = {
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
                             if (result) {
-                              //  console.log(result);
+                                //  console.log(result);
                                 console.log(req.files.DocFile.name + " Uploaded to Google Drive")
                                 var fileid = file.data.id;
                                 sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
@@ -142,8 +142,6 @@ module.exports = {
             }
         }
     },
-
-    
 
     SubmitReport: function (req, resp) {
         sess = req.session;
@@ -229,7 +227,7 @@ module.exports = {
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
                             if (result) {
-                               // console.log(result);
+                                // console.log(result);
                                 console.log(req.files.Evidence.name + " Uploaded to Google Drive")
                                 var fileid = file.data.id;
                                 sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
@@ -296,7 +294,7 @@ module.exports = {
             var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
             connection.query(sql2, values2, function (err, results, fields) {
                 if (err) throw err;
-               // console.log(results);
+                // console.log(results);
             });
             if (files.length) {
                 async.forEachOf(files, function (value, key, callback) {
@@ -428,7 +426,7 @@ module.exports = {
                 var folderId = UPLOAD_PATH.data.id
                 var fileMetadata = {
                     'name': files.name,
-                    parents : [folderId]
+                    parents: [folderId]
                 };
                 var media;
                 let uploadedimg = files;
@@ -565,6 +563,12 @@ module.exports = {
                 resp.redirect('/ViewMeasurementDetails?MID=' + MID)
             });
         }
-    }
+    },
+
+    SendDocumentsJSON: function (req, resp) {
+        console.log("Hello");
+
+    },
+    
 
 }
