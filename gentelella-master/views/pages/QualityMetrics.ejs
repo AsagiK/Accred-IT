@@ -136,13 +136,16 @@
 
 
                                                             <h3 class="panel-title">
-                                                                GOAL NAME:<%= metric.metric_Name %>-Measurements <input id="GoalName" value="<%=metric.metric_ID%>" >
+                                                                GOAL NAME:<%= metric.metric_Name %>-Measurements <input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
                                                             </h3>
                                                             <script>
+                                                               
                                                                 function transVal(){
-                                                                    var gid = document.getElementById("GoalName").value;
+                                                                     var gid = document.getElementById("<%=metric.metric_Name%>").value;
                                                                     console.log(gid);
-                                                                    var tgid = document.getElementById("GoalID")innerHTML(gid);
+                                                                    document.getElementById("GoalID").value = gid;
+                                                                    console.log("GoalID");
+                                                                    
                                                                 }
                                                             </script>
                                                             
@@ -150,7 +153,7 @@
                                                         </a>
                                                         <div id="Collapse<%= metric.metric_ID %>" class="collapse">
                                                             <div>
-                                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" onclick="transVal()">Create Measurements</button>
+                                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button>
                                                                  <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
@@ -178,7 +181,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <% for (var measurement of dataE) { %>
-
+                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
                                                                     <tr>
                                                                         <!--Edited-->
                                                                         <td><%= measurement.measurement_ID %></td>
@@ -193,7 +196,7 @@
                                                                             </form>
                                                                         </td>
                                                                     </tr>
-
+                                                                    <%}%>
                                                                     <% } %>
                                                                 </tbody>
                                                             </table>
@@ -325,10 +328,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal Duration<span class="required">*</span>:
-                            </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" />
+                                <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" style="visibility:collapse;" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -398,11 +399,11 @@
                             </div>
                             <!--Goal ID input field-->
                             <div class="form-group">
-                                <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" style="visibility:collapse;">
                                     GoalID: <span class="required">*</span></label>
                                 <!--Edited-->
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+                                    <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" style="visibility:collapse;">
                                 </div>
                             </div>
                             <!--Assign to Goal Input field-->
@@ -420,7 +421,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     Close
                                 </button>
-                                <button type="submit" class="btn btn-primary" form="createMeasurement">
+                                <button type="submit" class="btn btn-primary" form="createMeasurement" onclick="transVal()">
                                     Submit
                                 </button>
                             </div>

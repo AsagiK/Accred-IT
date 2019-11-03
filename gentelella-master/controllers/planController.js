@@ -207,14 +207,11 @@ module.exports = {
 
     SendMeasurement: function (req, resp) {
         var qt = req.body.QualityTarget;
-        //var pr = req.body.Procedures;
-        //var MID = req.body.MID;
-        //var GID = req.body.GID;
         var mn = req.body.MeasurementName;
         var md = req.body.MeasurementDesc;
-        //var goal_ID = 
+        var gid = req.body.GoalID;
         var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`,`measurement_Name`,`measurement_Description`, `metric_ID`) VALUES (? , ?, ?, ?)";
-        var values = [qt, mn, md];
+        var values = [qt, mn, md, gid ];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
