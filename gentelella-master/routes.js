@@ -33,33 +33,36 @@ router.route('/EditSource').get(planCtrl.EditSource);
 router.route('/AlterSource').post(planCtrl.AlterSource);
 
 
-//METRICS ROUTES
+//GOALS ROUTES
 router.route('/QualityMetric').get(planCtrl.QualityMetric);
 router.route('/addmetric').post(planCtrl.addmetric);
 router.route('/addmetrictosource').post(planCtrl.addmetrictosource);
 router.route('/editmetric').get(planCtrl.editmetric);
 router.route('/altermetric').post(planCtrl.altermetric);
+//router.route('/addduration').post(planCtrl.addduration);
 
 
 //MEASUREMENT ROUTES
-router.route('/MeasurementPage').get(planCtrl.Measurement);
+//router.route('/MeasurementPage').get(planCtrl.Measurement);
 router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
-router.route('/alterplan').post(planCtrl.alterplan);
-router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
+//router.route('/alterplan').post(planCtrl.alterplan);
+//router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
+router.route('/QualityMetrics').get(planCtrl.Measurement);
+
+//ACTIVITY ROUTES
+router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
 
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
-
-
 router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
-
-
+router.route('/planPhase').post(planCtrl.planPhase);
 router.route('/doPhase').post(planCtrl.doPhase);
 router.route('/checkPhase').post(planCtrl.checkPhase);
 router.route('/actPhase').post(planCtrl.actPhase);
-router.route('/planPhase').post(planCtrl.planPhase);
+router.route('/endPhase').post(planCtrl.endPhase);
+
 
 
 
@@ -84,6 +87,7 @@ router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
+router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 
 
 //--DocCtrl--
