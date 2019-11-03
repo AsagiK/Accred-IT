@@ -1,4 +1,18 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
+
+<style>
+.dash {
+overflow-y: scroll;
+height: 400px;
+width: 1215px;
+} 
+
+.dash2 {
+overflow-y: scroll;
+height: 350px;
+width: 585px;
+}
+</style>
 <html lang="en">
 
 <head>
@@ -40,33 +54,41 @@
             <%- include ./nav.ejs %>
             <!-- page content -->
             <div class="right_col" role="main">
-                <!-- top tiles -->
+                <!-- top tiles 
                 <div class="row tile_count">
                     <div class="col-md-4  tile_stats_count">
-                        <!-- tasks completed -->
+                        -- tasks completed --
                         <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
 
                         </span>
                         <div class="count">2500 </div>
                     </div>
-                    <!-- end of tasks completed -->
-                    <!-- Active tasks -->
+                    -- end of tasks completed --
+                    -- Active tasks --
                     <div class="col-md-4 tile_stats_count">
                         <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i> Active Tasks</span>
                         <div class="count">123.50</div>
                         <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last
                             Week</span>
                     </div>
-                    <!-- end of active tasks -->
+                    -- end of active tasks --
                 </div>
-                <!-- /top tiles -->
+                -- /top tiles -->
+
+                <div class="col-md-4  tile_stats_count">
+                        
+                        <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
+                                <%= new Date().getFullYear();%>
+                        </span>
+                        
+                </div>
 
                 <div class="row">
                     <!MEASUREMENT>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>MEASUREMENTS</h2>
+                                    <h2>METRICS</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
@@ -84,35 +106,50 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="x_content">
+                                <div class="dash">
                                     <!--METRIC TABLE-->  
-                                <% for (var mes of data) { %>
-                                    <table class="table table-bordered">
-                                        <thead>
+
+                     <% for (var user of dataD) { %>           
+
+                                <% for (var mes of data) { %> 
+
+                                    <% if(user.Group == mes.group_ID) { %> 
+
+                                    <table class="table table-bordered" style="table-layout: fixed;">
+                                        <thead >
                                             <tr>
                                                 <th>Metric Name</th>
                                                 <th>Description</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
 
-                                            <tr>
+                                            <tr> 
+                                                
                                                 <td> <%= mes.metric_Name %> </td>
                                                 <td><%= mes.metric_Desc %> </td>
                                                 <td><button type="submit" class="btn btn-primary">View Details</button></td> 
+
                                             </tr>
 
 
                                         </tbody>
-                                    </table>
+                                    </table> 
 
+                                    <% } else if(user.Group != mes.group_ID) { %> 
+                                        <!--NONE WILL BE LOADED-->
                                     <% } %>
+
+                                <% } %>
                                     
 
-                                </div>
+                                </div> 
                             </div>
-                        </div>
+                        </div> 
+
+               
 
                         <!METRIC>
                         <div class="col-md-6">
@@ -136,23 +173,25 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="x_content">
+                                <div class="dash2">
                                     <!--MEASRUEMENTS-->  
-                                <% for (var meas of dataB) { %>
-                                    <table class="table table-bordered">
+                                <% for (var meas of dataB) { %> 
+
+                                    <% if(user.Group == meas.GroupAssigned) { %>
+                                        <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead>
                                             <tr>
                                                 <th>Measurement Name</th>
                                                 <th>Description</th> 
-                                                
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
 
                                             <tr>
-                                                <td> <%= mes.measurement_Name %> </td>
-                                                <td><%= mes.measurement_Desc %> </td> 
+                                                <td> <%= meas.measurement_Name %> </td>
+                                                <td><%= meas.measurement_Desc %> </td> 
                                                 <td><button type="submit" class="btn btn-primary">View Details</button></td>
                                             </tr>
 
@@ -160,7 +199,11 @@
                                         </tbody>
                                     </table>
 
+                                    <% } else if (user.Group != meas.GroupAssigned) { %>
+                                            <!--NONE WILL BE LOADED-->
                                     <% } %>
+                                
+                                <% } %>
                                     
 
                                 </div>
@@ -171,7 +214,7 @@
                         <div class="col-md-6">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>MEASUREMENTS</h2>
+                                    <h2>ACTIVITIES</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
@@ -189,14 +232,17 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="x_content">
-                                    <!--METRIC TABLE-->  
-                                <% for (var app of dataC) { %>
-                                    <table class="table table-bordered">
+                                <div class="dash2">
+                                    <!--ACTIVITIES-->  
+                                <% for (var app of dataC) { %> 
+
+                                    <% if (user.Group == app.GroupAssigned) { %>
+                                        <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead>
                                             <tr>
                                                 <th>Activity Name</th>
                                                 <th>Description</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -210,15 +256,23 @@
 
 
                                         </tbody>
-                                    </table>
+                                    </table>  
 
+                                    <% } else if (user.Group == app.GroupAssigned) { %>
+                                            <!-- NONE WILL BE LOADED -->
                                     <% } %>
+
+                                <% } %>
                                     
 
                                 </div>
                             </div>
-                        </div>
-                </div>
+                        </div> 
+
+                        <% } %>
+                    
+                </div> 
+                
 
                 <!-- /page content -->
 
