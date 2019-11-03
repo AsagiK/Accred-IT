@@ -565,7 +565,7 @@ module.exports = {
         }
     },
 
-    SendDocumentsJSON: function (req, resp) {
+    SendDocJSON: function (req, resp) {
         console.log("Hello");
 
     },

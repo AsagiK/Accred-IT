@@ -66,44 +66,7 @@
                                             </tr>
                                         </thead>
 
-                                        <!--form action="SendDocuments" method="post" encType="multipart/form-data">
-                                            <tbody>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                            ID: </label></td>
-                                                    <td><%= data[0].activity_ID %></td>
-                                                    <input type="hidden" name="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                            Name: </label></td>
-                                                    <td><%= data[0].activity_name %></td>
-                                                    <input type="hidden" name="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                            Description: </label></td>
-                                                    <td><%= data[0].description %></td>
-                                                    <input type="hidden" name="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                    <td>Choose Evidences</td>
-                                                    <td><input type="file" name="DocFile" multiple></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="hidden" name="score" value="100" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" name="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" name="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
-                                                    </td>
-                                                    <td><button type="submit">Submit Evidence</button></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </form-->
-
-                                        <form id="Form" method="post" encType="multipart/form-data">
+                                        <form id="Form" encType="multipart/form-data">
 
                                             <tbody>
                                                 <tr>
@@ -316,18 +279,7 @@
                     });
 
                 });
-            });
-        </script>
-
-        <script>
-            function textAreaAdjust(o) {
-                o.style.height = "1px";
-                o.style.height = (25 + o.scrollHeight) + "px";
-            }
-
-
-                });
-
+                
                 $("#toJSON").click(function() {
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
@@ -364,13 +316,60 @@
                 });
 
                 $(document).on('submit', '#Form', function() {
-                    
+                    alert("1");
                     var form = document.getElementById("Form");
+                    alert("2");
+                    var form_data = new FormData(form); 
+                    alert("3");
+                    /*var ins = document.getElementById('multiFiles').files.length;
+                    
+                    for (var x = 0; x < ins; x++) {
+                        form_data.append("files[]", document.getElementById('multiFiles').files[x]);
+                    }*/
+                    //var form_data= "Hello";
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: '/SendDocJSON',
+                        dataType: 'text',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        success: function(response) {
+                            console.log("Hi")
+                        },
+                        error: function(response) {
+                            console.log("Not Hi")
+                        }
+                    });
+                });
+                
+            });
+        </script>
+
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+
+
+                });
+
+                
+            
+            function test(){
+                 alert("1");
+                    var form = document.getElementById("Form");
+                    
                     var form_data = new FormData(form); 
                     var ins = document.getElementById('multiFiles').files.length;
                     for (var x = 0; x < ins; x++) {
                         form_data.append("files[]", document.getElementById('multiFiles').files[x]);
                     }
+                    var form_data= "Hello";
+                    alert("2");
                     $.ajax({
                         type: 'POST',
                         url: '/SendDocumentsJSON',
@@ -386,7 +385,7 @@
                             console.log("Not Hi")
                         }
                     });
-                });
+            }
 
             });
 
