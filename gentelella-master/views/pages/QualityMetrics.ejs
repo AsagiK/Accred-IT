@@ -52,14 +52,22 @@
                         <div class="x_panel">
                             <div class="x_content">
                                 <!BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
+                                
                                     <%
                                         var x=dataD.length -1
                                         var y=0
                                     %>
                                     <% for (var cycle of dataD) { %>
+                                                <% if ( cycle.status  == "null"){ %>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
+                                                    
+                                                    
+                                                <% } else{ %>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals" style="visibility:collapse;">Create Goals</button>
+                                                <%}%>
                                         <% if (y==x){ %>
                                             <% if ( cycle.status  == 4){ %>
+                                                <br>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle">
                                                     Create Cycle
                                                 </button>
@@ -68,6 +76,7 @@
                                                     Create Cycle
                                                 </button>
                                             <%}%>
+                                            
                                         <%}%>
                                         
                                     <% y=y+1}%>
@@ -92,13 +101,6 @@
 
                                     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" value="">
                                         <div class="panel">
-                                            <%if(dataD==null){%>
-                                            <div>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle">
-                                                    Create Cycle
-                                                </button>
-                                            </div>
-                                            <%}%>
                                                                 <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= cycle.cycle_ID %>" aria-expanded="true" aria-controls="collapse<%= cycle.cycle_ID %>">
                                             <h4 class="panel-title">
                                                 CYCLE NAME: <%= cycle.cycle_Name %> - Status:
@@ -118,8 +120,94 @@
                                                 <form action="doPhase" method="post">
                                                     <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                     <button class="btn btn-default" type="submit">Start Do Phase</button>
-
                                                 </form>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
+                                               
+                                                <br>
+                                                <% for (var metric of data) { %>
+                                                <% if (metric.cycle_Status == "Active") { %>
+
+                                                <div class="panel-body">
+                                                    <!--Group 1 table-->
+
+                                                    <div class="panel">
+
+                                                        <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
+
+
+                                                            <h3 class="panel-title">
+                                                                GOAL NAME:<%= metric.metric_Name %>-Measurements <input id="GoalName" value="<%=metric.metric_ID%>" >
+                                                            </h3>
+                                                            <script>
+                                                                function transVal(){
+                                                                    var gid = document.getElementById("GoalName").value;
+                                                                    console.log(gid);
+                                                                    var tgid = document.getElementById("GoalID")innerHTML(gid);
+                                                                }
+                                                            </script>
+                                                            
+                                                            
+                                                        </a>
+                                                        <div id="Collapse<%= metric.metric_ID %>" class="collapse">
+                                                            <div>
+                                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" onclick="transVal()">Create Measurements</button>
+                                                                 <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Goal Description</th>
+                                                                            <th>Duration</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                     <tbody>
+                                                                         <td><%= metric.metric_Desc%></td>
+                                                                        <td><%= metric.duration%></td>
+                                                                     </tbody>
+                                                                </table>
+                                                            </div>
+                                                            
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <!--Edited-->
+                                                                    <tr>
+                                                                        <th>ID</th>
+                                                                        <th>Measurement Name</th>
+                                                                        <th>Measurement Description</th>
+                                                                        <th>Quality Target</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% for (var measurement of dataE) { %>
+
+                                                                    <tr>
+                                                                        <!--Edited-->
+                                                                        <td><%= measurement.measurement_ID %></td>
+                                                                        <td><%= measurement.measurement_Name %></td>
+                                                                        <td><%= measurement.measurement_Description %></td>
+                                                                        <td><%= measurement.QualityTarget %></td>
+                                                                        <td>
+                                                                            <form method="get" action="ViewMeasurementDetails">
+                                                                                <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                <button type="submit" class="btn btn-primary">View Measurement Details</button>
+                                                                                <!--Edited-->
+                                                                            </form>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <% } %>
+                                                                </tbody>
+                                                            </table>
+
+                                                        
+                                                        </div>
+
+                                                    </div>
+                                                
+                                                </div>
+
+                                                <!--End of Group 1 Table -->
+                                                <% } %>
+                                                <% } %>
 
                                                 <% } else if (cycle.status  == 1) { %>
                                                 <form action="checkPhase" method="post">
@@ -164,91 +252,7 @@
                                                 <% } %> %>
 
                                                 <!--Phase Button End-->
-                                                <br>
-                                                <% for (var metric of data) { %>
-                                                <% if (metric.cycle_Status == "Active") { %>
-
-                                                <div class="panel-body">
-                                                    <!--Group 1 table-->
-
-                                                    <div class="panel">
-
-                                                        <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-                                                            <h3 class="panel-title">
-                                                                GOAL NAME:<%= metric.metric_Name %>-Measurements
-                                                            </h3>
-                                                        </a>
-                                                        <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                            <div>
-                                                                 <table class="table table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Goal Description</th>
-                                                                            <th>Goal Duration</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                     <tbody>
-                                                                         <td><%= metric.metric_Desc%></td>
-                                                                        <td><%= metric.duration%></td>
-                                                                     </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement">Create Measurements</button>
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                    <!--Edited-->
-                                                                    <tr>
-                                                                        <th>ID</th>
-                                                                        <th>Measurement Name</th>
-                                                                        <th>Measurement Description</th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <% for (var measurement of dataF) { %>
-
-                                                                    <tr>
-                                                                        <!--Edited-->
-                                                                        <td><%= measurement.measurement_ID %></td>
-                                                                        <td><%= measurement.measurement_Name %></td>
-                                                                        <td><%= measurement.measurement_Description %></td>
-                                                                        <td><%= measurement.QualityTarget %></td>
-                                                                        <td>
-                                                                            <form method="get" action="ViewMeasurementDetails">
-                                                                                <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                <button type="submit" class="btn btn-primary">View Measurement Details</button>
-                                                                                <!--Edited-->
-                                                                            </form>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <% } %>
-                                                                </tbody>
-                                                            </table>
-                                                            <td>
-
-                                                                <div class="form-group">
-                                                                    <div>
-                                                                        <!BUTTONS FOR EDIT AND PLAN>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            </tr>
-
-
-                                                            </tbody>
-                                                            </table>
-
-
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <!--End of Group 1 Table -->
-                                                <% } %>
-                                                <% } %>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -349,6 +353,7 @@
 
     </script>
     <!--create measurements-->
+            
     <div class="modal fade createMeasurement" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg2">
             <div class="modal-content">
@@ -357,7 +362,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                     <h4 class="modal-title" id="ModalLabel1">
-                        Create Measurements
+                        Create Measurements for:
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -386,12 +391,31 @@
                             </div>
                             <!--Quality Target Input field-->
                             <div class="form-group">
-                                <label for="Quality Target" class="control-label col-md-3 col-sm-3 col-xs-12">Quality
-                                    Target: </label>
+                                 <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="number" id="QualityTarget" name="QualityTarget" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+                                    <input type="number" id="QualityTarget" name="QualityTarget" required="required" class="form-control col-md-7 col-xs-12" placeholder="Quality Target">
                                 </div>
                             </div>
+                            <!--Goal ID input field-->
+                            <div class="form-group">
+                                <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    GoalID: <span class="required">*</span></label>
+                                <!--Edited-->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+                                </div>
+                            </div>
+                            <!--Assign to Goal Input field-->
+                            <!--<div class="form-group">
+                                <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Goal: </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" name="AssignGoal">
+                                    <% for (var metric of data) { %>
+                                        <option value="<%= metric.metric_Name %>"><%= metric.metric_Name %></option>
+                                    <% } %>
+                                </select>
+                                </div>
+                            </div>-->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     Close
@@ -456,9 +480,7 @@
             </div>
                                       Select for Duration
                                         <select class="form-control" name="duration">
-                                            <% for (var duration of dataE) { %>
-                                            <option value="<%= duration.duration_ID %>"><%= duration.duration_Name%>: <%= duration.duration_End%></option>
-                                            <% } %>
+                                          
                                         </select>
 
                 <script>

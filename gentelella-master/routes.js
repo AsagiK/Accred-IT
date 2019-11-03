@@ -51,10 +51,7 @@ router.route('/QualityMetrics').get(planCtrl.Measurement);
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
 router.route('/Viewcycle').get(planCtrl.Viewcycle);
-
-
 router.route('/AssignCycleandDeadline').post(planCtrl.AssignCycleandDeadline);
-
 router.route('/planPhase').post(planCtrl.planPhase);
 router.route('/doPhase').post(planCtrl.doPhase);
 router.route('/checkPhase').post(planCtrl.checkPhase);

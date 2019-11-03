@@ -212,12 +212,13 @@ module.exports = {
         //var GID = req.body.GID;
         var mn = req.body.MeasurementName;
         var md = req.body.MeasurementDesc;
-        var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`,`measurement_Name`,`measurement_Description`) VALUES (? , ?, ?)";
+        //var goal_ID = 
+        var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`,`measurement_Name`,`measurement_Description`, `metric_ID`) VALUES (? , ?, ?, ?)";
         var values = [qt, mn, md];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
-            resp.redirect('/MeasurementPage?MID=' + MID);
+            resp.redirect('/QualityMetric');
         });
         console.log("INSERTED MEASUREMENT");
     },
@@ -268,17 +269,18 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.duration; SELECT * FROM capstone.measurement;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement;", function (err, results, fields) {
                 if (err) throw err;
+                if(results){
                 resp.render('./pages/QualityMetrics.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
                     dataD: results[3],
                     dataE: results[4],
-                    dataF: results[5],
                     current_user: sess.user
                 });
+                }
                 console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
