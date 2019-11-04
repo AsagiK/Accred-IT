@@ -969,13 +969,14 @@ module.exports = {
         } else {
             var id = (req.query.UID);
             console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?);", values, function (err, results) {
+            var values = [id, id];
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?); SELECT activity_evidences.activityID, activity_evidences.documentID, documents.Document_ID, documents.Document_Name, documents.Document_Route FROM capstone.activity_evidences join capstone.documents on activity_evidences.documentID = documents.Document_ID where activity_evidences.activityID=(?);", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
                     resp.render('./pages/ActivityPendingDetails.ejs', {
-                        data: results,
+                        data: results[0],
+                        dataB: results[1],
                         current_user: sess.user
                     })
                 }
@@ -1065,6 +1066,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataD: results[3],
                         current_user: sess.user
                     });
                     console.log(results);
