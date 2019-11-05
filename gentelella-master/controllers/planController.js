@@ -595,7 +595,7 @@ module.exports = {
                     current_user: sess.user,
                     notif: passData
                 })
-                console.log(results);
+                //console.log(results);
                 }
             });
             console.log("VIEW MEASUREMENT DETAILS");
