@@ -117,13 +117,13 @@ module.exports = {
         console.log(UID);
         async.forEachOf(UID, function (value, key, callback) {
             var an = UID[key]["Activity Name"];
-            var tar = UID[key]["Weight"];
+            var measureID = UID[key]["MeasurementID"];
             var desc = UID[key]["Description"];
             var dead  = UID[key]["Deadline"];
             console.log(an);
         
             var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?, ?);";
-            var values = [an, tar, desc, MID, dead];
+            var values = [an, tar, desc, measureID, dead];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
