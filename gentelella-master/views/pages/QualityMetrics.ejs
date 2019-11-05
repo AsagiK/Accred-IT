@@ -56,17 +56,18 @@
                                     <%
                                         var x=dataD.length -1
                                         var y=0
+                                        var z=dataD.length
                                     %>
-                                    <% for (var cycle of dataD) { %>
-                                                <% if ( cycle.status  == "null"){ %>
+                                    <% if (z==0){ %>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
                                                     
                                                     
                                                 <% } else{ %>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals" style="visibility:collapse;">Create Goals</button>
                                                 <%}%>
+                                    <% for (var cycle of dataD) { %>
                                         <% if (y==x){ %>
-                                            <% if ( cycle.status  == 4){ %>
+                                            <% if ( cycle.status  == 4 || cycle.status==null){ %>
                                                 <br>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle">
                                                     Create Cycle
@@ -328,8 +329,11 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
+                                Duration<span class="required">*</span>
+                            </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" style="visibility:collapse;" />
+                                <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" />
                             </div>
                         </div>
                         <div class="modal-footer">
