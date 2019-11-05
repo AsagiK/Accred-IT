@@ -581,7 +581,7 @@ module.exports = {
             console.log(MID);
             var values = [MID, MID, MID];
 
-            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities where approved_activities.measurement_ID = ?;SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement;"
+            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities where approved_activities.measurement_ID = ?;SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities;"
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -592,6 +592,7 @@ module.exports = {
                     dataC: results[2],
                     dataD: results[3],
                     dataE: results[4],
+                    dataF: results[5],
                     current_user: sess.user,
                     notif: passData
                 })

@@ -204,4 +204,31 @@ module.exports = {
 
     },
 
+    AssignActivitiesToMeasurementJSON: function (req, resp) {
+        var UID = req.body.table;
+        console.log(UID);
+        UID = JSON.parse(UID);
+        
+        async.forEachOf(UID, function (value, key, callback) {
+            var measureID = UID[key]["MeasurementID"];
+            var aid = UID[key]["ActivityID"];
+            var sql = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (? , ?); ";
+            var values = [measureID, aid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
 }
