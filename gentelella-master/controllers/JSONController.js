@@ -111,6 +111,7 @@ module.exports = {
     },
 
     AddActivitiesJSON: function (req, resp) {
+        console.log(req.body);
         var UID = req.body.table;
         var MID = req.body.mid;
         UID = JSON.parse(UID);
@@ -119,14 +120,18 @@ module.exports = {
             var an = UID[key]["Activity Name"];
             var measureID = UID[key]["MeasurementID"];
             var desc = UID[key]["Description"];
-            var dead  = UID[key]["Deadline"];
+            var dead = UID[key]["Deadline"];
             console.log(an);
-        
-            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?, ?);";
-            var values = [an, tar, desc, measureID, dead];
+
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?);";
+            var values = [an, desc, measureID, dead];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
+                    console.log(result);
+                    var sql2 = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (?, ?)"
+                    var values2 = [measureID, result.insertId]
+                    addMIDAID(sql2, values2);
                     callback();
                 }
             });
@@ -140,13 +145,22 @@ module.exports = {
             }
         })
 
+        function addMIDAID(sql, values) {
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                if (result) {
+                    console.log("Activity linked to Measurement");
+                }
+            });
+        }
+
     },
 
     AssignActivityJSON: function (req, resp) {
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
-        
+
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
             var uid = UID[key]["User ID"];
@@ -183,7 +197,7 @@ module.exports = {
             var eo = UID[key]["Output"];
             console.log(ai);
             console.log(eo);
-        
+
             var sql = "INSERT INTO `capstone`.`activity_outputs` (`activity_ID`, `output`) VALUES (?, ?);";
             var values = [ai, eo];
             connection.query(sql, values, function (err, result) {

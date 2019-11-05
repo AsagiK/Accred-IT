@@ -71,6 +71,7 @@
         .closebtn:hover {
             color: black;
         }
+
     </style>
 </head>
 <% if(locals.notif){ %>
@@ -118,6 +119,7 @@
         padding: 10px;
         text-align: left;
     }
+
 </style>
 
 <body class="nav-md">
@@ -158,8 +160,7 @@
                                 <div class="x_content">
 
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target=".bs-example-modal-lg">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                                             Create Activities
                                         </button>
 
@@ -173,10 +174,7 @@
 
                                                 <h2>Activities Table</h2>
 
-                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                    data-toggle="collapse" data-parent="#headingTwo"
-                                                    href="#FacilitiesGroupOne" aria-expanded="true"
-                                                    aria-controls="FacilitiesGroupOne">
+                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                                 </a>
 
                                                 <br>
@@ -219,10 +217,8 @@
                                                                 <td><%= activities.deadline %></td>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= activities.activity_ID %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Submit
+                                                                        <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
+                                                                        <button type="submit" class="btn btn-primary">Submit
                                                                             Evidence
                                                                         </button>
                                                                     </form>
@@ -235,12 +231,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <form method="get" action="AssignActivityToMember">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= activities.activity_ID %>">
-                                                                        <input type="hidden" name="GID"
-                                                                            value="<%= data[0].GroupAssigned %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Assign Members
+                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                        <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
+                                                                        <button type="submit" class="btn btn-primary">Assign Members
                                                                         </button>
                                                                     </form>
                                                                 </td>
@@ -265,9 +258,7 @@
 
                                             <h2>Pending Table</h2>
 
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                                data-parent="#headingTwo" href="#FacilitiesGroupOne"
-                                                aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                             </a>
 
                                             <br>
@@ -309,8 +300,7 @@
 
                                                             <td>
                                                                 <form method="get" action="ActivityPendingDetails">
-                                                                    <input type="hidden" name="UID"
-                                                                        value="<%= activities.activity_ID %>">
+                                                                    <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                     <button type="submit" class="btn btn-primary">View
                                                                         Evidence
                                                                     </button>
@@ -338,14 +328,15 @@
                     var i;
 
                     for (i = 0; i < close.length; i++) {
-                        close[i].onclick = function () {
+                        close[i].onclick = function() {
                             var div = this.parentElement;
                             div.style.opacity = "0";
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 div.style.display = "none";
                             }, 600);
                         }
                     }
+
                 </script>
 
                 <!-- /page content -->
@@ -376,9 +367,7 @@
                     <div class="modal-body">
                         <div class="panel-body">
                             <div class="panel">
-                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                    data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
-                                    aria-controls="FacilitiesGroupOne">
+                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                 </a>
                                 <!--div class="title_left">
                                     <button type="button" class="btn btn-default" id="check">Check</button>
@@ -404,15 +393,11 @@
                                 <!--div id="countbox"-->
                                 <label for="activitycount">Activity</label>
                                 <br>
-                                <textarea type="text" name="activitycount" id="activitycount" required="required"
-                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                    style="overflow:hidden"></textarea>
+                                <textarea type="text" name="activitycount" id="activitycount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 <br>
                                 <label for="descriptioncount">Description</label>
                                 <br>
-                                <textarea id="descriptioncount" name="descriptioncount" required="required"
-                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                    style="overflow:hidden"></textarea>
+                                <textarea id="descriptioncount" name="descriptioncount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 <br>
                                 <!--label for="target">Weight</label>
                                 <br>
@@ -468,8 +453,7 @@
                                         </tbody>
                                     </table>
                                     <!SUBMIT BUTTON HERE>
-                                        <button type="button" class="btn btn-success" id="toJSON"
-                                            style="display: none;">SUBMIT</button>
+                                        <button type="button" class="btn btn-success" id="toJSONactivities" style="display: none;">SUBMIT</button>
                                         <button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button>
                             </div>
 
@@ -477,15 +461,13 @@
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="1">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                <button type="submit" class="btn btn-success" style="display: none;"
-                                    id="backsuccess">Hi</button>
+                                <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                             </form>
 
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="0">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                <button type="submit" class="btn btn-success" style="display: none;"
-                                    id="backfail">Hi</button>
+                                <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                             </form>
 
                             <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
@@ -528,19 +510,14 @@
                 <div class="modal-body">
                     <div class="panel-body">
                         <div class="panel">
-                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
-                                aria-controls="FacilitiesGroupOne">
+                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                             </a>
                             <br>
-                            <input type="hidden" name="activityID" id="activityID" required="required"
-                                class="form-control col-md-7 col-xs-12" hidden>
+                            <input type="hidden" name="activityID" id="activityID" required="required" class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
-                            <textarea id="activityoutput" name="activityoutput" required="required"
-                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                style="overflow:hidden"></textarea>
+                            <textarea id="activityoutput" name="activityoutput" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                             <br>
 
 
@@ -571,15 +548,13 @@
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="1">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                            <button type="submit" class="btn btn-success" style="display: none;"
-                                id="backsuccess">Hi</button>
+                            <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                         </form>
 
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="0">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                            <button type="submit" class="btn btn-success" style="display: none;"
-                                id="backfail">Hi</button>
+                            <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                         </form>
 
                         <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
@@ -700,7 +675,7 @@
     <script type="text/javascript">
         var total = 0;
         var checkingtotal = 0;
-        $(document).ready(function () {
+        $(document).ready(function() {
             /*$(".add-row").click(function () {
                 if (!checkEmptyInputcheck()) {
                     console.log("testing add button");
@@ -807,19 +782,18 @@
             //console.log("Minused total: " + total);
         }
 
-        $("#toJSON").click(function () {
+        $("#toJSONactivities").click(function() {
             console.log("Hello");
             var table = JSON.stringify($('#tableactivities').tableToJSON());
-            var mid = document.getElementById("mid").value
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/AddActivitiesJSON', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
+            xhr.onload = function() {
                 console.log(xhr.responseText);
             };
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     var respData = xhr.responseText;
                     if (respData == "OK") {
@@ -836,7 +810,7 @@
 
         });
 
-        $("#checkTotal").click(function () {
+        $("#checkTotal").click(function() {
             //console.log("Total for submission: " + total);
             //if (total < 100) {
             //    alert("Activities weight insufficient please add more or adjust the weights of the current activities")
@@ -860,10 +834,10 @@
         };
 
         function addsuccess() {
-            var button = document.getElementById('toJSON');
+            var button = document.getElementById('toJSONactivities');
             button.click();
         }
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".add-row-exoutputs").click(function test() {
                 //console.log("testing test");
                 if (!checkEmptyInput()) {
@@ -896,7 +870,7 @@
             return isEmpty;
         }
 
-        $("#toJSONoutputs").click(function () {
+        $("#toJSONoutputs").click(function() {
             console.log("Hello");
             var table = JSON.stringify($('#tableoutputs').tableToJSON());
             var mid = document.getElementById("mid").value
@@ -904,11 +878,11 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/AddOutputsJSON', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
+            xhr.onload = function() {
                 console.log(xhr.responseText);
             };
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     var respData = xhr.responseText;
                     if (respData == "OK") {
@@ -966,7 +940,6 @@
             o.style.height = "1px";
             o.style.height = (25 + o.scrollHeight) + "px";
         }
-
 
     </script>
 
