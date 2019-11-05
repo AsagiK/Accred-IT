@@ -403,9 +403,17 @@
                                     class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
                                     style="overflow:hidden"></textarea>
                                 <br>
-                                <label for="target">Weight</label>
+                                <!--label for="target">Weight</label>
                                 <br>
                                 <input type="number" name="targetcount" id="targetcount" value="">
+                                <br-->
+                                <label for="target">Measurements</label>
+                                <br>
+                                <select class="form-control" name="measurement" id="measurement">
+                                    <% for (var measures of dataE) { %>
+                                    <option value="<%= measures.measurement_ID %>-<%= measures.measurement_Name %>"><%= measures.measurement_Name %></option>
+                                    <% } %>
+                                </select>
                                 <br>
                                 <!--div class='col-sm-4'>
                                         Only Date Picker
@@ -435,9 +443,10 @@
 
                                                 <th>Activity Name</th>
                                                 <th>Description</th>
-                                                <th>Weight</th>
+                                                <th>Measurement to assign</th>
                                                 <th>Deadline</th>
                                                 <th></th>
+                                                <th style="display: none;">MeasurementID</th>
 
                                             </tr>
                                         </thead>
@@ -592,28 +601,34 @@
             });*/
 
             $(".add-row2").click(function test() {
+                //console.log(measure.options[measure.selectedIndex].value);
                 //console.log("testing test");
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
-                    var target = $("#targetcount").val();
+                    var measurement = $("#measurement").val();
                     var description = $("#descriptioncount").val();
                     var dead = $("#deadline").val();
+                    var measureID = measurement.substr(0, measurement.indexOf('-'));
+                    var measureName = measurement.substr(measurement.lastIndexOf('-') + 1);
                     console.log(dead);
-                    total = +total + +target;
-                    console.log(total + " 1st");
-                    if (total <= 100) {
+                    //console.log(measurement);
+                    console.log(measureID);
+                    console.log(measureName);
+                    //total = +total + +target;
+                    //console.log(total + " 1st");
+                    //if (total <= 100) {
                         var markup = "<tr><td>" + activity +
-                            "</td><td>" + description + "</td><td>" + target + "</td><td>" + dead +
-                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                            "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + dead +
+                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td></tr>";
                         var table = document.getElementById("tableactivities")
                         $(table).append(markup);
-                        console.log(total + " 2nd");
-                    } else {
+                        //console.log(total + " 2nd");
+                    /*} else {
                         total = +total - +target;
                         alert("Total is above 100, please adjust weight");
                         console.log(total + " 3rd");
-                    }
+                    }*/
 
                 }
             });
@@ -637,13 +652,14 @@
         function checkEmptyInputcount() {
             var isEmpty = false,
                 activitycount = document.getElementById("activitycount").value,
-                targetcount = document.getElementById("targetcount").value;
-
+                //targetcount = document.getElementById("targetcount").value;
+                measurement = document.getElementById("measurement").value;
+                //console.log(measurement);
             if (activitycount === "") {
                 alert("Activity Cannot Be Empty");
                 isEmpty = true;
-            } else if (targetcount === "") {
-                alert("Target Cannot Be Empty");
+            } else if (measurement === "") {
+                alert("Measurement Cannot Be Empty");
                 isEmpty = true;
             }
             return isEmpty;
@@ -653,10 +669,10 @@
             r.closest("tr").remove();
             var table = document.getElementById("tableactivities");
             var val = r.closest("tr").cells[2].innerHTML;
-            console.log("cell weight: " + val);
+            //console.log("cell weight: " + val);
 
-            total = +total - +val;
-            console.log("Minused total: " + total);
+            //total = +total - +val;
+            //console.log("Minused total: " + total);
         }
 
         $("#toJSON").click(function () {
@@ -689,13 +705,13 @@
         });
 
         $("#checkTotal").click(function () {
-            console.log("Total for submission: " + total);
-            if (total < 100) {
-                alert("Activities weight insufficient please add more or adjust the weights of the current activities")
-            } else {
+            //console.log("Total for submission: " + total);
+            //if (total < 100) {
+            //    alert("Activities weight insufficient please add more or adjust the weights of the current activities")
+            //} else {
                 alert("success");
                 addsuccess();
-            }
+            //}
 
         });
 
