@@ -568,11 +568,11 @@ module.exports = {
         var name = req.body.name;
         var code = req.body.code;
         var description = req.body.description;
-        var MID = req.body.MID;
+        //var MID = req.body.MID;
         var target = req.body.target;
         var score = req.body.score;
-        var values2 = [AID, name, code, description, MID, target, score]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`, `target`, `suggested_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+        var values2 = [AID, name, code, description, score]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`) VALUES (? , ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
             // console.log(results);
