@@ -65,7 +65,7 @@
                                 <li><a href="Viewcycle">View Cycles</a></li>
                           </ul>
                       </li>
-                    <!--  <li><a><i class="fa fa-bars"></i> Other Pages <span class="fa fa-chevron-down"></span></a>
+                      <li><a><i class="fa fa-bars"></i> Other Pages <span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
                               <li><a href="PreChecking">Pre-Checking Page of Reports</a></li>
                               <li><a href="FinalReport">Final Report For Group Leader</a></li>
@@ -77,82 +77,9 @@
                               
 
                             <li><a href="/TestPage">TEST PAGE FOR CODES</a></li>
-                               
-                          </ul>
-                      </li>-->
-                      <!---->
-                      <li><a><i class="fa fa-user"></i>Normal Users Nav <span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                              <li><a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
-                                  <ul class="nav child_menu">
-                                     <li><a><i class="fa fa-user"></i> User Profile <span class="fa fa-chevron-down"></span></a>
-                                       <ul class="nav child_menu">
-                                            <li><a href="/Viewusers">View Account</a></li>
-                                            <li><a href="/Createusers">Edit Account</a></li>
-                                       </ul>
-                                    </li>
-                                <li><a><i class="fa fa-users"></i> Groups <span class="fa fa-chevron-down"></span></a>
-                                  <ul class="nav child_menu">
-                                      <li><a href="/ViewGroups">View Groups</a></li>
-                                  </ul>
-                              </li>
-                                  </ul>
-                              </li>
-                              <li><a><i class="fa fa-folder"></i> Evidence Repository <span class="fa fa-chevron-down"></span></a><!--document Management-->
-                                <ul class="nav child_menu">
-                                      <li><a href="/UploadDocument">Upload Documents</a></li>
-                                      <li><a href="/ViewDocument">View Documents</a></li>
-                                </ul>
-                              </li>
-                              <li><a><i class="fa fa-folder"></i> Activities <span class="fa fa-chevron-down"></span></a>
-                          </ul>
-                      </li>
-                      <!---->
-                      <li><a><i class="fa fa-user"></i> Dept Chair Nav <span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                              <li><a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
-                                  <ul class="nav child_menu">
-                                     <li><a><i class="fa fa-user"></i> User Profile <span class="fa fa-chevron-down"></span></a>
-                                       <ul class="nav child_menu">
-                                            <li><a href="/Viewusers">View Account</a></li>
-                                            <li><a href="/Createusers">Create Users</a></li>
-                                       </ul>
-                                    </li>
-                                <li><a><i class="fa fa-users"></i> Groups <span class="fa fa-chevron-down"></span></a>
-                                  <ul class="nav child_menu">
-                                      <li><a href="/ViewGroups">View Groups</a></li>
-                                      <li><a href="/CreateGroup">Create Group</a></li>
-                                  </ul>
-                              </li>
-                                  </ul>
-                              </li>
-                             <li><a><i class="fa fa-folder"></i> Evidence Repository <span class="fa fa-chevron-down"></span></a><!--document Management-->
-                                <ul class="nav child_menu">
-                                      <li><a href="/UploadDocument">Upload Documents</a></li>
-                                      <li><a href="/ViewDocument">View Documents</a></li>
-                                </ul>
-                              </li>
-                              <li><a><i class="fa fa-check-square"></i> Quality Management <span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                                <li><a><i class="fa fa-users"></i> Sources <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                            <li><a href="/ViewSources">View Sources</a></li>
-                                            <li><a href="/CreateSources">Create Sources</a></li>
-                                    </ul>
-                                    <li><a><i class="fa fa-users"></i> Meetings <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                            <li><a href="/ViewSources">Create Meeting</a></li>
-                                            <li><a href="/CreateSources">View Scheduled Meetings</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="QualityMetric">Quality Metrics</a></li>
-                                <li><a href="CheckingPage">Checking Page</a></li>
-                                <li><a href="Viewcycle">View Cycles</a></li>
-                          </ul>
-                      </li>
                               
-                              
-                              
+
+                            
                           </ul>
                       </li>
                   </ul>
@@ -191,10 +118,10 @@
                   <li class="">
                       <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                           <% if(locals.current_user){ %>
-                  <%= current_user[0].User_First %> <%= current_user[0].User_Last %>
-                  <%}else{%>
-                  John Doe
-                  <%}%>
+                             <%= current_user[0].User_First %> <%= current_user[0].User_Last %>
+                            <%}else{%>
+                            John Doe
+                            <%}%>
                           <span class=" fa fa-angle-down"></span>
                       </a>
                       <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -202,12 +129,12 @@
                           <li>
                                 <form method="get" action="EditUserbyUser">
                                         <input type="hidden" name="UID" value="<%= current_user[0].User_ID %>">
-                  <button style="background: none; border: none; padding: 0; cursor: pointer; color: #000; margin-left: 20px;" type="submit" class="btn btn-primary">Edit Account</button><i style=" margin-right:20px" class="fa fa-edit pull-right"></i>
-                  </form>
-                  </li>
-
-                  <li><a href="Logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
+                                            <button style="background: none; border: none; padding: 0; cursor: pointer; color: #000; margin-left: 20px;" type="submit" class="btn btn-primary">Edit Account</button><i style=" margin-right:20px" class="fa fa-edit pull-right"></i>
+                                      </form>
+                          </li>
+                          
+                          <li><a href="Logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                      </ul>
                   </li>
 
                   <li role="presentation" class="dropdown">
@@ -274,8 +201,8 @@
                           </li>
                       </ul>
                   </li>
-                  </ul>
-                  </nav>
-              </div>
-          </div>
-          <!-- /top navigation -->
+              </ul>
+          </nav>
+      </div>
+  </div>
+  <!-- /top navigation -->
