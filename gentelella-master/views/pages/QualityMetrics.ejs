@@ -31,6 +31,10 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+
 </head>
 
 <body class="nav-md">
@@ -93,6 +97,7 @@
                                                     <div class="x_title">
                                                         <h2><i class="fa fa-align-left"></i>Quality Cycles
                                                         </h2>
+
                                                         <div class="clearfix"></div>
                                                     </div>
                                                     <div class="x_content">
@@ -135,26 +140,84 @@
 
                                                         <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
 
-
                                                             <h3 class="panel-title">
                                                                 GOAL NAME:<%= metric.metric_Name %>-Measurements <input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
                                                             </h3>
-                                                            <script>
-                                                               
-                                                                function transVal(){
-                                                                     var gid = document.getElementById("<%=metric.metric_Name%>").value;
-                                                                    console.log(gid);
-                                                                    document.getElementById("GoalID").value = gid;
-                                                                    console.log("GoalID");
-                                                                    
-                                                                }
-                                                            </script>
-                                                            
-                                                            
+
                                                         </a>
                                                         <div id="Collapse<%= metric.metric_ID %>" class="collapse">
                                                             <div>
-                                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button>
+
+                                                        <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
+                                                        <button class="btn btn-primary" href="#my_modal" data-toggle="modal" data-book-id="<%=metric.metric_ID%>">Create Measurement - <%=metric.metric_ID%></button>
+
+                                                            <!--CREATE MEASUREMENTS-->
+                                                            <div class="modal fade createMeasurement" id="my_modal">
+                                                                    <div class="modal-dialog modal-lg2">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal3">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                    <h4 class="modal-title" id="ModalLabel1">
+                                                                                        Create Measurements for:
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form id="createMeasurement" data-parsley-validate class="form-horizontal form-label-left" action="SendMeasurement" method="POST">
+                                                                                        <form id="create" data-parsley-validate class="form-horizontal form-label-left" method="post" action="SendMeasurement">
+                                                                
+                                                                                            <!--Measurement Name input field-->
+                                                                                            <div class="form-group">
+                                                                                                <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                                                    Measurement Name: <span class="required">*</span></label>
+                                                                                                <!--Edited-->
+                                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                    <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+                                                                                                </div>
+                                                                                            </div>
+                                                                
+                                                                                            <!--Measurement Description field-->
+                                                                                            <div class="form-group">
+                                                                                                <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
+                                                                                                    Description:
+                                                                                                    <!--Edited-->
+                                                                                                    <span class="required">*</span></label>
+                                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                    <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!--Quality Target Input field-->
+                                                                                            <div class="form-group">
+                                                                                                <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
+                                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                    <input type="number" id="QualityTarget" name="QualityTarget" required="required" class="form-control col-md-7 col-xs-12" placeholder="Quality Target">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!--Goal ID input field-->
+                                                                                            <div class="form-group">
+                                                                                                <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
+                                                                                                    Goal ID: <span class="required">*</span></label>
+                                                                                                <!--Edited-->
+                                                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                    <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" >
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                                                    Close
+                                                                                                </button>
+                                                                                                <button type="submit" class="btn btn-primary" form="createMeasurement" onclick="transVal()">
+                                                                                                    Submit
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                 <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
                                                                  <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
@@ -356,10 +419,23 @@
             console.log(source);
         }
 
+        
+
+        $('#my_modal').on('show.bs.modal.fade', function(e) {
+            var bookId = $(e.relatedTarget).data('book-id');
+            alert(bookId);
+            $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+        });
+
+        $('#my_modal').on('show.bs.modal', function(e) {
+            var bookId = $(e.relatedTarget).data('book-id');
+            $(e.currentTarget).find('input[name="bookId"]').val(bookId);
+        });
+
     </script>
-    <!--create measurements-->
-            
-    <div class="modal fade createMeasurement" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <!--div class="modal fade createMeasurement" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg2">
             <div class="modal-content">
                 <div class="modal-header">
@@ -374,43 +450,43 @@
                     <form id="createMeasurement" data-parsley-validate class="form-horizontal form-label-left" action="SendMeasurement" method="POST">
                         <form id="create" data-parsley-validate class="form-horizontal form-label-left" method="post" action="SendMeasurement">
 
-                            <!--Measurement Name input field-->
+                            <!--Measurement Name input field>
                             <div class="form-group">
                                 <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
                                     Measurement Name: <span class="required">*</span></label>
-                                <!--Edited-->
+                                <!--Edited>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
                                 </div>
                             </div>
 
-                            <!--Measurement Description field-->
+                            <!--Measurement Description field>
                             <div class="form-group">
                                 <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
                                     Description:
-                                    <!--Edited-->
+                                    <!--Edited>
                                     <span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 </div>
                             </div>
-                            <!--Quality Target Input field-->
+                            <!--Quality Target Input field>
                             <div class="form-group">
                                  <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="number" id="QualityTarget" name="QualityTarget" required="required" class="form-control col-md-7 col-xs-12" placeholder="Quality Target">
                                 </div>
                             </div>
-                            <!--Goal ID input field-->
+                            <!--Goal ID input field>
                             <div class="form-group">
                                 <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" style="visibility:collapse;">
                                     Goal ID: <span class="required">*</span></label>
-                                <!--Edited-->
+                                <!--Edited>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" style="visibility:collapse;">
                                 </div>
                             </div>
-                            <!--Assign to Goal Input field-->
+                            <!--Assign to Goal Input field>
                             <!--<div class="form-group">
                                 <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Goal: </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -420,7 +496,7 @@
                                     <% } %>
                                 </select>
                                 </div>
-                            </div>-->
+                            </div>>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     Close
@@ -583,8 +659,6 @@
 
         </script>
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
         <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
@@ -618,6 +692,7 @@
         <script src="assets/vendors/starrr/dist/starrr.js"></script>
         <!-- Custom Theme Scripts -->
         <script src="assets/build/js/custom.min.js"></script>
+        <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 </body>
 
 </html>
