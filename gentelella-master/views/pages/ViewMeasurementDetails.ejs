@@ -161,6 +161,7 @@
                                 <div class="x_content">
 
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
+                                    <% if (current_user[0].Role == 1) { %>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                                             Create Activities
                                         </button>
@@ -169,6 +170,7 @@
                                             data-target=".bs-example-modal-lg-assign-activity">
                                             Assign Activity/s
                                         </button>
+                                    <% } %>
 
                                         <div class="panel-body">
                                             <div class="panel">
