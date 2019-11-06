@@ -115,10 +115,11 @@ module.exports = {
         var UID = req.body.table;
         var MID = req.body.mid;
         UID = JSON.parse(UID);
-        console.log(UID);
+        console.log("Table length =" + UID.length);
         async.forEachOf(UID, function (value, key, callback) {
             var an = UID[key]["Activity Name"];
             var measureID = UID[key]["MeasurementID"];
+            measureID = measureID.split(",");
             var desc = UID[key]["Description"];
             var dead = UID[key]["Deadline"];
             console.log(an);
@@ -128,11 +129,23 @@ module.exports = {
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
-                    console.log(result);
-                    var sql2 = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (?, ?)"
-                    var values2 = [measureID, result.insertId]
-                    addMIDAID(sql2, values2);
                     callback();
+                    console.log(result);
+                    var activitytolink = result.insertId;
+                    async.forEachOf(measureID, function (value, key, callback) {
+                        console.log("Measurement ID = " + measureID[key])
+                        var sql2 = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (?, ?)"
+                        var values2 = [measureID[key], activitytolink]
+                        connection.query(sql2, values2, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                callback();
+                                console.log("Activity linked to Measurement");
+                            }
+                        });
+
+                    }, function (err) {
+                    })
                 }
             });
         }, function (err) {
@@ -145,14 +158,7 @@ module.exports = {
             }
         })
 
-        function addMIDAID(sql, values) {
-            connection.query(sql, values, function (err, result) {
-                if (err) throw err;
-                if (result) {
-                    console.log("Activity linked to Measurement");
-                }
-            });
-        }
+
 
     },
 

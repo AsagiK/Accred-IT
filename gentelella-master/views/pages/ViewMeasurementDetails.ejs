@@ -676,9 +676,11 @@
                 var measureID="";
                 var measureName=""
                 for(var x=0;x<measure.length;x++){
-                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('-'))+"<br>";
+                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('-'))+",";
                     measureName = measureName + measure[x].substr(measure[x].lastIndexOf('-') + 1) + "<br>";
                 }
+                var comremove = measureID.length - 1;
+                measureID = measureID.substr(0, comremove);
                 console.log("Final: " +measureID);
                 console.log("Final: " +measureName);
                 
