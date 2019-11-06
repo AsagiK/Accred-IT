@@ -8,9 +8,9 @@
 
           <!-- menu profile quick info -->
           <div class="profile clearfix">
-              <div class="profile_pic">
+              <!--div class="profile_pic">
                   <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
+              </div-->
               <div class="profile_info">
                   <span>Welcome,</span>
                   <% if(locals.current_user){ %>
@@ -33,36 +33,65 @@
                           <ul class="nav child_menu">
                               <li><a><i class="fa fa-user"></i> Users <span class="fa fa-chevron-down"></span></a>
                                   <ul class="nav child_menu">
+                                    <% if (current_user[0].Role == 4 || current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                                       <li><a href="/Viewusers">View Users</a></li>
+
                                       <li><a href="/Createusers">Create Users</a></li>
-                                      
+
+                                      <li><a>View Account (NO PAGE YET)</a></li>
+                                    <% } %>
                                   </ul>
                               </li>
                               <li><a><i class="fa fa-users"></i> Groups <span class="fa fa-chevron-down"></span></a>
                                   <ul class="nav child_menu">
+                                    <% if (current_user[0].Role == 4 || current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                                       <li><a href="/ViewGroups">View Groups</a></li>
+                                    <% if (current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                                       <li><a href="/CreateGroup">Create Group</a></li>
+                                    <% } %>
+
+                                    <% } %>
                                   </ul>
                               </li>
                           </ul>
                       </li>
-                      <li><a><i class="fa fa-folder"></i> Document Management <span class="fa fa-chevron-down"></span></a>
+                      <li><a><i class="fa fa-folder"></i> Ecidence Repository <span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
+                            <% if (current_user[0].Role == 4 || current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                               <li><a href="/UploadDocument">Upload Documents</a></li>
+
                               <li><a href="/ViewDocument">View Documents</a></li>
+                            <% } %>
                           </ul>
                       </li>
                       <li><a><i class="fa fa-check-square"></i> Quality Management <span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
+                            
+                                <% if (current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                                 <li><a><i class="fa fa-users"></i> Sources <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                             <li><a href="/ViewSources">View Sources</a></li>
                                             <li><a href="/CreateSources">Create Sources</a></li>
                                     </ul>
                                 </li>
+
+                                <li><a><i class="fa fa-users"></i> Meetings (NO PAGES YET) <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                            <li><a>Create Meeting/s</a></li>
+                                            <li><a>View Scheduled Meeting/s</a></li>
+                                    </ul>
+                                </li>
+
                                 <li><a href="QualityMetric">Quality Metrics</a></li>
+
                                 <li><a href="CheckingPage">Checking Page</a></li>
+
                                 <li><a href="Viewcycle">View Cycles</a></li>
+                                <% } %>
+                                <% if ( current_user[0].Role == 4) { %>
+                                <li><a>View Measurements</a></li>
+                                <% } %>
+                            
                           </ul>
                       </li>
                       <li><a><i class="fa fa-bars"></i> Other Pages <span class="fa fa-chevron-down"></span></a>
