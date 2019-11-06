@@ -123,8 +123,8 @@ module.exports = {
             var dead = UID[key]["Deadline"];
             console.log(an);
 
-            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?);";
-            var values = [an, desc, measureID, dead];
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `description`, `deadline`) VALUES (?, ?, ?);";
+            var values = [an, desc, dead];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {

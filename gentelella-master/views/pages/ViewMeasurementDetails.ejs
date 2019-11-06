@@ -405,24 +405,13 @@
                                 <br-->
                                 <label for="target">Measurements</label>
                                 <br>
-                                <select class="form-control" name="measurement" id="measurement">
+                                <select style="width: 500px;" class="js-example-basic-multiple" name="measurement[]" id="measurement[]" multiple="multiple">
                                     <% for (var measures of dataE) { %>
                                     <option value="<%= measures.measurement_ID %>-<%= measures.measurement_Name %>">
                                         <%= measures.measurement_Name %></option>
                                     <% } %>
                                 </select>
                                 <br>
-                                <!--div class='col-sm-4'>
-                                        Only Date Picker
-                                        <div class="form-group">
-                                            <div class='input-group date' id='myDatepicker2'>
-                                                <input type='text' class="form-control" />
-                                                <span class="input-group-addon">
-                                                   <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div-->
                                 <label> Deadline
                                     <br>
                                     <input type="date" name="deadline" id="deadline" value="">
@@ -443,7 +432,7 @@
                                                 <th>Measurement to assign</th>
                                                 <th>Deadline</th>
                                                 <th></th>
-                                                <th style="display: none;">MeasurementID</th>
+                                                <th>MeasurementID</th>
 
                                             </tr>
                                         </thead>
@@ -655,19 +644,6 @@
 
                     </div>
                 </div>
-
-
-
-                <!--script>
-                    $(document).ready(function () {
-                        $("#check").click(function () {
-                            $("#checkbox").toggle();
-                        });
-                        $("#count").click(function () {
-                            $("#countbox").toggle();
-                        });
-                    });
-                </script-->
             </div>
         </div>
     </div>
@@ -690,27 +666,40 @@
                 }
             });*/
 
+            $('.js-example-basic-multiple').select2();
+
             $(".add-row2").click(function test() {
-                //console.log(measure.options[measure.selectedIndex].value);
-                //console.log("testing test");
+                //GETS VALUES OF THE DROPDOWN
+                var measure = $(".js-example-basic-multiple").val();
+                alert(measure);
+                console.log(measure.length);
+                var measureID="";
+                var measureName=""
+                for(var x=0;x<measure.length;x++){
+                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('-'))+"<br>";
+                    measureName = measureName + measure[x].substr(measure[x].lastIndexOf('-') + 1) + "<br>";
+                }
+                console.log("Final: " +measureID);
+                console.log("Final: " +measureName);
+                
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
-                    var measurement = $("#measurement").val();
+                    //var measurement = $("#measurement").val();
                     var description = $("#descriptioncount").val();
                     var dead = $("#deadline").val();
-                    var measureID = measurement.substr(0, measurement.indexOf('-'));
-                    var measureName = measurement.substr(measurement.lastIndexOf('-') + 1);
-                    console.log(dead);
+                    //var measureID = measurement.substr(0, measurement.indexOf('-'));
+                    //var measureName = measurement.substr(measurement.lastIndexOf('-') + 1);
+                    //console.log(dead);
                     //console.log(measurement);
-                    console.log(measureID);
-                    console.log(measureName);
+                    //console.log(measureID);
+                    //console.log(measureName);
                     //total = +total + +target;
                     //console.log(total + " 1st");
                     //if (total <= 100) {
                     var markup = "<tr><td>" + activity +
                         "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + dead +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td></tr>";
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" + measureID + "</td></tr>";
                     var table = document.getElementById("tableactivities")
                     $(table).append(markup);
                     //console.log(total + " 2nd");
@@ -741,32 +730,15 @@
             });
         });
 
-        /*function checkEmptyInputcheck() {
-            var isEmpty = false,
-                activitycheck = document.getElementById("activitycheck").value,
-                targetcheck = document.getElementById("targetcheck").value;
-
-            if (activitycheck === "") {
-                alert("Activity Cannot Be Empty");
-                isEmpty = true;
-            } else if (targetcheck === "") {
-                alert("Target Cannot Be Empty");
-                isEmpty = true;
-            }
-            return isEmpty;
-        }*/
-
         function checkEmptyInputcount() {
             var isEmpty = false,
                 activitycount = document.getElementById("activitycount").value,
-                //targetcount = document.getElementById("targetcount").value;
-                measurement = document.getElementById("measurement").value;
-            //console.log(measurement);
+                desccount = document.getElementById("descriptioncount").value;
             if (activitycount === "") {
                 alert("Activity Cannot Be Empty");
                 isEmpty = true;
-            } else if (measurement === "") {
-                alert("Measurement Cannot Be Empty");
+            } else if (desccount === "") {
+                alert("Description Cannot Be Empty");
                 isEmpty = true;
             }
             return isEmpty;
