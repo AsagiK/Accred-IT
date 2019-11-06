@@ -136,7 +136,7 @@
                             <div class="x_content">
 
                                 <div class="title_left">
-                                    <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                    <h1>View Measurement Details Title: <%= data[0].measurement_Name %> - <%= data[0].measurement_ID %></h1>
                                 </div>
                                 <br />
 
@@ -196,7 +196,9 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% for (activities of dataB) { %>
+                                                            <% for (actMeasures of dataG) { %>
+                                                                <% for (activities of dataB) { %>
+                                                                <% if (data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMeasures.activity_ID) { %>
                                                             <tr>
 
                                                                 <td style="display: none;"><%= activities.activity_ID %>
@@ -238,6 +240,8 @@
                                                                     </form>
                                                                 </td>
                                                             </tr>
+                                                            <% } %>
+                                                            <% } %>
                                                             <% } %>
                                                         </tbody>
                                                     </table>
