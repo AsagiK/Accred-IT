@@ -521,7 +521,7 @@ module.exports = {
                 }
 
             }
-        }else{
+        } else {
             resp.redirect('/ViewDocument')
         }
     },
@@ -571,38 +571,46 @@ module.exports = {
         //var MID = req.body.MID;
         var target = req.body.target;
         var score = req.body.score;
-        var values2 = [AID, name, code, description, score]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`) VALUES (? , ?, ?, ?, ?);"
+        var today = new Date();
+        var current = today.toISOString().split('T')[0];
+        var values2 = [AID, name, code, description, score, current]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`) VALUES (? , ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
-            // console.log(results);
+            if (results) {
+                console.log("Pending activity inserted")
+                inserttable();
+            }
         });
-        var Doc = req.body.table
-        Doc = JSON.parse(Doc)
-        if (Object.keys(Doc).length == 0) {
-            console.log("Empty");
-            resp.send("OK");
-        } else {
-            async.forEachOf(Doc, function (value, key, callback) {
-                var did = Doc[key]["Document ID"];
-                var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?); ";
-                var values = [AID, did];
-                connection.query(sql, values, function (err, result) {
-                    if (err) callback(err);
-                    if (result) {
-                        console.log("Document linked to DB");
-                        callback();
+
+        function inserttable() {
+            var Doc = req.body.table
+            Doc = JSON.parse(Doc)
+            if (Object.keys(Doc).length == 0) {
+                console.log("Empty");
+                resp.send("OK");
+            } else {
+                async.forEachOf(Doc, function (value, key, callback) {
+                    var did = Doc[key]["Document ID"];
+                    var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?); ";
+                    var values = [AID, did];
+                    connection.query(sql, values, function (err, result) {
+                        if (err) callback(err);
+                        if (result) {
+                            console.log("Document linked to DB");
+                            callback();
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        console.log("Failed");
+                        resp.send("Not OK")
+                    } else {
+                        console.log("Passed");
+                        resp.send("OK");
                     }
-                });
-            }, function (err) {
-                if (err) {
-                    console.log("Failed");
-                    resp.send("Not OK")
-                } else {
-                    console.log("Passed");
-                    resp.send("OK");
-                }
-            })
+                })
+            }
         }
     },
 
