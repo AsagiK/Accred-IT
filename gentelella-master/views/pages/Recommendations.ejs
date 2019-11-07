@@ -179,6 +179,8 @@
                               <input type="hidden" id="MID" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
                               <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
                               <input type="hidden" name="code" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
+                              <input type="hidden" id="PID" name="PID" value="" class="form-control col-md-7 col-xs-12">
+                              
                           </td>
                           <td>
                             <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
@@ -345,11 +347,12 @@
           xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
               var respData = xhr.responseText;
-              if (respData == "OK") {
-                console.log("Good");
-                backsuccess();
-              } else {
+              if (respData == "Not OK") {
                 console.log("Not Good");
+              } else {
+                console.log("Good");
+                document.getElementById('PID').value=respdata;
+                backsuccess();
               }
             }
           };

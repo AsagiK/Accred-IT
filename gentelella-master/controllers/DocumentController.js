@@ -287,6 +287,7 @@ module.exports = {
             var code = req.body.code;
             var description = req.body.subdesc;
             var MID = req.body.MID;
+            var PID = req.body.PID;
 
 
             var count = 0;
@@ -322,8 +323,8 @@ module.exports = {
                                 body: fs.createReadStream('public/uploads/' + files[key].name)
                             };
                             uploadfile();
-                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?)"
-                            values = [req.body.activityID, result.insertId];
+                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                            values = [req.body.activityID, result.insertId, PID];
                             addDoc(sql, values);
                             callback();
                         }
@@ -440,8 +441,8 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?);"
-                        values = [req.body.activityID, result.insertId];
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                        values = [req.body.activityID, result.insertId, PID];
                         addDoc(sql, values);
                         resp.redirect('/ViewDocument')
                     }
@@ -580,21 +581,21 @@ module.exports = {
             if (err) throw err;
             if (results) {
                 console.log("Pending activity inserted")
-                inserttable();
+                inserttable(results.insertId);
             }
         });
 
-        function inserttable() {
+        function inserttable(pending) {
             var Doc = req.body.table
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
                 console.log("Empty");
-                resp.send("OK");
+                resp.send(pending);
             } else {
                 async.forEachOf(Doc, function (value, key, callback) {
                     var did = Doc[key]["Document ID"];
-                    var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?); ";
-                    var values = [AID, did];
+                    var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); ";
+                    var values = [AID, did, pending];
                     connection.query(sql, values, function (err, result) {
                         if (err) callback(err);
                         if (result) {
@@ -608,7 +609,7 @@ module.exports = {
                         resp.send("Not OK")
                     } else {
                         console.log("Passed");
-                        resp.send("OK");
+                        resp.send(pending);
                     }
                 })
             }
