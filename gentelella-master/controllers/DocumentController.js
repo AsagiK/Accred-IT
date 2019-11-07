@@ -587,7 +587,8 @@ module.exports = {
 
         function inserttable(pending) {
             var pendingID = pending;
-            pendingID = pendingID.toString;
+            pendingID = pendingID.toString();
+            
             var Doc = req.body.table
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
