@@ -217,7 +217,7 @@ module.exports = {
             var id = (req.query.UID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=18; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=26; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
                 if (err) throw err;
                 if(results){
                     console.log(results);
@@ -971,13 +971,14 @@ module.exports = {
             var id = (req.query.UID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
                 if (err) throw err;
                 if(results){
                     console.log(results);
                     resp.render('./pages/ActivityDetails.ejs', {
                         data: results[0],
                         dataB: results[1],
+                        dataC: results [2],
                         current_user: sess.user
                     })
                 }
@@ -1126,6 +1127,29 @@ module.exports = {
                 }
             });
         }
+    },
+
+    ViewUsersSubmission: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var userid= req.query.sess;
+            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?);";
+            var values = [sess.user[0].User_ID];
+            console.log(sess.user[0].User_ID);
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewUsersSubmissions.ejs', {
+                    data: results,
+                    current_user: sess.user
+                });
+                console.log(results)
+            });
+        }
+
+
     },
 
 }

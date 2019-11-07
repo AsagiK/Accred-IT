@@ -70,23 +70,49 @@
                                         <tbody>
                                             <form action="SendDocuments" method="post" encType="multipart/form-data">
                                                 <tr>
-                                                    <form action="SendDocuments" method="post" encType="multipart/form-data">
-                                                        <td style="width:200px;"><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                                                    <form action="SendDocuments" method="post"
+                                                        encType="multipart/form-data">
+                                                        <td style="width:200px;"><label
+                                                                class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                                 ID: </label></td>
                                                         <td><%= data[0].activity_ID %></td>
-                                                        <input type="hidden" name="activityID" id="activityID" value="<%= data[0].activity_ID %>" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="activityID" id="activityID"
+                                                            value="<%= data[0].activity_ID %>"
+                                                            class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="UID" id="UID"
+                                                            value="<%= current_user[0].User_ID %>"
+                                                            class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                                                    <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             Name: </label></td>
                                                     <td><%= data[0].activity_name %></td>
-                                                    <input type="hidden" name="activityName" id="activityName" value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12">
+                                                    <input type="hidden" name="activityName" id="activityName"
+                                                        value="<%= data[0].activity_name %>"
+                                                        class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                                                    <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             Description: </label></td>
                                                     <td><%= data[0].description %></td>
-                                                    <input type="hidden" id="activityDesc" value="<%= data[0].description %>" class="form-control col-md-7 col-xs-12">
+                                                    <input type="hidden" id="activityDesc"
+                                                        value="<%= data[0].description %>"
+                                                        class="form-control col-md-7 col-xs-12">
+                                                </tr>
+                                                <tr>
+                                                    <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Expected
+                                                            Output: </label></td>
+                                                    <td>
+                                                        <!--EXPECTED OUTPUTS CODE HERE-->
+                                                        <% for( var outputs of dataC) { %>
+                                                            <% if (data[0].activity_ID == outputs.activity_ID) { %>
+                                                                <%= outputs.output %> <br>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </td>
                                                 </tr>
                                                 <!--tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current
@@ -95,17 +121,31 @@
 
                                                 <tr-->
                                                 <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Submission
+                                                    <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Submission
                                                             Description: </label></td>
                                                     <td>
-                                                        <textarea id="subdesc" name="subdesc" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden" placeholder="Report Description"></textarea>
+                                                        <textarea id="subdesc" name="subdesc" required="required"
+                                                            class="form-control col-md-7 col-xs-12"
+                                                            onkeyup="textAreaAdjust(this)" style="overflow:hidden"
+                                                            placeholder="Report Description"></textarea>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Suggested Score: </label></td>
+                                                    <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
+                                                            Progress: </label></td>
                                                     <td>
-                                                        <input type="number" name="score" id="score" placeholder="Suggested Score">
+                                                        <input type="number" name="score" id="score"
+                                                            placeholder="Suggested Progress">
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Previous Evidences: </label></td>
+                                                        <td>
+                                                          <!--PREVIOUS EVIDENCES CODE HERE-->
+                                                          SHOULD ONLY APPEAR WHEN THERE ARE PREVIOUS SUBMISSIONS DONE BY THE USER FOR THIS ACTIVITY
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
@@ -115,13 +155,15 @@
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
                                                             Evidences from system: </label></td>
-                                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".chooseEvidence">Choose
+                                                    <td><button type="button" class="btn btn-primary"
+                                                            data-toggle="modal" data-target=".chooseEvidence">Choose
                                                             Evidence</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td style="width=100%; height=100%;">
-                                                        <table id="table2" class="table table-striped table-bordered" style="width=100%; height=100%;">
+                                                        <table id="table2" class="table table-striped table-bordered"
+                                                            style="width=100%; height=100%;">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Check</th>
@@ -143,20 +185,27 @@
                                                 </tr>
                                                 <tr style="display: none;">
                                                     <td>
-                                                        <input type="hidden" id="MID" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" name="code" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" id="MID" name="MID"
+                                                            value="<%= data[0].measurement_ID %>"
+                                                            class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" id="target" value="<%= data[0].target %>"
+                                                            class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" name="code" id="code"
+                                                            value="<%= data[0].code %>"
+                                                            class="form-control col-md-7 col-xs-12">
                                                     </td>
                                                     <td>
-                                                        <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
+                                                        <button type="submit" id="passdocuments"
+                                                            style="display: none;">Submit Evidence</button>
                                                     </td>
 
                                                 </tr>
                                             </form>
-                                                <td></td>
-                                                <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
+                                            <td></td>
+                                            <td><button type="submit" class="btn btn-success"
+                                                    id="toJSON">Submit</button></td>
                                         </tbody>
-                                        
+
 
 
                                     </table>
@@ -234,9 +283,9 @@
         <!--TEST SCRIPT FOR ADDING-->
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".add-row").click(function() {
-                    $("#table1 tbody").find('input[name="record"]').each(function() {
+            $(document).ready(function () {
+                $(".add-row").click(function () {
+                    $("#table1 tbody").find('input[name="record"]').each(function () {
                         //console.log('test');
                         if ($(this).is(":checked")) {
                             var index = $(this).attr("id");
@@ -246,8 +295,11 @@
                             var Route = $("#Route").attr("value");
                             //console.log(last);
                             var hidden = $('#hidden' + index).attr("value");
-                            var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
+                            var markup =
+                                "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                                index +
+                                "><span class='checkmark'></span></label></td><td id= DID" +
+                                index + " value=" + DID + ">" + DID +
                                 "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
                                 "</td><td id= Route" + " value=" + Route + ">" + Route +
                                 "</td><td id= hidden" + index + " value=" + hidden +
@@ -260,8 +312,8 @@
 
                 // Find and remove selected table rows
 
-                $(".delete-row").click(function() {
-                    $("#table2 tbody tr").find('input[name="record"]').each(function() {
+                $(".delete-row").click(function () {
+                    $("#table2 tbody tr").find('input[name="record"]').each(function () {
 
                         if ($(this).is(":checked")) {
                             var index = $(this).attr("id");
@@ -271,8 +323,11 @@
                             var Route = $("#Route").attr("value");
                             //console.log(last);
                             var hidden = $('#hidden' + index).attr("value");
-                            var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
+                            var markup =
+                                "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                                index +
+                                "><span class='checkmark'></span></label></td><td id= DID" +
+                                index + " value=" + DID + ">" + DID +
                                 "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
                                 "</td><td id= Route" + " value=" + Route + ">" + Route +
                                 "</td><td id= hidden" + index + " value=" + hidden +
@@ -286,7 +341,7 @@
 
                 });
 
-                $("#toJSON").click(function() {
+                $("#toJSON").click(function () {
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
                     var AID = document.getElementById("activityID").value
@@ -294,17 +349,18 @@
                     var code = document.getElementById("code").value
                     var description = document.getElementById("subdesc").value
                     var MID = document.getElementById("MID").value
+                    var UID = document.getElementById("UID").value
                     var target = document.getElementById("target").value
                     var score = document.getElementById("score").value
 
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onload = function() {
+                    xhr.onload = function () {
                         console.log(xhr.responseText);
                     };
 
-                    xhr.onreadystatechange = function() {
+                    xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4) {
                             var respData = xhr.responseText;
                             if (respData == "OK") {
@@ -317,7 +373,9 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target+ "&score=" + score);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code +
+                        "&description=" + description + "&MID=" + MID + "&target=" + target +
+                        "&score=" + score + "&UID=" + UID);
 
                 });
 
@@ -329,7 +387,6 @@
 
 
             });
-
         </script>
 
         <script>
@@ -358,16 +415,14 @@
                     contentType: false,
                     processData: false,
                     data: form_data,
-                    success: function(response) {
+                    success: function (response) {
                         console.log("Good")
                     },
-                    error: function(response) {
+                    error: function (response) {
                         console.log("Not Good")
                     }
                 });
             }
-
-
         </script>
 
 
