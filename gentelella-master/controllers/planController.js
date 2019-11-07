@@ -209,8 +209,16 @@ module.exports = {
     },
 
     Recommendations: function (req, resp) {
-        resp.render('./pages/Recommendations.ejs');
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+        resp.render('./pages/Recommendations.ejs', {
+            current_user: sess.user
+        });
         console.log("Recommendations");
+        }
     },
 
     SendMeasurement: function (req, resp) {
