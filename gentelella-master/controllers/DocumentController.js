@@ -433,7 +433,7 @@ module.exports = {
                 var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
                 var values = [name, path, desc, ext];
                 connection.query(sql, values, function (err, result) {
-                    if (err) console.log("error");
+                    if (err) console.log(err);
                     if (result) {
                         console.log("Record Inserted");
                         media = {
