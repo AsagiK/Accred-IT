@@ -586,16 +586,18 @@ module.exports = {
         });
 
         function inserttable(pending) {
+            var pendingID = pending;
+            pendingID = pendingID.toString;
             var Doc = req.body.table
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
                 console.log("Empty");
-                resp.send(pending);
+                resp.send(pendingID);
             } else {
                 async.forEachOf(Doc, function (value, key, callback) {
                     var did = Doc[key]["Document ID"];
                     var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); ";
-                    var values = [AID, did, pending];
+                    var values = [AID, did, pendingID];
                     connection.query(sql, values, function (err, result) {
                         if (err) callback(err);
                         if (result) {
@@ -609,7 +611,7 @@ module.exports = {
                         resp.send("Not OK")
                     } else {
                         console.log("Passed");
-                        resp.send(pending);
+                        resp.send(pendingID);
                     }
                 })
             }
