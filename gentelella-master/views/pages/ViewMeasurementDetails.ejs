@@ -199,9 +199,14 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                        <% for (var actMembers of dataH) { %>
                                                             <% for (actMeasures of dataG) { %>
                                                                 <% for (activities of dataB) { %>
+                                                                    
+                                                                <% if (dataH.length == 0) { %>    
+                                                                <% if ( current_user[0].Role == 1) { %>
                                                                 <% if (data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMeasures.activity_ID) { %>
+                                                                    
                                                             <tr>
 
                                                                 <td style="display: none;"><%= activities.activity_ID %>
@@ -245,7 +250,61 @@
                                                             </tr>
                                                             <% } %>
                                                             <% } %>
+                                                            <% } else { %>
+                                                                
+                                                                <% if ((actMembers.activity_Member == current_user[0].User_ID && data[0].measurement_ID == actMembers.measurement_ID && activities.activity_ID == actMembers.activity_ID) || current_user[0].Role == 1) { %>
+                                                                
+                                                                        
+                                                                <tr>
+    
+                                                                    <td style="display: none;"><%= activities.activity_ID %>
+                                                                    </td>
+                                                                    <td><%= activities.activity_name %></td>
+                                                                    <td><%= activities.description %></td>
+                                                                    <td>
+    
+                                                                        <% for (outputs of dataD){ %>
+                                                                        <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                        <%= outputs.output_ID %> - <%= outputs.output %>
+                                                                        <br>
+                                                                        <% } %>
+                                                                        <% } %>
+    
+                                                                    </td>
+                                                                    <td><%= activities.target %></td>
+                                                                    <td><%= activities.deadline %></td>
+                                                                    <td>
+                                                                        <form method="get" action="ActivityDetails">
+                                                                            <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
+                                                                            <button type="submit" class="btn btn-primary">Submit
+                                                                                Evidence
+                                                                            </button>
+                                                                        </form>
+                                                                        <br>
+                                                                        <button class="btn btn-primary" href="#my_modal"
+                                                                            data-toggle="modal"
+                                                                            data-book-id="<%= activities.activity_ID %>">Add
+                                                                            expected output/s -
+                                                                            <%= activities.activity_ID %></button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <form method="get" action="AssignActivityToMember">
+                                                                            <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                            <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
+                                                                            <button type="submit" class="btn btn-primary">Assign Members
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <% } %>
+                                                                
                                                             <% } %>
+
+                                                            <% } %>
+                                                            <% } %>
+                                                            <% } %>
+                                                            
                                                         </tbody>
                                                     </table>
                                                 </div>

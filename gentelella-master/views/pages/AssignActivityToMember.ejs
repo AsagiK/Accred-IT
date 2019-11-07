@@ -159,8 +159,8 @@
                                                         <%= user.User_Last %></td>
                                                     <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td id='measure<%= user.User_ID %>' value="<%= dataB[0].measurement_ID %>"
-                                                        ><%= dataB[0].measurement_ID %></td>
+                                                    <td id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                        ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -202,14 +202,14 @@
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
+                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
                                         </form>
 
                                         <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="MID" value="<%= dataB[0].measurement_ID %>">
+                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>

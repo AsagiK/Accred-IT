@@ -581,7 +581,7 @@ module.exports = {
             console.log(MID);
             var values = [MID, MID, MID];
 
-            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities;"
+            var sql = "SELECT measurement.measurement_ID, measurement.QualityTarget, measurement.Procedures, measurement.measurement_Name, measurement.Deadline, measurement.GroupAssigned FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members;"
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -594,6 +594,7 @@ module.exports = {
                     dataE: results[4],
                     dataF: results[5],
                     dataG: results[6],
+                    dataH: results[7],
                     current_user: sess.user,
                     notif: passData
                 })
@@ -1087,8 +1088,10 @@ module.exports = {
         } else {
             var AID = req.query.AID;
             var GID = req.query.GID;
-            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?);"
-            var values = [GID, AID];
+            console.log("GROUP ID-------------------" + GID)
+            console.log("ACTIVITY ID-------------------" + AID)
+            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
+            var values = [GID, AID, AID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
@@ -1097,7 +1100,6 @@ module.exports = {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
-                    dataD: results[3],
                     current_user: sess.user
                 });
                 console.log("Assign Activity to Member Page");
