@@ -201,6 +201,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            <!--VIEW OF ADMIN OR QA OR DEP CHAIR-->
                                                             <% if (current_user[0].Role == 1) { %>
                                                                 <% for (actMeasures of dataG) { %> 
                                                                     <% for (activities of dataB) { %> 
@@ -254,7 +255,8 @@
                                                                             <% } %>
                                                                             <% } %>
                                                                             <% } %>
-
+                                                                            <!--END OF ADMIN, QAO, AND DEPCHAIR VIEW-->
+                                                                            <!--VIEW OF A USER-->
                                                             <% } else { %>
                                                                 <% for (var actMembers of dataH) { %>
                                                                     <% for (actMeasures of dataG) { %> 
@@ -301,20 +303,11 @@
                                                                         <% } %>
                                                                         
                                                             <% } %>
-                                                            
-                                                         
-                                                                        
-                                                                
-                                                                
-                                                                
-                                                            
+                                                            <!-- END OF USER VIEW -->
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-
-                                            <!--End of Group 1 Table -->
-
                                         </div>
                                 </div>
 
