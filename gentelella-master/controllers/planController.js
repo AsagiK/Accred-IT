@@ -214,10 +214,22 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-        resp.render('./pages/Recommendations.ejs', {
-            current_user: sess.user
-        });
-        console.log("Recommendations");
+            var id = (req.query.UID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=18; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
+                if (err) throw err;
+                if(results){
+                    console.log(results);
+                    resp.render('./pages/Recommendations.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    })
+                }
+            });
+            console.log("TESTING PAGE FOR BRIAN");
         }
     },
 

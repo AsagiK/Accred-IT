@@ -2,431 +2,444 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TESTING VERSIONING SUBMISSIONS</title>
+  <title>TESTING VERSIONING SUBMISSIONS</title>
 
-    <!-- Bootstrap -->
-    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-wysiwyg -->
-    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-    <!-- starrr -->
-    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  <!-- bootstrap-wysiwyg -->
+  <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+  <!-- Select2 -->
+  <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+  <!-- Switchery -->
+  <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+  <!-- starrr -->
+  <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+  <!-- bootstrap-daterangepicker -->
+  <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-            <%- include ./nav.ejs %>
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
+  <div class="container body">
+    <div class="main_container">
+      <%- include ./nav.ejs %>
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
 
-                            <h3>Submit Evidence TESTING FOR VERSIONING PAGE</h3>
+              <h3>Submit Evidence TESTING FOR VERSIONING PAGE</h3>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+              <div class="x_content">
 
-                                <div class="x_content">
-                                    <br />
+                <div class="x_content">
+                  <br />
 
-                                    <!--view table for users-->
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-
-
-                                            </tr>
-                                        </thead>
+                  <!--view table for users-->
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
 
 
-                                        <tbody>
-                                            <form action="SendDocuments" method="post" encType="multipart/form-data">
-                                                <tr>
-                                                    <form action="SendDocuments" method="post" encType="multipart/form-data">
-                                                        <td style="width:200px;"><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                                ID: </label></td>
-                                                        <td></td>
-                                                        <!--ACTIVITY ID-->
-                                                        <input type="hidden" name="activityID" id="activityID" value="" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                            Name: </label></td>
-                                                    <td></td>
-                                                    <!--ACTIVITY NAME-->
-                                                    <input type="hidden" name="activityName" id="activityName" value="" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
-                                                            Description: </label></td>
-                                                    <td></td>
-                                                    <!--ACTIVITY DESCRIPTION-->
-                                                    <input type="hidden" id="activityDesc" value="" class="form-control col-md-7 col-xs-12">
-                                                </tr>
-                                                <tr>
-                                                  <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Expected Output: </label></td>
-                                                  <td>
-                                                    <!--EXPECTED OUTPUTS CODE HERE-->
-                                                    
-                                                  </td>
-                                                </tr>
-                                                <!--tr>
+                      </tr>
+                    </thead>
+
+
+                    <tbody>
+                      <form action="SendDocuments" method="post" encType="multipart/form-data">
+                        <tr>
+                          <form action="SendDocuments" method="post" encType="multipart/form-data">
+                            <td style="width:200px;"><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                                ID: </label></td>
+                            <td><%= data[0].activity_ID %></td>
+                            <!--ACTIVITY ID-->
+                            <input type="hidden" name="activityID" id="activityID" value="<%= data[0].activity_ID %>"
+                              class="form-control col-md-7 col-xs-12">
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                              Name: </label></td>
+                          <td><%= data[0].activity_name %></td>
+                          <!--ACTIVITY NAME-->
+                          <input type="hidden" name="activityName" id="activityName"
+                            value="<%= data[0].activity_name %>" class="form-control col-md-7 col-xs-12">
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
+                              Description: </label></td>
+                          <td><%= data[0].description %></td>
+                          <!--ACTIVITY DESCRIPTION-->
+                          <input type="hidden" id="activityDesc" value="<%= data[0].description %>"
+                            class="form-control col-md-7 col-xs-12">
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Expected Output: </label></td>
+                          <td>
+                            <!--EXPECTED OUTPUTS CODE HERE-->
+                              <% for( var outputs of dataC) { %>
+                                <% if (data[0].activity_ID == outputs.activity_ID) { %>
+                                    <%= outputs.output %> <br>
+                                <% } %>
+                              <% } %>
+                          </td>
+                        </tr>
+                        <!--tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Current
                                                             Value: </label></td>
                                                     <td><input type="number" id="score"></td>
 
                                                 <tr-->
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Submission
-                                                            Description: </label></td>
-                                                    <td>
-                                                      <!--SUBMISSION DESCRIPTION-->
-                                                        <textarea id="subdesc" name="subdesc" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden" placeholder="Report Description"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Suggested Progress: </label></td>
-                                                    <td>
-                                                        <input type="number" name="score" id="score" placeholder="Suggested Score">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Previous Evidences: </label></td>
-                                                    <td>
-                                                        <!--PREVIOUS EVIDENCES CODE HERE-->
-                                                        SHOULD ONLY APPEAR WHEN THERE ARE PREVIOUS SUBMISSIONS DONE BY THE USER FOR THIS ACTIVITY
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
-                                                            Evidences: </label></td>
-                                                    <!--SUBMISSION OF NEW FILE INTO THE SYSTEM AND FOR ACTIVITY-->
-                                                    <td><input type="file" name="DocFile" id="DocFile" multiple></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
-                                                            Evidences from system: </label></td>
-                                                    <!--SUBMISSION OF EVIDENCE TAKEN FROM THE SYSTEM-->
-                                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".chooseEvidence">Choose
-                                                            Evidence</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td style="width=100%; height=100%;">
-                                                        <table id="table2" class="table table-striped table-bordered" style="width=100%; height=100%;">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Check</th>
-                                                                    <th>Document ID</th>
-                                                                    <th>File Name</th>
-                                                                    <th>Routes</th>
-                                                                    <th style="display: none;">Group ID</th>
-                                                                </tr>
-                                                            </thead>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Submission
+                              Description: </label></td>
+                          <td>
+                            <!--SUBMISSION DESCRIPTION-->
+                            <textarea id="subdesc" name="subdesc" required="required"
+                              class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
+                              style="overflow:hidden" placeholder="Report Description"></textarea>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Suggested Progress: </label></td>
+                          <td>
+                            <input type="number" name="score" id="score" placeholder="Suggested Score">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Previous Evidences: </label></td>
+                          <td>
+                            <!--PREVIOUS EVIDENCES CODE HERE-->
+                            SHOULD ONLY APPEAR WHEN THERE ARE PREVIOUS SUBMISSIONS DONE BY THE USER FOR THIS ACTIVITY
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
+                              Evidences: </label></td>
+                          <!--SUBMISSION OF NEW FILE INTO THE SYSTEM AND FOR ACTIVITY-->
+                          <td><input type="file" name="DocFile" id="DocFile" multiple></td>
+                        </tr>
+                        <tr>
+                          <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
+                              Evidences from system: </label></td>
+                          <!--SUBMISSION OF EVIDENCE TAKEN FROM THE SYSTEM-->
+                          <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target=".chooseEvidence">Choose
+                              Evidence</button></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td style="width=100%; height=100%;">
+                            <table id="table2" class="table table-striped table-bordered"
+                              style="width=100%; height=100%;">
+                              <thead>
+                                <tr>
+                                  <th>Check</th>
+                                  <th>Document ID</th>
+                                  <th>File Name</th>
+                                  <th>Routes</th>
+                                  <th style="display: none;">Group ID</th>
+                                </tr>
+                              </thead>
 
-                                                            <tbody>
+                              <tbody>
 
-                                                            </tbody>
-
-
-                                                        </table>
-                                                        <button type="button" class="delete-row">Delete Row</button>
-                                                    </td>
-                                                </tr>
-                                                <tr style="display: none;">
-                                                    <td>
-                                                        <input type="hidden" id="MID" name="MID" value="" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" id="target" value="" class="form-control col-md-7 col-xs-12">
-                                                        <input type="hidden" name="code" id="code" value="" class="form-control col-md-7 col-xs-12">
-                                                    </td>
-                                                    <td>
-                                                        <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
-                                                    </td>
-
-                                                </tr>
-                                            </form>
-                                                <td></td>
-                                                <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
-                                        </tbody>
-                                        
+                              </tbody>
 
 
-                                    </table>
+                            </table>
+                            <button type="button" class="delete-row">Delete Row</button>
+                          </td>
+                        </tr>
+                        <tr style="display: none;">
+                          <td>
+                              <input type="hidden" id="MID" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
+                              <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
+                              <input type="hidden" name="code" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
+                          </td>
+                          <td>
+                            <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
+                          </td>
 
-                                    <div class="ln_solid"></div>
-                                </div>
+                        </tr>
+                      </form>
+                      <td></td>
+                      <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
+                    </tbody>
 
-                            </div>
-                        </div>
-                    </div>
+
+
+                  </table>
+
+                  <div class="ln_solid"></div>
                 </div>
 
-
-                <!-- /page content -->
-
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
+              </div>
             </div>
+          </div>
         </div>
 
-        <!--MODAL FOR CHOOSE EVIDENCE-->
-        <div class="modal fade chooseEvidence" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel2">Choose Evidence</h4>
-                    </div>
-                    <div class="modal-body">
-                        <table name="table1" id="table1" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Check</th>
-                                    <th>Document ID</th>
-                                    <th>File Name</th>
-                                    <th>Routes</th>
-                                    <th style="visibility:collapse;">Group ID</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                               
-                                <tr>
-                                    <td>
-                                        <label class="containercheckbox">
-                                            <input type='checkbox' name='record' id=''>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </td>
-                                    <td id="DID" value="">
-                                        </td>
-                                    <td id="Doc" value="">
-                                        </td>
-                                    <td id="Route" value="">
-                                        </td>
-                                    <td id='hidden' value="" style="visibility:collapse;">test</td>
-                                </tr>
-                                
-                            </tbody>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!--MODAL FOR CHOOSE EVIDENCE-->
+    <div class="modal fade chooseEvidence" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel2">Choose Evidence</h4>
+          </div>
+          <div class="modal-body">
+            <table name="table1" id="table1" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Check</th>
+                  <th>Document ID</th>
+                  <th>File Name</th>
+                  <th>Routes</th>
+                  <th style="visibility:collapse;">Group ID</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                  <% for (var doc of dataB) { %>
+                    <tr>
+                        <td>
+                            <label class="containercheckbox">
+                                <input type='checkbox' name='record' id='<%= doc.Document_ID %>'>
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td id="DID<%= doc.Document_ID %>" value="<%= doc.Document_ID %>">
+                            <%= doc.Document_ID %></td>
+                        <td id="Doc" value="<%= doc.Document_Name %>">
+                            <%= doc.Document_Name %></td>
+                        <td id="Route" value="<%= doc.Document_Route %>">
+                            <%= doc.Document_Route %></td>
+                        <td id='hidden' value="" style="visibility:collapse;">test</td>
+                    </tr>
+                    <% } %>
+              </tbody>
 
 
-                        </table>
-                    </div>
-                    <button type="button" class="add-row">Add Row</button>
+            </table>
+          </div>
+          <button type="button" class="add-row">Add Row</button>
 
-                </div>
-            </div>
         </div>
+      </div>
+    </div>
 
-        <!--TEST SCRIPT FOR ADDING-->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $(".add-row").click(function() {
-                    $("#table1 tbody").find('input[name="record"]').each(function() {
-                        //console.log('test');
-                        if ($(this).is(":checked")) {
-                            var index = $(this).attr("id");
-                            var DID = $('#DID' + index).attr("value");
-                            var Doc = $('#Doc').attr("value");
-                            //console.log(Doc);
-                            var Route = $("#Route").attr("value");
-                            //console.log(last);
-                            var hidden = $('#hidden' + index).attr("value");
-                            var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
-                                "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
-                                "</td><td id= Route" + " value=" + Route + ">" + Route +
-                                "</td><td id= hidden" + index + " value=" + hidden +
-                                " style='visibility:collapse'>" + hidden + "</td></tr>";
-                            $("#table2 tbody").append(markup);
-                            $(this).parents("tr").remove();
-                        }
-                    });
-                });
-
-                // Find and remove selected table rows
-
-                $(".delete-row").click(function() {
-                    $("#table2 tbody tr").find('input[name="record"]').each(function() {
-
-                        if ($(this).is(":checked")) {
-                            var index = $(this).attr("id");
-                            var DID = $('#DID' + index).attr("value");
-                            var Doc = $('#Doc').attr("value");
-                            // console.log(first);
-                            var Route = $("#Route").attr("value");
-                            //console.log(last);
-                            var hidden = $('#hidden' + index).attr("value");
-                            var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + ">" + DID +
-                                "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
-                                "</td><td id= Route" + " value=" + Route + ">" + Route +
-                                "</td><td id= hidden" + index + " value=" + hidden +
-                                " style='visibility:collapse'>" + hidden + "</td></tr>";
-                            $("#table1 tbody").append(markup);
-                            $(this).closest("tr").remove();
-
-
-                        }
-                    });
-
-                });
-
-                $("#toJSON").click(function() {
-                    console.log("Hello");
-                    var table = JSON.stringify($('#table2').tableToJSON());
-                    var AID = document.getElementById("activityID").value
-                    var name = document.getElementById("activityName").value
-                    var code = document.getElementById("code").value
-                    var description = document.getElementById("subdesc").value
-                    var MID = document.getElementById("MID").value
-                    var target = document.getElementById("target").value
-                    var score = document.getElementById("score").value
-
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/SendDocumentsJSON', true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onload = function() {
-                        console.log(xhr.responseText);
-                    };
-
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4) {
-                            var respData = xhr.responseText;
-                            if (respData == "OK") {
-                                console.log("Good");
-                                backsuccess();
-                            } else {
-                                console.log("Not Good");
-                            }
-                        }
-                    };
-
-
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target+ "&score=" + score);
-
-                });
-
-                function backsuccess() {
-                    var button = document.getElementById('passdocuments');
-                    button.click();
-
-                };
-
-
-            });
-
-        </script>
-
-        <script>
-            function textAreaAdjust(o) {
-                o.style.height = "1px";
-                o.style.height = (25 + o.scrollHeight) + "px";
+    <!--TEST SCRIPT FOR ADDING-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".add-row").click(function () {
+          $("#table1 tbody").find('input[name="record"]').each(function () {
+            //console.log('test');
+            if ($(this).is(":checked")) {
+              var index = $(this).attr("id");
+              var DID = $('#DID' + index).attr("value");
+              var Doc = $('#Doc').attr("value");
+              //console.log(Doc);
+              var Route = $("#Route").attr("value");
+              //console.log(last);
+              var hidden = $('#hidden' + index).attr("value");
+              var markup =
+                "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" +
+                DID + ">" + DID +
+                "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
+                "</td><td id= Route" + " value=" + Route + ">" + Route +
+                "</td><td id= hidden" + index + " value=" + hidden +
+                " style='visibility:collapse'>" + hidden + "</td></tr>";
+              $("#table2 tbody").append(markup);
+              $(this).parents("tr").remove();
             }
+          });
+        });
+
+        // Find and remove selected table rows
+
+        $(".delete-row").click(function () {
+          $("#table2 tbody tr").find('input[name="record"]').each(function () {
+
+            if ($(this).is(":checked")) {
+              var index = $(this).attr("id");
+              var DID = $('#DID' + index).attr("value");
+              var Doc = $('#Doc').attr("value");
+              // console.log(first);
+              var Route = $("#Route").attr("value");
+              //console.log(last);
+              var hidden = $('#hidden' + index).attr("value");
+              var markup =
+                "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
+                index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" +
+                DID + ">" + DID +
+                "</td><td id= Doc" + " value=" + Doc + ">" + Doc +
+                "</td><td id= Route" + " value=" + Route + ">" + Route +
+                "</td><td id= hidden" + index + " value=" + hidden +
+                " style='visibility:collapse'>" + hidden + "</td></tr>";
+              $("#table1 tbody").append(markup);
+              $(this).closest("tr").remove();
 
 
-            function test() {
-                alert("1");
-                var form = document.getElementById("Form");
-
-                var form_data = new FormData(form);
-                var ins = document.getElementById('multiFiles').files.length;
-                for (var x = 0; x < ins; x++) {
-                    form_data.append("files[]", document.getElementById('multiFiles').files[x]);
-                }
-                var form_data = "Hello";
-                alert("2");
-                $.ajax({
-                    type: 'POST',
-                    url: '/SendDocumentsJSON',
-                    dataType: 'text',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: form_data,
-                    success: function(response) {
-                        console.log("Good")
-                    },
-                    error: function(response) {
-                        console.log("Not Good")
-                    }
-                });
             }
+          });
+
+        });
+
+        $("#toJSON").click(function () {
+          console.log("Hello");
+          var table = JSON.stringify($('#table2').tableToJSON());
+          var AID = document.getElementById("activityID").value
+          var name = document.getElementById("activityName").value
+          var code = document.getElementById("code").value
+          var description = document.getElementById("subdesc").value
+          var MID = document.getElementById("MID").value
+          var target = document.getElementById("target").value
+          var score = document.getElementById("score").value
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/SendDocumentsJSON', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function () {
+            console.log(xhr.responseText);
+          };
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+              var respData = xhr.responseText;
+              if (respData == "OK") {
+                console.log("Good");
+                backsuccess();
+              } else {
+                console.log("Not Good");
+              }
+            }
+          };
 
 
-        </script>
+          xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" +
+            description + "&MID=" + MID + "&target=" + target + "&score=" + score);
+
+        });
+
+        function backsuccess() {
+          var button = document.getElementById('passdocuments');
+          button.click();
+
+        };
 
 
-        <!-- jQuery -->
-        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="assets/vendors/nprogress/nprogress.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="assets/vendors/iCheck/icheck.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="assets/vendors/moment/min/moment.min.js"></script>
-        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap-wysiwyg -->
-        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-        <!-- jQuery Tags Input -->
-        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-        <!-- Switchery -->
-        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-        <!-- Select2 -->
-        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-        <!-- Parsley -->
-        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-        <!-- Autosize -->
-        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-        <!-- jQuery autocomplete -->
-        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-        <!-- starrr -->
-        <script src="assets/vendors/starrr/dist/starrr.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
-        <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+      });
+    </script>
+
+    <script>
+      function textAreaAdjust(o) {
+        o.style.height = "1px";
+        o.style.height = (25 + o.scrollHeight) + "px";
+      }
+
+
+      function test() {
+        alert("1");
+        var form = document.getElementById("Form");
+
+        var form_data = new FormData(form);
+        var ins = document.getElementById('multiFiles').files.length;
+        for (var x = 0; x < ins; x++) {
+          form_data.append("files[]", document.getElementById('multiFiles').files[x]);
+        }
+        var form_data = "Hello";
+        alert("2");
+        $.ajax({
+          type: 'POST',
+          url: '/SendDocumentsJSON',
+          dataType: 'text',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          success: function (response) {
+            console.log("Good")
+          },
+          error: function (response) {
+            console.log("Not Good")
+          }
+        });
+      }
+    </script>
+
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
+    <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
 
 </body>
 
