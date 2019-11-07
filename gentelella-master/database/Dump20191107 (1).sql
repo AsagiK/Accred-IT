@@ -36,7 +36,7 @@ CREATE TABLE `activity_evidences` (
 
 LOCK TABLES `activity_evidences` WRITE;
 /*!40000 ALTER TABLE `activity_evidences` DISABLE KEYS */;
-INSERT INTO `activity_evidences` VALUES (1,1),(1,4),(1,3),(1,5),(1,2),(2,6),(1,7),(1,13),(1,20),(1,18),(1,10),(1,11),(1,16),(1,21),(1,17),(1,15),(1,14),(1,12),(1,22),(1,19),(1,9),(1,8),(2,27),(2,23),(2,38),(2,26),(2,31),(2,36),(2,24),(2,30),(2,29),(2,45),(2,28),(2,40),(2,25),(2,35),(2,34),(2,42),(2,46),(2,44),(2,41),(2,43),(2,32),(2,37),(2,39),(2,33),(3,47),(3,50),(3,48),(3,49),(3,53),(3,71),(3,54),(3,63),(3,51),(3,73),(3,52),(3,55),(3,74),(3,64),(3,61),(3,66),(3,60),(3,76),(3,79),(3,82),(3,62),(3,67),(3,80),(3,58),(3,93),(3,83),(3,78),(3,90),(3,84),(3,65),(3,97),(3,92),(3,88),(3,94),(3,68),(3,87),(3,75),(3,89),(3,57),(3,70),(3,91),(3,85),(3,86),(3,103),(3,98),(3,96),(3,102),(3,105),(3,99),(3,69),(3,110),(3,56),(3,77),(3,112),(3,109),(3,81),(3,95),(3,104),(3,114),(3,72),(3,59),(3,117),(3,101),(3,111),(3,123),(3,121),(3,115),(3,133),(3,125),(3,126),(3,107),(3,124),(3,127),(3,122),(3,106),(3,134),(3,113),(3,132),(3,128),(3,118),(3,119),(3,142),(3,144),(3,120),(3,143),(3,136),(3,116),(3,131),(3,138),(3,135),(3,140),(3,139),(3,159),(3,137),(3,130),(3,129),(3,141),(3,145),(3,149),(3,155),(3,156),(3,100),(3,146),(3,108),(3,151),(3,161),(3,158),(3,148),(3,147),(3,160),(3,157),(3,152),(3,163),(3,153),(3,162),(3,150),(3,164),(3,171),(3,154),(3,166),(3,165),(3,174),(3,168),(3,176),(3,178),(3,170),(3,175),(3,172),(3,192),(3,177),(3,173),(3,188),(3,169),(3,194),(3,167),(3,182),(3,186),(3,183),(3,198),(3,187),(3,189),(3,181),(3,184),(3,180),(3,193),(3,196),(3,199),(3,179),(3,191),(3,190),(3,200),(3,197),(3,185),(3,195),(11,201),(12,202),(12,201),(12,203),(18,203),(18,204),(18,203),(18,204),(18,205),(18,206),(12,204),(12,203),(18,201),(18,202),(18,203),(18,201),(18,202),(18,203),(18,202),(18,203),(18,204),(18,207),(18,208),(18,209);
+INSERT INTO `activity_evidences` VALUES (1,1),(1,4),(1,3),(1,5),(1,2),(2,6),(1,7),(1,13),(1,20),(1,18),(1,10),(1,11),(1,16),(1,21),(1,17),(1,15),(1,14),(1,12),(1,22),(1,19),(1,9),(1,8),(2,27),(2,23),(2,38),(2,26),(2,31),(2,36),(2,24),(2,30),(2,29),(2,45),(2,28),(2,40),(2,25),(2,35),(2,34),(2,42),(2,46),(2,44),(2,41),(2,43),(2,32),(2,37),(2,39),(2,33),(3,47),(3,50),(3,48),(3,49),(3,53),(3,71),(3,54),(3,63),(3,51),(3,73),(3,52),(3,55),(3,74),(3,64),(3,61),(3,66),(3,60),(3,76),(3,79),(3,82),(3,62),(3,67),(3,80),(3,58),(3,93),(3,83),(3,78),(3,90),(3,84),(3,65),(3,97),(3,92),(3,88),(3,94),(3,68),(3,87),(3,75),(3,89),(3,57),(3,70),(3,91),(3,85),(3,86),(3,103),(3,98),(3,96),(3,102),(3,105),(3,99),(3,69),(3,110),(3,56),(3,77),(3,112),(3,109),(3,81),(3,95),(3,104),(3,114),(3,72),(3,59),(3,117),(3,101),(3,111),(3,123),(3,121),(3,115),(3,133),(3,125),(3,126),(3,107),(3,124),(3,127),(3,122),(3,106),(3,134),(3,113),(3,132),(3,128),(3,118),(3,119),(3,142),(3,144),(3,120),(3,143),(3,136),(3,116),(3,131),(3,138),(3,135),(3,140),(3,139),(3,159),(3,137),(3,130),(3,129),(3,141),(3,145),(3,149),(3,155),(3,156),(3,100),(3,146),(3,108),(3,151),(3,161),(3,158),(3,148),(3,147),(3,160),(3,157),(3,152),(3,163),(3,153),(3,162),(3,150),(3,164),(3,171),(3,154),(3,166),(3,165),(3,174),(3,168),(3,176),(3,178),(3,170),(3,175),(3,172),(3,192),(3,177),(3,173),(3,188),(3,169),(3,194),(3,167),(3,182),(3,186),(3,183),(3,198),(3,187),(3,189),(3,181),(3,184),(3,180),(3,193),(3,196),(3,199),(3,179),(3,191),(3,190),(3,200),(3,197),(3,185),(3,195),(11,201),(12,202),(12,201),(12,203),(18,203),(18,204),(18,203),(18,204),(18,205),(18,206),(12,204),(12,203),(18,201),(18,202),(18,203),(18,201),(18,202),(18,203),(18,202),(18,203),(18,204),(18,207),(18,208),(18,209),(18,210);
 /*!40000 ALTER TABLE `activity_evidences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +218,7 @@ CREATE TABLE `documents` (
   `InDrive` tinyint(1) NOT NULL DEFAULT '0',
   `DriveID` varchar(40) DEFAULT '0',
   PRIMARY KEY (`Document_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES (201,'F1institutional-moa-re-ojt.doc','uploads/F1institutional-moa-re-ojt.doc',NULL,'.doc',1,'1fUZrQ9PRlAHFh4DlkF35ed2zvAYEkHMx'),(202,'F1institutional-moa-re-ojt.doc','uploads/F1institutional-moa-re-ojt.doc',NULL,'.doc',1,'1fUZrQ9PRlAHFh4DlkF35ed2zvAYEkHMx'),(203,'LITEPOPRI.docx','uploads/LITEPOPRI.docx',NULL,'.docx',1,'10NhrX-GgGvOax_Ou2lyO-RAxWWBvpKs5'),(204,'ONEDECISIONCANCHANGETHEFUTURE.png','uploads/ONEDECISIONCANCHANGETHEFUTURE.png',NULL,'.png',1,'1cLMYJ3GIck65ETcxNloO0vj347T1utu4'),(205,'PTOUR-2A2SorianoRijaneMayC.doc','uploads/PTOUR-2A2SorianoRijaneMayC.doc',NULL,'.doc',1,'1Y2E65VaC9KMR20o80IZxOCpngBJiidx7'),(206,'MOBAPDEAndroidChallenge1-S18.docx','uploads/MOBAPDEAndroidChallenge1-S18.docx',NULL,'.docx',1,'1ZpAQ7940dglSUD5-8UJumg5nR-i7YYd0'),(207,'04-19-04-35-15-2019.jpg','uploads/04-19-04-35-15-2019.jpg',NULL,'.jpg',1,'1cr9mAUFm-bo2aBT0dTCisfUt7zbogFB8'),(208,'04-19-04-39-33-2019.png','uploads/04-19-04-39-33-2019.png',NULL,'.png',1,'1fGRoFtBbJdiOJ4qaUMBA5WV34QAVLTLs'),(209,'04-19-04-40-40-2019.png','uploads/04-19-04-40-40-2019.png',NULL,'.png',1,'1sd7l9pTS-kF831Cjsgu2TGqpXJBBOxWS');
+INSERT INTO `documents` VALUES (201,'F1institutional-moa-re-ojt.doc','uploads/F1institutional-moa-re-ojt.doc',NULL,'.doc',1,'1fUZrQ9PRlAHFh4DlkF35ed2zvAYEkHMx'),(202,'F1institutional-moa-re-ojt.doc','uploads/F1institutional-moa-re-ojt.doc',NULL,'.doc',1,'1fUZrQ9PRlAHFh4DlkF35ed2zvAYEkHMx'),(203,'LITEPOPRI.docx','uploads/LITEPOPRI.docx',NULL,'.docx',1,'10NhrX-GgGvOax_Ou2lyO-RAxWWBvpKs5'),(204,'ONEDECISIONCANCHANGETHEFUTURE.png','uploads/ONEDECISIONCANCHANGETHEFUTURE.png',NULL,'.png',1,'1cLMYJ3GIck65ETcxNloO0vj347T1utu4'),(205,'PTOUR-2A2SorianoRijaneMayC.doc','uploads/PTOUR-2A2SorianoRijaneMayC.doc',NULL,'.doc',1,'1Y2E65VaC9KMR20o80IZxOCpngBJiidx7'),(206,'MOBAPDEAndroidChallenge1-S18.docx','uploads/MOBAPDEAndroidChallenge1-S18.docx',NULL,'.docx',1,'1ZpAQ7940dglSUD5-8UJumg5nR-i7YYd0'),(207,'04-19-04-35-15-2019.jpg','uploads/04-19-04-35-15-2019.jpg',NULL,'.jpg',1,'1cr9mAUFm-bo2aBT0dTCisfUt7zbogFB8'),(208,'04-19-04-39-33-2019.png','uploads/04-19-04-39-33-2019.png',NULL,'.png',1,'1fGRoFtBbJdiOJ4qaUMBA5WV34QAVLTLs'),(209,'04-19-04-40-40-2019.png','uploads/04-19-04-40-40-2019.png',NULL,'.png',1,'1sd7l9pTS-kF831Cjsgu2TGqpXJBBOxWS'),(210,'04-22-08-25-15-2019.jpg','uploads/04-22-08-25-15-2019.jpg',NULL,'.jpg',1,'1l1tH5tbpXOFMjIvNwBLzvaV79YN6ymcf');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,6 +463,7 @@ CREATE TABLE `pending_activities` (
   `suggested_Score` int(11) DEFAULT NULL,
   `dateupdated` date NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
+  `user_ID` int(11) NOT NULL,
   PRIMARY KEY (`pending_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -473,7 +474,7 @@ CREATE TABLE `pending_activities` (
 
 LOCK TABLES `pending_activities` WRITE;
 /*!40000 ALTER TABLE `pending_activities` DISABLE KEYS */;
-INSERT INTO `pending_activities` VALUES (1,18,'2',NULL,1,'Kaguya',NULL,NULL,NULL,13,'2019-11-07',1);
+INSERT INTO `pending_activities` VALUES (1,18,'2',NULL,1,'Hello',NULL,NULL,NULL,100,'2019-11-07',1,46);
 /*!40000 ALTER TABLE `pending_activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -704,4 +705,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-07 17:45:11
+-- Dump completed on 2019-11-07 18:07:28

@@ -77,6 +77,8 @@
                             <!--ACTIVITY ID-->
                             <input type="hidden" name="activityID" id="activityID" value="<%= data[0].activity_ID %>"
                               class="form-control col-md-7 col-xs-12">
+                                  <input type="hidden" name="UID" id="UID" value="<%= current_user[0].User_ID %>"
+                              class="form-control col-md-7 col-xs-12">
                         </tr>
                         <tr>
                           <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Activity
@@ -329,6 +331,7 @@
           var code = document.getElementById("code").value
           var description = document.getElementById("subdesc").value
           var MID = document.getElementById("MID").value
+          var UID = document.getElementById("UID").value
           var target = document.getElementById("target").value
           var score = document.getElementById("score").value
 
@@ -353,7 +356,7 @@
 
 
           xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" +
-            description + "&MID=" + MID + "&target=" + target + "&score=" + score);
+            description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID);
 
         });
 

@@ -567,14 +567,15 @@ module.exports = {
         var AID = req.body.AID;
         var name = req.body.name;
         var code = req.body.code;
+        var UID = req.body.UID;
         var description = req.body.description;
         //var MID = req.body.MID;
         var target = req.body.target;
         var score = req.body.score;
         var today = new Date();
         var current = today.toISOString().split('T')[0];
-        var values2 = [AID, name, code, description, score, current]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`) VALUES (? , ?, ?, ?, ?, ?);"
+        var values2 = [AID, name, code, description, score, current, UID]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`) VALUES (? , ?, ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
             if (results) {
