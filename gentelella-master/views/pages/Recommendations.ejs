@@ -348,7 +348,7 @@
             if (xhr.readyState == 4) {
               var respData = xhr.responseText;
               if (respData == "Not OK") {
-                console.log("Not Good");
+                console.log("Not Good, Respdata =" + respData);
               } else {
                 console.log("Good");
                 document.getElementById('PID').value=respData;
