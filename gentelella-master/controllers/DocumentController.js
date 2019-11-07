@@ -600,7 +600,10 @@ module.exports = {
                     var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); ";
                     var values = [AID, did, pendingID];
                     connection.query(sql, values, function (err, result) {
-                        if (err) callback(err);
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        }
                         if (result) {
                             console.log("Document linked to DB");
                             callback();
