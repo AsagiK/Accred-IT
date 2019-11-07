@@ -137,7 +137,7 @@
 
                                 <div class="title_left">
                                     <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
-                                    <h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1>
+                                    <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                 </div>
                                 <br />
 
@@ -195,8 +195,9 @@
                                                                 <th>Deadline</th>
                                                                 <th></th>
                                                                 <th></th>
-                                                                <th>testing - <%= dataH.length %></th>
-
+                                                                <% if (current_user[0].Role == 1) { %>
+                                                                <th></th>
+                                                                <% } %>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -231,12 +232,15 @@
                                                                                         </button>
                                                                                     </form>
                                                                                     <br>
+                                                                                    
                                                                                     <button class="btn btn-primary" href="#my_modal"
                                                                                         data-toggle="modal"
                                                                                         data-book-id="<%= activities.activity_ID %>">Add
                                                                                         expected output/s -
                                                                                         <%= activities.activity_ID %></button>
+                                                                                    
                                                                                 </td>
+                                                                                
                                                                                 <td>
                                                                                     <form method="get" action="AssignActivityToMember">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
@@ -245,6 +249,7 @@
                                                                                         </button>
                                                                                     </form>
                                                                                 </td>
+                                                                                
                                                                             </tr>
                                                                             <% } %>
                                                                             <% } %>
@@ -282,21 +287,10 @@
                                                                                             Evidence
                                                                                         </button>
                                                                                     </form>
-                                                                                    <br>
-                                                                                    <button class="btn btn-primary" href="#my_modal"
-                                                                                        data-toggle="modal"
-                                                                                        data-book-id="<%= activities.activity_ID %>">Add
-                                                                                        expected output/s -
-                                                                                        <%= activities.activity_ID %></button>
+                                                                                   
+                                                                                    
                                                                                 </td>
-                                                                                <td>
-                                                                                    <form method="get" action="AssignActivityToMember">
-                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
-                                                                                        <button type="submit" class="btn btn-primary">Assign Members
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </td>
+                                                                                
                                                                             </tr>
                                                                             
                                                                             <% } %>
