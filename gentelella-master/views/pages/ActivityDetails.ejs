@@ -108,9 +108,9 @@
                                                     <td>
                                                         <!--EXPECTED OUTPUTS CODE HERE-->
                                                         <% for( var outputs of dataC) { %>
-                                                            <% if (data[0].activity_ID == outputs.activity_ID) { %>
-                                                                <%= outputs.output %> <br>
-                                                            <% } %>
+                                                        <% if (data[0].activity_ID == outputs.activity_ID) { %>
+                                                        <%= outputs.output %> <br>
+                                                        <% } %>
                                                         <% } %>
                                                     </td>
                                                 </tr>
@@ -139,13 +139,6 @@
                                                         <input type="number" name="score" id="score"
                                                             placeholder="Suggested Progress">
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                        <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Previous Evidences: </label></td>
-                                                        <td>
-                                                          <!--PREVIOUS EVIDENCES CODE HERE-->
-                                                          SHOULD ONLY APPEAR WHEN THERE ARE PREVIOUS SUBMISSIONS DONE BY THE USER FOR THIS ACTIVITY
-                                                        </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
@@ -192,6 +185,8 @@
                                                             class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" name="code" id="code"
                                                             value="<%= data[0].code %>"
+                                                            class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" id="PID" name="PID" value=""
                                                             class="form-control col-md-7 col-xs-12">
                                                     </td>
                                                     <td>
@@ -363,19 +358,18 @@
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4) {
                             var respData = xhr.responseText;
-                            if (respData == "OK") {
-                                console.log("Good");
-                                backsuccess();
+                            if (respData == "Not OK") {
+                                console.log("Not Good, Respdata =" + respData);
                             } else {
-                                console.log("Not Good");
+                                console.log("Good");
+                                document.getElementById('PID').value = respData;
+                                backsuccess();
                             }
                         }
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code +
-                        "&description=" + description + "&MID=" + MID + "&target=" + target +
-                        "&score=" + score + "&UID=" + UID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID);
 
                 });
 

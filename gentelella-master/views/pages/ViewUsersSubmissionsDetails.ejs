@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Submissions Page </title>
+    <title>View Submissions Details Page </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,9 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -42,8 +45,9 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>View Submissions</h3>
+                            <h3>View Submissions Details</h3>
                             <h2>Testing User - <%= current_user[0].User_First %> - <%= current_user[0].User_ID %></h2>
+                            <h2>Current Submission - <%= data[0].pending_ID %> - <%= data[0].activity_name %></h2>
                         </div>
                     </div>
                 </div>
@@ -52,42 +56,38 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
+                                <input type="text" name="PID" id="PID" value="<%= data[0].pending_ID %>">
+
                                 <br />
-                                <table class="table table-bordered">
+                                <!--DROPDOWN TO SELECT EVIDENCE TO UPDATE-->
+                                <select class="form-control" name="evidences" id="evidences">
+                                    <% for (var docs of dataB) { %>
+                                    <% for (var evidence of dataC) { %>
+                                        <% if (evidence.pendingID == data[0].pending_ID && evidence.documentID == docs.Document_ID) { %>
+                                            <option value="<%= docs.Document_ID %>~<%= docs.Document_Name %>"><%= docs.Document_ID %>--<%= docs.Document_Name %></option>
+                                        <% } %>
+                                    <% } %>
+                                    <% } %>
+
+                                </select>
+                                <br>
+
+                                <button type="button" class="btn btn-default addEvidence">Add</button>
+
+                                <br>
+                                <!--TABLE TO HOLD THE CHOSEN EVIDENCE TO UPDATE-->
+                                <table class="table table-bordered" id="updateTable">
                                         <thead>
                                             <tr>
                                                 <th>Submission ID</th>
-                                                <th>Activity ID</th>
-                                                <th>Activity Name</th>
-                                                <th>Description</th>
+                                                <th>Evidence</th>
+                                                <th>Updated Evidence</th>
                                                 <th></th>
+                                                <th>EvidenceID</th>
 
                                             </tr>
                                         </thead>
-                                        <tbody>
-
-                                            <% for (var submissions of data) { %>
-                                            
-                                            <tr>
-                                                
-
-                                                    <td><%= submissions.pending_ID %></td>
-                                                    <td><%= submissions.activity_ID %></td>
-                                                    <td><%= submissions.activity_name %></td>
-                                                    <td><%= submissions.description %></td>
-                                                    <td>
-                                                        <form method="get" action="ViewUsersSubmissionDetails">
-                                                            <input type=text name="subID" id="subID" value="<%= submissions.pending_ID %>">
-                                                            <button type="submit" class="btn btn-primary">Update Evidence</button>
-                                                        </form>
-                                                    </td>
-                                                    
-                                                    
-                                                
-                                                
-                                            </tr>
-                                            <% } %>
-                                        </tbody>
+                                        
                                     </table>
                             </div>
                         </div>
@@ -107,6 +107,28 @@
                 <!-- /footer content -->
             </div>
         </div>
+
+        <script type="text/javascript">
+        
+        $(document).ready(function() {
+            $(".addEvidence").click(function test() {
+                
+                //alert("testing adding activities");
+                    var PID = $("#PID").val();
+                    var evidences = $("#evidences").val();
+                    
+                    var evidenceID = evidences.substr(0, evidences.indexOf('~'));
+                    var evidenceName = evidences.substr(evidences.lastIndexOf('~') + 1);
+                    console.log(evidenceID);
+                    console.log(evidenceName);
+                    //console.log(activityName);
+                    var markup = "<tr><td '>" + PID + "</td><td>" + evidenceName + "</td><td><input type='file' name='DocFile' id='DocFile'></td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" + evidenceID + "</td></tr>";
+                    var table = document.getElementById("updateTable")
+                    $(table).append(markup);
+            });
+        });
+
+        </script>
 
         <!Script for dynamic text area>
         <script>

@@ -1152,4 +1152,31 @@ module.exports = {
 
     },
 
+    ViewUsersSubmissionDetails: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var userid= req.query.sess;
+            var SID = req.query.subID;
+            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?) && pending_ID = (?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
+            var values = [sess.user[0].User_ID, SID, SID];
+            console.log(sess.user[0].User_ID);
+            console.log(SID);
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/ViewUsersSubmissionsDetails.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results)
+            });
+        }
+
+
+    },
+
 }

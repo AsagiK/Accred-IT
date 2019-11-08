@@ -104,8 +104,9 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 //OTHERS
 router.route('/TestPage').get(planCtrl.Recommendations);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
-router.route('/CreateGrades').get(planCtrl.CreateGrades);
+router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
 
+router.route('/CreateGrades').get(planCtrl.CreateGrades);
 router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
 router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
 router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
