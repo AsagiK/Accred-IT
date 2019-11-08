@@ -621,6 +621,20 @@ module.exports = {
             }
         }
     },
+    
+    UpdateDocumentsJSON: function (req, resp){
+        /*
+      Step 0 = create isaversionof, md5, and version number in documents table
+      Step 1 = receive ID of document to be updated and new document
+      Step 2 = generate a hash of new document
+      Step 3 = compare hash of old document and new document
+      IF failed then return a dupicate error
+      IF not failed check for same filename
+      IF same filename then append v + "version number" to filename
+      ELSE process document and return success message
+      Step 4 = fix hardlinks of evidence to activity
+      */
+    },
 
 
 }
