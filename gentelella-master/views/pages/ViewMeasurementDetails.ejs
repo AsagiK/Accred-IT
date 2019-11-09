@@ -181,11 +181,11 @@
                                                         <thead>
                                                             <tr>
 
-                                                                <th>ID</th>
+                                                                <th style="display: none;">ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
-                                                                <th>Weight</th>
                                                                 <th>Expected Outputs</th>
+                                                                <th>Weight</th>
                                                                 <th>Deadline</th>
                                                                 <th></th>
                                                                 <th></th>
@@ -196,10 +196,9 @@
                                                             <% for (activities of dataB) { %>
                                                             <tr>
 
-                                                                <td><%= activities.activity_ID %></td>
+                                                                <td style="display: none;"><%= activities.activity_ID %></td>
                                                                 <td><%= activities.activity_name %></td>
                                                                 <td><%= activities.description %></td>
-                                                                <td><%= activities.target %></td>
                                                                 <td>
 
                                                                     <% for (outputs of dataD){ %>
@@ -209,6 +208,7 @@
                                                                     <% } %>
 
                                                                 </td>
+                                                                <td><%= activities.target %></td>
                                                                 <td><%= activities.deadline %></td>
                                                                 <td>
                                                                     <form method="get" action="ActivityDetails">
@@ -268,9 +268,10 @@
                                                         <tr>
 
                                                             <!--th></th-->
-                                                            <th>ID</th>
+                                                            <th style="display: none;">ID</th>
                                                             <th>Activity Name</th>
                                                             <th>Description</th>
+                                                            <th>Expected Outputs</th>
                                                             <th>Weight</th>
                                                             <th></th>
                                                             <!--th style="display: none">Code</th-->
@@ -281,9 +282,18 @@
                                                         <% for (activities of dataC) { %>
                                                         <tr>
 
-                                                            <td><%= activities.activity_ID %></td>
+                                                            <td style="display: none;"><%= activities.activity_ID %></td>
                                                             <td><%= activities.activity_name %></td>
                                                             <td><%= activities.description %></td>
+                                                            <td>
+
+                                                                <% for (outputs of dataD){ %>
+                                                                    <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                        <%= outputs.output_ID %> - <%= outputs.output %> <br>
+                                                                    <% } %>
+                                                                <% } %>
+
+                                                            </td>
                                                             <td><%= activities.target %></td>
 
                                                             <td>
@@ -501,13 +511,9 @@
                                 data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
                                 aria-controls="FacilitiesGroupOne">
                             </a>
-
                             <br>
-
-                            <label for="activityID">Activity ID</label>
-                            <br>
-                            <input type="text" name="activityID" id="activityID" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="hidden" name="activityID" id="activityID" required="required"
+                                class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
@@ -524,8 +530,9 @@
                                 <thead>
                                     <tr>
 
-                                        <th>Activity ID</th>
+                                        <th style="display: none;">Activity ID</th>
                                         <th>Output</th>
+                                        <th></th>
 
                                     </tr>
                                 </thead>
@@ -716,7 +723,7 @@
                     var activity = $("#activityID").val();
                     var output = $("#activityoutput").val();
 
-                    var markup = "<tr><td>" + activity +
+                    var markup = "<tr><td style='display: none'>" + activity +
                         "</td><td>" + output + "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableoutputs")
                     $(table).append(markup);
@@ -771,8 +778,8 @@
         });
 
         $('#my_modal').on('show.bs.modal.fade', function (e) {
-            alert("test");
             var bookId = $(e.relatedTarget).data('book-id');
+            alert(bookId);
             $(e.currentTarget).find('input[name="activityID"]').val(bookId);
         });
 

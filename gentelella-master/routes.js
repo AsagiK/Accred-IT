@@ -45,9 +45,9 @@ router.route('/altermetric').post(planCtrl.altermetric);
 //MEASUREMENT ROUTES
 //router.route('/MeasurementPage').get(planCtrl.Measurement);
 router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
-//router.route('/alterplan').post(planCtrl.alterplan);
-//router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
-router.route('/QualityMetrics').get(planCtrl.Measurement);
+router.route('/alterplan').post(planCtrl.alterplan);
+router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
+router.route('/QualityMetrics').get(planCtrl.QualityMetric);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
@@ -89,6 +89,7 @@ router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
+router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
 
 
 //--DocCtrl--

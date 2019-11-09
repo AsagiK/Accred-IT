@@ -102,13 +102,19 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Suggested Score: </label></td>
+                                                    <td>
+                                                        <input type="number" name="score" id="score" placeholder="Suggested Score">
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
-                                                            Evdences: </label></td>
+                                                            Evidences: </label></td>
                                                     <td><input type="file" name="DocFile" id="DocFile" multiple></td>
                                                 </tr>
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
-                                                            Evdences from system: </label></td>
+                                                            Evidences from system: </label></td>
                                                     <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".chooseEvidence">Choose
                                                             Evidence</button></td>
                                                 </tr>
@@ -135,19 +141,22 @@
                                                         <button type="button" class="delete-row">Delete Row</button>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr style="display: none;">
                                                     <td>
                                                         <input type="hidden" id="MID" name="MID" value="<%= data[0].measurement_ID %>" class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" id="target" value="<%= data[0].target %>" class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" name="code" id="code" value="<%= data[0].code %>" class="form-control col-md-7 col-xs-12">
                                                     </td>
-                                                    <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
-
+                                                    <td>
+                                                        <button type="submit" id="passdocuments" style="display: none;">Submit Evidence</button>
+                                                    </td>
 
                                                 </tr>
                                             </form>
+                                                <td></td>
+                                                <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
                                         </tbody>
-                                        <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
+                                        
 
 
                                     </table>
@@ -285,6 +294,8 @@
                     var code = document.getElementById("code").value
                     var description = document.getElementById("subdesc").value
                     var MID = document.getElementById("MID").value
+                    var target = document.getElementById("target").value
+                    var score = document.getElementById("score").value
 
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
@@ -306,7 +317,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target+ "&score=" + score);
 
                 });
 
