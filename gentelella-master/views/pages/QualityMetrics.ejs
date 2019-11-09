@@ -34,8 +34,60 @@
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
 
 </head>
+
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
 
 <body class="nav-md">
     <div class="container body">
@@ -167,44 +219,44 @@
                                                                                                     <form>
 
                                                                                                         <!--Measurement Name input field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementName" >
-                                                                                                                Measurement Name: <span class="required">*</span></label>
-                                                                                                            <!--Edited-->
-                                                                                                            
-                                                                                                                <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-                                                                                                            
+
+                                                                                                        <label for="MeasurementName">
+                                                                                                            Measurement Name: <span class="required">*</span></label>
+                                                                                                        <!--Edited-->
+
+                                                                                                        <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+
                                                                                                         <br>
 
                                                                                                         <!--Measurement Description field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementDesc" >Measurement
-                                                                                                                Description:
-                                                                                                                <!--Edited-->
-                                                                                                                <span class="required">*</span></label>
-                                                                                                            
-                                                                                                                <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                            <br>
+
+                                                                                                        <label for="MeasurementDesc">Measurement
+                                                                                                            Description:
+                                                                                                            <!--Edited-->
+                                                                                                            <span class="required">*</span></label>
+
+                                                                                                        <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                                                                        <br>
                                                                                                         <!--Assign Group field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementDesc">Assign Group:
-                                                                                                                <!--Edited-->
-                                                                                                                <span class="required">*</span></label>
-                                                                                                            
-                                                                                                                <select class="form-control" name="AssignGoal">
-                                                                                                                    <% for (var group of dataC) { %>
-                                                                                                                    <option value="<%= group.Group_ID %>" name="group" id="group"><%= group.Group_Name %></option>
-                                                                                                                    <% } %>
-                                                                                                                </select>
+
+                                                                                                        <label for="MeasurementDesc">Assign Group:
+                                                                                                            <!--Edited-->
+                                                                                                            <span class="required">*</span></label>
+
+                                                                                                        <select class="form-control" name="group" id="group">
+                                                                                                            <% for (var group of dataC) { %>
+                                                                                                            <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                                                                            <% } %>
+                                                                                                        </select>
                                                                                                         <br>
                                                                                                         <!--Quality Target Input field-->
-                                                                                                        
-                                                                                                            <label for="Assign Goal" >Quality Target:</label>
-                                                                                                            <div id="newInp">
-                                                                                                                <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target" >
-                                                                                                            </div>
-                                                                                                            <button type="button" id="addRow" onclick="addQT()">+</button>
-                                                                                                        
+
+                                                                                                        <label for="Assign Goal">Quality Target:</label>
+                                                                                                        <div id="newInp">
+                                                                                                            <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target">
+                                                                                                        </div>
+                                                                                                        <button type="button" id="addRow" onclick="addQT()">+</button>
+
                                                                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                                                                             <table class="table table-striped" name="TargetT" id="TargetT">
                                                                                                                 <thead>
@@ -340,64 +392,64 @@
                                                                                                     </h4>
                                                                                                 </div>
                                                                                                 <div class="modal-body">
-                                                                                                    
 
-                                                                                                        <!--Measurement Name input field-->
-                                                                                                        <div class="form-group">
-                                                                                                            <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                                                                                Measurement Name: <span class="required">*</span></label>
+
+                                                                                                    <!--Measurement Name input field-->
+                                                                                                    <div class="form-group">
+                                                                                                        <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                                                            Measurement Name: <span class="required">*</span></label>
+                                                                                                        <!--Edited-->
+                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                            <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <!--Measurement Description field-->
+                                                                                                    <div class="form-group">
+                                                                                                        <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
+                                                                                                            Description:
                                                                                                             <!--Edited-->
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-                                                                                                            </div>
+                                                                                                            <span class="required">*</span></label>
+                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                            <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                                                                                         </div>
-
-                                                                                                        <!--Measurement Description field-->
-                                                                                                        <div class="form-group">
-                                                                                                            <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
-                                                                                                                Description:
-                                                                                                                <!--Edited-->
-                                                                                                                <span class="required">*</span></label>
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                            </div>
+                                                                                                    </div>
+                                                                                                    <!--Quality Target Input field-->
+                                                                                                    <div class="form-group" id="form">
+                                                                                                        <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
+                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="newInp">
+                                                                                                            <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target" class="form-control col-md-7 col-xs-12">
                                                                                                         </div>
-                                                                                                        <!--Quality Target Input field-->
-                                                                                                        <div class="form-group" id="form">
-                                                                                                            <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12" id="newInp">
-                                                                                                                <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target" class="form-control col-md-7 col-xs-12">
-                                                                                                            </div>
-                                                                                                            <button type="button" id="addRow" onclick="addQT()">+</button>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                                                            <table class="table table-striped" name="TargetT" id="TargetT">
-                                                                                                                <thead>
-                                                                                                                    <tr>
-                                                                                                                        <th>Targets:</th>
-                                                                                                                    </tr>
-                                                                                                                </thead>
-                                                                                                                <tbody id="tBody"></tbody>
-                                                                                                            </table>
-                                                                                                        </div>
-                                                                                                        <!--Goal ID input field-->
-                                                                                                        <div class="form-group">
-                                                                                                            <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
+                                                                                                        <button type="button" id="addRow" onclick="addQT()">+</button>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                                        <table class="table table-striped" name="TargetT" id="TargetT">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th>Targets:</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody id="tBody"></tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                    <!--Goal ID input field-->
+                                                                                                    <div class="form-group">
+                                                                                                        <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
                                                                                                     Goal ID: <span class="required">*</span></label>-->
-                                                                                                            <!--Edited-->
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                                                                                            </div>
+                                                                                                        <!--Edited-->
+                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                         </div>
-                                                                                                        <div class="modal-footer">
-                                                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                                                                                Close
-                                                                                                            </button>
-                                                                                                            <button type="submit" class="btn btn-primary" id="toJSON">
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
-                                                                                                    
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                                                            Close
+                                                                                                        </button>
+                                                                                                        <button type="submit" class="btn btn-primary" id="toJSON">
+                                                                                                            Submit
+                                                                                                        </button>
+                                                                                                    </div>
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -523,75 +575,75 @@
                                                                                                     </h4>
                                                                                                 </div>
                                                                                                 <div class="modal-body">
-                                                                                                    
 
-                                                                                                        <!--Measurement Name input field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementName" >
-                                                                                                                Measurement Name: <span class="required">*</span></label>
-                                                                                                            <!--Edited-->
-                                                                                                            
-                                                                                                                <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-                                                                                                            
-                                                                                                        <br>
 
-                                                                                                        <!--Measurement Description field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementDesc" >Measurement
-                                                                                                                Description:
-                                                                                                                <!--Edited-->
-                                                                                                                <span class="required">*</span></label>
-                                                                                                            
-                                                                                                                <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                            <br>
-                                                                                                        <!--Assign Group field-->
-                                                                                                        
-                                                                                                            <label for="MeasurementDesc">Assign Group:
-                                                                                                                <!--Edited-->
-                                                                                                                <span class="required">*</span></label>
-                                                                                                            
-                                                                                                                <select class="form-control" name="AssignGoal">
-                                                                                                                    <% for (var group of dataC) { %>
-                                                                                                                    <option value="<%= group.Group_ID %>" name="group" id="group"><%= group.Group_Name %></option>
-                                                                                                                    <% } %>
-                                                                                                                </select>
-                                                                                                        <br>
-                                                                                                        <!--Quality Target Input field-->
-                                                                                                        
-                                                                                                            <label for="Assign Goal" >Quality Target:</label>
-                                                                                                            <div id="newInp">
-                                                                                                                <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target" >
-                                                                                                            </div>
-                                                                                                            <button type="button" id="addRow" onclick="addQT()">+</button>
-                                                                                                        
-                                                                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                                                            <table class="table table-striped" name="TargetT" id="TargetT">
-                                                                                                                <thead>
-                                                                                                                    <tr>
-                                                                                                                        <th>Targets:</th>
-                                                                                                                    </tr>
-                                                                                                                </thead>
-                                                                                                                <tbody id="tBody"></tbody>
-                                                                                                            </table>
-                                                                                                        </div>
-                                                                                                        <!--Goal ID input field-->
-                                                                                                        <div class="form-group">
-                                                                                                            <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
+                                                                                                    <!--Measurement Name input field-->
+
+                                                                                                    <label for="MeasurementName">
+                                                                                                        Measurement Name: <span class="required">*</span></label>
+                                                                                                    <!--Edited-->
+
+                                                                                                    <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+
+                                                                                                    <br>
+
+                                                                                                    <!--Measurement Description field-->
+
+                                                                                                    <label for="MeasurementDesc">Measurement
+                                                                                                        Description:
+                                                                                                        <!--Edited-->
+                                                                                                        <span class="required">*</span></label>
+
+                                                                                                    <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                                                                    <br>
+                                                                                                    <!--Assign Group field-->
+
+                                                                                                    <label for="MeasurementDesc">Assign Group:
+                                                                                                        <!--Edited-->
+                                                                                                        <span class="required">*</span></label>
+
+                                                                                                    <select class="form-control" name="group" id="group">
+                                                                                                        <% for (var group of dataC) { %>
+                                                                                                        <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                                                                        <% } %>
+                                                                                                    </select>
+                                                                                                    <br>
+                                                                                                    <!--Quality Target Input field-->
+
+                                                                                                    <label for="Assign Goal">Quality Target:</label>
+                                                                                                    <div id="newInp">
+                                                                                                        <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target">
+                                                                                                    </div>
+                                                                                                    <button type="button" id="addRow" onclick="addQT()">+</button>
+
+                                                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                                        <table class="table table-striped" name="TargetT" id="TargetT">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th>Targets:</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody id="tBody"></tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                    <!--Goal ID input field-->
+                                                                                                    <div class="form-group">
+                                                                                                        <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
                                                                                                     Goal ID: <span class="required">*</span></label>-->
-                                                                                                            <!--Edited-->
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                                                                                            </div>
+                                                                                                        <!--Edited-->
+                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                         </div>
-                                                                                                        <div class="modal-footer">
-                                                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                                                                                Close
-                                                                                                            </button>
-                                                                                                            <button type="submit" class="btn btn-primary" id="toJSON">
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
-                                                                                                    
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                                                            Close
+                                                                                                        </button>
+                                                                                                        <button type="submit" class="btn btn-primary" id="toJSON">
+                                                                                                            Submit
+                                                                                                        </button>
+                                                                                                    </div>
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -991,6 +1043,14 @@
                     </div>
                 </div>
             </div>
+            <form method="get" action="/QualityMetrics">
+                <input type="hidden" name="passdata" value="1">
+                <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+            </form>
+            <form method="get" action="/QualityMetrics">
+                <input type="hidden" name="passdata" value="0">
+                <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+            </form>
 
             <!script for dynamic text area>
                 <script>
@@ -1026,6 +1086,19 @@
                         document.getElementById("tBody").deleteRow(i - 1);
                     }
 
+                    var close = document.getElementsByClassName("closebtn");
+                    var i;
+
+                    for (i = 0; i < close.length; i++) {
+                        close[i].onclick = function() {
+                            var div = this.parentElement;
+                            div.style.opacity = "0";
+                            setTimeout(function() {
+                                div.style.display = "none";
+                            }, 600);
+                        }
+                    }
+
                 </script>
 
                 <script type="text/javascript">
@@ -1036,7 +1109,10 @@
                             var table = JSON.stringify($('#TargetT').tableToJSON());
                             var mname = document.getElementById("MeasurementName").value;
                             var desc = document.getElementById("MeasurementDesc").value;
-                            var group = document.getElementById("group").value;
+                            var e = document.getElementById("group");
+                            var group = e.options[e.selectedIndex].value;
+                            var gid = document.getElementById("GoalID").value;
+                            console.log(group);
 
                             var xhr = new XMLHttpRequest();
                             xhr.open('POST', '/AddMeasurementsJSON', true);
@@ -1053,14 +1129,27 @@
                                         backsuccess();
                                     } else {
                                         console.log("Not Good");
+                                        backfail();
                                     }
                                 }
                             };
 
 
-                            xhr.send("table=" + table + "&mname=" + mname + "&desc=" + desc + "&group=" + group);
+                            xhr.send("table=" + table + "&mname=" + mname + "&desc=" + desc + "&group=" + group + "&gid=" + gid);
 
                         });
+
+                        function backsuccess() {
+                            var button = document.getElementById('backsuccess');
+                            button.click();
+
+                        };
+
+                        function backfail() {
+                            var button = document.getElementById('backfail');
+                            button.click();
+
+                        };
 
                     });
 

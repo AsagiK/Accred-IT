@@ -205,29 +205,50 @@ module.exports = {
     },
 
     AddMeasurementsJSON: function (req, resp) {
-        console.log(req.body);
-//        var UID = req.body.table;
-//        UID = JSON.parse(UID);
-//        async.forEachOf(UID, function (value, key, callback) {
-//            var gid = UID[key]["Group ID"];
-//            var uid = UID[key]["User ID"];
-//            var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
-//            var values = [gid, uid, gid, uid];
-//            connection.query(sql, values, function (err, result) {
-//                if (err) callback(err);
-//                if (result) {
-//                    callback();
-//                }
-//            });
-//        }, function (err) {
-//            if (err) {
-//                console.log("Failed");
-//                resp.send("Not OK")
-//            } else {
-//                console.log("Passed");
-//                resp.send("OK");
-//            }
-//        })
+        var UID = req.body.table;
+        console.log("--------");
+        console.log(UID);
+        var mname = req.body.mname;
+        var desc = req.body.desc;
+        var group = req.body.group;
+        var gid = req.body.gid;
+        UID = JSON.parse(UID);
+        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`) VALUES (?, ?, ?, ?)";
+        var values2 = [group, gid, mname, desc]
+        connection.query(sql2, values2, function (err, result) {
+            if (err){
+                console.log(err);
+            };
+            if (result) {
+                console.log(result)
+                var MID = result.insertId;
+                async.forEachOf(UID, function (value, key, callback) {
+                    var target = UID[key]["Targets:"];
+                    var sql = " INSERT INTO `capstone`.`measurements_targets` (`measurementID`, `target`) VALUES (?, ?)";
+                    var values = [MID, target];
+                    connection.query(sql, values, function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        };
+                        if (result) {
+                            console.log("Measurements = Targets")
+                            callback();
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        console.log("Failed");
+                        resp.send("Not OK")
+                    } else {
+                        console.log("Passed");
+                        resp.send("OK");
+                    }
+                })
+            }
+        });
+
+
     },
 
 }
