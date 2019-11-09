@@ -1065,6 +1065,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataD:results[3],
                         current_user: sess.user
                     });
                     console.log(results);
@@ -1099,6 +1100,9 @@ module.exports = {
                 }
             });
         }
-    },
+    }, 
+
+    
+
 
 }

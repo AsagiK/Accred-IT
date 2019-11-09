@@ -112,6 +112,7 @@ router.route('/PreChecking').get(CheckCtrl.PreChecking);
 router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
 router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
 router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
-
+router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
+router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 
 module.exports = router;
