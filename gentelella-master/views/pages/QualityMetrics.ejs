@@ -186,6 +186,19 @@
                                                                                                                 <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                                                                                             </div>
                                                                                                         </div>
+                                                                                                        <!--Assign Group field-->
+                                                                                                        <div class="form-group">
+                                                                                                            <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Group:
+                                                                                                                <!--Edited-->
+                                                                                                                <span class="required">*</span></label>
+                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                                <select class="form-control" name="AssignGoal">
+                                                                                                                    <% for (var group of dataC) { %>
+                                                                                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                                                                                    <% } %>
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </div>
                                                                                                         <!--Quality Target Input field-->
                                                                                                         <div class="form-group" id="form">
                                                                                                             <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
@@ -532,6 +545,19 @@
                                                                                                                 <span class="required">*</span></label>
                                                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                                                                                 <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <!--Assign Group Field-->
+                                                                                                        <div class="form-group">
+                                                                                                            <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Group:
+                                                                                                                <!--Edited-->
+                                                                                                                <span class="required">*</span></label>
+                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                                                <select class="form-control" name="AssignGoal">
+                                                                                                                    <% for (var group of dataC) { %>
+                                                                                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
+                                                                                                                    <% } %>
+                                                                                                                </select>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <!--Quality Target Input field-->
@@ -1005,7 +1031,7 @@
                     }
 
                 </script>
-                <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
                 <script type="text/javascript">
                     $(document).ready(function() {
 
