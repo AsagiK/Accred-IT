@@ -287,6 +287,7 @@ module.exports = {
             var code = req.body.code;
             var description = req.body.subdesc;
             var MID = req.body.MID;
+            var PID = req.body.PID;
 
 
             var count = 0;
@@ -297,6 +298,7 @@ module.exports = {
                     var filename = files[key].name;
                     var path = 'uploads/' + files[key].name;
                     var desc = req.body.DocDesc;
+                    var md5 = files[key].md5;
                     var point = filename.lastIndexOf(".");
                     var ext = filename.substr(point);
                     var folderId = UPLOAD_PATH.data.id;
@@ -310,8 +312,8 @@ module.exports = {
                         if (err) return console.log(err);
                         else console.log("File uploaded");
                     })
-                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
-                    var values = [name, path, desc, ext];
+                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
+                    var values = [name, path, desc, ext, md5];
 
                     connection.query(sql, values, function (err, result) {
                         if (err) callback(err);
@@ -322,8 +324,8 @@ module.exports = {
                                 body: fs.createReadStream('public/uploads/' + files[key].name)
                             };
                             uploadfile();
-                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?)"
-                            values = [req.body.activityID, result.insertId];
+                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                            values = [req.body.activityID, result.insertId, PID];
                             addDoc(sql, values);
                             callback();
                         }
@@ -416,6 +418,7 @@ module.exports = {
                 var filename = files.name;
                 var path = 'uploads/' + files.name;
                 var desc = req.body.DocDesc;
+                var md5 = files.md5;
                 var point = filename.lastIndexOf(".");
                 var ext = filename.substr(point);
                 var folderId = UPLOAD_PATH.data.id
@@ -429,10 +432,10 @@ module.exports = {
                     if (err) return console.log(err);
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
-                var values = [name, path, desc, ext];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
+                var values = [name, path, desc, ext, md5];
                 connection.query(sql, values, function (err, result) {
-                    if (err) console.log("error");
+                    if (err) console.log(err);
                     if (result) {
                         console.log("Record Inserted");
                         media = {
@@ -440,8 +443,8 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?);"
-                        values = [req.body.activityID, result.insertId];
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                        values = [req.body.activityID, result.insertId, PID];
                         addDoc(sql, values);
                         resp.redirect('/ViewDocument')
                     }
@@ -521,7 +524,7 @@ module.exports = {
                 }
 
             }
-        }else{
+        } else {
             resp.redirect('/ViewDocument')
         }
     },
@@ -567,43 +570,72 @@ module.exports = {
         var AID = req.body.AID;
         var name = req.body.name;
         var code = req.body.code;
+        var UID = req.body.UID;
         var description = req.body.description;
-        var MID = req.body.MID;
+        //var MID = req.body.MID;
         var target = req.body.target;
         var score = req.body.score;
-        var values2 = [AID, name, code, description, MID, target, score]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`, `measurement_ID`, `target`, `suggested_Score`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+        var today = new Date();
+        var current = today.toISOString().split('T')[0];
+        var values2 = [AID, name, code, description, score, current, UID]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`) VALUES (? , ?, ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
-            // console.log(results);
+            if (results) {
+                console.log("Pending activity inserted")
+                inserttable(results.insertId);
+            }
         });
-        var Doc = req.body.table
-        Doc = JSON.parse(Doc)
-        if (Object.keys(Doc).length == 0) {
-            console.log("Empty");
-            resp.send("OK");
-        } else {
-            async.forEachOf(Doc, function (value, key, callback) {
-                var did = Doc[key]["Document ID"];
-                var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`) VALUES (?, ?); ";
-                var values = [AID, did];
-                connection.query(sql, values, function (err, result) {
-                    if (err) callback(err);
-                    if (result) {
-                        console.log("Document linked to DB");
-                        callback();
+
+        function inserttable(pending) {
+            var pendingID = pending;
+            pendingID = pendingID.toString();
+
+            var Doc = req.body.table
+            Doc = JSON.parse(Doc)
+            if (Object.keys(Doc).length == 0) {
+                console.log("Empty");
+                resp.send(pendingID);
+            } else {
+                async.forEachOf(Doc, function (value, key, callback) {
+                    var did = Doc[key]["Document ID"];
+                    var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); ";
+                    var values = [AID, did, pendingID];
+                    connection.query(sql, values, function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        }
+                        if (result) {
+                            console.log("Document linked to DB");
+                            callback();
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        console.log("Failed");
+                        resp.send("Not OK")
+                    } else {
+                        console.log("Passed");
+                        resp.send(pendingID);
                     }
-                });
-            }, function (err) {
-                if (err) {
-                    console.log("Failed");
-                    resp.send("Not OK")
-                } else {
-                    console.log("Passed");
-                    resp.send("OK");
-                }
-            })
+                })
+            }
         }
+    },
+
+    UpdateDocumentsJSON: function (req, resp) {
+        /*
+      Step 0 = create isaversionof, md5, and version number in documents table
+      Step 1 = receive ID of document to be updated and new document
+      Step 2 = generate a hash of new document
+      Step 3 = compare hash of old document and new document
+      IF failed then return a dupicate error
+      IF not failed check for same filename
+      IF same filename then append v + "version number" to filename
+      ELSE process document and return success message
+      Step 4 = fix hardlinks of evidence to activity
+      */
     },
 
 

@@ -111,23 +111,40 @@ module.exports = {
     },
 
     AddActivitiesJSON: function (req, resp) {
+        console.log(req.body);
         var UID = req.body.table;
         var MID = req.body.mid;
         UID = JSON.parse(UID);
-        console.log(UID);
+        console.log("Table length =" + UID.length);
         async.forEachOf(UID, function (value, key, callback) {
             var an = UID[key]["Activity Name"];
-            var tar = UID[key]["Weight"];
+            var measureID = UID[key]["MeasurementID"];
+            measureID = measureID.split(",");
             var desc = UID[key]["Description"];
             var dead = UID[key]["Deadline"];
             console.log(an);
-
-            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?, ?);";
-            var values = [an, tar, desc, MID, dead];
+            var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `description`, `deadline`) VALUES (?, ?, ?);";
+            var values = [an, desc, dead];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
                     callback();
+                    console.log(result);
+                    var activitytolink = result.insertId;
+                    async.forEachOf(measureID, function (value, key, callback) {
+                        console.log("Measurement ID = " + measureID[key])
+                        var sql2 = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (?, ?)"
+                        var values2 = [measureID[key], activitytolink]
+                        connection.query(sql2, values2, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                callback();
+                                console.log("Activity linked to Measurement");
+                            }
+                        });
+
+                    }, function (err) {
+                    })
                 }
             });
         }, function (err) {
@@ -139,6 +156,8 @@ module.exports = {
                 resp.send("OK");
             }
         })
+
+
 
     },
 
@@ -204,6 +223,35 @@ module.exports = {
 
     },
 
+
+    AssignActivitiesToMeasurementJSON: function (req, resp) {
+        var UID = req.body.table;
+        console.log(UID);
+        UID = JSON.parse(UID);
+        
+        async.forEachOf(UID, function (value, key, callback) {
+            var measureID = UID[key]["MeasurementID"];
+            var aid = UID[key]["ActivityID"];
+            var sql = "INSERT INTO `capstone`.`measurements_activities` (`measurement_ID`, `activity_ID`) VALUES (? , ?); ";
+            var values = [measureID, aid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+        
+    },
+
     AddMeasurementsJSON: function (req, resp) {
         var UID = req.body.table;
         console.log("--------");
@@ -247,6 +295,7 @@ module.exports = {
                 })
             }
         });
+
 
 
     },

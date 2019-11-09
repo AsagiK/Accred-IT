@@ -64,19 +64,6 @@ router.route('/actPhase').post(planCtrl.actPhase);
 router.route('/endPhase').post(planCtrl.endPhase);
 
 
-
-
-//OTHERS
-router.route('/TestPage').get(planCtrl.Recommendations);
-router.route('/CreateGrades').get(planCtrl.CreateGrades);
-router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
-router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
-router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
-router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
-router.route('/ActionPlan').get(planCtrl.ActionPlan);
-router.route('/home').get(planCtrl.Dashboards);
-
-
 router.route('/ViewDocument').get(planCtrl.ViewDocument);
 router.route('/UploadDocument').get(planCtrl.UploadDocument);
 router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
@@ -89,7 +76,9 @@ router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
+router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
+
 
 
 //--DocCtrl--
@@ -113,7 +102,24 @@ router.route('/PreChecking').get(CheckCtrl.PreChecking);
 router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
 router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
 router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
+
+
+//OTHERS
+router.route('/TestPage').get(planCtrl.Recommendations);
+router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
+router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
+
+router.route('/CreateGrades').get(planCtrl.CreateGrades);
+router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
+router.route('/AssignRecommendationToGroup').get(planCtrl.AssignRecommendationToGroup);
+router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
+router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
+router.route('/ActionPlan').get(planCtrl.ActionPlan);
+router.route('/home').get(planCtrl.Dashboards);
+
+
 router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
+
 
 module.exports = router;

@@ -71,6 +71,7 @@
         .closebtn:hover {
             color: black;
         }
+
     </style>
 </head>
 <% if(locals.notif){ %>
@@ -118,6 +119,7 @@
         padding: 10px;
         text-align: left;
     }
+
 </style>
 
 <body class="nav-md">
@@ -135,6 +137,7 @@
 
                                 <div class="title_left">
                                     <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                    <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                 </div>
                                 <br />
 
@@ -158,20 +161,23 @@
                                 <div class="x_content">
 
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target=".bs-example-modal-lg">
+                                    <% if (current_user[0].Role == 1) { %>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                                             Create Activities
                                         </button>
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg-assign-activity">
+                                            Assign Activity/s
+                                        </button>
+                                    <% } %>
 
                                         <div class="panel-body">
                                             <div class="panel">
 
                                                 <h2>Activities Table</h2>
 
-                                                <a class="panel-heading" role="tab" id="HeadGroupOne"
-                                                    data-toggle="collapse" data-parent="#headingTwo"
-                                                    href="#FacilitiesGroupOne" aria-expanded="true"
-                                                    aria-controls="FacilitiesGroupOne">
+                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                                 </a>
 
                                                 <br>
@@ -189,60 +195,118 @@
                                                                 <th>Deadline</th>
                                                                 <th></th>
                                                                 <th></th>
-
+                                                                <% if (current_user[0].Role == 1) { %>
+                                                                <th></th>
+                                                                <% } %>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% for (activities of dataB) { %>
-                                                            <tr>
-
-                                                                <td style="display: none;"><%= activities.activity_ID %></td>
-                                                                <td><%= activities.activity_name %></td>
-                                                                <td><%= activities.description %></td>
-                                                                <td>
-
-                                                                    <% for (outputs of dataD){ %>
-                                                                        <% if (outputs.activity_ID == activities.activity_ID) { %>
-                                                                            <%= outputs.output_ID %> - <%= outputs.output %> <br>
+                                                            <!--VIEW OF ADMIN OR QA OR DEP CHAIR-->
+                                                            <% if (current_user[0].Role == 1) { %>
+                                                                <% for (actMeasures of dataG) { %> 
+                                                                    <% for (activities of dataB) { %> 
+                                                                        <% if (data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMeasures.activity_ID) { %>
+                                                                    
+                                                                            <tr>
+                
+                                                                                <td style="display: none;"><%= activities.activity_ID %>
+                                                                                </td>
+                                                                                <td><%= activities.activity_name %></td>
+                                                                                <td><%= activities.description %></td>
+                                                                                <td>
+                
+                                                                                    <% for (outputs of dataD){ %>
+                                                                                    <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                                    <%= outputs.output_ID %> - <%= outputs.output %>
+                                                                                    <br>
+                                                                                    <% } %>
+                                                                                    <% } %>
+                
+                                                                                </td>
+                                                                                <td><%= activities.target %></td>
+                                                                                <td><%= activities.deadline %></td>
+                                                                                <td>
+                                                                                    <form method="get" action="ActivityDetails">
+                                                                                        <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary">Submit
+                                                                                            Evidence
+                                                                                        </button>
+                                                                                    </form>
+                                                                                    <br>
+                                                                                    
+                                                                                    <button class="btn btn-primary" href="#my_modal"
+                                                                                        data-toggle="modal"
+                                                                                        data-book-id="<%= activities.activity_ID %>">Add
+                                                                                        expected output/s -
+                                                                                        <%= activities.activity_ID %></button>
+                                                                                    
+                                                                                </td>
+                                                                                
+                                                                                <td>
+                                                                                    <form method="get" action="AssignActivityToMember">
+                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
+                                                                                        <button type="submit" class="btn btn-primary">Assign Members
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                            <% } %>
+                                                                            <% } %>
+                                                                            <% } %>
+                                                                            <!--END OF ADMIN, QAO, AND DEPCHAIR VIEW-->
+                                                                            <!--VIEW OF A USER-->
+                                                            <% } else { %>
+                                                                <% for (var actMembers of dataH) { %>
+                                                                    <% for (actMeasures of dataG) { %> 
+                                                                      <% for (activities of dataB) { %>
+                                                                        <% if ((actMembers.activity_Member == current_user[0].User_ID && data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMembers.activity_ID && actMeasures.activity_ID == activities.activity_ID)) { %>
+                                                                
+                                                                        
+                                                                            <tr>
+                                                                                <td style="display: none;"><%= activities.activity_ID %>
+                                                                                </td>
+                                                                                <td><%= activities.activity_name %></td>
+                                                                                <td><%= activities.description %></td>
+                                                                                <td>
+                
+                                                                                    <% for (outputs of dataD){ %>
+                                                                                    <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                                    <%= outputs.output_ID %> - <%= outputs.output %>
+                                                                                    <br>
+                                                                                    <% } %>
+                                                                                    <% } %>
+                
+                                                                                </td>
+                                                                                <td><%= activities.target %></td>
+                                                                                <td><%= activities.deadline %></td>
+                                                                                <td>
+                                                                                    <form method="get" action="ActivityDetails">
+                                                                                        <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary">Submit
+                                                                                            Evidence
+                                                                                        </button>
+                                                                                    </form>
+                                                                                   
+                                                                                    
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                            
+                                                                            <% } %>
+                                                                            
                                                                         <% } %>
-                                                                    <% } %>
-
-                                                                </td>
-                                                                <td><%= activities.target %></td>
-                                                                <td><%= activities.deadline %></td>
-                                                                <td>
-                                                                    <form method="get" action="ActivityDetails">
-                                                                        <input type="hidden" name="UID"
-                                                                            value="<%= activities.activity_ID %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Submit
-                                                                            Evidence
-                                                                        </button>
-                                                                    </form>
-                                                                    <br>
-                                                                    <button class="btn btn-primary" href="#my_modal" data-toggle="modal"
-                                                                        data-book-id="<%= activities.activity_ID %>">Add expected output/s - <%= activities.activity_ID %></button>
-                                                                </td>
-                                                                <td>
-                                                                    <form method="get" action="AssignActivityToMember">
-                                                                        <input type="hidden" name="AID"
-                                                                            value="<%= activities.activity_ID %>">
-                                                                        <input type="hidden" name="GID"
-                                                                            value="<%= data[0].GroupAssigned %>">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Assign Members
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
+            
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                        
                                                             <% } %>
+                                                            <!-- END OF USER VIEW -->
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-
-                                            <!--End of Group 1 Table -->
-
                                         </div>
                                 </div>
 
@@ -255,9 +319,7 @@
 
                                             <h2>Pending Table</h2>
 
-                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                                data-parent="#headingTwo" href="#FacilitiesGroupOne"
-                                                aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                             </a>
 
                                             <br>
@@ -282,15 +344,16 @@
                                                         <% for (activities of dataC) { %>
                                                         <tr>
 
-                                                            <td style="display: none;"><%= activities.activity_ID %></td>
+                                                            <td style="display: none;"><%= activities.activity_ID %>
+                                                            </td>
                                                             <td><%= activities.activity_name %></td>
                                                             <td><%= activities.description %></td>
                                                             <td>
 
                                                                 <% for (outputs of dataD){ %>
-                                                                    <% if (outputs.activity_ID == activities.activity_ID) { %>
-                                                                        <%= outputs.output_ID %> - <%= outputs.output %> <br>
-                                                                    <% } %>
+                                                                <% if (outputs.activity_ID == activities.activity_ID) { %>
+                                                                <%= outputs.output_ID %> - <%= outputs.output %> <br>
+                                                                <% } %>
                                                                 <% } %>
 
                                                             </td>
@@ -298,8 +361,7 @@
 
                                                             <td>
                                                                 <form method="get" action="ActivityPendingDetails">
-                                                                    <input type="hidden" name="UID"
-                                                                        value="<%= activities.activity_ID %>">
+                                                                    <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                     <button type="submit" class="btn btn-primary">View
                                                                         Evidence
                                                                     </button>
@@ -327,14 +389,15 @@
                     var i;
 
                     for (i = 0; i < close.length; i++) {
-                        close[i].onclick = function () {
+                        close[i].onclick = function() {
                             var div = this.parentElement;
                             div.style.opacity = "0";
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 div.style.display = "none";
                             }, 600);
                         }
                     }
+
                 </script>
 
                 <!-- /page content -->
@@ -365,9 +428,7 @@
                     <div class="modal-body">
                         <div class="panel-body">
                             <div class="panel">
-                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                    data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
-                                    aria-controls="FacilitiesGroupOne">
+                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                                 </a>
                                 <!--div class="title_left">
                                     <button type="button" class="btn btn-default" id="check">Check</button>
@@ -393,31 +454,25 @@
                                 <!--div id="countbox"-->
                                 <label for="activitycount">Activity</label>
                                 <br>
-                                <textarea type="text" name="activitycount" id="activitycount" required="required"
-                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                    style="overflow:hidden"></textarea>
+                                <textarea type="text" name="activitycount" id="activitycount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 <br>
                                 <label for="descriptioncount">Description</label>
                                 <br>
-                                <textarea id="descriptioncount" name="descriptioncount" required="required"
-                                    class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                    style="overflow:hidden"></textarea>
+                                <textarea id="descriptioncount" name="descriptioncount" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                 <br>
-                                <label for="target">Weight</label>
+                                <!--label for="target">Weight</label>
                                 <br>
                                 <input type="number" name="targetcount" id="targetcount" value="">
+                                <br-->
+                                <label for="target">Measurements</label>
                                 <br>
-                                <!--div class='col-sm-4'>
-                                        Only Date Picker
-                                        <div class="form-group">
-                                            <div class='input-group date' id='myDatepicker2'>
-                                                <input type='text' class="form-control" />
-                                                <span class="input-group-addon">
-                                                   <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div-->
+                                <select style="width: 500px;" class="js-example-basic-multiple" name="measurement[]" id="measurement[]" multiple="multiple">
+                                    <% for (var measures of dataE) { %>
+                                    <option value="<%= measures.measurement_ID %>-<%= measures.measurement_Name %>">
+                                        <%= measures.measurement_Name %></option>
+                                    <% } %>
+                                </select>
+                                <br>
                                 <label> Deadline
                                     <br>
                                     <input type="date" name="deadline" id="deadline" value="">
@@ -435,9 +490,10 @@
 
                                                 <th>Activity Name</th>
                                                 <th>Description</th>
-                                                <th>Weight</th>
+                                                <th>Measurement to assign</th>
                                                 <th>Deadline</th>
                                                 <th></th>
+                                                <th>MeasurementID</th>
 
                                             </tr>
                                         </thead>
@@ -447,8 +503,7 @@
                                         </tbody>
                                     </table>
                                     <!SUBMIT BUTTON HERE>
-                                        <button type="button" class="btn btn-success" id="toJSON"
-                                            style="display: none;">SUBMIT</button>
+                                        <button type="button" class="btn btn-success" id="toJSONactivities" style="display: none;">SUBMIT</button>
                                         <button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button>
                             </div>
 
@@ -456,15 +511,13 @@
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="1">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                <button type="submit" class="btn btn-success" style="display: none;"
-                                    id="backsuccess">Hi</button>
+                                <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                             </form>
 
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="0">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
-                                <button type="submit" class="btn btn-success" style="display: none;"
-                                    id="backfail">Hi</button>
+                                <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                             </form>
 
                             <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
@@ -507,19 +560,14 @@
                 <div class="modal-body">
                     <div class="panel-body">
                         <div class="panel">
-                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
-                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
-                                aria-controls="FacilitiesGroupOne">
+                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
                             </a>
                             <br>
-                            <input type="hidden" name="activityID" id="activityID" required="required"
-                                class="form-control col-md-7 col-xs-12" hidden>
+                            <input type="hidden" name="activityID" id="activityID" required="required" class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
-                            <textarea id="activityoutput" name="activityoutput" required="required"
-                                class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)"
-                                style="overflow:hidden"></textarea>
+                            <textarea id="activityoutput" name="activityoutput" required="required" class="form-control col-md-7 col-xs-12" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                             <br>
 
 
@@ -550,6 +598,96 @@
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="1">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
+                        </form>
+
+                        <form method="get" action="/ViewMeasurementDetails">
+                            <input type="hidden" name="passdata" value="0">
+                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                        </form>
+
+                        <input type="hidden" name="passdata" value="<%= data[0].measurement_ID %>" id="mid">
+
+                        <!--End of Group 1 Table -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal for Assigning Activities -->
+    <div class="modal fade bs-example-modal-lg-assign-activity" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Assign Activity/s
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="panel">
+                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse"
+                                data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true"
+                                aria-controls="FacilitiesGroupOne">
+                            </a>
+                            
+                            
+                            <br>
+                            <input type="hidden" name="measurementID" id="measurementID" required="required"
+                                class="form-control col-md-7 col-xs-12" value="<%= data[0].measurement_ID %>">
+                            <br>
+                            <label for="measurementName">Measurement Name</label>
+                            <br>
+                            <input type="text" name="measurementName" id="measurementName" required="required"
+                                class="form-control col-md-7 col-xs-12" value="<%= data[0].measurement_Name %>" readonly>
+                            <br>
+                           
+                            <label for="target">Activities</label>
+                            <br>
+                            <select class="form-control" name="activities" id="activities">
+                                <% for (var activities of dataF) { %>
+                                <option value="<%= activities.activity_ID %>-<%= activities.activity_name %>">
+                                    <%= activities.activity_name %></option>
+                                <% } %>
+                            </select>
+                            <br>
+                            
+                                <button type="button" class="btn btn-default addactivities">Add</button>
+                                
+                                <div class="ln_solid"></div>
+                                <table id="tableassignactivities">
+                                    <thead>
+                                        <tr>
+
+                                            <th style='display: none;'>MeasurementID</th>
+                                            <th>Measurement</th>
+                                            <th>Activity to assign</th>
+                                            <th></th>
+                                            <th style='display: none;'>ActivityID</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                                <!SUBMIT BUTTON HERE>
+                                    <button type="button" class="btn btn-success" id="toJSONassignActs"
+                                        >SUBMIT</button>
+                                    
+                        </div>
+
+
+                        <form method="get" action="/ViewMeasurementDetails">
+                            <input type="hidden" name="passdata" value="1">
+                            <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
                             <button type="submit" class="btn btn-success" style="display: none;"
                                 id="backsuccess">Hi</button>
                         </form>
@@ -568,15 +706,13 @@
                     </div>
                 </div>
             </div>
-        </div>                                                                    
-    </div>
-
+        </div>
     </div>
 
     <script type="text/javascript">
         var total = 0;
         var checkingtotal = 0;
-        $(document).ready(function () {
+        $(document).ready(function() {
             /*$(".add-row").click(function () {
                 if (!checkEmptyInputcheck()) {
                     console.log("testing add button");
@@ -591,59 +727,81 @@
                 }
             });*/
 
+            $('.js-example-basic-multiple').select2();
+
             $(".add-row2").click(function test() {
-                //console.log("testing test");
+                //GETS VALUES OF THE DROPDOWN
+                var measure = $(".js-example-basic-multiple").val();
+                alert(measure);
+                console.log(measure.length);
+                var measureID="";
+                var measureName=""
+                for(var x=0;x<measure.length;x++){
+                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('-'))+",";
+                    measureName = measureName + measure[x].substr(measure[x].lastIndexOf('-') + 1) + "<br>";
+                }
+                var comremove = measureID.length - 1;
+                measureID = measureID.substr(0, comremove);
+                console.log("Final: " +measureID);
+                console.log("Final: " +measureName);
+                
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
-                    var target = $("#targetcount").val();
+                    //var measurement = $("#measurement").val();
                     var description = $("#descriptioncount").val();
                     var dead = $("#deadline").val();
-                    console.log(dead);
-                    total = +total + +target;
-                    console.log(total + " 1st");
-                    if (total <= 100) {
-                        var markup = "<tr><td>" + activity +
-                            "</td><td>" + description + "</td><td>" + target + "</td><td>" + dead +
-                            "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                        var table = document.getElementById("tableactivities")
-                        $(table).append(markup);
-                        console.log(total + " 2nd");
-                    } else {
+                    //var measureID = measurement.substr(0, measurement.indexOf('-'));
+                    //var measureName = measurement.substr(measurement.lastIndexOf('-') + 1);
+                    //console.log(dead);
+                    //console.log(measurement);
+                    //console.log(measureID);
+                    //console.log(measureName);
+                    //total = +total + +target;
+                    //console.log(total + " 1st");
+                    //if (total <= 100) {
+                    var markup = "<tr><td>" + activity +
+                        "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + dead +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" + measureID + "</td></tr>";
+                    var table = document.getElementById("tableactivities")
+                    $(table).append(markup);
+                    //console.log(total + " 2nd");
+                    /*} else {
                         total = +total - +target;
                         alert("Total is above 100, please adjust weight");
                         console.log(total + " 3rd");
-                    }
+                    }*/
 
                 }
             });
+
+            //ADDING ACTIVITIES TO ASSIGN TO MEASUREMENT TABLE JAVASCRIPT
+            $(".addactivities").click(function test() {
+                
+                //alert("testing adding activities");
+                    var measurementID = $("#measurementID").val();
+                    var measurementName = $("#measurementName").val();
+                    var activities = $("#activities").val();
+                    var activityID = activities.substr(0, activities.indexOf('-'));
+                    var activityName = activities.substr(activities.lastIndexOf('-') + 1);
+                    console.log(activityID);
+                    console.log(activityName);
+                    var markup = "<tr><td style='display: none;'>" + measurementID +
+                        "</td><td>" + measurementName + "</td><td>" + activityName + "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + activityID + "</td></tr>";
+                    var table = document.getElementById("tableassignactivities")
+                    $(table).append(markup);
+            });
         });
-
-        /*function checkEmptyInputcheck() {
-            var isEmpty = false,
-                activitycheck = document.getElementById("activitycheck").value,
-                targetcheck = document.getElementById("targetcheck").value;
-
-            if (activitycheck === "") {
-                alert("Activity Cannot Be Empty");
-                isEmpty = true;
-            } else if (targetcheck === "") {
-                alert("Target Cannot Be Empty");
-                isEmpty = true;
-            }
-            return isEmpty;
-        }*/
 
         function checkEmptyInputcount() {
             var isEmpty = false,
                 activitycount = document.getElementById("activitycount").value,
-                targetcount = document.getElementById("targetcount").value;
-
+                desccount = document.getElementById("descriptioncount").value;
             if (activitycount === "") {
                 alert("Activity Cannot Be Empty");
                 isEmpty = true;
-            } else if (targetcount === "") {
-                alert("Target Cannot Be Empty");
+            } else if (desccount === "") {
+                alert("Description Cannot Be Empty");
                 isEmpty = true;
             }
             return isEmpty;
@@ -653,25 +811,24 @@
             r.closest("tr").remove();
             var table = document.getElementById("tableactivities");
             var val = r.closest("tr").cells[2].innerHTML;
-            console.log("cell weight: " + val);
+            //console.log("cell weight: " + val);
 
-            total = +total - +val;
-            console.log("Minused total: " + total);
+            //total = +total - +val;
+            //console.log("Minused total: " + total);
         }
 
-        $("#toJSON").click(function () {
+        $("#toJSONactivities").click(function() {
             console.log("Hello");
             var table = JSON.stringify($('#tableactivities').tableToJSON());
-            var mid = document.getElementById("mid").value
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/AddActivitiesJSON', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
+            xhr.onload = function() {
                 console.log(xhr.responseText);
             };
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     var respData = xhr.responseText;
                     if (respData == "OK") {
@@ -688,14 +845,14 @@
 
         });
 
-        $("#checkTotal").click(function () {
-            console.log("Total for submission: " + total);
-            if (total < 100) {
-                alert("Activities weight insufficient please add more or adjust the weights of the current activities")
-            } else {
-                alert("success");
-                addsuccess();
-            }
+        $("#checkTotal").click(function() {
+            //console.log("Total for submission: " + total);
+            //if (total < 100) {
+            //    alert("Activities weight insufficient please add more or adjust the weights of the current activities")
+            //} else {
+            alert("success");
+            addsuccess();
+            //}
 
         });
 
@@ -712,10 +869,10 @@
         };
 
         function addsuccess() {
-            var button = document.getElementById('toJSON');
+            var button = document.getElementById('toJSONactivities');
             button.click();
         }
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".add-row-exoutputs").click(function test() {
                 //console.log("testing test");
                 if (!checkEmptyInput()) {
@@ -748,13 +905,42 @@
             return isEmpty;
         }
 
-        $("#toJSONoutputs").click(function () {
+        $("#toJSONoutputs").click(function() {
             console.log("Hello");
             var table = JSON.stringify($('#tableoutputs').tableToJSON());
             var mid = document.getElementById("mid").value
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/AddOutputsJSON', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log(xhr.responseText);
+            };
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    var respData = xhr.responseText;
+                    if (respData == "OK") {
+                        console.log("Hi");
+                        backsuccess();
+                    } else {
+                        backfail();
+                    }
+                }
+            };
+
+
+            xhr.send("table=" + table + "&mid=" + mid);
+
+        });
+
+        $("#toJSONassignActs").click(function () {
+            console.log("Hello");
+            var table = JSON.stringify($('#tableassignactivities').tableToJSON());
+            var mid = document.getElementById("mid").value
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/AssignActivitiesToMeasurementJSON', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function () {
                 console.log(xhr.responseText);
@@ -790,7 +976,6 @@
             o.style.height = "1px";
             o.style.height = (25 + o.scrollHeight) + "px";
         }
-
 
     </script>
 
