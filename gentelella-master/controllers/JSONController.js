@@ -119,9 +119,9 @@ module.exports = {
             var an = UID[key]["Activity Name"];
             var tar = UID[key]["Weight"];
             var desc = UID[key]["Description"];
-            var dead  = UID[key]["Deadline"];
+            var dead = UID[key]["Deadline"];
             console.log(an);
-        
+
             var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `target`, `description`, `measurement_ID`, `deadline`) VALUES (?, ?, ?, ?, ?);";
             var values = [an, tar, desc, MID, dead];
             connection.query(sql, values, function (err, result) {
@@ -146,7 +146,7 @@ module.exports = {
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
-        
+
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
             var uid = UID[key]["User ID"];
@@ -183,7 +183,7 @@ module.exports = {
             var eo = UID[key]["Output"];
             console.log(ai);
             console.log(eo);
-        
+
             var sql = "INSERT INTO `capstone`.`activity_outputs` (`activity_ID`, `output`) VALUES (?, ?);";
             var values = [ai, eo];
             connection.query(sql, values, function (err, result) {
@@ -202,6 +202,32 @@ module.exports = {
             }
         })
 
+    },
+
+    AddMeasurementsJSON: function (req, resp) {
+        console.log(req.body);
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var gid = UID[key]["Group ID"];
+            var uid = UID[key]["User ID"];
+            var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
+            var values = [gid, uid, gid, uid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
     },
 
 }
