@@ -298,6 +298,7 @@ module.exports = {
                     var filename = files[key].name;
                     var path = 'uploads/' + files[key].name;
                     var desc = req.body.DocDesc;
+                    var md5 = files[key].md5;
                     var point = filename.lastIndexOf(".");
                     var ext = filename.substr(point);
                     var folderId = UPLOAD_PATH.data.id;
@@ -311,8 +312,8 @@ module.exports = {
                         if (err) return console.log(err);
                         else console.log("File uploaded");
                     })
-                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
-                    var values = [name, path, desc, ext];
+                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
+                    var values = [name, path, desc, ext, md5];
 
                     connection.query(sql, values, function (err, result) {
                         if (err) callback(err);
@@ -417,6 +418,7 @@ module.exports = {
                 var filename = files.name;
                 var path = 'uploads/' + files.name;
                 var desc = req.body.DocDesc;
+                var md5 = files.md5;
                 var point = filename.lastIndexOf(".");
                 var ext = filename.substr(point);
                 var folderId = UPLOAD_PATH.data.id
@@ -430,8 +432,8 @@ module.exports = {
                     if (err) return console.log(err);
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
-                var values = [name, path, desc, ext];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
+                var values = [name, path, desc, ext, md5];
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -588,7 +590,7 @@ module.exports = {
         function inserttable(pending) {
             var pendingID = pending;
             pendingID = pendingID.toString();
-            
+
             var Doc = req.body.table
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
@@ -621,8 +623,8 @@ module.exports = {
             }
         }
     },
-    
-    UpdateDocumentsJSON: function (req, resp){
+
+    UpdateDocumentsJSON: function (req, resp) {
         /*
       Step 0 = create isaversionof, md5, and version number in documents table
       Step 1 = receive ID of document to be updated and new document
