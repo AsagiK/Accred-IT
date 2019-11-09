@@ -965,6 +965,7 @@
 
         $('#my_modal').on('show.bs.modal.fade', function (e) {
             var bookId = $(e.relatedTarget).data('book-id');
+            alert(bookId);
             $(e.currentTarget).find('input[name="activityID"]').val(bookId);
         });
 

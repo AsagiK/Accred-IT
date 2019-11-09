@@ -47,7 +47,7 @@ router.route('/altermetric').post(planCtrl.altermetric);
 router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
-router.route('/QualityMetrics').get(planCtrl.Measurement);
+router.route('/QualityMetrics').get(planCtrl.QualityMetric);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
@@ -77,6 +77,8 @@ router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
+router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
+
 
 
 //--DocCtrl--
@@ -101,6 +103,7 @@ router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
 router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
 router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
+
 //OTHERS
 router.route('/TestPage').get(planCtrl.Recommendations);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
@@ -113,6 +116,10 @@ router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/ActionPlan').get(planCtrl.ActionPlan);
 router.route('/home').get(planCtrl.Dashboards);
+
+
+router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
+router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 
 
 module.exports = router;
