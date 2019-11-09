@@ -105,15 +105,19 @@
                                                                             </h4>
                                                                         </a>
                                                                         
+                                                                        <% for (var evidence of dataD ) { %> 
+                                                                        
+                                                                        <% for (var evi of dataE ) { %>
+
+                                                                        <% if (evidence.activityID == activity.activity_ID && evidence.pendingID == evi.pending_ID) { %>
                                                                         <div id="Collapse<%=activity.activity_ID%>" class="collapse"> 
 
                                                                                 <table class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
-                                                                                                <th>Activity Name</th>
-                                                                                                <th>Activity Description</th>
-                                                                                                <th>Quality Target</th>   
-                                                                                                <th>View Submitted Evidences</th>
+                                                                                                
+                                                                                                <th>Description</th>   
+                                                                                                <th></th>
                                                                                                 
                                                                                             </tr>
                                                                                         </thead>
@@ -122,10 +126,14 @@
                         
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
-                                                                                                <td> <%= activity.activity_name %> </td>
-                                                                                                <td> <%= activity.description%></td>
-                                                                                                <td> <%= activity.target %> </td> 
-                                                                                                <td><button type="submit" class="btn btn-primary">View </button></td>
+                                                                                                <td> <%= evi.description %> </td>
+                                                                                                <td> <form method="get" action="ViewEvidenceDetails">
+                                                                                                    <input type="hidden" name="VID"
+                                                                                                        value="<%= evi.pending_ID %>">
+                                                                                                    <button type="submit" class="btn btn-primary">View
+                                                                                                        Evidence
+                                                                                                    </button>
+                                                                                                </form></td>>
                                                                                             </tr>
                         
                         
@@ -135,7 +143,9 @@
                                                                         </div>
                                                                         
                                                                         </div> 
-
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                        <% } %>
                                                                     </div>
                                                                     <% } %>
                                                                     <% } %>

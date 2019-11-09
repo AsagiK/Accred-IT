@@ -197,7 +197,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; ", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -205,6 +205,8 @@ module.exports = {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
                     current_user: sess.user
                 });
                 console.log(results);
@@ -214,4 +216,27 @@ module.exports = {
             });
         }
     }, 
+
+    ViewEvidenceDetails: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.VID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.documents where pending_activity.documentID;", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results);
+                    resp.render('./pages/ViewActivityEvidences.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    }, 
+    
 }
