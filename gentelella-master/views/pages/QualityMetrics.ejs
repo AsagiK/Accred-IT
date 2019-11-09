@@ -210,7 +210,7 @@
                                                                                                     Goal ID: <span class="required">*</span></label>-->
                                                                                                             <!--Edited-->
                                                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" >
+                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <div class="modal-footer">
@@ -298,8 +298,8 @@
                                                                         <button class="btn btn-default" type="submit">Back to Plan Phase</button>
 
                                                                     </form>
-                                                                        
-                                                                        <% for (var metric of data) { %>
+
+                                                                    <% for (var metric of data) { %>
                                                                     <% if (metric.cycle_Status == "Active") { %>
 
                                                                     <div class="panel-body">
@@ -375,7 +375,7 @@
                                                                                                     Goal ID: <span class="required">*</span></label>-->
                                                                                                             <!--Edited-->
                                                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" >
+                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <div class="modal-footer">
@@ -475,8 +475,8 @@
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Back to Act Phase</button>
                                                                     </form>
-                                                                    
-                                                                                                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
+
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
 
                                                                     <% for (var metric of data) { %>
                                                                     <% if (metric.cycle_Status == "Active") { %>
@@ -558,7 +558,7 @@
                                                                                                     Goal ID: <span class="required">*</span></label>-->
                                                                                                             <!--Edited-->
                                                                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" >
+                                                                                                                <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <div class="modal-footer">
@@ -1008,7 +1008,7 @@
                 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
                 <script type="text/javascript">
                     $(document).ready(function() {
-                        
+
                         $("#toJSON").click(function() {
                             console.log("Hello");
                             var table = JSON.stringify($('#TargetT').tableToJSON());
