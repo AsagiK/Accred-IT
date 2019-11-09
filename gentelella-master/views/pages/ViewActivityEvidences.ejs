@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Activity Evidences</title>
+    <title>View Submissions Details Page </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assests/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -31,20 +31,22 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-            <% include ./nav %>
+            <%- include ./nav.ejs %>
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-
-                            <h3>View Activity Evidences</h3>
-
+                            <h3>View Submissions Details</h3>
+                         
                         </div>
                     </div>
                 </div>
@@ -53,46 +55,90 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <br />
-
-                                <!--view table for users-->
+                               
+                                <% for (var id of data) { %> 
+                                <% for (var docs of dataB) { %>
+                                <% for (var evidence of dataC) { %>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                    
-                                            <th>#</th>
-                                            <th>Activity Name</th>
-                                            <th>Evidences</th>
                                             
-
+                                            <th>Submission ID</th>   
+                                            <th>Document Name</th>
+                                            <th>Document Desc</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <% if (id.pending_ID == evidence.pendingID && evidence.documentID == docs.Document_ID) { %> 
+                                            
+                                        <tr>
+                                            
+                                            <td><% id.pending_ID %></td>
+                                            <td><% docs.Document_Name %> </td>
+                                            <td><% docs.Document_Desc %> </td>
+                                        </tr> 
+                                        <% } %>
+                                        <% } %>
 
-                                       
                                     </tbody>
                                 </table>
-                                <div class="ln_solid"></div>
+                                <% } %>
+                                <% } %>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div role="main">
-                   
 
 
-                    <!-- /page content -->
+                <!-- /page content -->
 
-                    <!-- footer content -->
-                    <footer>
-                        <div class="pull-right">
-                            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </footer>
-                    <!-- /footer content -->
-                </div>
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
             </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".addEvidence").click(function test() {
+
+                    //alert("testing adding activities");
+                    var PID = $("#PID").val();
+                    var evidences = $("#evidences").val();
+
+                    var evidenceID = evidences.substr(0, evidences.indexOf('~'));
+                    var evidenceName = evidences.substr(evidences.lastIndexOf('~') + 1);
+                    console.log(evidenceID);
+                    console.log(evidenceName);
+                    //console.log(activityName);
+                    var markup = "<tr><td '>" + PID + "</td><td>" + evidenceName +
+                        "</td><td><input type='file' name='DocFile' id='DocFile'></td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" +
+                        evidenceID + "</td></tr>";
+                    var table = document.getElementById("updateTable")
+                    $(table).append(markup);
+                });
+
+                function submit_ID(id){
+                    alert(id);
+                }
+
+            });
+        </script>
+
+        <!Script for dynamic text area>
+            <script>
+                function textAreaAdjust(o) {
+                    o.style.height = "1px";
+                    o.style.height = (25 + o.scrollHeight) + "px";
+                }
+            </script>
 
             <!-- jQuery -->
             <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
