@@ -189,57 +189,5 @@ module.exports = {
             }
         }
 
-    }, 
-
-    CheckingAccordionPage: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_activities; ", function (err, results, fields) {
-            if (err) throw err;
-            if(results){
-
-                resp.render('./pages/CheckingAccordionPage.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    dataD: results[3],
-                    dataE: results[4],
-                    dataF: results[5],
-                    current_user: sess.user
-                });
-                console.log(results);
-                console.log("Checking Accordion Page loaded");
-
-            }
-            });
-        }
-    }, 
-
-    ViewActivityEvidences: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var id = (req.query.PID);
-            console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
-                if (err) throw err;
-                if (results){
-                console.log(results);
-                    resp.render('./pages/ViewActivityEvidences.ejs', {
-                        data: results[0],
-                        dataB: results[1],
-                        dataC: results[2],
-                        current_user: sess.user
-                    })
-                }
-            });
-        }
-    }, 
-    
+    },
 }

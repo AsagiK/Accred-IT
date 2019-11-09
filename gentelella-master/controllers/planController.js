@@ -239,7 +239,7 @@ module.exports = {
         var md = req.body.MeasurementDesc;
         var gid = req.body.GoalID;
         var sql = "INSERT INTO `capstone`.`measurement` (`QualityTarget`,`measurement_Name`,`measurement_Description`, `metric_ID`) VALUES (? , ?, ?, ?)";
-        var values = [qt, mn, md, gid];
+        var values = [qt, mn, md, gid ];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -294,35 +294,19 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var alert = req.query.passdata;
-            var passData
-            if (alert) {
-                if (alert == 0) {
-                    passData = {
-                        goodStatus: 0,
-                        msg: "Measurement Not Created"
-                    }
-                } else {
-                    passData = {
-                        goodStatus: 1,
-                        msg: "Measurement Created"
-                    }
-                }
-            }
             connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement;", function (err, results, fields) {
                 if (err) throw err;
-                if (results) {
-                    resp.render('./pages/QualityMetrics.ejs', {
-                        data: results[0],
-                        dataB: results[1],
-                        dataC: results[2],
-                        dataD: results[3],
-                        dataE: results[4],
-                        current_user: sess.user,
-                        notif: passData
-                    });
+                if(results){
+                resp.render('./pages/QualityMetrics.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    current_user: sess.user
+                });
                 }
-                //console.log(results);
+                console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
         }
@@ -333,7 +317,7 @@ module.exports = {
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
         var duration = (req.body.duration);
-        var startStatus = "Active"
+        var startStatus ="Active"
         console.log(metricName);
         console.log(metricDesc);
         console.log(source);
@@ -389,7 +373,7 @@ module.exports = {
             });
         }
     },
-    addcycle: function (req, resp) {
+ addcycle: function (req, resp) {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
         var startDate = '';
@@ -414,67 +398,67 @@ module.exports = {
             resp.redirect('/QualityMetric');
         });
     },
-    //addduration: function (req, resp) {
-    //      var durationname = (req.body.durationName);
+//addduration: function (req, resp) {
+  //      var durationname = (req.body.durationName);
     //   var date = (req.body.txtDate);
-    //   console.log(durationname);
-    // console.log(date);
-    //var sql = "INSERT INTO `capstone`.`duration` (`duration_Name`, `duration_End`) VALUES (? , ?)";
-    //var values = [durationname, date];
-    //connection.query(sql, values, function (err, result) {
-    //    if (err) throw err;
-    //  console.log("Record Inserted");
-    //    resp.redirect('/QualityMetric');
-    //});
+     //   console.log(durationname);
+       // console.log(date);
+        //var sql = "INSERT INTO `capstone`.`duration` (`duration_Name`, `duration_End`) VALUES (? , ?)";
+        //var values = [durationname, date];
+        //connection.query(sql, values, function (err, result) {
+        //    if (err) throw err;
+          //  console.log("Record Inserted");
+        //    resp.redirect('/QualityMetric');
+        //});
     //},
 
-    //10/08/2019 12:00 AM - 11/28/2019 12:00 AM
+//10/08/2019 12:00 AM - 11/28/2019 12:00 AM
     //addcycle: function (req, resp) {
-    //  var cyclename = (req.body.cycleName);
-    //var date = (req.body.date);
-    //var startDate = '';
+      //  var cyclename = (req.body.cycleName);
+        //var date = (req.body.date);
+        //var startDate = '';
     //    var startTimeHour= date.substr(11,2);
-    //  console.log(req.body);
-    //var startTimeMin= date.substr(14,2);
-    //var startTimeAPM= date.substr(17,2);
-    //var startYear = date.substr(6, 4);
-    //var startMonth = date.substr(0, 2);
-    //var startDay = date.substr(3, 2);
-    //var endDate = '';
-    //var endTimeHour= date.substr(33,2);
-    //var endTimeMin= date.substr(36,2);
-    //var endTimeAPM= date.substr(39,2);
-    //var endYear = date.substr(28, 4);
-    //var endMonth = date.substr(22, 2);
-    //var endDay = date.substr(25, 2);
-    //console.log(cyclename);
-    //console.log(date);
-    //if(startTimeAPM=="PM"){
-    //    var startTimeHourFin=parseInt(startTimeHour)+12;
-    //  console.log("Nag plus na!");
-    // }else if(endTimeAPM=="PM"){
-    //   var endTimeHourFin=parseInt(endTimeHour)+12;
-    // console.log("Nag plus na!!");
-    //} 
-    //if(startTimeAPM=="AM"){
-    //  var startTimeHourFin=parseInt(startTimeHour);
-    //    console.log("Walang ng yari");
-    //}else if(endTimeAPM=="PM"){
-    //  var endTimeHourFin=parseInt(endTimeHour);
-    //    console.log("Walang ng yari!!");
-    //}
-    //startDate = startYear + "-" + startMonth + "-" + startDay +" "+ startTimeHourFin +":"+ startTimeMin;
-    //endDate = endYear + "-" + endMonth + "-" + endDay +" "+ endTimeHourFin+":"+ endTimeMin;
-    //console.log("Start Date: " + startDate);
-    //console.log("End Date: " + endDate);
-    //var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
-    //var values = [cyclename, startDate, endDate];
-    //connection.query(sql, values, function (err, result) {
-    //  if (err) throw err;
-    //console.log("Record Inserted");
-    //resp.redirect('/QualityMetric');
-    //});
-    // },
+      //  console.log(req.body);
+        //var startTimeMin= date.substr(14,2);
+        //var startTimeAPM= date.substr(17,2);
+        //var startYear = date.substr(6, 4);
+        //var startMonth = date.substr(0, 2);
+        //var startDay = date.substr(3, 2);
+        //var endDate = '';
+        //var endTimeHour= date.substr(33,2);
+        //var endTimeMin= date.substr(36,2);
+        //var endTimeAPM= date.substr(39,2);
+        //var endYear = date.substr(28, 4);
+        //var endMonth = date.substr(22, 2);
+        //var endDay = date.substr(25, 2);
+        //console.log(cyclename);
+        //console.log(date);
+        //if(startTimeAPM=="PM"){
+        //    var startTimeHourFin=parseInt(startTimeHour)+12;
+          //  console.log("Nag plus na!");
+       // }else if(endTimeAPM=="PM"){
+         //   var endTimeHourFin=parseInt(endTimeHour)+12;
+           // console.log("Nag plus na!!");
+        //} 
+        //if(startTimeAPM=="AM"){
+          //  var startTimeHourFin=parseInt(startTimeHour);
+        //    console.log("Walang ng yari");
+        //}else if(endTimeAPM=="PM"){
+          //  var endTimeHourFin=parseInt(endTimeHour);
+        //    console.log("Walang ng yari!!");
+        //}
+        //startDate = startYear + "-" + startMonth + "-" + startDay +" "+ startTimeHourFin +":"+ startTimeMin;
+        //endDate = endYear + "-" + endMonth + "-" + endDay +" "+ endTimeHourFin+":"+ endTimeMin;
+        //console.log("Start Date: " + startDate);
+        //console.log("End Date: " + endDate);
+        //var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
+        //var values = [cyclename, startDate, endDate];
+        //connection.query(sql, values, function (err, result) {
+          //  if (err) throw err;
+            //console.log("Record Inserted");
+            //resp.redirect('/QualityMetric');
+        //});
+   // },
 
     editmetric: function (req, resp) {
         sess = req.session;
@@ -779,7 +763,7 @@ module.exports = {
             var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                if (results) {
+                if (results){
                     resp.render('./pages/ViewMetricofSource.ejs', {
                         data: results[0],
                         dataB: results[1],
@@ -870,8 +854,8 @@ module.exports = {
                 resp.redirect('/PlanPage?PID=' + RID);
             }
         });
-    },
-
+    }, 
+    
     planPhase: function (req, resp) {
         var CID = (req.body.CID);
         var status = "0"
@@ -884,7 +868,7 @@ module.exports = {
                 resp.redirect('/QualityMetric');
             }
         });
-    },
+    }, 
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
@@ -898,8 +882,8 @@ module.exports = {
                 resp.redirect('/QualityMetric');
             }
         });
-    },
-
+    }, 
+    
     checkPhase: function (req, resp) {
         var CID = (req.body.CID);
         var status = "2"
@@ -912,8 +896,8 @@ module.exports = {
                 resp.redirect('/QualityMetric');
             }
         });
-    },
-
+    }, 
+    
     actPhase: function (req, resp) {
         var CID = (req.body.CID);
         var status = "3"
@@ -926,9 +910,9 @@ module.exports = {
                 resp.redirect('/QualityMetric');
             }
         });
-    },
-
-
+    }, 
+    
+    
     endPhase: function (req, resp) {
         var CID = (req.body.CID);
         var status = "4"
@@ -941,9 +925,9 @@ module.exports = {
                 resp.redirect('/QualityMetric');
             }
         });
-    },
+    }, 
 
-
+    
 
     UploadDocument: function (req, resp) {
         sess = req.session;
@@ -966,12 +950,12 @@ module.exports = {
         } else {
             connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
                 if (err) throw err;
-                if (results) {
+                if (results){
                     resp.render('./pages/ViewDocument.ejs', {
                         data: results,
                         current_user: sess.user
                     });
-                    //console.log(results);
+                //console.log(results);
                 }
             });
             console.log("ViewDocument");
@@ -989,7 +973,7 @@ module.exports = {
             var values = [id];
             connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
                 if (err) throw err;
-                if (results) {
+                if(results){
                     console.log(results);
                     resp.render('./pages/ActivityDetails.ejs', {
                         data: results[0],
@@ -1013,8 +997,8 @@ module.exports = {
             var values = [id, id];
             connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?); SELECT activity_evidences.activityID, activity_evidences.documentID, documents.Document_ID, documents.Document_Name, documents.Document_Route FROM capstone.activity_evidences join capstone.documents on activity_evidences.documentID = documents.Document_ID where activity_evidences.activityID=(?);", values, function (err, results) {
                 if (err) throw err;
-                if (results) {
-                    console.log(results);
+                if (results){
+                console.log(results);
                     resp.render('./pages/ActivityPendingDetails.ejs', {
                         data: results[0],
                         dataB: results[1],
@@ -1023,7 +1007,7 @@ module.exports = {
                 }
             });
         }
-    },
+    }, 
 
     EditUserAccount: function (req, resp) {
         sess = req.session;
@@ -1040,8 +1024,8 @@ module.exports = {
                 resp.render('./pages/EditUserbyUser.ejs', {
                     data: results,
                     current_user: sess.user
-                })
-            });
+            })
+        });
         }
     },
 
@@ -1069,7 +1053,7 @@ module.exports = {
                 }
             });
         });
-    },
+    }, 
 
     ActionPlan: function (req, resp) {
         sess = req.session;
@@ -1078,21 +1062,21 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement;", function (err, results, fields) {
-                if (err) throw err;
-                if (results) {
+            if (err) throw err;
+            if(results){
 
-                    resp.render('./pages/ActionPlan.ejs', {
-                        data: results[0],
-                        dataB: results[1],
-                        current_user: sess.user
-                    });
-                    console.log(results);
-                    console.log("Action Plan test");
+                resp.render('./pages/ActionPlan.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("Action Plan test");
 
-                }
+            }
             });
         }
-    },
+    }, 
 
     Dashboards: function (req, resp) {
         sess = req.session;
@@ -1102,7 +1086,7 @@ module.exports = {
         } else {
             connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities JOIN capstone.measurement WHERE approved_activities.measurement_ID = measurement.measurement_ID; SELECT * FROM capstone.users;", function (err, results, fields) {
                 if (err) throw err;
-                if (results) {
+                if(results){
                     resp.render('./pages/home.ejs', {
                         data: results[0],
                         dataB: results[1],
@@ -1143,10 +1127,7 @@ module.exports = {
                 }
             });
         }
-    }, 
-
-    
-
+    },
 
     ViewUsersSubmission: function (req, resp) {
         sess = req.session;
