@@ -189,5 +189,29 @@ module.exports = {
             }
         }
 
-    },
+    }, 
+
+    CheckingAccordionPage: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;", function (err, results, fields) {
+            if (err) throw err;
+            if(results){
+
+                resp.render('./pages/CheckingAccordionPage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("Checking Accordion Page loaded");
+
+            }
+            });
+        }
+    }, 
 }
