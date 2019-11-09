@@ -286,7 +286,7 @@ module.exports = {
                     current_user: sess.user
                 });
                 }
-                console.log(results);
+                //console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
         }

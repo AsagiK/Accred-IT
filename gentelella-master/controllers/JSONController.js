@@ -206,28 +206,28 @@ module.exports = {
 
     AddMeasurementsJSON: function (req, resp) {
         console.log(req.body);
-        var UID = req.body.table;
-        UID = JSON.parse(UID);
-        async.forEachOf(UID, function (value, key, callback) {
-            var gid = UID[key]["Group ID"];
-            var uid = UID[key]["User ID"];
-            var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
-            var values = [gid, uid, gid, uid];
-            connection.query(sql, values, function (err, result) {
-                if (err) callback(err);
-                if (result) {
-                    callback();
-                }
-            });
-        }, function (err) {
-            if (err) {
-                console.log("Failed");
-                resp.send("Not OK")
-            } else {
-                console.log("Passed");
-                resp.send("OK");
-            }
-        })
+//        var UID = req.body.table;
+//        UID = JSON.parse(UID);
+//        async.forEachOf(UID, function (value, key, callback) {
+//            var gid = UID[key]["Group ID"];
+//            var uid = UID[key]["User ID"];
+//            var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
+//            var values = [gid, uid, gid, uid];
+//            connection.query(sql, values, function (err, result) {
+//                if (err) callback(err);
+//                if (result) {
+//                    callback();
+//                }
+//            });
+//        }, function (err) {
+//            if (err) {
+//                console.log("Failed");
+//                resp.send("Not OK")
+//            } else {
+//                console.log("Passed");
+//                resp.send("OK");
+//            }
+//        })
     },
 
 }
