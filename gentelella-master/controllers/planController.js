@@ -309,7 +309,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -318,6 +318,7 @@ module.exports = {
                         dataC: results[2],
                         dataD: results[3],
                         dataE: results[4],
+                        dataF: results[5],
                         current_user: sess.user,
                         notif: passData
                     });
@@ -910,7 +911,7 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
-                resp.redirect('/QualityMetric');
+                resp.redirect('/ProgressPage');
             }
         });
     },
