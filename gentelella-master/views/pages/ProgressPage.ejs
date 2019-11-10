@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create Source </title>
+    <title>Review Evidences and Progress Page </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,9 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -42,7 +45,8 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Sources</h3>
+                            <h3>Review Evidences and Progress Page</h3>
+                         
                         </div>
                     </div>
                 </div>
@@ -51,38 +55,50 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AddSource">
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Task Name">Source Name: <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="sourcename" name="sourcename" required="required"
-                                                class="form-control col-md-7 col-xs-12" placeholder="Source Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Quality Target"
-                                            class="control-label col-md-3 col-sm-3 col-xs-12">Source Description <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea class="form-control" rows="3" id="sourcedesc" name="sourcedesc"
-                                                placeholder="Source Description" required="required"
-                                                onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                               
+                                
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>MeasurementID</th>
+                                        <th>Measurement</th>
+                                        <th>Description</th>
+                                        <th>Group Assigned</th>
+                                        <th>Quality Target and Progress</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <% for (var measurements of data) { %>
+                                            <% for(var groups of dataC) { %>
+                                                <% if (measurements.GroupAssigned == groups.Group_ID) { %>
+                                        <tr>
+                                            <td><%= measurements.measurement_ID %></td>
+                                            <td><%= measurements.measurement_Name %></td>
+                                            <td><%= measurements.measurement_Description %></td>
+                                            <td>
+                                                
+                                                    <%= groups.Group_Name %>
+                                                
+                                            </td>
+                                            <td>
+                                                <% for(var targets of dataB) { %>
+                                                    <% if(targets.measurementID == measurements.measurement_ID) { %>
+                                                        <%= targets.target %> - <%= targets.progress %> <br>
+                                                    <% } %>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <form method="GET" action="ProgressDetailsPage">
+                                                    <input type="hidden" name="MID" id="MID" value="<%= measurements.measurement_ID %>">
+                                                    <button class="btn btn-primary">Review Evidence and Declare Progress</button>
+                                                </form>
+                                            </td>                                            
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                                
                             </div>
                         </div>
                     </div>
@@ -102,7 +118,34 @@
             </div>
         </div>
 
-        <!script for dynamic text area>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".addEvidence").click(function test() {
+
+                    //alert("testing adding activities");
+                    var PID = $("#PID").val();
+                    var evidences = $("#evidences").val();
+
+                    var evidenceID = evidences.substr(0, evidences.indexOf('~'));
+                    var evidenceName = evidences.substr(evidences.lastIndexOf('~') + 1);
+                    console.log(evidenceID);
+                    console.log(evidenceName);
+                    //console.log(activityName);
+                    var markup = "<tr><td '>" + PID + "</td><td>" + evidenceName +
+                        "</td><td><input type='file' name='DocFile' id='DocFile'></td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" +
+                        evidenceID + "</td></tr>";
+                    var table = document.getElementById("updateTable")
+                    $(table).append(markup);
+                });
+
+                function submit_ID(id){
+                    alert(id);
+                }
+
+            });
+        </script>
+
+        <!Script for dynamic text area>
             <script>
                 function textAreaAdjust(o) {
                     o.style.height = "1px";

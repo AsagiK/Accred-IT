@@ -300,4 +300,31 @@ module.exports = {
 
     },
 
+    AssignProgressJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        var MID = req.body.mid;
+        console.log(MID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var prog = UID[key]["Progress"];
+            var tid = UID[key]["TargetID"];
+            var sql = "Update capstone.measurements_targets set measurements_targets.progress = ? where measurements_targets.target_ID = ? && measurements_targets.measurementID = ?;";
+            var values = [prog, tid, MID];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
 }

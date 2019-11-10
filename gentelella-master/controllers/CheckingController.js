@@ -227,7 +227,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -235,6 +235,57 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    }, 
+
+    ProgressPage: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.PID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group;", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results);
+                    resp.render('./pages/ProgressPage.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    }, 
+
+    ProgressDetailsPage: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.MID);
+            console.log(id+ "------------------------------------------------------------------------");
+            var values = [id, id];
+            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT measurements_targets.measurementID, measurements_targets.target, measurements_targets.target_ID FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities;", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results[1]);
+                    resp.render('./pages/ProgressDetailsPage.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        dataE: results[4],
+                        dataF: results[5],
                         current_user: sess.user
                     })
                 }

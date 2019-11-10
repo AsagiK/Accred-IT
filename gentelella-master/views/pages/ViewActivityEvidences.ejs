@@ -56,36 +56,59 @@
                         <div class="x_panel">
                             <div class="x_content">
                                
-                                <% for (var id of data) { %> 
-                                <% for (var docs of dataB) { %>
-                                <% for (var evidence of dataC) { %>
+                                
                                 <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th>Submission ID</th>   
-                                            <th>Document Name</th>
-                                            <th>Document Desc</th>
-                                            
-                                        </tr>
-                                    </thead>
+                                    
                                     <tbody>
-                                        <% if (id.pending_ID == evidence.pendingID && evidence.documentID == docs.Document_ID) { %> 
-                                            
                                         <tr>
-                                            
-                                            <td><% id.pending_ID %></td>
-                                            <td><% docs.Document_Name %> </td>
-                                            <td><% docs.Document_Desc %> </td>
-                                        </tr> 
-                                        <% } %>
-                                        <% } %>
+                                            <td>Status</td>
+                                            <td><%= data[0].status %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Submission Report: </td>
+                                            <td><%= data[0].description %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evidences: </td>
+                                        
+                                        
+                                            <td>
+                                                    <% for (var actEvidences of dataC) { %>
+                                                        <% for (var documents of dataB) { %>
+                                                        <% if (data[0].pending_ID == actEvidences.pendingID && actEvidences.documentID == documents.Document_ID) { %>
+                                                            <a href="<%= documents.Document_Route %>" download><%= documents.Document_Name %> - <%= documents.Document_Route %></a> </a><br>
+                                                        <% } %>
+                                                        <% } %>
+                                                        <% } %>
+                                            </td>
 
+                                        </tr>
+                                        <form action="PreCheck" method="POST">
+                                        <tr>
+
+                                            <td>Comment: </td>
+                                            <td>
+                                                    <textarea class="form-control" rows="3" id="comment"
+                                                    required="required" name="comment" onkeyup="textAreaAdjust(this)"
+                                                    style="overflow:hidden"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><input type=text id="PID" name="PID" value="<%= data[0].pending_ID %>"></td>
+                                            <td>
+                                                    <button type="submit" name="subtype" value="1">Approve
+                                                            Evidence</button>
+                                                        <button type="submit" name="subtype" value="2">Disapprove
+                                                            Evidence</button>
+                                            </td>
+                                        </tr>
+                                    </form> 
+                                       
+                                        
                                     </tbody>
                                 </table>
-                                <% } %>
-                                <% } %>
-                                <% } %>
+                                
                             </div>
                         </div>
                     </div>

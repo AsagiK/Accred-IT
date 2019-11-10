@@ -532,35 +532,26 @@ module.exports = {
     PreCheck: function (req, resp) {
         console.log(req.body);
         if (req.body.subtype == "1") {
-            var AID = req.body.activityID;
-            var name = req.body.activityName;
-            var target = req.body.target;
-            var code = req.body.code;
-            var description = req.body.activityDesc;
-            var MID = req.body.MID;
-            var score = req.body.score;
+            var PID = req.body.PID;
+            var comment = req.body.comment;
             var status = 1;
-            var values = [score, AID, AID, name, target, code, description, MID, score, status, AID]
-            var sql = "UPDATE capstone.approved_activities set current_Score = ? where activity_ID = ?; INSERT INTO `capstone`.`audit_activities` ( `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?); DELETE FROM `capstone`.`pending_activities` WHERE (`activity_ID` = ?);"
+            var values = [status, comment, PID]
+            var sql = "UPDATE capstone.pending_activities set status = ?, comment = ? where pending_ID = ?;"
             connection.query(sql, values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
-                resp.redirect('/ViewMeasurementDetails?MID=' + MID)
+                resp.redirect('/CheckingAccordionPage')
             });
         } else {
-            var AID = req.body.activityID;
-            var name = req.body.activityName;
-            var target = req.body.target;
-            var code = req.body.code;
-            var description = req.body.activityDesc;
-            var MID = req.body.MID;
-            var score = req.body.score;
-            var values = [AID]
-            var sql = "DELETE FROM `capstone`.`pending_activities` WHERE (`activity_ID` = ?);";
+            var PID = req.body.PID;
+            var comment = req.body.comment;
+            var status = 2;
+            var values = [status, comment, PID]
+            var sql = "UPDATE capstone.pending_activities set status = ?, comment = ? where pending_ID = ?;"
             connection.query(sql, values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
-                resp.redirect('/ViewMeasurementDetails?MID=' + MID)
+                resp.redirect('/CheckingAccordionPage')
             });
         }
     },

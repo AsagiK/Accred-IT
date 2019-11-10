@@ -55,7 +55,7 @@
                               </li>
                           </ul>
                       </li>
-                      <li><a><i class="fa fa-folder"></i> Ecidence Repository <span class="fa fa-chevron-down"></span></a>
+                      <li><a><i class="fa fa-folder"></i> Evidence Repository <span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
                             <% if (current_user[0].Role == 4 || current_user[0].Role == 3 || current_user[0].Role == 1) { %>
                               <li><a href="/UploadDocument">Upload Documents</a></li>
@@ -82,11 +82,17 @@
                                     </ul>
                                 </li>
 
+                                <li><a><i class="fa fa-users"></i> Checking <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                            <li><a href="/CheckingAccordionPage">Checking Evidence Submission Page</a></li>
+                                            <li><a href="/ProgressPage">Reviewing Evidence and Progress Page</a></li>
+                                    </ul>
+                                </li>
+
                                 <li><a href="QualityMetric">Quality Metrics</a></li>
 
                                 <li><a href="CheckingPage">Checking Page</a></li>
 
-                                <li><a href="/CheckingAccordionPage">Checking Accordion Page</a></li>
                                 <li><a href="Viewcycle">View Cycles</a></li>
                                 <% } %>
                                 <% if ( current_user[0].Role == 4) { %>

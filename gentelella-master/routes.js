@@ -78,6 +78,7 @@ router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
+router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
 
 
 
@@ -120,6 +121,8 @@ router.route('/home').get(planCtrl.Dashboards);
 
 router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
+router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
+router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 
 
 module.exports = router;

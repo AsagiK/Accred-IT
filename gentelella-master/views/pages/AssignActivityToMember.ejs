@@ -136,8 +136,8 @@
                                                     <th>User ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Activity ID</th>
-                                                    <th>Measurement ID</th>
+                                                    <th style="display: none;">Activity ID</th>
+                                                    <th style="display: none;">Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -157,9 +157,9 @@
                                                         <%= user.User_First %></td>
                                                     <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
-                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                    <td style="display: none;" id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                    <td style="display: none;" id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
@@ -181,8 +181,8 @@
                                                     <th>User ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Activity ID</th>
-                                                    <th>Measurement ID</th>
+                                                    <th style="display: none;">Activity ID</th>
+                                                    <th style="display: none;">Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -257,8 +257,8 @@
                             index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
                             "</td><td id= first" + index + " value=" + first + ">" + first +
                             "</td><td id= last" + index + " value=" + last + ">" + last +
-                            "</td><td id= hidden" + index + " value=" + hidden +
-                            ">" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            "</td><td style='display: none;' id= hidden" + index + " value=" + hidden +
+                            ">" + hidden + "</td><td style='display: none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
