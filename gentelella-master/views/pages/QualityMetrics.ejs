@@ -322,7 +322,6 @@
                                                                                             <th>Measurement Description</th>
                                                                                             <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
-                                                                                            <th>Target Progress
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -339,7 +338,14 @@
                                                                                                 <td><%= group.Group_Name %></td>
                                                                                             <%}%>
                                                                                             <%}%>
-                                                                                            <td><%= measurement.QualityTarget %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets of dataF) { %>
+                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                        - <%= targets.target %><br>
+                                                                                                    <% } %>
+                                                                                                
+                                                                                                <% } %>
+                                                                                            </td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                                                     <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
@@ -493,7 +499,6 @@
                                                                                             <th>Measurement Description</th>
                                                                                             <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
-                                                                                            <th>Target Progress</th>
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -510,7 +515,14 @@
                                                                                                 <td><%= group.Group_Name %></td>
                                                                                             <%}%>
                                                                                             <%}%>
-                                                                                            <td><%= measurement.QualityTarget %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets of dataF) { %>
+                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                        - <%= targets.target %><br>
+                                                                                                    <% } %>
+                                                                                                
+                                                                                                <% } %>
+                                                                                            </td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                                                     <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
@@ -545,8 +557,109 @@
                                                                     <form action="doPhase" method="post">
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Back to Do Phase</button>
-
                                                                     </form>
+
+                                                                    <% for (var metric of data) { %>
+                                                                        <% if (metric.cycle_Status == "Active") { %>
+    
+                                                                        <div class="panel-body">
+                                                                            <!--Group 1 table-->
+    
+                                                                            <div class="panel">
+    
+                                                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
+    
+                                                                                    <h3 class="panel-title">
+                                                                                        GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
+                                                                                    </h3>
+    
+                                                                                </a>
+                                                                                <div id="Collapse<%= metric.metric_ID %>" class="collapse">
+                                                                                    <div>
+
+
+
+                                                                                        <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
+                                                                                        <table class="table table-bordered">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Goal Description</th>
+                                                                                                    <th>Duration</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <td><%= metric.metric_Desc%></td>
+                                                                                                <td><%= metric.duration%></td>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+    
+                                                                                    <table class="table table-bordered">
+                                                                                        <thead>
+                                                                                            <!--Edited-->
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Measurement Name</th>
+                                                                                                <th>Measurement Description</th>
+                                                                                                <th>Group Assigned</th>
+                                                                                                <th>Quality Target</th>
+                                                                                                <th>Progress</th>
+                                                                                                <th></th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <% for (var measurement of dataE) { %>
+                                                                                            <%if(measurement.metric_ID==metric.metric_ID){%>
+                                                                                            <tr>
+                                                                                                <!--Edited-->
+                                                                                                <td><%= measurement.measurement_ID %></td>
+                                                                                                <td><%= measurement.measurement_Name %></td>
+                                                                                                <td><%= measurement.measurement_Description %></td>
+                                                                                                <%for (var group of dataC){%>
+                                                                                                <% if(measurement.GroupAssigned==group.Group_ID){%>
+                                                                                                    <td><%= group.Group_Name %></td>
+                                                                                                <%}%>
+                                                                                                <%}%>
+                                                                                                <td>
+                                                                                                    <% for (var targets of dataF) { %>
+                                                                                                        <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                            Target ID - <%= targets.target_ID %>:<br> <%= targets.target %><br>
+                                                                                                        <% } %>
+                                                                                                    
+                                                                                                    <% } %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        <% for (var targets of dataF) { %>
+                                                                                                            <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                                Target ID - <%= targets.target_ID %>:<br> <%= targets.progress %><br>
+                                                                                                            <% } %>
+                                                                                                        
+                                                                                                        <% } %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <form method="get" action="ViewMeasurementDetails">
+                                                                                                        <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                        <button type="submit" class="btn btn-primary">View Measurement Details</button>
+                                                                                                        <!--Edited-->
+                                                                                                    </form>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <%}%>
+                                                                                        <%}%>
+                                                                                        </tbody>
+                                                                                    </table>
+    
+    
+                                                                                </div>
+    
+                                                                            </div>
+    
+                                                                        </div>
+    
+                                                                        <!--End of Group 1 Table -->
+                                                                        <% } %>
+                                                                        <% } %>
+    
 
                                                                     <% } else if (cycle.status  == 3) { %>
                                                                     <form action="endPhase" method="post">
@@ -693,7 +806,6 @@
                                                                                             <th>Measurement Description</th>
                                                                                             <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
-                                                                                            <th>Target Progress
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -710,7 +822,14 @@
                                                                                                 <td><%= group.Group_Name %></td>
                                                                                             <%}%>
                                                                                             <%}%>
-                                                                                            <td><%= measurement.QualityTarget %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets of dataF) { %>
+                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                        - <%= targets.target %><br>
+                                                                                                    <% } %>
+                                                                                                
+                                                                                                <% } %>
+                                                                                            </td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                                                     <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
@@ -794,7 +913,14 @@
                                                                                                 <td><%= group.Group_Name %></td>
                                                                                             <%}%>
                                                                                             <%}%>
-                                                                                            <td><%= measurement.QualityTarget %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets of dataF) { %>
+                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                                        - <%= targets.target %><br>
+                                                                                                    <% } %>
+                                                                                                
+                                                                                                <% } %>
+                                                                                            </td>
                                                                                             <td>
                                                                                             </td>
                                                                                         </tr>
