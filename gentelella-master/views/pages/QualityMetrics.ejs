@@ -314,11 +314,13 @@
                                                                                 <table class="table table-bordered">
                                                                                     <thead>
                                                                                         <!--Edited-->
-                                                                                        <tr>
+                                                                                       <tr>
                                                                                             <th>ID</th>
                                                                                             <th>Measurement Name</th>
                                                                                             <th>Measurement Description</th>
+                                                                                            <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
+                                                                                            <th>Target Progress
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -330,6 +332,11 @@
                                                                                             <td><%= measurement.measurement_ID %></td>
                                                                                             <td><%= measurement.measurement_Name %></td>
                                                                                             <td><%= measurement.measurement_Description %></td>
+                                                                                            <%for (var group of dataC){%>
+                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
+                                                                                                <td><%= group.Group_Name %></td>
+                                                                                            <%}%>
+                                                                                            <%}%>
                                                                                             <td><%= measurement.QualityTarget %></td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
@@ -340,7 +347,7 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <%}%>
-                                                                    <% } %>
+                                                                                        <% } %>
                                                                                     </tbody>
                                                                                 </table>
 
@@ -384,8 +391,8 @@
 
                                                                             </a>
                                                                             <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                <div>
-                                                                                    <!--CREATE MEASUREMENTS-->
+                                                                                
+                                                                                    <!--CREATE MEASUREMENTS
                                                                                     <div class="modal fade createMeasurement" id="my_modal">
                                                                                         <div class="modal-dialog modal-lg2">
                                                                                             <div class="modal-content">
@@ -400,27 +407,27 @@
                                                                                                 <div class="modal-body">
 
 
-                                                                                                    <!--Measurement Name input field-->
+                                                                                                    <!--Measurement Name input field
                                                                                                     <div class="form-group">
                                                                                                         <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
                                                                                                             Measurement Name: <span class="required">*</span></label>
-                                                                                                        <!--Edited-->
+                                                                                                        <!--Edited
                                                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                                                             <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
                                                                                                         </div>
                                                                                                     </div>
 
-                                                                                                    <!--Measurement Description field-->
+                                                                                                    <!--Measurement Description field
                                                                                                     <div class="form-group">
                                                                                                         <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
                                                                                                             Description:
-                                                                                                            <!--Edited-->
+                                                                                                            <!--Edited
                                                                                                             <span class="required">*</span></label>
                                                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                                                             <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <!--Quality Target Input field-->
+                                                                                                    <!--Quality Target Input field
                                                                                                     <div class="form-group" id="form">
                                                                                                         <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
                                                                                                         <div class="col-md-6 col-sm-6 col-xs-12" id="newInp">
@@ -438,11 +445,11 @@
                                                                                                             <tbody id="tBody"></tbody>
                                                                                                         </table>
                                                                                                     </div>
-                                                                                                    <!--Goal ID input field-->
+                                                                                                    <!--Goal ID input field
                                                                                                     <div class="form-group">
                                                                                                         <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
                                                                                                     Goal ID: <span class="required">*</span></label>-->
-                                                                                                        <!--Edited-->
+                                                                                                        <!--Edited
                                                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                                                             <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                                                                                         </div>
@@ -459,9 +466,8 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-
-                                                                                    <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
+                                                                                    </div>-->
+                                                                                <div>
                                                                                     <table class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
@@ -483,7 +489,9 @@
                                                                                             <th>ID</th>
                                                                                             <th>Measurement Name</th>
                                                                                             <th>Measurement Description</th>
+                                                                                            <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
+                                                                                            <th>Target Progress</th>
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -495,6 +503,11 @@
                                                                                             <td><%= measurement.measurement_ID %></td>
                                                                                             <td><%= measurement.measurement_Name %></td>
                                                                                             <td><%= measurement.measurement_Description %></td>
+                                                                                            <%for (var group of dataC){%>
+                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
+                                                                                                <td><%= group.Group_Name %></td>
+                                                                                            <%}%>
+                                                                                            <%}%>
                                                                                             <td><%= measurement.QualityTarget %></td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
@@ -505,7 +518,7 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <%}%>
-                                                                    <% } %>
+                                                                                        <% } %>
                                                                                     </tbody>
                                                                                 </table>
 
@@ -539,7 +552,6 @@
                                                                         <button class="btn btn-default" type="submit">End Cycle</button>
 
                                                                     </form>
-
                                                                     <form action="checkPhase" method="post">
                                                                         <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
                                                                         <button class="btn btn-default" type="submit">Back to Check Phase</button>
@@ -677,7 +689,9 @@
                                                                                             <th>ID</th>
                                                                                             <th>Measurement Name</th>
                                                                                             <th>Measurement Description</th>
+                                                                                            <th>Group Assigned</th>
                                                                                             <th>Quality Target</th>
+                                                                                            <th>Target Progress
                                                                                             <th></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -689,6 +703,11 @@
                                                                                             <td><%= measurement.measurement_ID %></td>
                                                                                             <td><%= measurement.measurement_Name %></td>
                                                                                             <td><%= measurement.measurement_Description %></td>
+                                                                                            <%for (var group of dataC){%>
+                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
+                                                                                                <td><%= group.Group_Name %></td>
+                                                                                            <%}%>
+                                                                                            <%}%>
                                                                                             <td><%= measurement.QualityTarget %></td>
                                                                                             <td>
                                                                                                 <form method="get" action="ViewMeasurementDetails">
@@ -699,7 +718,7 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <%}%>
-                                                                    <% } %>
+                                                                                    <%}%>
                                                                                     </tbody>
                                                                                 </table>
 
@@ -715,17 +734,88 @@
                                                                     <% } %>
 
                                                                     <% } else if (cycle.status  == 4) { %>
-                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">View Cycle Grade</button>
-                                                                    <% } %> %>
+                                                                        <form action="doPhase" method="post">
+                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
+                                                                        <button class="btn btn-default" type="submit">View Cycle End Report</button>
+                                                                        </form>
+                                                                    
+                                                                    <% for (var metric of data) { %>
+                                                                    <% if (metric.cycle_Status == "Active") { %>
 
-                                                                    <!--Phase Button End-->
+                                                                    <div class="panel-body">
+                                                                        <!--Group 1 table-->
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <% } %>
-                                                    </div>
+                                                                        <div class="panel">
 
+                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
+
+                                                                                <h3 class="panel-title">
+                                                                                    GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
+                                                                                </h3>
+
+                                                                            </a>
+                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
+                                                                                <div>
+
+                                                                                    <table class="table table-bordered">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th>Goal Description</th>
+                                                                                                <th>Duration</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <td><%= metric.metric_Desc%></td>
+                                                                                            <td><%= metric.duration%></td>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <!--Edited-->
+                                                                                        <tr>
+                                                                                            <th>ID</th>
+                                                                                            <th>Measurement Name</th>
+                                                                                            <th>Measurement Description</th>
+                                                                                            <th>Group Assigned</th>
+                                                                                            <th>Quality Target</th>
+                                                                                            <th>Target Progress</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <% for (var measurement of dataE) { %>
+                                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
+                                                                                        <tr>
+                                                                                            <!--Edited-->
+                                                                                            <td><%= measurement.measurement_ID %></td>
+                                                                                            <td><%= measurement.measurement_Name %></td>
+                                                                                            <td><%= measurement.measurement_Description %></td>
+                                                                                            <%for (var group of dataC){%>
+                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
+                                                                                                <td><%= group.Group_Name %></td>
+                                                                                            <%}%>
+                                                                                            <%}%>
+                                                                                            <td><%= measurement.QualityTarget %></td>
+                                                                                            <td>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <%}%>
+                                                                                    <%}%>
+                                                                                    </tbody>
+                                                                                </table>
+
+
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <!--End of Group 1 Table -->
+                                                                    <% } %>
+                                                                    <% } %>
+                                                                <%}%>
                                                     <!-- end of accordion -->
 
 
@@ -734,7 +824,7 @@
                                                 </div>
                                             </div>
 
-
+                                        <%}%>
                                         </div>
                                     </div>
 
