@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Submissions Details Page </title>
+    <title>Review Evidences and Progress Page </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>View Submissions Details</h3>
+                            <h3>Review Evidences and Progress Page</h3>
                          
                         </div>
                     </div>
@@ -58,54 +58,44 @@
                                
                                 
                                 <table class="table table-bordered">
-                                    
+                                    <thead>
+                                        <th>MeasurementID</th>
+                                        <th>Measurement</th>
+                                        <th>Description</th>
+                                        <th>Group Assigned</th>
+                                        <th>Quality Target and Progress</th>
+                                        <th></th>
+                                    </thead>
                                     <tbody>
+                                        <% for (var measurements of data) { %>
+                                            <% for(var groups of dataC) { %>
+                                                <% if (measurements.GroupAssigned == groups.Group_ID) { %>
                                         <tr>
-                                            <td>Status</td>
-                                            <td><%= data[0].status %></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Submission Report: </td>
-                                            <td><%= data[0].description %></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Evidences: </td>
-                                        
-                                        
+                                            <td><%= measurements.measurement_ID %></td>
+                                            <td><%= measurements.measurement_Name %></td>
+                                            <td><%= measurements.measurement_Description %></td>
                                             <td>
-                                                    <% for (var actEvidences of dataC) { %>
-                                                        <% for (var documents of dataB) { %>
-                                                        <% if (data[0].pending_ID == actEvidences.pendingID && actEvidences.documentID == documents.Document_ID) { %>
-                                                            <a href="<%= documents.Document_Route %>" download><%= documents.Document_Name %> - <%= documents.Document_Route %></a> </a><br>
-                                                        <% } %>
-                                                        <% } %>
-                                                        <% } %>
+                                                
+                                                    <%= groups.Group_Name %>
+                                                
                                             </td>
-
-                                        </tr>
-                                        <form action="PreCheck" method="POST">
-                                        <tr>
-
-                                            <td>Comment: </td>
                                             <td>
-                                                    <textarea class="form-control" rows="3" id="comment"
-                                                    required="required" name="comment" onkeyup="textAreaAdjust(this)"
-                                                    style="overflow:hidden"></textarea>
+                                                <% for(var targets of dataB) { %>
+                                                    <% if(targets.measurementID == measurements.measurement_ID) { %>
+                                                        <%= targets.target %> - <%= targets.progress %> <br>
+                                                    <% } %>
+                                                <% } %>
                                             </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td><input type=text id="PID" name="PID" value="<%= data[0].pending_ID %>"></td>
                                             <td>
-                                                    <button type="submit" name="subtype" value="1">Approve
-                                                            Evidence</button>
-                                                        <button type="submit" name="subtype" value="2">Disapprove
-                                                            Evidence</button>
-                                            </td>
+                                                <form method="GET" action="ProgressDetailsPage">
+                                                    <input type="text" name="MID" id="MID" value="<%= measurements.measurement_ID %>">
+                                                    <button class="btn btn-primary">Review Evidence and Declare Progress</button>
+                                                </form>
+                                            </td>                                            
                                         </tr>
-                                    </form> 
-                                       
-                                        
+                                        <% } %>
+                                            <% } %>
+                                        <% } %>
                                     </tbody>
                                 </table>
                                 

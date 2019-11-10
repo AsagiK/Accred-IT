@@ -123,18 +123,20 @@
                                                                                         <tbody>
                                                                                             <% for (var subs of dataE) { %>
                                                                                                 
-                                                                                            <% if (activity.activity_ID == subs.activity_ID) { %>    
+                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
                                                                                             
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
                                                                                                 <td> <%= subs.description %> </td>
-                                                                                                <td>  <form method="get" action="">
-                                                                                                        <input type="hidden" name="PID"
+                                                                                                <td>  
+                                                                                                    <form method="get" action="ViewActivityEvidences">
+                                                                                                        <input type="text" name="PID"
                                                                                                             value="<%= subs.pending_ID %>">
                                                                                                         <button type="submit" class="btn btn-primary">View
                                                                                                             Evidence
                                                                                                         </button>
-                                                                                                    </form></td>
+                                                                                                    </form>
+                                                                                                </td>
                                                                                             </tr>
                                                                                                
                                                                                             <% } %>
