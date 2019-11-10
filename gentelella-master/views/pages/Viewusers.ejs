@@ -29,8 +29,16 @@
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    
 </head>
 
 <body class="nav-md">
@@ -56,7 +64,7 @@
                                 <br />
 
                                 <!--view table for users-->
-                                <table class="table table-bordered">
+                                <table id="datatable-fixed-header" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -66,6 +74,7 @@
                                             <th>Area and Group Assigned</th>
                                             <th>Role</th>
                                             <th>Contact Number</th>
+                                            <th></th>
 
                                         </tr>
                                     </thead>
@@ -83,7 +92,9 @@
                                                 <td><%= info.Role_Name %></td>
                                                 <td><%= info.ContactNo %></td>
                                                 <% if (info.Role != "1") {%>
-                                                <td><button type="submit" class="btn btn-success">Edit</button></td>
+                                                <td><button type="submit" class="btn btn-info">Edit</button></td>
+                                                <% }else { %>
+                                                <td></td>
                                                 <% } %>
                                             </tr>
                                         </form>
@@ -113,7 +124,7 @@
                                     <br />
 
                                     <!--view table for users-->
-                                    <table class="table table-bordered">
+                                    <table id="datatable" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -121,6 +132,8 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Contact Number</th>
+                                                <th></th>
+                                                <th></th>
 
                                             </tr>
                                         </thead>
@@ -139,12 +152,12 @@
                                                     <td><%= info2.ContactNo %></td>
                                                     
                                                     <% if (info2.Role != "1") {%>
-                                                    <td><button type="submit" class="btn btn-success">Edit</button></td>
+                                                    <td><button type="submit" class="btn btn-info">Edit</button></td>
                                                     <%}%>
                                                 </form>
-                                                <form method="get" action="addtogroup">
-                                                    <input type="hidden" name="UID" value="<%= info2.User_ID %>">
-                                                    <td><button type="submit" class="btn btn-success">Add to group</button></td>
+                                                <form method="get" action="ViewGroups">
+                                                    
+                                                    <td><button type="submit" class="btn btn-primary">Add to group</button></td>
                                                 </form>
                                                 
                                             </tr>
@@ -171,6 +184,8 @@
                     <!-- /footer content -->
                 </div>
             </div>
+
+            
 
             <!-- jQuery -->
             <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -207,6 +222,22 @@
             <script src="assets/vendors/starrr/dist/starrr.js"></script>
             <!-- Custom Theme Scripts -->
             <script src="assets/build/js/custom.min.js"></script>
+            <!-- Datatables -->
+            <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+            <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+            <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+            <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 
