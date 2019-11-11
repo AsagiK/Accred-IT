@@ -616,17 +616,63 @@ module.exports = {
     },
 
     UpdateDocumentsJSON: function (req, resp) {
-        /*
-      Step 0 = create isaversionof, md5, and version number in documents table
-      Step 1 = receive ID of document to be updated and new document
-      Step 2 = generate a hash of new document
-      Step 3 = compare hash of old document and new document
-      IF failed then return a dupicate error
-      IF not failed check for same filename
-      IF same filename then append v + "version number" to filename
-      ELSE process document and return success message
-      Step 4 = fix hardlinks of evidence to activity
-      */
+
+        //      Done Step 0 = create isaversionof, md5, and version number in documents table
+        //      Step 1 = receive ID of document to be updated and new document
+        var files = req.files.UpEvidence;
+        var DID = req.body.DocumentID;
+        //      Step 2 = generate a hash of new document
+        var md5 = files.md5;
+        //      Step 3 = compare hash of new document in system
+        var sql = "Select * from capstone.documents where documents.md5 = (?);"
+        var values = [md5]
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            if (result.length < 1) {
+                checkname(result);
+                updatedocument(DID, files);
+                insertfile(files);
+            } else if (result.length >= 1) {
+                var resjson = {
+                    case: "0",
+                    data: result
+                };
+                resp.send(resjson)
+            }
+        })
+        //      IF failed then return a dupicate error = Case 0
+        //      IF not failed check for same filename
+        //      IF same filename then append v + "version number" to filename = Case 1 Type 1
+        //      ELSE process document and return success message = Case 1 Type 2
+        //      Step 4 = fix hardlinks of evidence to activity
+        function checkname() {
+            var sql2 = "SELECT * FROM capstone.documents where documents.Document_Name = (?) && documents.Document_ID = (?);"
+            var values2 = [new file name, old document id];
+            connection.query(sql2, values2, function (err, result) {
+                if (err) callback(err);
+                if (result.length < 1) {
+                    insertfile(files, 1, result);
+                } else if (result.length >= 1) {
+                    insertfile(files, 2, result);
+                }
+            });
+
+        }
+
+        function insertfile(files, type, result) {
+
+        }
+
+
+
+        //        var req = new XMLHttpRequest();
+        //        req.overrideMimeType("application/json");
+        //        req.open('GET', url, true);
+        //        req.onload = function () {
+        //            var jsonResponse = JSON.parse(req.responseText);
+        //            // do something with jsonResponse
+        //        };
+        //        req.send(null);
     },
 
 
