@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `capstone`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
--- Host: localhost    Database: capstone
+-- Host: 127.0.0.1    Database: capstone
 -- ------------------------------------------------------
 -- Server version	8.0.16
 
@@ -638,6 +636,28 @@ INSERT INTO `source` VALUES (1,'PAASCU','BLABLABLABLAk');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sourcetype`
+--
+
+DROP TABLE IF EXISTS `sourcetype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `sourcetype` (
+  `stype_ID` int(11) NOT NULL,
+  `SourceType` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sourcetype`
+--
+
+LOCK TABLES `sourcetype` WRITE;
+/*!40000 ALTER TABLE `sourcetype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sourcetype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tasks`
 --
 
@@ -737,4 +757,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-12 19:21:18
+-- Dump completed on 2019-11-12 19:41:36
