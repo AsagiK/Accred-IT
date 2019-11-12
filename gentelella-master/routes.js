@@ -79,6 +79,7 @@ router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
 router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
+router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
 
 
 

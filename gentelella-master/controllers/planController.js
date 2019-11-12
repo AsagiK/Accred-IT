@@ -323,7 +323,7 @@ module.exports = {
                         notif: passData
                     });
                 }
-                //console.log(results);
+                console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
         }
@@ -944,8 +944,6 @@ module.exports = {
             }
         });
     },
-
-
 
     UploadDocument: function (req, resp) {
         sess = req.session;

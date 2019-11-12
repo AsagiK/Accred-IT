@@ -239,7 +239,7 @@
                                                                                     </form>
                                                                                     <br>
                                                                                     
-                                                                                    <button class="btn btn-primary" href="#my_modal"
+                                                                                    <button class="btn btn-primary" href="#my_modaloutputs"
                                                                                         data-toggle="modal"
                                                                                         data-book-id="<%= activities.activity_ID %>">Add
                                                                                         expected output/s</button>
@@ -476,7 +476,7 @@
 
 
     <!--MODAL FOR ADDING EXPECTED OUTPUTS FOR ACTIVITIES -->
-    <div class="modal fade" id="my_modal">
+    <div class="modal fade" id="my_modaloutputs">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -893,7 +893,7 @@
 
         });
 
-        $('#my_modal').on('show.bs.modal.fade', function (e) {
+        $('#my_modaloutputs').on('show.bs.modal.fade', function (e) {
             var bookId = $(e.relatedTarget).data('book-id');
             //alert(bookId);
             $(e.currentTarget).find('input[name="activityID"]').val(bookId);

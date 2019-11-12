@@ -261,7 +261,7 @@ module.exports = {
         var group = req.body.group;
         var gid = req.body.gid;
         UID = JSON.parse(UID);
-        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`) VALUES (?, ?, ?, ?)";
+        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `cycle_ID`, `measurement_Name`, `measurement_Description`) VALUES (?, ?, ?, ?)";
         var values2 = [group, gid, mname, desc]
         connection.query(sql2, values2, function (err, result) {
             if (err){
@@ -325,6 +325,40 @@ module.exports = {
                 resp.send("OK");
             }
         })
+    },
+
+    AddCyclesJSON: function (req, resp) {
+        var UID = req.body.table;
+        var MID = req.body.mid;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var cn = UID[key]["Cycle Name"];
+            var sd = UID[key]["Start Date"];
+            var ed = UID[key]["End Date"];
+            var gi = UID[key]["GoalID"];
+            console.log(cn);
+            console.log(sd);
+            console.log(ed);
+            console.log(gi);
+            var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`) VALUES (?, ?, ?, ?);";
+            var values = [cn, sd, ed, gi];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
     },
 
 }
