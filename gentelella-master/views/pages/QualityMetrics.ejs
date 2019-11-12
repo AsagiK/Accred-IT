@@ -97,7 +97,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Quality Management - <%= dataD.length %></h3>
+                            <h3>Quality Management</h3>
                         </div>
                     </div>
                 </div>
@@ -106,10 +106,6 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".createGoals">Create Goals</button>
 
                                     <!--MODAL FOR CYCLE CREATION-->
                                     <div class="modal fade createCycle"
@@ -349,13 +345,11 @@
                                             <div class="x_content">
                                                 <br />
                                                 <div class="col-md-12 col-sm-6 col-xs-12">
-                                                    <div class="x_title">
-                                                        <h2><i class="fa fa-align-left"></i>TESTING
-                                                        </h2>
-
-                                                        <div class="clearfix"></div>
-                                                    </div>
+                                                    
                                                     <div class="x_content">
+                                                            <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                                data-target=".createGoals">Create Goals</button>
 
                                                         <% for (var goals of data) { %>
 
@@ -418,8 +412,6 @@
                                                                                         <% var dateNow = new Date(date.getFullYear(), date.getMonth(), date.getDate()); %>
                                                                                         <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                                         <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
-                                                                                        <h4>DATE NOW - <%= dateNow %></h4>
-                                                                                        <h4>END DATE - <%= endDate %></h4>
                                                                                         <h4>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %></h4>
                                                                                     </a>
                                                                                     <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
@@ -494,6 +486,7 @@
                                                                                                 data-book-id="<%=cycles.cycle_ID%>">Create
                                                                                                 Measurement</button>
                                                                                             <% } %>
+                                                                                                
                                                                                         
                                                                                         
                                                                                         
