@@ -88,6 +88,7 @@ router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
 router.route('/PreCheck').post(DocCtrl.PreCheck);
 router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
+router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 
 //--SessCtrl
 router.route('/DebugCreate').post(SessCtrl.Register);

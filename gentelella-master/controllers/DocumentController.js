@@ -676,4 +676,7 @@ module.exports = {
     },
 
 */
+    TestingJSON: function(req, resp){
+        console.log(req.body)
+    }
 }

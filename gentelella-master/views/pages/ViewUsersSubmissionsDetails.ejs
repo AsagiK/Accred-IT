@@ -93,17 +93,16 @@
                                         <% for (var docs of dataB) { %>
                                         <% for (var evidence of dataC) { %>
                                         <% if (evidence.pendingID == data[0].pending_ID && evidence.documentID == docs.Document_ID) { %>
+                                        <form action="TestingJSON" method="POST" name="updateform">
+                                            <tr>
+                                                <td><%= data[0].pending_ID %></td>
+                                                <td><%= docs.Document_Name %></td>
+                                                <td><input type='file' name='DocFile<%= x %>' id='DocFile<%= x %>'></td>
+                                                <td class="nr"><%= evidence.documentID %></td>
+                                                <td><button class="btn btn-primary" name="btnsubmit<%= x %>" id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
 
-                                        <tr>
-                                            <td><%= data[0].pending_ID %></td>
-                                            <td><%= docs.Document_Name %></td>
-                                            <td><input type='file' name='DocFile<%= x %>' id='DocFile<%= x %>'></td>
-                                            <td class="nr" ><%= evidence.documentID %></td>
-                                            <td><button class="btn btn-primary" name="btnsubmit<%= x %>"
-                                                    id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
-                                            
-                                        </tr>
-
+                                            </tr>
+                                        </form>
                                         <% } %>
                                         <% } %>
                                         <% x++ } %>
@@ -131,24 +130,40 @@
         </div>
 
         <script>
-                $(document).ready(function () {
-                    
-                    $('input[type=file]').change(function () {
-                        var $row = $(this).closest("tr"); 
-                        var $text = $row.find(".nr").text(); 
-                        console.log("GETTING THE EVIDENCE ID " + $text);
-                        console.log(name);
-                        if ($('input[type=file]').val() == '') {
-                            $('#btnsubmit'+$text).attr('disabled', true)
-                        } else {
-                            $('#btnsubmit'+$text).attr('disabled', false);
-                        }
-                    })
+            $(document).ready(function() {
+
+                $('input[type=file]').change(function() {
+                    var $row = $(this).closest("tr");
+                    var $text = $row.find(".nr").text();
+                    console.log("GETTING THE EVIDENCE ID " + $text);
+                    console.log(name);
+                    if ($('input[type=file]').val() == '') {
+                        $('#btnsubmit' + $text).attr('disabled', true)
+                    } else {
+                        $('#btnsubmit' + $text).attr('disabled', false);
+                    }
+                })
+
+                $('form[name="updateform"]').submit(function(event) {
+                    event.preventDefault(); 
+                    var post_url = $(this).attr("action"); 
+                    var request_method = $(this).attr("method"); 
+                    var form_data = $(this).serialize(); 
+
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: form_data
+                    }).done(function(response) { //
+                        $("#server-results").html(response);
+                    });
                 });
-            </script>
+            });
+
+        </script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $(".addEvidence").click(function test() {
 
                     //alert("testing adding activities");
@@ -167,13 +182,14 @@
                     $(table).append(markup);
                 });
 
-               
+
 
             });
 
-            function submit_ID(id){
-                    alert(id);
-                }
+            function submit_ID(id) {
+                alert(id);
+            }
+
         </script>
 
         <!Script for dynamic text area>
@@ -182,6 +198,7 @@
                     o.style.height = "1px";
                     o.style.height = (25 + o.scrollHeight) + "px";
                 }
+
             </script>
 
             <!-- jQuery -->
