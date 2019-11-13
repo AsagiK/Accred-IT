@@ -219,7 +219,7 @@ module.exports = {
             var values = [id];
             connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=26; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
                 if (err) throw err;
-                if(results){
+                if (results) {
                     console.log(results);
                     resp.render('./pages/Recommendations.ejs', {
                         data: results[0],
@@ -622,21 +622,21 @@ module.exports = {
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                if(results){
-                resp.render('./pages/ViewMeasurementDetails.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    dataD: results[3],
-                    dataE: results[4],
-                    dataF: results[5],
-                    dataG: results[6],
-                    dataH: results[7],
-                    dataI: results[8],
-                    current_user: sess.user,
-                    notif: passData
-                })
-                //console.log(results);
+                if (results) {
+                    resp.render('./pages/ViewMeasurementDetails.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        dataE: results[4],
+                        dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
+                        dataI: results[8],
+                        current_user: sess.user,
+                        notif: passData
+                    })
+                    //console.log(results);
                 }
             });
             console.log("VIEW MEASUREMENT DETAILS");
@@ -713,8 +713,24 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Source not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Source added"
+                    }
+                }
+            }
             resp.render('./pages/CreateSource.ejs', {
-                current_user: sess.user
+                current_user: sess.user,
+                notif: passData
             });
             console.log("CREATE SOURCE PAGE");
         }
@@ -996,7 +1012,7 @@ module.exports = {
                     resp.render('./pages/ActivityDetails.ejs', {
                         data: results[0],
                         dataB: results[1],
-                        dataC: results [2],
+                        dataC: results[2],
                         current_user: sess.user
                     })
                 }
@@ -1134,20 +1150,20 @@ module.exports = {
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
-                if(results){
-                resp.render('./pages/AssignActivityToMember.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user
-                });
-                console.log("Assign Activity to Member Page");
+                if (results) {
+                    resp.render('./pages/AssignActivityToMember.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    });
+                    console.log("Assign Activity to Member Page");
                 }
             });
         }
-    }, 
+    },
 
-    
+
 
 
     ViewUsersSubmission: function (req, resp) {
@@ -1156,8 +1172,8 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var userid= req.query.sess;
-            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?);";
+            var userid = req.query.sess;
+            var sql = "SELECT * FROM capstone.pending_activities WHERE user_ID = (?);";
             var values = [sess.user[0].User_ID];
             console.log(sess.user[0].User_ID);
             connection.query(sql, values, function (err, results, fields) {
@@ -1179,9 +1195,9 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var userid= req.query.sess;
+            var userid = req.query.sess;
             var SID = req.query.subID;
-            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?) && pending_ID = (?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
+            var sql = "SELECT * FROM capstone.pending_activities WHERE user_ID = (?) && pending_ID = (?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
             var values = [sess.user[0].User_ID, SID, SID];
             console.log(sess.user[0].User_ID);
             console.log(SID);

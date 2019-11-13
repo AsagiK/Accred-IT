@@ -615,7 +615,7 @@ module.exports = {
         }
     },
 
-    UpdateDocumentsJSON: function (req, resp) {
+    /*UpdateDocumentsJSON: function (req, resp) {
 
         //      Done Step 0 = create isaversionof, md5, and version number in documents table
         //      Step 1 = receive ID of document to be updated and new document
@@ -675,5 +675,5 @@ module.exports = {
         //        req.send(null);
     },
 
-
+*/
 }
