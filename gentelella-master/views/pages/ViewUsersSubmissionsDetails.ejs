@@ -93,13 +93,15 @@
                                         <% for (var docs of dataB) { %>
                                         <% for (var evidence of dataC) { %>
                                         <% if (evidence.pendingID == data[0].pending_ID && evidence.documentID == docs.Document_ID) { %>
-                                        <form action="TestingJSON" method="POST" name="updateform">
+                                        <form action="TestingJSON" method="POST" name="updateform" enctype="multipart/form-data">
                                             <tr>
                                                 <td><%= data[0].pending_ID %></td>
                                                 <td><%= docs.Document_Name %></td>
-                                                <td><input type='file' name='DocFile<%= x %>' id='DocFile<%= x %>'></td>
+                                                <td><input type='file' name='DocFile' id='DocFile'></td>
                                                 <td class="nr"><%= evidence.documentID %></td>
                                                 <td><button class="btn btn-primary" name="btnsubmit<%= x %>" id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
+                                                <input type="hidden" name="DID" value="<%= evidence.documentID %>">
+                                                <input type="hidden" name="AID" value="<%= data[0].activity_ID %>">
 
                                             </tr>
                                         </form>
@@ -145,15 +147,17 @@
                 })
 
                 $('form[name="updateform"]').submit(function(event) {
-                    event.preventDefault(); 
-                    var post_url = $(this).attr("action"); 
-                    var request_method = $(this).attr("method"); 
-                    var form_data = $(this).serialize(); 
+                    event.preventDefault();
+                    var post_url = $(this).attr("action");
+                    var request_method = $(this).attr("method");
+                    var form_data = new FormData(this)
 
                     $.ajax({
                         url: post_url,
                         type: request_method,
-                        data: form_data
+                        data: form_data,
+                        processData: false,
+                        contentType: false,
                     }).done(function(response) { //
                         $("#server-results").html(response);
                     });

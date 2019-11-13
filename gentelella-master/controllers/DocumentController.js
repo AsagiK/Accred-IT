@@ -615,12 +615,25 @@ module.exports = {
         }
     },
 
-    /*UpdateDocumentsJSON: function (req, resp) {
+    UpdateDocumentsJSON: function (req, resp) {
 
         //      Done Step 0 = create isaversionof, md5, and version number in documents table
         //      Step 1 = receive ID of document to be updated and new document
-        var files = req.files.UpEvidence;
-        var DID = req.body.DocumentID;
+        var files = req.files.DocFile;
+        var DID = req.body.DID;
+        var AID = req.body.AID;
+        var PID = req.body.PID
+        var name = files.name;
+        var filename = files.name;
+        var path = 'uploads/' + files.name;
+        var point = filename.lastIndexOf(".");
+        var ext = filename.substr(point);
+        var fname = filename.substr(0, point)
+        var folderId = UPLOAD_PATH.data.id
+        var fileMetadata = {
+            'name': files.name,
+            parents: [folderId]
+        };
         //      Step 2 = generate a hash of new document
         var md5 = files.md5;
         //      Step 3 = compare hash of new document in system
@@ -647,20 +660,244 @@ module.exports = {
         //      Step 4 = fix hardlinks of evidence to activity
         function checkname() {
             var sql2 = "SELECT * FROM capstone.documents where documents.Document_Name = (?) && documents.Document_ID = (?);"
-            var values2 = [new file name, old document id];
+            var values2 = [files.name, DID];
             connection.query(sql2, values2, function (err, result) {
                 if (err) callback(err);
                 if (result.length < 1) {
-                    insertfile(files, 1, result);
+                    getdata() // Case 1 Type 2 differet filename
                 } else if (result.length >= 1) {
-                    insertfile(files, 2, result);
+                    insertfile(files, 1, result); // Case 1 Type 1 same filename
                 }
             });
 
         }
 
-        function insertfile(files, type, result) {
+        function getdata() {
+            var sql2 = "SELECT * FROM capstone.documents where documents.Document_ID = (?);"
+            var values2 = [DID];
+            connection.query(sql2, values2, function (err, result) {
+                if (err) throw err;
+                if (result) {
+                    insertfile(files, 2, result);
+                }
+            });
+        }
+        //Sample result data        
+        //        [RowDataPacket {
+        //            Document_ID: 24,
+        //            Document_Name: '04-19-05-20-00-2019.png',
+        //            Document_Route: 'uploads/04-19-05-20-00-2019.png',
+        //            Document_Desc: null,
+        //            Document_Ext: '.png',
+        //            InDrive: 1,
+        //            DriveID: '1ZlTsNbu1ooWdwXaAZN4yVp0xgRaP8cBS',
+        //            isaversionof: null,
+        //            version: 1,
+        //            md5: '01c9587f3923c8b30f3fc1ca13fc8c5a'
+        //        }]
 
+        function insertfile(files, type, result) {
+            if (type == 1) { // Case 1 Type 1 same filename
+                var vno = parseInt(result.version) + 1;
+                var newfilename = fname + vno + ext;
+                var newfilepath = 'uploads/' + fname + vno + ext;
+                uploadedimg.mv('public/uploads/' + files.name + vno, function (err) {
+                    if (err) return console.log("file not moved to server");
+                    else console.log("File uploaded");
+                })
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+                var values = [newfilename, newfilepath, desc, ext, md5, DID, vno];
+                connection.query(sql, values, function (err, result) {
+                    if (err) console.log(err);
+                    if (result) {
+                        console.log("Record Inserted");
+                        media = {
+                            mimeType: mime.lookup('public/uploads/' + newfilename),
+                            body: fs.createReadStream('public/uploads/' + newfilename)
+                        };
+                        uploadfile();
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                        values = [AID, result.insertId, PID];
+                        addDoc(sql, values);
+                        resp.redirect('/ViewDocument')
+                    }
+                });
+
+                function uploadfile() {
+                    fs.readFile('credentials.json', (err, content) => {
+                        if (err) return console.log('Error loading client secret file:', err);
+                        authorize(JSON.parse(content), uploadtodrive);
+                    });
+                }
+
+                function authorize(credentials, callback) {
+                    const {
+                        client_secret,
+                        client_id,
+                        redirect_uris
+                    } = credentials.installed;
+                    const oAuth2Client = new google.auth.OAuth2(
+                        client_id, client_secret, redirect_uris[0]);
+
+                    fs.readFile(TOKEN_PATH, (err, token) => {
+                        if (err) return getAccessToken(oAuth2Client, callback);
+                        oAuth2Client.setCredentials(JSON.parse(token));
+                        callback(oAuth2Client);
+                    });
+                }
+
+                function uploadtodrive(auth) {
+                    var fileMetadata = {
+                        'name': newfilename,
+                        parents: [folderId]
+                    };
+                    const drive = google.drive({
+                        version: 'v3',
+                        auth
+                    });
+                    drive.files.create({
+                        resource: fileMetadata,
+                        media: media,
+                        fields: 'id'
+                    }, function (err, file) {
+                        count = count + 1;
+                        console.log("File " + count + " of 1");
+                        if (err) {
+                            console.log(newfilename + "Was not uploaded to Google Drive")
+                        } else {
+                            sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
+                            values = 'uploads/' + newfilename;
+                            connection.query(sql, values, function (err, result) {
+                                if (err) throw err;
+                                if (result) {
+                                    console.log(files.name + " Uploaded to Google Drive")
+                                    var fileid = file.data.id;
+                                    sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                                    values = [fileid, 'uploads/' + newfilename];
+                                    addID(sql, values);
+
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function addID(sql, values) {
+                    connection.query(sql, values, function (err, result) {
+                        if (err) throw err;
+                        if (result) {
+                            console.log("ID inserted to DB");
+                        }
+                    });
+                }
+
+                function addDoc(sql, values) {
+                    connection.query(sql, values, function (err, result) {
+                        if (err) throw err;
+                        if (result) {
+                            console.log("Document linked to DB");
+                        }
+                    });
+                }
+
+            } else if (type == 2) { // Case 1 Type 1 differet filename
+                var vno = parseInt(result.version) + 1;
+                uploadedimg.mv('public/uploads/' + files.name, function (err) {
+                    if (err) return console.log("file not moved to server");
+                    else console.log("File uploaded");
+                })
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+                var values = [name, path, desc, ext, md5, DID, vno];
+                connection.query(sql, values, function (err, result) {
+                    if (err) console.log(err);
+                    if (result) {
+                        console.log("Record Inserted");
+                        media = {
+                            mimeType: mime.lookup('public/uploads/' + files.name),
+                            body: fs.createReadStream('public/uploads/' + files.name)
+                        };
+                        uploadfile();
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?);"
+                        values = [AID, result.insertId, PID];
+                        addDoc(sql, values);
+                        resp.redirect('/ViewDocument')
+                    }
+                });
+
+                function uploadfile() {
+                    fs.readFile('credentials.json', (err, content) => {
+                        if (err) return console.log('Error loading client secret file:', err);
+                        authorize(JSON.parse(content), uploadtodrive);
+                    });
+                }
+
+                function authorize(credentials, callback) {
+                    const {
+                        client_secret,
+                        client_id,
+                        redirect_uris
+                    } = credentials.installed;
+                    const oAuth2Client = new google.auth.OAuth2(
+                        client_id, client_secret, redirect_uris[0]);
+
+                    fs.readFile(TOKEN_PATH, (err, token) => {
+                        if (err) return getAccessToken(oAuth2Client, callback);
+                        oAuth2Client.setCredentials(JSON.parse(token));
+                        callback(oAuth2Client);
+                    });
+                }
+
+                function uploadtodrive(auth) {
+                    const drive = google.drive({
+                        version: 'v3',
+                        auth
+                    });
+                    drive.files.create({
+                        resource: fileMetadata,
+                        media: media,
+                        fields: 'id'
+                    }, function (err, file) {
+                        count = count + 1;
+                        console.log("File " + count + " of 1");
+                        if (err) {
+                            console.log(files.name + "Was not uploaded to Google Drive")
+                        } else {
+                            sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
+                            values = 'uploads/' + files.name;
+                            connection.query(sql, values, function (err, result) {
+                                if (err) throw err;
+                                if (result) {
+                                    console.log(files.name + " Uploaded to Google Drive")
+                                    var fileid = file.data.id;
+                                    sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                                    values = [fileid, 'uploads/' + files.name];
+                                    addID(sql, values);
+
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function addID(sql, values) {
+                    connection.query(sql, values, function (err, result) {
+                        if (err) throw err;
+                        if (result) {
+                            console.log("ID inserted to DB");
+                        }
+                    });
+                }
+
+                function addDoc(sql, values) {
+                    connection.query(sql, values, function (err, result) {
+                        if (err) throw err;
+                        if (result) {
+                            console.log("Document linked to DB");
+                        }
+                    });
+                }
+
+            }
         }
 
 
@@ -675,8 +912,28 @@ module.exports = {
         //        req.send(null);
     },
 
-*/
-    TestingJSON: function(req, resp){
+
+    TestingJSON: function (req, resp) {
+        console.log("hello")
+        console.log(req.files)
         console.log(req.body)
+        var vno = 2;
+        var files = req.files.DocFile;
+        var filename = files.name;
+        var path = 'uploads/' + files.name;
+        var point = filename.lastIndexOf(".");
+        var ext = filename.substr(point);
+        var fname = filename.substr(0, point)
+        var newfilename = fname + vno + ext;
+        console.log(newfilename);
+        var DID = req.body.DID;
+        var sql2 = "SELECT * FROM capstone.documents where documents.Document_Name = (?) && documents.Document_ID = (?);"
+        var values2 = [files.name, DID];
+        connection.query(sql2, values2, function (err, result) {
+            if (err) callback(err);
+            if (result) {
+                //console.log(result)
+            }
+        });
     }
 }
