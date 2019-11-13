@@ -159,10 +159,13 @@
                         data: form_data,
                         processData: false,
                         contentType: false,
-                    }).done(function(response) { //
-                        $("#server-results").html(response);
-                    });
+                        success: function(data) {
+                            console.log(data);
+                        },
+                    })
                 });
+                
+                
             });
 
         </script>

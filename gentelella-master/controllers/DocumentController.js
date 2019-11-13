@@ -712,8 +712,8 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + newfilename)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
-                        values = [AID, result.insertId, PID];
+                        sql = "Update capstone.activity_evidences set documentID = ? where activityID = ? && pendingID = ? && documentID = ? "
+                        values = [result.insertId, AID, PID, DID];
                         addDoc(sql, values);
                         var resjson = {
                             case: "11",
@@ -821,8 +821,8 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?);"
-                        values = [AID, result.insertId, PID];
+                        sql = "Update capstone.activity_evidences set documentID = ? where activityID = ? && pendingID = ? && documentID = ? "
+                        values = [result.insertId, AID, PID, DID];
                         addDoc(sql, values);
                         var resjson = {
                             case: "12",
