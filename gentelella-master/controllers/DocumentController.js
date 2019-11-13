@@ -619,6 +619,16 @@ module.exports = {
 
         //      Done Step 0 = create isaversionof, md5, and version number in documents table
         //      Step 1 = receive ID of document to be updated and new document
+        //      Step 2 = generate a hash of new document
+        //      Step 3 = compare hash of new document in system
+        //      IF failed then return a dupicate error = Case 0
+        //      IF not failed check for same filename
+        //      IF same filename then append v + "version number" to filename = Case 1 Type 1
+        //      ELSE process document and return success message = Case 1 Type 2
+        //      Step 4 = fix hardlinks of evidence to activity
+        console.log("hello")
+        console.log(req.files)
+        console.log(req.body)
         var files = req.files.DocFile;
         var DID = req.body.DID;
         var AID = req.body.AID;
@@ -634,30 +644,25 @@ module.exports = {
             'name': files.name,
             parents: [folderId]
         };
-        //      Step 2 = generate a hash of new document
         var md5 = files.md5;
-        //      Step 3 = compare hash of new document in system
         var sql = "Select * from capstone.documents where documents.md5 = (?);"
         var values = [md5]
+        var count = 0;
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             if (result.length < 1) {
+                console.log("check1")
                 checkname(result);
-                updatedocument(DID, files);
-                insertfile(files);
             } else if (result.length >= 1) {
                 var resjson = {
                     case: "0",
-                    data: result
+                    data: result,
+                    message: "document already exists in system"
                 };
                 resp.send(resjson)
+                console.log("response case 0")
             }
         })
-        //      IF failed then return a dupicate error = Case 0
-        //      IF not failed check for same filename
-        //      IF same filename then append v + "version number" to filename = Case 1 Type 1
-        //      ELSE process document and return success message = Case 1 Type 2
-        //      Step 4 = fix hardlinks of evidence to activity
         function checkname() {
             var sql2 = "SELECT * FROM capstone.documents where documents.Document_Name = (?) && documents.Document_ID = (?);"
             var values2 = [files.name, DID];
@@ -666,7 +671,8 @@ module.exports = {
                 if (result.length < 1) {
                     getdata() // Case 1 Type 2 differet filename
                 } else if (result.length >= 1) {
-                    insertfile(files, 1, result); // Case 1 Type 1 same filename
+                    var rows = JSON.parse(JSON.stringify(result[0]))
+                    insertfile(files, 1, rows); // Case 1 Type 1 same filename
                 }
             });
 
@@ -678,35 +684,25 @@ module.exports = {
             connection.query(sql2, values2, function (err, result) {
                 if (err) throw err;
                 if (result) {
-                    insertfile(files, 2, result);
+                    var rows = JSON.parse(JSON.stringify(result[0]))
+                    insertfile(files, 2, rows);
                 }
             });
         }
-        //Sample result data        
-        //        [RowDataPacket {
-        //            Document_ID: 24,
-        //            Document_Name: '04-19-05-20-00-2019.png',
-        //            Document_Route: 'uploads/04-19-05-20-00-2019.png',
-        //            Document_Desc: null,
-        //            Document_Ext: '.png',
-        //            InDrive: 1,
-        //            DriveID: '1ZlTsNbu1ooWdwXaAZN4yVp0xgRaP8cBS',
-        //            isaversionof: null,
-        //            version: 1,
-        //            md5: '01c9587f3923c8b30f3fc1ca13fc8c5a'
-        //        }]
+
 
         function insertfile(files, type, result) {
             if (type == 1) { // Case 1 Type 1 same filename
                 var vno = parseInt(result.version) + 1;
                 var newfilename = fname + vno + ext;
                 var newfilepath = 'uploads/' + fname + vno + ext;
+                let uploadedimg = req.files.DocFile;
                 uploadedimg.mv('public/uploads/' + files.name + vno, function (err) {
                     if (err) return console.log("file not moved to server");
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?, ?);"
-                var values = [newfilename, newfilepath, desc, ext, md5, DID, vno];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?);"
+                var values = [newfilename, newfilepath, ext, md5, DID, vno];
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -719,7 +715,13 @@ module.exports = {
                         sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
                         values = [AID, result.insertId, PID];
                         addDoc(sql, values);
-                        resp.redirect('/ViewDocument')
+                        var resjson = {
+                            case: "11",
+                            data: result,
+                            message: "document updated"
+                        };
+                        resp.send(resjson)
+                        console.log("response case 11")
                     }
                 });
 
@@ -800,14 +802,16 @@ module.exports = {
                     });
                 }
 
-            } else if (type == 2) { // Case 1 Type 1 differet filename
+            } else if (type == 2) { // Case 1 Type 2 differet filename
                 var vno = parseInt(result.version) + 1;
+                let uploadedimg = req.files.DocFile;
                 uploadedimg.mv('public/uploads/' + files.name, function (err) {
                     if (err) return console.log("file not moved to server");
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?, ?);"
-                var values = [name, path, desc, ext, md5, DID, vno];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?);"
+                var values = [name, path, ext, md5, DID, vno];
+                console.log("sql values" + values );
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -820,7 +824,13 @@ module.exports = {
                         sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?);"
                         values = [AID, result.insertId, PID];
                         addDoc(sql, values);
-                        resp.redirect('/ViewDocument')
+                        var resjson = {
+                            case: "12",
+                            data: result,
+                            message: "document updated"
+                        };
+                        resp.send(resjson)
+                        console.log("response case 12")
                     }
                 });
 
@@ -900,18 +910,7 @@ module.exports = {
             }
         }
 
-
-
-        //        var req = new XMLHttpRequest();
-        //        req.overrideMimeType("application/json");
-        //        req.open('GET', url, true);
-        //        req.onload = function () {
-        //            var jsonResponse = JSON.parse(req.responseText);
-        //            // do something with jsonResponse
-        //        };
-        //        req.send(null);
     },
-
 
     TestingJSON: function (req, resp) {
         console.log("hello")
