@@ -32,6 +32,11 @@
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
@@ -48,6 +53,7 @@
                             <h3>View Submissions Details</h3>
                             <h2>Testing User - <%= current_user[0].User_First %> - <%= current_user[0].User_ID %></h2>
                             <h2>Current Submission - <%= data[0].pending_ID %> - <%= data[0].activity_name %></h2>
+
                         </div>
                     </div>
                 </div>
@@ -93,16 +99,20 @@
                                         <% for (var docs of dataB) { %>
                                         <% for (var evidence of dataC) { %>
                                         <% if (evidence.pendingID == data[0].pending_ID && evidence.documentID == docs.Document_ID) { %>
-                                        <form action="UpdateDocumentsJSON" method="POST" name="updateform" enctype="multipart/form-data">
+                                        <form action="UpdateDocumentsJSON" method="POST" name="updateform"
+                                            enctype="multipart/form-data">
                                             <tr>
                                                 <td><%= data[0].pending_ID %></td>
-                                                <td><%= docs.Document_Name %></td>
-                                                <td><input type='file' name='DocFile' id='DocFile'></td>
+                                                <td class="docs"><%= docs.Document_Name %></td>
+                                                <td><input type='file' name='DocFile' id='DocFile<%= x %>'></td>
                                                 <td class="nr"><%= evidence.documentID %></td>
-                                                <td><button class="btn btn-primary" name="btnsubmit<%= x %>" id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
+                                                <td><button class="btn btn-primary" name="btnsubmit<%= x %>"
+                                                        id="btnsubmit<%= x %>" onClick="submit_ID(this.id)"
+                                                        disabled>Submit</button></td>
                                                 <input type="hidden" name="DID" value="<%= evidence.documentID %>">
                                                 <input type="hidden" name="AID" value="<%= data[0].activity_ID %>">
                                                 <input type="hidden" name="PID" value="<%= data[0].pending_ID %>">
+                                                <input type="hidden" name="DocuID" value="<%= x %>">
 
                                             </tr>
                                         </form>
@@ -133,13 +143,18 @@
         </div>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('input[type=file]').change(function() {
+                $('input[type=file]').change(function () {
                     var $row = $(this).closest("tr");
                     var $text = $row.find(".nr").text();
-                    console.log("GETTING THE EVIDENCE ID " + $text);
-                    console.log(name);
+                    var docfile = $(this).attr("name");
+                    //var file = docfile.val();
+                    //var docSubmit = document.getElementById()
+                    //console.log(file);
+                    //console.log("GETTING THE EVIDENCE ID " + $text);
+                    //console.log("CHOSEN DOCUMENT FILE = " + $('input[type=file]').val());
+                    //console.log("DOCFILE NAME = " + $(this).attr("name"));
                     if ($('input[type=file]').val() == '') {
                         $('#btnsubmit' + $text).attr('disabled', true)
                     } else {
@@ -147,31 +162,68 @@
                     }
                 })
 
-                $('form[name="updateform"]').submit(function(event) {
+                $('form[name="updateform"]').submit(function (event) {
                     event.preventDefault();
                     var post_url = $(this).attr("action");
                     var request_method = $(this).attr("method");
                     var form_data = new FormData(this)
-
+                    var fdata = $(this).serializeArray();
+                    
                     $.ajax({
                         url: post_url,
                         type: request_method,
                         data: form_data,
                         processData: false,
                         contentType: false,
-                        success: function(data) {
-                            console.log(data);
+                        dataType: 'json',
+                        success: function (data) {
+                            processdata(data, fdata);
                         },
                     })
                 });
-                
-                
+
+                function processdata(data, fdata) {
+                    console.log(data);
+                    if (data.case == "0") {
+                        new PNotify({
+                            title: 'Error: Document already exists',
+                            text: data.message,
+                            hide: false,
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        });
+                    } else {
+                        new PNotify({
+                            title: 'Evidence Updated!',
+                            text: data.message,
+                            type: 'success',
+                            hide: false,
+                            styling: 'bootstrap3'
+                        });
+                        
+                        var target = "DocFile"+fdata[3].value;
+                        var target2 = "btnsubmit"+fdata[3].value; 
+                        //console.log(target2);
+                        document.getElementById(target).style = "display:none;";
+                        document.getElementById(target).value = "";
+                        document.getElementById(target2).style = "display:none;";
+                        $(target2).html("Submitted");
+                        //document.getElementById(target2).class = "btn btn-success";
+                    }
+
+                };
+
+
             });
+
+
 
         </script>
 
+
+
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $(".addEvidence").click(function test() {
 
                     //alert("testing adding activities");
@@ -193,10 +245,6 @@
 
 
             });
-
-            function submit_ID(id) {
-                alert(id);
-            }
 
         </script>
 
@@ -244,6 +292,10 @@
             <script src="assets/vendors/starrr/dist/starrr.js"></script>
             <!-- Custom Theme Scripts -->
             <script src="assets/build/js/custom.min.js"></script>
+            <!-- PNotify -->
+            <script src="assets/vendors/pnotify/dist/pnotify.js"></script>
+            <script src="assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
+            <script src="assets/vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 </body>
 
