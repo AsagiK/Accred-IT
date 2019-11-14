@@ -255,7 +255,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var alert = req.query.passdata;
-            var passData
+            var passData;
             if (alert) {
                 if (alert == 0) {
                     passData = {
@@ -783,7 +783,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var SID = req.query.SID;
-            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = (?); Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;"
+            var sql = "Select metric.metric_ID,metric.source_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = (?); Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;SELECT * FROM capstone.source;SELECT * FROM capstone.measurement;SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype;"
             var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -793,6 +793,10 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
+                        dataH: results[4],
+                        dataE: results[5],
+                        dataF: results[6],
+                        dataG: results[7],
                         current_user: sess.user
                     });
                     console.log(results);
