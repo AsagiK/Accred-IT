@@ -1151,9 +1151,6 @@ module.exports = {
         }
     }, 
 
-    
-
-
     ViewUsersSubmission: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {

@@ -98,22 +98,10 @@
                                             <td><%= data[0].pending_ID %></td>
                                             <td><%= docs.Document_Name %></td>
                                             <td><input type='file' name='DocFile<%= x %>' id='DocFile<%= x %>'></td>
-                                            <td><%= evidence.documentID %></td>
+                                            <td class="nr" ><%= evidence.documentID %></td>
                                             <td><button class="btn btn-primary" name="btnsubmit<%= x %>"
                                                     id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
-                                            <script>
-                                                $(document).ready(function () {
-                                                    $('input[type=file]').change(function () {
-                                                        var name = $("#DocFile<%= x %>").attr("name");
-                                                        console.log(name);
-                                                        if ($('input[type=file]').val() == '') {
-                                                            $('button').attr('disabled', true)
-                                                        } else {
-                                                            $('button').attr('disabled', false);
-                                                        }
-                                                    })
-                                                });
-                                            </script>
+                                            
                                         </tr>
 
                                         <% } %>
@@ -142,6 +130,23 @@
             </div>
         </div>
 
+        <script>
+                $(document).ready(function () {
+                    
+                    $('input[type=file]').change(function () {
+                        var $row = $(this).closest("tr"); 
+                        var $text = $row.find(".nr").text(); 
+                        console.log("GETTING THE EVIDENCE ID " + $text);
+                        console.log(name);
+                        if ($('input[type=file]').val() == '') {
+                            $('#btnsubmit'+$text).attr('disabled', true)
+                        } else {
+                            $('#btnsubmit'+$text).attr('disabled', false);
+                        }
+                    })
+                });
+            </script>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".addEvidence").click(function test() {
@@ -162,11 +167,13 @@
                     $(table).append(markup);
                 });
 
-                function submit_ID(id){
-                    alert(id);
-                }
+               
 
             });
+
+            function submit_ID(id){
+                    alert(id);
+                }
         </script>
 
         <!Script for dynamic text area>
