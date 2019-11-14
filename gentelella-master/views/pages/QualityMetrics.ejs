@@ -378,15 +378,22 @@
                                                                         <table class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
-                                                                                                <th>Goal Description
-                                                                                                </th>
+                                                                                                <th>Goal Description</th>
                                                                                                 <th>Duration</th>
+                                                                                                <th>Goal Source</th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <td><%= goals.metric_Desc%>
-                                                                                            </td>
-                                                                                            <td><%= goals.duration%>
+                                                                                            <td><%= goals.metric_Desc%></td>
+                                                                                            
+                                                                                            <td><%= goals.duration%></td>
+                                                                                            <td>
+                                                                                                <% for (var source of dataH) { %>
+                                                                                                    <% if (source.source_ID == goals.source_ID) { %>
+                                                                                                        <%= source.source_Name %> - 
+                                                                                                    <% } %>
+                                                                                                <% } %>
+                                                                                                <%= goals.source_Type%>
                                                                                             </td>
                                                                                         </tbody>
                                                                                     </table>
@@ -606,8 +613,12 @@
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <select class="form-control" name="source">
                                                                         <% for (var source of dataB) { %>
-                                                                        <option value="<%= source.source_ID %>">
-                                                                            <%= source.source_Name %></option>
+                                                                            <%for (var sourcetype of dataG) { %>
+                                                                                <% if (source.source_ID==sourcetype.stype_ID){ %>
+                                                                                    <option value="<%= source.source_ID %>~<%= sourcetype.SourceType%>">
+                                                                                    <%= source.source_Name %>-<%= sourcetype.SourceType%></option>
+                                                                                <%}%>
+                                                                            <%}%>
                                                                         <% } %>
                                                                     </select>
                                                                 </div>

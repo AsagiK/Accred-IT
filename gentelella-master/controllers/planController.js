@@ -309,7 +309,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -319,6 +319,8 @@ module.exports = {
                         dataD: results[3],
                         dataE: results[4],
                         dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
                         current_user: sess.user,
                         notif: passData
                     });
@@ -331,6 +333,8 @@ module.exports = {
 
     addmetric: function (req, resp) {
         var source = (req.body.source);
+        var sourceID = source.substr(0, source.indexOf('~'));
+        var sourceType = source.substr(source.lastIndexOf('~') + 1);
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
         var duration = (req.body.duration);
@@ -339,8 +343,10 @@ module.exports = {
         console.log(metricDesc);
         console.log(source);
         console.log(duration);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `duration`, `cycle_Status`) VALUES ( ?, ?, ?, ?, ?)";
-        var values = [metricName, metricDesc, source, duration, startStatus];
+        console.log("SOURCE ID - "+sourceID);
+        console.log("SOURCE TYPE = "+sourceType);
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `duration`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?, ?)";
+        var values = [metricName, metricDesc, sourceID, duration, startStatus, sourceType];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
