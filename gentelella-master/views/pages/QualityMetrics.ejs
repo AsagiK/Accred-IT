@@ -538,6 +538,7 @@
                                                                                                             <% } %>
                                                                                                         </td>
                                                                                                         <td>
+                                                                                                            <!--VIEW MEASUREMENT BUTTON-->
                                                                                                             <form method="get"
                                                                                                                 action="ViewMeasurementDetails">
                                                                                                                 <input type="hidden"
@@ -548,8 +549,40 @@
                                                                                                                     class="btn btn-primary">View
                                                                                                                     Measurement
                                                                                                                     Details</button>
-                                                                                                                <!--Edited-->
                                                                                                             </form>
+                                                                                                            <% if (cycles.status == 0) { %>
+                                                                                                            <!--EDIT MEASUREMENT BUTTON PLAN PHASE-->
+                                                                                                            <form method="get"
+                                                                                                                action="EditMeasurement">
+                                                                                                                <input type="text"
+                                                                                                                    name="MID"
+                                                                                                                    value="<%= measurement.measurement_ID %>">
+                                                                                                                <input type="text"
+                                                                                                                    name="CASE"
+                                                                                                                    value="0">
+                                                                                                                <button
+                                                                                                                    type="submit"
+                                                                                                                    class="btn btn-primary">Edit
+                                                                                                                    Measurement
+                                                                                                                    Details</button>
+                                                                                                            </form>
+                                                                                                            <% } else if (cycles.status == 3) { %>
+                                                                                                            <!--EDIT BUTTON ACTION PHASE-->
+                                                                                                            <form method="get"
+                                                                                                                action="EditMeasurement">
+                                                                                                                <input type="hidden"
+                                                                                                                    name="MID"
+                                                                                                                    value="<%= measurement.measurement_ID %>">
+                                                                                                                <input type="hidden"
+                                                                                                                    name="CASE"
+                                                                                                                    value="1">
+                                                                                                                <button
+                                                                                                                    type="submit"
+                                                                                                                    class="btn btn-primary">Edit
+                                                                                                                    Measurement
+                                                                                                                    Details with update of of cycle</button>
+                                                                                                            </form>
+                                                                                                            <% } %>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <% } %>

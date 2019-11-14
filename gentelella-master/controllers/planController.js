@@ -1201,4 +1201,30 @@ module.exports = {
 
     },
 
+    EditMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var CASE = req.query.CASE;
+            var MID = req.query.MID;
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric;"
+            var values = [MID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/EditMeasurement.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    CASE : CASE,
+                    current_user: sess.user
+                });
+                //console.log(results);
+                console.log("EDIT MEASUREMENT PAGE");
+            });
+        }
+    },
+
 }
