@@ -654,10 +654,12 @@ module.exports = {
                 console.log("check1")
                 checkname(result);
             } else if (result.length >= 1) {
+                var rows = JSON.parse(JSON.stringify(result[0]))
+                rows = rows.Document_Name
                 var resjson = {
                     case: "0",
                     data: result,
-                    message: "document already exists in system"
+                    message: "Document already exists in system as " +rows
                 };
                 resp.send(resjson)
                 console.log("response case 0")
@@ -715,10 +717,12 @@ module.exports = {
                         sql = "Update capstone.activity_evidences set documentID = ? where activityID = ? && pendingID = ? && documentID = ? "
                         values = [result.insertId, AID, PID, DID];
                         addDoc(sql, values);
+                        var rows = JSON.parse(JSON.stringify(result[0]))
+                rows = rows.Document_Name
                         var resjson = {
                             case: "11",
                             data: result,
-                            message: "document updated"
+                            message: "Document updated"
                         };
                         resp.send(resjson)
                         console.log("response case 11")
@@ -827,7 +831,7 @@ module.exports = {
                         var resjson = {
                             case: "12",
                             data: result,
-                            message: "document updated"
+                            message: "Document updated"
                         };
                         resp.send(resjson)
                         console.log("response case 12")
