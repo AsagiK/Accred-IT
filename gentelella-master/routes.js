@@ -49,6 +49,8 @@ router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 router.route('/QualityMetrics').get(planCtrl.QualityMetric);
 router.route('/EditMeasurement').get(planCtrl.EditMeasurement);
+router.route('/UpdateMeasurement').post(planCtrl.UpdateMeasurement);
+router.route('/AuditMeasurement').post(planCtrl.AuditMeasurement);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
