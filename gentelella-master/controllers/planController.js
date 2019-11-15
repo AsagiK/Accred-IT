@@ -1291,9 +1291,7 @@ module.exports = {
                         callback(resdata, updatemeasurement, audittargets)
                     }
                 });
-
             }
-
             function auditmeasurement(resdata, callback, callback2) {
                 var date = new Date();
                 var current = date.toISOString().split('T')[0];
@@ -1305,12 +1303,10 @@ module.exports = {
                         console.log("Measurement Audited")
                         var MAID = result.insertId;
                         callback()
-                        callback2(MAID)
+                        callback2(MAID, auditactivities)
                     }
                 });
-
             }
-
             function updatemeasurement() {
                 var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ?, `cycle_ID` = ?  WHERE (`measurement_ID` = ?)";
                 var values = [group, mname, mdesc, cycle, MID]
@@ -1321,10 +1317,8 @@ module.exports = {
                         resp.redirect('/QualityMetrics')
                     }
                 });
-
             }
-
-            function audittargets(MAID) {
+            function audittargets(MAID, audidactivities) {
                 var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
                 var values = [MID]
                 connection.query(sql, values, function (err, result, fields) {
@@ -1352,12 +1346,19 @@ module.exports = {
                                 console.log("Failed");
                             } else {
                                 console.log("Passed");
+                                auditactivities(MID, MIAD)
                             }
                         })
                     }
                 });
             }
-
+            function auditactivities(MID, MIAD, auditpendingactivities){
+                auditpendingactivities(MID, MIAD, CID)
+            }
+            function auditpendingactivities(MID, MIAD, CID){
+                
+            }
+            
         }
     },
 
