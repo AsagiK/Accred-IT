@@ -1102,7 +1102,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities JOIN capstone.measurement WHERE approved_activities.measurement_ID = measurement.measurement_ID; SELECT * FROM capstone.users;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities ; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.pending_activities;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/home.ejs', {
@@ -1110,10 +1110,18 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
+                        dataE: results[4],
+                        dataF: results[5],
+                        
                         current_user: sess.user
                     });
-                    console.log(results);
-                    console.log("Dashboards Loaded");
+                    //console.log(results);
+                   // console.log(results[3]);
+                    //console.log(results[4]);
+                    console.log(results[6]);
+                    
+                    console.log("Dashboards Loaded"); 
+                
                 }
             });
         }
