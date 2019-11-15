@@ -188,6 +188,8 @@
                                                             class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" id="PID" name="PID" value=""
                                                             class="form-control col-md-7 col-xs-12">
+                                                        <input type="text" id="CID" name="CID" value="<%= CID %>"
+                                                            class="form-control col-md-7 col-xs-12">
                                                     </td>
                                                     <td>
                                                         <button type="submit" id="passdocuments"
@@ -347,6 +349,7 @@
                     var UID = document.getElementById("UID").value
                     var target = document.getElementById("target").value
                     var score = document.getElementById("score").value
+                    var CID = document.getElementById("CID").value
 
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
@@ -369,7 +372,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID);
 
                 });
 

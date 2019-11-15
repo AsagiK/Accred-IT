@@ -1006,6 +1006,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var id = (req.query.UID);
+            var cid = req.query.CID;
             console.log(id);
             var values = [id];
             connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
@@ -1016,6 +1017,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        CID: cid,
                         current_user: sess.user
                     })
                 }
