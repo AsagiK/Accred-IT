@@ -148,14 +148,14 @@
                 $('input[type=file]').change(function () {
                     var $row = $(this).closest("tr");
                     var $text = $row.find(".nr").text();
-                    var docfile = $(this).attr("name");
+                    var docfile = $(this).attr("id");
                     //var file = docfile.val();
                     //var docSubmit = document.getElementById()
                     //console.log(file);
                     //console.log("GETTING THE EVIDENCE ID " + $text);
                     //console.log("CHOSEN DOCUMENT FILE = " + $('input[type=file]').val());
                     //console.log("DOCFILE NAME = " + $(this).attr("name"));
-                    if ($('input[type=file]').val() == '') {
+                    if ($('docfile').val() == '') {
                         $('#btnsubmit' + $text).attr('disabled', true)
                     } else {
                         $('#btnsubmit' + $text).attr('disabled', false);
@@ -207,8 +207,8 @@
                         document.getElementById(target).style = "display:none;";
                         document.getElementById(target).value = "";
                         document.getElementById(target2).style = "display:none;";
-                        $(target2).html("Submitted");
-                        //document.getElementById(target2).class = "btn btn-success";
+                        //$(target2).innerHTML("Submitted");
+                        //document.getElementById(target2).removeClass = "btn btn-primary";
                     }
 
                 };
