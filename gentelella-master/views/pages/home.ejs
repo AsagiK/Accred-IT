@@ -80,8 +80,9 @@ width: 585px;
                                 <%= new Date().getFullYear();%>
                         </span>
                         
-                </div>
-
+                </div> 
+                <br>
+             <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                 <div class="row">
                     <!MEASUREMENT>
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -112,7 +113,7 @@ width: 585px;
 
                                 <% for (var mes of data) { %> 
 
-                                    <% if(user.Group == mes.group_ID) { %> 
+                                    
 
                                     <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead >
@@ -137,9 +138,7 @@ width: 585px;
                                         </tbody>
                                     </table> 
 
-                                    <% } else if(user.Group != mes.group_ID) { %> 
-                                        <!--NONE WILL BE LOADED-->
-                                    <% } %>
+                                   
 
                                 <% } %>
                                     
@@ -232,47 +231,179 @@ width: 585px;
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="dash2">
-                                    <!--ACTIVITIES-->  
-                                <% for (var app of dataC) { %> 
-
-                                    <% if (user.Group == app.GroupAssigned) { %>
+                                        <!--ACTIVITIES-->   
+                                        <% for (var mem of dataD) { %> 
+                                            <% for (var act of dataC) { %> 
+                                                <%if (current_user[0].User_ID == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
                                         <table class="table table-bordered" style="table-layout: fixed;">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity Name</th>
-                                                <th>Description</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Activity Name</th>
+                                                        <th>Description</th> 
+                                                        <th>Deadline</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead> 
+                                   
+                                            <tbody>
+    
+                                                <tr>
+                                                    <td> <%= act.activity_name %> </td>
+                                                    <td><%= act.description %> </td>
+                                                    <td><%= act.deadline %></td> 
+                                                    <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                </tr>
 
+    
+                                            </tbody>
+                                  
+                                        </table> 
 
-                                            <tr>
-                                                <td> <%= app.activity_name %> </td>
-                                                <td><%= app.description %> </td> 
-                                                <td><button type="submit" class="btn btn-primary">View Details</button></td>
-                                            </tr>
+                                        <% } %>
 
-
-                                        </tbody>
-                                    </table>  
-
-                                    <% } else if (user.Group == app.GroupAssigned) { %>
-                                            <!-- NONE WILL BE LOADED -->
-                                    <% } %>
-
-                                <% } %>
+                                 <% } %>
+                                 <% } %>
                                     
-
                                 </div>
                             </div>
                         </div> 
 
                         <% } %>
-                    
                 </div> 
-                
 
+                <% }  else if (current_user[0].Role == 4) { %>
+                    <div class="row"> 
+                            <div class="col-md-6 col-sm-8 col-xs-8">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>ACTIVITIES</h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Settings 1</a>
+                                                        </li>
+                                                        <li><a href="#">Settings 2</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="dash2">
+                                            <!--ACTIVITIES-->   
+                                            <% for (var mem of dataD) { %> 
+                                                <% for (var act of dataC) { %> 
+                                                    <%if (current_user[0].User_ID == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
+                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Activity Name</th>
+                                                            <th>Description</th> 
+                                                            <th>Deadline</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead> 
+                                       
+                                                <tbody>
+        
+                                                    <tr>
+                                                        <td> <%= act.activity_name %> </td>
+                                                        <td><%= act.description %> </td>
+                                                        <td><%= act.deadline %></td> 
+                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                    </tr>
+
+        
+                                                </tbody>
+                                      
+                                            </table> 
+
+                                            <% } %>
+
+                                     <% } %>
+                                     <% } %>
+                                        
+                                    </div>
+                                </div>
+
+                        </div> 
+                    </div> 
+
+                    <!--SUBMISSIONS TABLE -->
+
+                    <div class="row"> 
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>SUBMISSIONS</h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Settings 1</a>
+                                                        </li>
+                                                        <li><a href="#">Settings 2</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="dash2">
+                                            <!--ACTIVITIES-->   
+                                            <% for (var pending of dataF) { %> 
+                                            <% if (current_user[0].User_ID == pending.user_ID) { %>
+                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Activity Name</th>
+                                                            <th>Submissions</th> 
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead> 
+                                       
+                                                <tbody>
+        
+                                                    <tr>
+                                                        <td> <%= pending.activity_name %> </td>
+                                                        <td><% if (pending.status == 0) { %> 
+                                                                P E N D I N G
+                                                            <% } else if (pending.status == 1) { %>
+                                                                A P P R O V E D 
+                                                            <% } else if (pending.status == 2) { %>
+                                                                D I S A P P R O V E D
+                                                            <% } %>
+                                                        </td>
+                                                         
+                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                    </tr>
+
+        
+                                                </tbody>
+                                      
+                                            </table> 
+
+                                        <% } %> 
+                                        <% } %>
+                                        
+                                    </div>
+                                </div>
+
+                        </div> 
+                    </div>
+
+
+                
+                <% } %>
                 <!-- /page content -->
 
                 <!-- footer content -->
