@@ -1209,7 +1209,6 @@ module.exports = {
                     dataC: results[2],
                     current_user: sess.user
                 });
-                console.log(results)
             });
         }
 

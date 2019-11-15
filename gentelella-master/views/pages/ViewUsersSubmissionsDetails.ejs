@@ -104,15 +104,15 @@
                                             <tr>
                                                 <td><%= data[0].pending_ID %></td>
                                                 <td class="docs"><%= docs.Document_Name %></td>
-                                                <td><input type='file' name='DocFile' id='DocFile<%= x %>'></td>
+                                                <td><input type='file' name='DocFile' id='DocFile<%= evidence.documentID %>'></td>
                                                 <td class="nr"><%= evidence.documentID %></td>
-                                                <td><button class="btn btn-primary" name="btnsubmit<%= x %>"
-                                                        id="btnsubmit<%= x %>" onClick="submit_ID(this.id)"
+                                                <td><button class="btn btn-primary" name="btnsubmit<%= evidence.documentID %>"
+                                                        id="btnsubmit<%= evidence.documentID %>" onClick="submit_ID(this.id)"
                                                         disabled>Submit</button></td>
                                                 <input type="hidden" name="DID" value="<%= evidence.documentID %>">
                                                 <input type="hidden" name="AID" value="<%= data[0].activity_ID %>">
                                                 <input type="hidden" name="PID" value="<%= data[0].pending_ID %>">
-                                                <input type="hidden" name="DocuID" value="<%= x %>">
+                                                <input type="hidden" name="DocuID" value="<%= evidence.documentID %>">
 
                                             </tr>
                                         </form>

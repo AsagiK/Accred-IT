@@ -659,12 +659,13 @@ module.exports = {
                 var resjson = {
                     case: "0",
                     data: result,
-                    message: "Document already exists in system as " +rows
+                    message: "Document already exists in system as " + rows
                 };
                 resp.send(resjson)
                 console.log("response case 0") //// Case 0 docoument already exists
             }
         })
+
         function checkname() {
             var sql2 = "SELECT * FROM capstone.documents where documents.Document_Name = (?) && documents.Document_ID = (?);"
             var values2 = [files.name, DID];
@@ -696,10 +697,10 @@ module.exports = {
         function insertfile(files, type, result) {
             if (type == 1) { // Case 1 Type 1 same filename
                 var vno = parseInt(result.version) + 1;
-                var newfilename = fname + vno + ext;
-                var newfilepath = 'uploads/' + fname + vno + ext;
+                var newfilename = fname + "v"+ vno + ext;
+                var newfilepath = 'uploads/' + fname + "v" + vno + ext;
                 let uploadedimg = req.files.DocFile;
-                uploadedimg.mv('public/uploads/' + files.name + vno, function (err) {
+                uploadedimg.mv('public/uploads/' + newfilename, function (err) {
                     if (err) return console.log("file not moved to server");
                     else console.log("File uploaded");
                 })
@@ -717,8 +718,6 @@ module.exports = {
                         sql = "Update capstone.activity_evidences set documentID = ? where activityID = ? && pendingID = ? && documentID = ? "
                         values = [result.insertId, AID, PID, DID];
                         addDoc(sql, values);
-                        var rows = JSON.parse(JSON.stringify(result[0]))
-                rows = rows.Document_Name
                         var resjson = {
                             case: "11",
                             data: result,
@@ -815,7 +814,7 @@ module.exports = {
                 })
                 var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?);"
                 var values = [name, path, ext, md5, DID, vno];
-                console.log("sql values" + values );
+                console.log("sql values" + values);
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
