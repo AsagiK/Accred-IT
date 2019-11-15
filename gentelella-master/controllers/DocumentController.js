@@ -662,7 +662,7 @@ module.exports = {
                     message: "Document already exists in system as " +rows
                 };
                 resp.send(resjson)
-                console.log("response case 0")
+                console.log("response case 0") //// Case 0 docoument already exists
             }
         })
         function checkname() {
@@ -671,10 +671,10 @@ module.exports = {
             connection.query(sql2, values2, function (err, result) {
                 if (err) callback(err);
                 if (result.length < 1) {
-                    getdata() // Case 1 Type 2 differet filename
+                    getdata() // Case 1 Type 2 different file differet filename
                 } else if (result.length >= 1) {
                     var rows = JSON.parse(JSON.stringify(result[0]))
-                    insertfile(files, 1, rows); // Case 1 Type 1 same filename
+                    insertfile(files, 1, rows); // Case 1 Type 1 different file same filename
                 }
             });
 
