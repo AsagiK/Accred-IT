@@ -4,13 +4,13 @@
 .dash {
 overflow-y: scroll;
 height: 400px;
-width: 1215px;
+width: 1300px;
 } 
 
 .dash2 {
 overflow-y: scroll;
 height: 350px;
-width: 585px;
+width: 775px;
 }
 </style>
 <html lang="en">
@@ -81,11 +81,11 @@ width: 585px;
                         </span>
                         
                 </div> 
-                <br>
+                
              <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                 <div class="row">
                     <!MEASUREMENT>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-10 col-sm-15 col-xs-15">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>METRICS</h2>
@@ -189,7 +189,7 @@ width: 585px;
 
                                             <tr>
                                                 <td> <%= meas.measurement_Name %> </td>
-                                                <td><%= meas.measurement_Desc %> </td> 
+                                                <td><%= meas.measurement_Description %> </td> 
                                                 <td><button type="submit" class="btn btn-primary">View Details</button></td>
                                             </tr>
 
@@ -273,7 +273,7 @@ width: 585px;
 
                 <% }  else if (current_user[0].Role == 4) { %>
                     <div class="row"> 
-                            <div class="col-md-6 col-sm-8 col-xs-8">
+                            <div class="col-md-10 col-sm-15 col-xs-15">
                                     <div class="x_panel">
                                         <div class="x_title">
                                             <h2>ACTIVITIES</h2>
@@ -294,12 +294,12 @@ width: 585px;
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash2">
+                                        <div class="dash">
                                             <!--ACTIVITIES-->   
                                             <% for (var mem of dataD) { %> 
                                                 <% for (var act of dataC) { %> 
                                                     <%if (current_user[0].User_ID == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
-                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                            <table class="table table-bordered" style="table-layout:fixed;">
                                                     <thead>
                                                         <tr>
                                                             <th>Activity Name</th>
@@ -337,7 +337,7 @@ width: 585px;
                     <!--SUBMISSIONS TABLE -->
 
                     <div class="row"> 
-                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                     <div class="x_panel">
                                         <div class="x_title">
                                             <h2>SUBMISSIONS</h2>
@@ -358,7 +358,7 @@ width: 585px;
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash2">
+                                        <div class="dash">
                                             <!--ACTIVITIES-->   
                                             <% for (var pending of dataF) { %> 
                                             <% if (current_user[0].User_ID == pending.user_ID) { %>
@@ -366,7 +366,10 @@ width: 585px;
                                                     <thead>
                                                         <tr>
                                                             <th>Activity Name</th>
-                                                            <th>Submissions</th> 
+                                                            <th>Status</th> 
+                                                            <th>Suggested Score</th>
+                                                            <th>Date Updated</th>
+                                                            <th>Comments</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead> 
@@ -382,7 +385,10 @@ width: 585px;
                                                             <% } else if (pending.status == 2) { %>
                                                                 D I S A P P R O V E D
                                                             <% } %>
-                                                        </td>
+                                                        </td> 
+                                                        <td><%= pending.suggested_Score %></td>
+                                                        <td><%= pending.dateupdated %></td>
+                                                        <td><%= pending.comment %></td>
                                                          
                                                         <td><button type="submit" class="btn btn-primary">View Details</button></td>
                                                     </tr>
