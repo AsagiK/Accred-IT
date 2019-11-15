@@ -1295,14 +1295,17 @@ module.exports = {
             }
 
             function auditmeasurement(resdata, callback, callback2) {
-                var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?);"
-                var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID]
+                var date = new Date();
+                var current = date.toISOString().split('T')[0];
+                var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`, `audit_date`) VALUES (?,?,?,?,?,?,?,?,?,?);"
+                var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID, current]
                 connection.query(sql, values, function (err, result, fields) {
                     if (err) throw err;
                     if (result) {
                         console.log("Measurement Audited")
+                        var MAID = result.insertId;
                         callback()
-                        callback2()
+                        callback2(MAID)
                     }
                 });
 
@@ -1321,7 +1324,7 @@ module.exports = {
 
             }
 
-            function audittargets() {
+            function audittargets(MAID) {
                 var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
                 var values = [MID]
                 connection.query(sql, values, function (err, result, fields) {
@@ -1334,9 +1337,10 @@ module.exports = {
                             var pr = resdata[key]["progress"]
                             var ti = resdata[key]["target_ID"]
 
-                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurementID`, `target`, `progress`, `target_ID`) VALUES (?,?,?,?);"
+                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID`) VALUES (?,?,?,?,?);"
 
-                            var values = [mi, ta, pr, ti];
+
+                            var values = [MAID, mi, ta, pr, ti];
                             connection.query(sql, values, function (err, result) {
                                 if (err) callback(err);
                                 if (result) {
