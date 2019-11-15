@@ -5,6 +5,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const async = require("async");
 var mysql = require('mysql');
 var connection = require('../db');
 // ---- URL PARSER
@@ -1287,13 +1288,13 @@ module.exports = {
                     if (result) {
                         console.log(result)
                         var resdata = JSON.parse(JSON.stringify(result[0]))
-                        callback(resdata, updatemeasurement)
+                        callback(resdata, updatemeasurement, audittargets)
                     }
                 });
 
             }
 
-            function auditmeasurement(resdata, callback) {
+            function auditmeasurement(resdata, callback, callback2) {
                 var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?);"
                 var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID]
                 connection.query(sql, values, function (err, result, fields) {
@@ -1301,6 +1302,7 @@ module.exports = {
                     if (result) {
                         console.log("Measurement Audited")
                         callback()
+                        callback2()
                     }
                 });
 
@@ -1317,6 +1319,39 @@ module.exports = {
                     }
                 });
 
+            }
+
+            function audittargets() {
+                var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
+                var values = [MID]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var mi = resdata[key]["measurementID"];
+                            var ta = resdata[key]["target"];
+                            var pr = resdata[key]["progress"]
+                            var ti = resdata[key]["target_ID"]
+
+                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurementID`, `target`, `progress`, `target_ID`) VALUES (?,?,?,?);"
+
+                            var values = [mi, ta, pr, ti];
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback(err);
+                                if (result) {
+                                    callback();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Failed");
+                            } else {
+                                console.log("Passed");
+                            }
+                        })
+                    }
+                });
             }
 
         }
