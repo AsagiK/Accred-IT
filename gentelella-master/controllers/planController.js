@@ -1373,7 +1373,6 @@ module.exports = {
                                 if (result) {
                                     var CID = resdata.cycle_ID;
                                     var MAAID = result.insertId;
-                                    auditpendingactivities(MAID, MAAID, CID, ai);
                                     console.log("pending called");
                                     var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = ?;"
                                     var values2 = [ai, CID];
