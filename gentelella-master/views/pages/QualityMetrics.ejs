@@ -351,7 +351,11 @@
                                                                     <% var dateNow = new Date(date.getFullYear(), date.getMonth(), date.getDate()); %>
                                                                     <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                     <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
-                                                                    <h4>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %></h4>
+                                                                    <% if (Difference_In_Days > 0) { %>
+                                                                        <h4>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %></h4>
+                                                                    <% } else { %>
+                                                                        <h4>Cycle ended on: </h4>
+                                                                    <% } %>
                                                                 </a>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body">
