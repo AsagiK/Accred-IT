@@ -1318,7 +1318,7 @@ module.exports = {
                     }
                 });
             }
-            function audittargets(MAID, audidactivities) {
+            function audittargets(MAID, audidactivities) { //MAID == Measurementt Audit ID
                 var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
                 var values = [MID]
                 connection.query(sql, values, function (err, result, fields) {
@@ -1346,16 +1346,44 @@ module.exports = {
                                 console.log("Failed");
                             } else {
                                 console.log("Passed");
-                                auditactivities(MID, MIAD)
+                                auditactivities(MID, MAID);
                             }
                         })
                     }
                 });
             }
-            function auditactivities(MID, MIAD, auditpendingactivities){
-                auditpendingactivities(MID, MIAD, CID)
+            function auditactivities(MID, MAID, auditpendingactivities){
+                var sql = "SELECT * FROM capstone.measurements_activities WHERE measurementID = (?)"
+                var values = [MID]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var mi = resdata[key]["measurement_ID"];
+                            var ai = resdata[key]["activity_ID"];
+
+                            var sql = "INSERT INTO `capstone`.`measurements_activities_audit` (`measurements_auditID`, `measurement_ID`, `activity_ID`) VALUES (?,?,?);"
+                            var values = [MAID, mi, ai];
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback(err);
+                                if (result) {
+                                    audit
+                                    callback();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Failed");
+                            } else {
+                                console.log("Passed");
+                                auditactivities(MID, MAID)
+                            }
+                        })
+                    }
+                });
             }
-            function auditpendingactivities(MID, MIAD, CID){
+            function auditpendingactivities(MID, MAID, CID){
                 
             }
             
