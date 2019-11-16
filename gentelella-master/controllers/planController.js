@@ -336,7 +336,6 @@ module.exports = {
                         notif: passData
                     });
                 }
-                console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
         }
@@ -1260,7 +1259,6 @@ module.exports = {
             connection.query(sql, values, function (err, result, fields) {
                 if (err) throw err;
                 if (result) {
-                    console.log(result)
                     resp.redirect('/QualityMetrics?passdata=3')
                 }
             });
@@ -1294,6 +1292,7 @@ module.exports = {
                     }
                 });
             }
+
             function auditmeasurement(resdata, callback, callback2) {
                 var date = new Date();
                 var current = date.toISOString().split('T')[0];
@@ -1305,10 +1304,11 @@ module.exports = {
                         console.log("Measurement Audited")
                         var MAID = result.insertId;
                         callback()
-                        callback2(MAID, auditactivities)
+                        callback2(MAID, auditactivities, resdata)
                     }
                 });
             }
+
             function updatemeasurement() {
                 var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ?, `cycle_ID` = ?  WHERE (`measurement_ID` = ?)";
                 var values = [group, mname, mdesc, cycle, MID]
@@ -1320,7 +1320,8 @@ module.exports = {
                     }
                 });
             }
-            function audittargets(MAID, audidactivities) { //MAID == Measurementt Audit ID
+
+            function audittargets(MAID, auditactivities, resdata) { //MAID == Measurementt Audit ID
                 var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
                 var values = [MID]
                 connection.query(sql, values, function (err, result, fields) {
@@ -1348,15 +1349,16 @@ module.exports = {
                                 console.log("Failed");
                             } else {
                                 console.log("Passed");
-                                auditactivities(MID, MAID);
+                                auditactivities(MID, MAID, auditpendingactivities, resdata);
                             }
                         })
                     }
                 });
             }
-            function auditactivities(MID, MAID, auditpendingactivities){
-                var sql = "SELECT * FROM capstone.measurements_activities WHERE measurementID = (?)"
-                var values = [MID]
+
+            function auditactivities(MID, MAID, auditpendingactivities, resdata) {
+                var sql = "SELECT * FROM capstone.measurements_activities WHERE measurement_ID = (?)"
+                var values = [MID];
                 connection.query(sql, values, function (err, result, fields) {
                     if (err) throw err;
                     if (result) {
@@ -1364,31 +1366,121 @@ module.exports = {
                         async.forEachOf(resdata, function (value, key, callback) {
                             var mi = resdata[key]["measurement_ID"];
                             var ai = resdata[key]["activity_ID"];
-
                             var sql = "INSERT INTO `capstone`.`measurements_activities_audit` (`measurements_auditID`, `measurement_ID`, `activity_ID`) VALUES (?,?,?);"
                             var values = [MAID, mi, ai];
                             connection.query(sql, values, function (err, result) {
                                 if (err) callback(err);
                                 if (result) {
-                                    audit
+                                    var CID = resdata.cycle_ID;
+                                    var MAAID = result.insertId;
+                                    auditpendingactivities(MAID, MAAID, CID, ai);
+                                    console.log("pending called");
+                                    var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = ?;"
+                                    var values2 = [ai, CID];
+                                    connection.query(sql2, values2, function (err, result, fields) {
+                                        if (err) throw err;
+                                        if (result) {
+                                            var resdata = JSON.parse(JSON.stringify(result))
+                                            async.forEachOf(resdata, function (value, key, callback2) {
+                                                var pi = resdata[key]["pending_ID"];
+                                                var ai = resdata[key]["activity_ID"];
+                                                var an = resdata[key]["activity_name"];
+                                                var ta = resdata[key]["target"];
+                                                var co = resdata[key]["code"];
+                                                var de = resdata[key]["description"];
+                                                var mi = resdata[key]["measurement_ID"];
+                                                var cs = resdata[key]["current_Score"];
+                                                var st = resdata[key]["status"];
+                                                var ss = resdata[key]["suggested_Score"];
+                                                var du = resdata[key]["dateupdated"];
+                                                var ac = resdata[key]["active"];
+                                                var ui = resdata[key]["user_ID"];
+                                                var com = resdata[key]["comment"];
+                                                var ci = resdata[key]["cycle_ID"];
+                                                var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?);"
+
+                                                var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci];
+                                                connection.query(sql, values, function (err, result) {
+                                                    if (err) callback(err);
+                                                    if (result) {
+                                                        var CID = resdata.cycle_ID;
+                                                        var MAAID = result.insertId;
+                                                        auditpendingactivities(MAID, MAAID, CID, ai);
+                                                        callback2();
+                                                    }
+                                                });
+                                            }, function (err) {
+                                                if (err) {
+                                                    console.log("Audit Pending Failed");
+                                                } else {
+                                                    console.log("Audit Pending Passed");
+                                                }
+                                            })
+                                        }
+                                    });
                                     callback();
                                 }
                             });
                         }, function (err) {
                             if (err) {
-                                console.log("Failed");
+                                console.log("Audit Activities Failed");
                             } else {
-                                console.log("Passed");
-                                auditactivities(MID, MAID)
+                                console.log("Audit Activities Passed");
                             }
                         })
                     }
                 });
             }
-            function auditpendingactivities(MID, MAID, CID){
-                
+
+            function auditpendingactivities(MAID, MAAID, CID, ai) {
+                console.log("pending called");
+                var sql = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = ?;"
+                var values = [ai, CID];
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var pi = resdata[key]["measurement_ID"];
+                            var ai = resdata[key]["measurement_ID"];
+                            var an = resdata[key]["measurement_ID"];
+                            var ta = resdata[key]["measurement_ID"];
+                            var co = resdata[key]["measurement_ID"];
+                            var de = resdata[key]["measurement_ID"];
+                            var mi = resdata[key]["measurement_ID"];
+                            var cs = resdata[key]["measurement_ID"];
+                            var st = resdata[key]["measurement_ID"];
+                            var ss = resdata[key]["measurement_ID"];
+                            var du = resdata[key]["measurement_ID"];
+                            var ac = resdata[key]["measurement_ID"];
+                            var ui = resdata[key]["measurement_ID"];
+                            var com = resdata[key]["measurement_ID"];
+                            var ci = resdata[key]["measurement_ID"];
+                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?);"
+
+                            var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci];
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback(err);
+                                if (result) {
+                                    var CID = resdata.cycle_ID;
+                                    var MAAID = result.insertId;
+                                    auditpendingactivities(MAID, MAAID, CID, ai);
+                                    callback();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Audit Pending Failed");
+                            } else {
+                                console.log("Audit Pending Passed");
+                            }
+                        })
+                    }
+                });
+
+
             }
-            
+
         }
     },
 
