@@ -320,7 +320,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -332,6 +332,8 @@ module.exports = {
                         dataF: results[5],
                         dataG: results[6],
                         dataH: results[7],
+                        dataI: results[8],
+                        dataJ: results[9],
                         current_user: sess.user,
                         notif: passData
                     });
@@ -1225,7 +1227,8 @@ module.exports = {
         } else {
             var CASE = req.query.CASE;
             var MID = req.query.MID;
-            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric;"
+            var GID = req.query.GID;
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric"
             var values = [MID]
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -1235,6 +1238,7 @@ module.exports = {
                     dataC: results[2],
                     dataD: results[3],
                     CASE: CASE,
+                    GID: GID,
                     current_user: sess.user
                 });
                 //console.log(results);
