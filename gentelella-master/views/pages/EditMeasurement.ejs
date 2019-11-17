@@ -170,7 +170,7 @@
                                                             <% } %>
                                                         <% } %>
                                                         <% for (var currentCycle of dataC) { %>
-                                                                <% if (currentCycle.goal_ID == data[0].metric_ID) { %>
+                                                                <% if (currentCycle.goal_ID == GID) { %>
                                                                 <option value="<%= currentCycle.cycle_ID %>"><%= currentCycle.cycle_Name %></option>
                                                                 <% } %>
                                                         <% } %>
@@ -184,6 +184,7 @@
                                             <button type="submit" class="btn btn-primary">
                                                 Submit
                                             </button>
+                                            
                                         </div>
     
                                     </form>
