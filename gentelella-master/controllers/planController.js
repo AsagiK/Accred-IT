@@ -1351,14 +1351,14 @@ module.exports = {
                                 console.log("Failed");
                             } else {
                                 console.log("Passed");
-                                auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain);
+                                auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain, auditactivitydata);
                             }
                         })
                     }
                 });
             }
 
-            function auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain) {
+            function auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain, auditactivitydata) {
                 var sql = "SELECT * FROM capstone.measurements_activities WHERE measurement_ID = (?)"
                 var values = [MID];
                 var CID = resdatamain.cycle_ID;
@@ -1378,6 +1378,7 @@ module.exports = {
                                     var MAAID = result.insertId;
                                     var aii = ai;
                                     auditpendingactivities(MAID, MAAID, CID, aii);
+                                    auditactivitydata(MAID, ai);
                                     callback();
                                 }
                             });
@@ -1394,7 +1395,6 @@ module.exports = {
             }
 
             function auditpendingactivities(MAID, MAAID, CID, ai) {
-                console.log("pending called");
                 var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = 1 && pending_activities.cycle_ID = ?;"
                 var values2 = [ai, CID];
                 console.log(values2 + " pending values")
@@ -1427,7 +1427,6 @@ module.exports = {
                                     var CID = resdata.cycle_ID;
                                     var MAAID = result.insertId;
                                     auditpendingactivities(MAID, MAAID, CID, ai);
-                                    console.log(result);
                                     callback2();
                                 }
                             });
@@ -1441,6 +1440,27 @@ module.exports = {
                         })
                     }
                 });
+            }
+
+            function auditactivitydata(MAID, ai) {
+                var sql = "SELECT * FROM capstone.approved_activities where approved_activities.activity_ID = ?;"
+                var values = [ai]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result[0]))
+                        var sql2 = "INSERT INTO `capstone`.`approved_activities_audit` (`measurement_auditID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `deadline`) VALUES (?,?,?,?,?,?,?,?,?);"
+                        var deadline = new Date(resdata.deadline).toISOString().split('T')[0];
+                        var values2 = [MAID, resdata.activity_ID, resdata.activity_name, resdata.target, resdata.code, resdata.description, resdata.measurement_ID, resdata.current_Score, deadline]
+                        connection.query(sql2, values2, function (err, result, fields) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log("activity data audited");
+                            }
+                        });
+                    }
+                });
+
             }
 
         }
