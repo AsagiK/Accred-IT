@@ -90,7 +90,7 @@
                                             <select class="form-control" name="group" id ="group">
                                                 <% for (var ogGroup of dataB) { %>
                                                     <% if (ogGroup.Group_ID == data[0].GroupAssigned) { %>
-                                                        <option value="<%= data[0].group_ID %>"><%= ogGroup.Group_Name %></option>
+                                                        <option value="<%= data[0].GroupAssigned %>" selected="selected"><%= ogGroup.Group_Name %></option>
                                                     <% } %>
                                                 <% } %>
                                                 <% for (var group of dataB) { %>
@@ -148,7 +148,7 @@
                                                 <select class="form-control" name="group" id ="group">
                                                     <% for (var ogGroup of dataB) { %>
                                                         <% if (ogGroup.Group_ID == data[0].GroupAssigned) { %>
-                                                            <option value="<%= data[0].group_ID %>"><%= ogGroup.Group_Name %></option>
+                                                            <option value="<%= data[0].GroupAssigned %>" selected="selected"><%= ogGroup.Group_Name %></option>
                                                         <% } %>
                                                     <% } %>
                                                     <% for (var group of dataB) { %>
