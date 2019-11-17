@@ -361,4 +361,45 @@ module.exports = {
 
     },
 
+    CreateSourcesJSON: function (req, resp) {
+        console.log(req.body);
+        var SID = req.body.table;
+        SID = JSON.parse(SID);
+        var sname = req.body.sname;
+        var sdesc = req.body.sdesc;
+        var sql = "INSERT INTO `capstone`.`source` (`source_Name`, `source_Description`) VALUES (? , ?)";
+        var values = [sname, sdesc];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            if (result) {
+                console.log("Record Inserted");
+                insertdatatypes(result.insertId)
+            }
+        });
+
+        function insertdatatypes(id) {
+            async.forEachOf(SID, function (value, key, callback) {
+                var dtype = SID[key]["Data Types:"];
+                var sql = "INSERT INTO capstone.sourcetype (stype_ID, SourceType) VALUES (?,?)";
+                var values = [id, dtype];
+                connection.query(sql, values, function (err, result) {
+                    if (err) callback(err);
+                    if (result) {
+                        console.log("source = sourcetype")
+                        callback();
+                    }
+                });
+            }, function (err) {
+                if (err) {
+                    console.log("Failed");
+                    resp.send("Not OK")
+                } else {
+                    console.log("Passed");
+                    resp.send("OK");
+                }
+            })
+
+        }
+    }
+
 }
