@@ -1374,7 +1374,7 @@ module.exports = {
                                     var CID = resdata.cycle_ID;
                                     var MAAID = result.insertId;
                                     console.log("pending called");
-                                    var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = ?;"
+                                    var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = 1 && pending_activities.cycle_ID = ?;"
                                     var values2 = [ai, CID];
                                     connection.query(sql2, values2, function (err, result, fields) {
                                         if (err) throw err;
