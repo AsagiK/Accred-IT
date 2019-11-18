@@ -62,8 +62,8 @@ module.exports = {
                 if (err) return console.log("file not moved to server");
                 else console.log("File uploaded");
             })
-            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?);"
-            var values = [name, path, desc, ext];
+            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `upload_id`) VALUES (? , ? , ?, ?, ?);"
+            var values = [name, path, desc, ext, req.session.user[0].User_ID];
 
             connection.query(sql, values, function (err, result) {
                 if (err) console.log("file not saved to local server");
@@ -171,8 +171,8 @@ module.exports = {
                 if (err) return console.log(err);
                 else console.log("File uploaded");
             })
-            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`) VALUES (? , ? , ?, ?); INSERT INTO `capstone`.`plansubmissions` (`Plan_ID`, `User_ID`, `Submission_Title`, `Submission_File`, `Submission_Description`, `Submission_Date`) VALUES (?, ?, ?, ?, ?, ?) "
-            var values = [name, path, desc, ext, PID, UID, name, path, desc, current];
+            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `upload_id`) VALUES (? , ? , ?, ?, ?); INSERT INTO `capstone`.`plansubmissions` (`Plan_ID`, `User_ID`, `Submission_Title`, `Submission_File`, `Submission_Description`, `Submission_Date`) VALUES (?, ?, ?, ?, ?, ?) "
+            var values = [name, path, desc, ext, req.session.user[0].User_ID, PID, UID, name, path, desc, current];
             connection.query(sql, values, function (err, result) {
                 if (err) throw err;
                 if (result) {
@@ -312,8 +312,8 @@ module.exports = {
                         if (err) return console.log(err);
                         else console.log("File uploaded");
                     })
-                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
-                    var values = [name, path, desc, ext, md5];
+                    var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
+                    var values = [name, path, desc, ext, md5, req.session.user[0].User_ID];
 
                     connection.query(sql, values, function (err, result) {
                         if (err) callback(err);
@@ -432,8 +432,8 @@ module.exports = {
                     if (err) return console.log(err);
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`) VALUES (? , ? , ?, ?, ?);"
-                var values = [name, path, desc, ext, md5];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
+                var values = [name, path, desc, ext, md5, req.session.user[0].User_ID];
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -704,8 +704,8 @@ module.exports = {
                     if (err) return console.log("file not moved to server");
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?);"
-                var values = [newfilename, newfilepath, ext, md5, DID, vno];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+                var values = [newfilename, newfilepath, ext, md5, DID, vno, req.session.user[0].User_ID];
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -812,8 +812,8 @@ module.exports = {
                     if (err) return console.log("file not moved to server");
                     else console.log("File uploaded");
                 })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`) VALUES (? , ? , ?, ?, ?, ?);"
-                var values = [name, path, ext, md5, DID, vno];
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `isaversionof`, `version`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?, ?);"
+                var values = [name, path, ext, md5, DID, vno, req.session.user[0].User_ID];
                 console.log("sql values" + values);
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
