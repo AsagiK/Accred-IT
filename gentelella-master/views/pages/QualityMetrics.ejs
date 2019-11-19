@@ -464,6 +464,13 @@
                                                                                                         <% } %>
                 
                                                                                                         <% } %>
+                                                                                            </td> 
+                                                                                            <td>
+                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
+                                                                                            <form method="post" action="ViewActivitiesUnderMeasurement">
+                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary">View Activities under Measurement</button> 
+                                                                                            <form>
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>
@@ -521,7 +528,7 @@
                                                                                                 Measurement
                                                                                                 Details </button>
                                                                                         </form>
-                                                                                        <% } %>
+                                                                                        <% } %>    
                                                                                     </td>
                                                                                 </tr>
                                                                                 <% } %>
