@@ -513,25 +513,27 @@
                                                                                                 Measurement
                                                                                                 Details</button>
                                                                                         </form>
-                                                                                        <% if (cycles.status == 0) { %>
-                                                                                        <!--EDIT MEASUREMENT BUTTON PLAN PHASE-->
-                                                                                        <form method="get" action="EditMeasurement">
-                                                                                            <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                            <input type="hidden" name="CASE" value="0">
-                                                                                            <button type="submit" class="btn btn-primary">Edit
-                                                                                                Measurement
-                                                                                                Details</button>
-                                                                                        </form>
-                                                                                        <% } else if (cycles.status == 3) { %>
-                                                                                        <!--EDIT BUTTON ACTION PHASE-->
-                                                                                        <form method="get" action="EditMeasurement">
-                                                                                            <input type="hidden" name="GID" value="<%= cycles.goal_ID %>">
-                                                                                            <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                            <input type="hidden" name="CASE" value="1">
-                                                                                            <button type="submit" class="btn btn-primary">Edit
-                                                                                                Measurement and Move to next cycle </button>
-                                                                                        </form>
-                                                                                        <% } %>    
+                                                                                        <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
+                                                                                            <% if (cycles.status == 0) { %>
+                                                                                                <!--EDIT MEASUREMENT BUTTON PLAN PHASE-->
+                                                                                                <form method="get" action="EditMeasurement">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="CASE" value="0">
+                                                                                                    <button type="submit" class="btn btn-primary">Edit
+                                                                                                        Measurement
+                                                                                                        Details</button>
+                                                                                                </form>
+                                                                                                <% } else if (cycles.status == 3) { %>
+                                                                                                <!--EDIT BUTTON ACTION PHASE-->
+                                                                                                <form method="get" action="EditMeasurement">
+                                                                                                    <input type="hidden" name="GID" value="<%= cycles.goal_ID %>">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="CASE" value="1">
+                                                                                                    <button type="submit" class="btn btn-primary">Edit
+                                                                                                        Measurement and Move to next cycle </button>
+                                                                                                </form>
+                                                                                                <% } %>    
+                                                                                        <% } %>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <% } %>
