@@ -90,11 +90,10 @@
                                 <div class="x_content">
                                         <div>
 
-                                                <label>MeasureID: </label>
-                                                <input class="form-control" type="text" id="mid" name="mid" value="<%= data[0].measurement_ID %>">
-                                                <br>
-                                                <label>Progress: </label>
-                                                <input class="form-control" type="text" id="progress" name="progress" >
+                                                <!-- MEASURE ID-->
+                                                <input class="form-control" type="hidden" id="mid" name="mid" value="<%= data[0].measurement_ID %>">
+                                                <label>Measurment Name:</label>
+                                                <input class="form-control" type="text" id="mname" name="mname" value="<%= data[0].measurement_Name %>" readonly>
                                                 <br>
                                                 <label>Target: </label>
                                                 <select class="form-control" id="target" name="target">
@@ -104,7 +103,12 @@
                                                         <option value="<%= targs.target_ID %>~<%= targs.target %>"><%= targs.target %></option>
                                                         
                                                         <% } %>
-                                                      </select>
+                                                      </select> 
+                                                <br>
+                                                <label>Progress: </label>
+                                                <input class="form-control" type="text" id="progress" name="progress" >
+                                                <br>
+                                                
                                                 <br>
                                                 <button type="button" class="btn btn-default add-row-targetProg">Add</button>
                                                 <br>
