@@ -83,7 +83,7 @@
                                                             <td> 
                                                             <% for (var evi of dataB) { %> 
                                                                 <% for (var doc of dataC) { %>
-                                                                 <% if ( evi.documentID == doc.Document_ID) { %>       
+                                                                 <% if (act.activity_ID == evi.activityID &&evi.documentID == doc.Document_ID) { %>       
                                                                      <%= doc.Document_Name %> 
                                                                      <br>
                                                                  <% } else { %>
@@ -94,18 +94,15 @@
                                                                 <% } %> 
                                                             <% } %> 
                                                             </td>
-                                                        </tr> 
-                                                        
-                                                         
+                                                        </tr>           
                                                 <% } %>
                                               
                                             </tbody>
                                         </table> 
-
-                                        <form method="get" action="BackToMeasurement">       
-                                                <button type="submit" class="btn btn-primary">Back</button> 
-                                            <form>
-
+                                                <!-- BUTTON TO GO BACK -->
+                                                <button class ="btn btn-primary" onclick="window.history.back()">Back</button>
+                                        
+                                            
                                     
                             </div>
                         </div>
