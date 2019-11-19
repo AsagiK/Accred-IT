@@ -424,7 +424,11 @@
                                                                                     </th>
                                                                                     <th>Group Assigned</th>
                                                                                     <th>Quality Target</th>
-                                                                                    <th>Progress</th>
+                                                                                    <% if (cycles.status == 4) { %>
+                                                                                        <th>Progress</th>
+                                                                                    <% } else { %>
+                                                                                        <th></th>
+                                                                                    <% } %>
                                                                                     <th></th>
                                                                                 </tr>
                                                                             </thead>
