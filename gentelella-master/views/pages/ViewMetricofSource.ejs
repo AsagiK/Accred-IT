@@ -726,13 +726,15 @@ id="my_modalCreateMeasures">
 
 
     
-    <form method="get" action="/QualityMetrics">
+    <form method="get" action="/ViewMetricofSource">
         <input type="hidden" name="passdata" value="1">
+        <input type="hidden" name="SID" value="<%= dataB[0].source_ID %>">
         <button type="submit" class="btn btn-success" style="display: none;"
             id="backsuccess">Hi</button>
     </form>
-    <form method="get" action="/QualityMetrics">
+    <form method="get" action="/ViewMetricofSource">
         <input type="hidden" name="passdata" value="0">
+        <input type="hidden" name="SID" value="<%= dataB[0].source_ID %>">
         <button type="submit" class="btn btn-success" style="display: none;"
             id="backfail">Hi</button>
     </form>
