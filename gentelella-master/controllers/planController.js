@@ -51,6 +51,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
+            
             connection.query("SELECT * FROM capstone.roles where Role_ID > 1; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
