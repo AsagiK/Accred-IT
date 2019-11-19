@@ -1477,7 +1477,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var MID = req.body.MID;
-            var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences ; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
+            var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
             console.log("Activity test"+ MID);
             var values = [MID]
             

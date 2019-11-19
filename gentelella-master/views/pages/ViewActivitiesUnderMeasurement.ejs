@@ -84,7 +84,7 @@
                                                             <% for (var evi of dataB) { %> 
                                                                 <% for (var doc of dataC) { %>
                                                                  <% if (act.activity_ID == evi.activityID &&evi.documentID == doc.Document_ID) { %>       
-                                                                     <%= doc.Document_Name %> 
+                                                                     <a href="<%= doc.Document_Route %>" download><%= doc.Document_Name %></a> 
                                                                      <br>
                                                                  <% } else { %>
 
