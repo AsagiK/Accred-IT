@@ -136,8 +136,9 @@
                             <div class="x_content">
 
                                 <div class="title_left">
-                                    <h1>View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                    <h1 align="left">View Measurement Details Title: <%= data[0].measurement_Name %></h1>
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
+                                    <h4 align="left"><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
                                 </div>
                                 <br />
 
@@ -148,16 +149,24 @@
                                                 <div class="title_right">
                                                     <h2>Description:<br> <%= data[0].measurement_Description %></h2>
                                                 </div>
-                                                <div class="title_left">
-                                                    <h2>
-                                                        Quality Target/s :<br>
-                                                        <% for(var targets of dataI) { %>
-                                                            <% if (data[0].measurement_ID == targets.measurementID) { %> 
-                                                                <%= targets.target %> - <%= targets.progress %> <br>
+                                                <% if (current_user[0].Role == 1) { %>
+                                                    <div class="title_left">
+                                                        <h2>
+                                                            Quality Target/s :<br>
+                                                            <% for(var targets of dataI) { %>
+                                                                <% if (data[0].measurement_ID == targets.measurementID) { %> 
+                                                                    <%= targets.target %> 
+                                                                    <% if (targets.progress == null) { %>
+                                                                    - No Progress
+                                                                    <% } else { %>
+                                                                    - <%= targets.progress %> 
+                                                                    <% } %>
+                                                                    <br>
+                                                                <% } %>
                                                             <% } %>
-                                                        <% } %>
-                                                    </h2>
-                                                </div>
+                                                        </h2>
+                                                    </div>
+                                                <% } %>
                                             </div>
                                             <!--Edited-->
                                             <div class="clearfix"></div>
@@ -233,7 +242,7 @@
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="text" name="CID" value="<%= data[0].cycle_ID %>">
+                                                                                        <input type="hidden" name="CID" value="<%= data[0].cycle_ID %>">
                                                                                         <button type="submit" class="btn btn-primary">Submit
                                                                                             Evidence
                                                                                         </button>
@@ -288,7 +297,7 @@
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="text" name="CID" value="<%= data[0].cycle_ID %>">
+                                                                                        <input type="hidden" name="CID" value="<%= data[0].cycle_ID %>">
                                                                                         <button type="submit" class="btn btn-primary">Submit
                                                                                             Evidence
                                                                                         </button>
