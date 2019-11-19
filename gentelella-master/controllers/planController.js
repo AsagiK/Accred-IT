@@ -1468,6 +1468,40 @@ module.exports = {
             }
 
         }
+    }, 
+
+    ViewActivitiesUnderMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var MID = req.body.MID;
+            var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences ; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
+            console.log("Activity test"+ MID);
+            var values = [MID]
+            
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/ViewActivitiesUnderMeasurement.ejs' , {
+                        data:results[0],
+                        dataB:results[1],
+                        dataC:results[2],
+                        current_user:sess.user
+                    }); 
+                    console.log(results[2]);
+                    console.log ("activities are loaded");
+                    
+            
+
+            });
+
+        }
+    }, 
+
+    BackToMeasurement: function (req, resp) { 
+        resp.redirect('./pages/QualityMetrics.ejs');
+        console.log("Back To Quality Metrics");
     },
 
 }
