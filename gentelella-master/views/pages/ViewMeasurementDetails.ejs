@@ -409,7 +409,7 @@
                                 <br>
                                 <select style="width: 500px;" class="js-example-basic-multiple" name="measurement[]" id="measurement[]" multiple="multiple">
                                     <% for (var measures of dataE) { %>
-                                    <option value="<%= measures.measurement_ID %>-<%= measures.measurement_Name %>">
+                                    <option value="<%= measures.measurement_ID %>~<%= measures.measurement_Name %>">
                                         <%= measures.measurement_Name %></option>
                                     <% } %>
                                 </select>
@@ -593,7 +593,7 @@
                             <br>
                             <select class="form-control" name="activities" id="activities">
                                 <% for (var activities of dataF) { %>
-                                <option value="<%= activities.activity_ID %>-<%= activities.activity_name %>">
+                                <option value="<%= activities.activity_ID %>~<%= activities.activity_name %>">
                                     <%= activities.activity_name %></option>
                                 <% } %>
                             </select>
@@ -678,8 +678,8 @@
                 var measureID="";
                 var measureName=""
                 for(var x=0;x<measure.length;x++){
-                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('-'))+",";
-                    measureName = measureName + measure[x].substr(measure[x].lastIndexOf('-') + 1) + "<br>";
+                    measureID = measureID + measure[x].substr(0, measure[x].lastIndexOf('~'))+",";
+                    measureName = measureName + measure[x].substr(measure[x].lastIndexOf('~') + 1) + "<br>";
                 }
                 var comremove = measureID.length - 1;
                 measureID = measureID.substr(0, comremove);
@@ -725,8 +725,8 @@
                     var measurementID = $("#measurementID").val();
                     var measurementName = $("#measurementName").val();
                     var activities = $("#activities").val();
-                    var activityID = activities.substr(0, activities.indexOf('-'));
-                    var activityName = activities.substr(activities.lastIndexOf('-') + 1);
+                    var activityID = activities.substr(0, activities.indexOf('~'));
+                    var activityName = activities.substr(activities.lastIndexOf('~') + 1);
                     console.log(activityID);
                     console.log(activityName);
                     var markup = "<tr><td style='display: none;'>" + measurementID +
