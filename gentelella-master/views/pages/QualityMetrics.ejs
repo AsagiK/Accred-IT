@@ -831,34 +831,7 @@
                             return isEmpty;
                         }
 
-                        $("#toJSONCycles").click(function() {
-                            console.log("JSON CYCLES");
-                            var table = JSON.stringify($('#tableCycles').tableToJSON());
-                            //var mid = document.getElementById("mid").value
-
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', '/AddCyclesJSON', true);
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onload = function() {
-                                console.log(xhr.responseText);
-                            };
-
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState == 4) {
-                                    var respData = xhr.responseText;
-                                    if (respData == "OK") {
-                                        console.log("Hi");
-                                        backsuccess();
-                                    } else {
-                                        backfail();
-                                    }
-                                }
-                            };
-
-
-                            xhr.send("table=" + table);
-
-                        });
+                        
 
                         function backsuccess() {
                             var button = document.getElementById('backsuccess');
@@ -917,6 +890,36 @@
                                     "&gid=" + gid);
 
                             });
+
+
+                            $("#toJSONCycles").click(function() {
+                            console.log("JSON CYCLES");
+                            var table = JSON.stringify($('#tableCycles').tableToJSON());
+                            //var mid = document.getElementById("mid").value
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '/AddCyclesJSON', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                console.log(xhr.responseText);
+                            };
+
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState == 4) {
+                                    var respData = xhr.responseText;
+                                    if (respData == "OK") {
+                                        console.log("Hi");
+                                        backsuccess();
+                                    } else {
+                                        backfail();
+                                    }
+                                }
+                            };
+
+
+                            xhr.send("table=" + table);
+
+                        });
 
                             function backsuccess() {
                                 var button = document.getElementById('backsuccess');
