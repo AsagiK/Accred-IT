@@ -334,8 +334,8 @@ module.exports = {
         console.log(UID);
         async.forEachOf(UID, function (value, key, callback) {
             var cn = UID[key]["Cycle Name"];
-            var sd = UID[key]["Start Date"];
-            var ed = UID[key]["End Date"];
+            var sd = UID[key]["StartDate"];
+            var ed = UID[key]["EndDate"];
             var gi = UID[key]["GoalID"];
             console.log(cn);
             console.log(sd);

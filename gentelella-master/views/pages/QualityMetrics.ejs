@@ -153,6 +153,8 @@
                                             <th>End Date</th>
                                             <th></th>
                                             <th>GoalID</th>
+                                            <th>StartDate</th>
+                                            <th>EndDate</th>
                                         </thead>
                                     </table>
 
@@ -738,7 +740,7 @@
                                     var rowID = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>test</td><td>" + gid + "</td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>test</td><td>" + gid + "</td><td id='cellSDate~" +rowID+"'></td><td id='cellEDate~" +rowID+"'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
@@ -776,6 +778,8 @@
                                 //alert("checking start date");
                                 if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
                                     //alert("kek");
+                                    console.log("FIRST DATE INPUT IS OK");
+                                    document.getElementById("cellSDate~"+id).innerHTML = e.target.value;
                                 }else{
                                     alert("Start cannot be a date before today!")
                                     document.getElementById("sDate~"+id).value = "";
@@ -788,6 +792,7 @@
                                 if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
                                     console.log("start date is fine");
                                     console.log(date);
+                                    document.getElementById("cellSDate~"+id).innerHTML = e.target.value;
                                 }else{
                                     alert("Start date cannot be a date during the previous cycle");
                                     document.getElementById("sDate~"+id).value = "";
@@ -810,6 +815,7 @@
                                 console.log("Fine");
                                 date = e.target.value;
                                 console.log("setting the date = "+date);
+                                document.getElementById("cellEDate~"+id).innerHTML = e.target.value;
                             }
                             
                             //console.log(id);
