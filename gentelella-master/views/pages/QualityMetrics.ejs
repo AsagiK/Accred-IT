@@ -132,26 +132,17 @@
                                 <div class="modal-body">
                                     <input type="hidden" id="gid" name="gid" class="form-control col-md-7 col-xs-12" />
 
-                                    <label for="cycleName">Cycle
-                                        Name<span class="required">*</span>
+                                    <label for="cycleName">Goal Duration(in years):<span class="required">*</span>
                                     </label>
                                     <div>
-                                        <input type="text" id="cycleName" name="cycleName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                        <input type="number" id="yearNum" name="yearNum" required="required" class="form-control col-md-7 col-xs-12" placeholder="(ex.5)" />
                                     </div>
                                     <br>
-
-                                    <label>Set Cycle Duration Date:<span class="required"></span></label>
-
-                                    <fieldset>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="controls">
-                                                <div class="input-prepend input-group">
-                                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                    <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
+                                    <label for="cycleName">Terms Per Year:<span class="required">*</span>
+                                    </label>
+                                    <div>
+                                        <input type="number" id="termNum" name="termNum" required="required" class="form-control col-md-7 col-xs-12" placeholder="(ex.5)" />
+                                    </div>
                                     <br>
                                     <button type="button" class="btn btn-default add-row-cycles">Add</button>
 
@@ -738,42 +729,82 @@
                             $(".add-row-cycles").click(function test() {
                                 //console.log("testing test");
                                 if (!checkEmptyInput()) {
-                                    //console.log("testing add button");
-                                    var cycleName = $("#cycleName").val();
-                                    var cycleDuration = $("#reservation").val();
+                                    var yearNum = $("#yearNum").val();
+                                    var termNum = $("#termNum").val();
+                                    var cycleNum= yearNum*termNum;
                                     var gid = $("#gid").val();
-                                    console.log("CYCLE NAME = " + cycleName);
-                                    console.log("DURATION = " + cycleDuration);
-                                    console.log(gid);
-                                    var startDate = '';
-                                    var startYear = cycleDuration.substr(6, 4);
-                                    var startMonth = cycleDuration.substr(0, 2);
-                                    var startDay = cycleDuration.substr(3, 2);
-                                    var endDate = '';
-                                    var endYear = cycleDuration.substr(19, 4);
-                                    var endMonth = cycleDuration.substr(13, 2);
-                                    var endDay = cycleDuration.substr(16, 2);
-                                    startDate = startYear + "-" + startMonth + "-" + startDay;
-                                    endDate = endYear + "-" + endMonth + "-" + endDay;
-                                    console.log("Start Date: " + startDate);
-                                    console.log("End Date: " + endDate);
-
-                                    var markup = "<tr><td>" + cycleName + "</td><td>" + startDate + "</td><td>" + endDate + "<td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td>" + gid + "</td></tr>";
-                                    var table = document.getElementById("tableCycles")
-                                    $(table).append(markup);
+                                    var CNT = 1;
+                                    var CNY = 1;
+                                    var rowID = 1;
+                                    for(var i=0;i<yearNum;i++){
+                                        for(var j=0;j<termNum;j++){
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>test</td><td>" + gid + "</td></tr>";
+                                            var table = document.getElementById("tableCycles")
+                                            $(table).append(markup);
+                                            CNT++;
+                                            rowID++;
+                                        }
+                                        CNT=1;
+                                        CNY++;
+                                    }
+                                 
                                 }
                             });
+
+
+                            
                         });
+
+                         
+                        var n =  new Date();
+                        var y = n.getFullYear();
+                        var m = n.getMonth() + 1;
+                        var d = n.getDay();
+                        var date = y + "-" + m + "-" + d;
+                        function checkStartDate(e){
+                            var id = e.target.name.substr(e.target.name.lastIndexOf('~') + 1);
+                            var edate = document.getElementById("eDate~"+id).value;
+                            //alert(date);
+                            if(edate == ""){
+                                //alert("checking start date");
+                                if( new Date(e.target.value).getTime() === new Date(date).getTime()){
+                                    alert("kek");
+                                }else{
+                                    console.log("date now = " + new Date(date).getTime());
+                                    console.log("date selected = "+new Date(e.target.value).getTime());
+                                    console.log(e.target.value);
+                                }
+                            }
+                           //alert(edate);
+                            //console.log(id);
+                        }
+
+                        function checkEndDate(e){
+                            var id = e.target.name.substr(e.target.name.lastIndexOf('~') + 1);
+                            var sdate = document.getElementById("sDate~"+id).value;
+                            var edate = document.getElementById("eDate~"+id).value;
+
+                            if( (new Date(edate).getTime() < new Date(sdate).getTime()))
+                            {
+                                alert("End Date cannot be before Start Date!");
+                                document.getElementById("eDate~"+id).value = "";
+                            }else{
+                                console.log("Fine");
+                            }
+                            
+                            //console.log(id);
+                            //console.log(sdate);
+                        }
 
                         function checkEmptyInput() {
                             var isEmpty = false,
-                                cycleName = document.getElementById("cycleName").value,
-                                cycleDuration = document.getElementById("reservation").value;
+                                yearNum = document.getElementById("yearNum").value,
+                                termNum = document.getElementById("termNum").value;
 
-                            if (cycleName === "") {
+                            if (yearNum === "") {
                                 alert("Cycle Name cannot Be Empty");
                                 isEmpty = true;
-                            } else if (cycleDuration === "") {
+                            } else if (termNum === "") {
                                 alert("Cycle Duration Cannot Be Empty");
                                 isEmpty = true;
                             }
