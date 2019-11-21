@@ -759,20 +759,38 @@
                         var n =  new Date();
                         var y = n.getFullYear();
                         var m = n.getMonth() + 1;
-                        var d = n.getDay();
+                        var d = n.getDate();
                         var date = y + "-" + m + "-" + d;
+                        var dateToday1 = new Date();
+                        var y = dateToday.getFullYear();
+                        var m = dateToday.getMonth() + 1;
+                        var d = dateToday.getDate();
+                        var dateTodayFinal = y + "-" + m + "-" + d;
+                        
                         function checkStartDate(e){
                             var id = e.target.name.substr(e.target.name.lastIndexOf('~') + 1);
                             var edate = document.getElementById("eDate~"+id).value;
                             //alert(date);
-                            if(edate == ""){
+                            if(date == dateTodayFinal){
+                                
                                 //alert("checking start date");
-                                if( new Date(e.target.value).getTime() === new Date(date).getTime()){
-                                    alert("kek");
+                                if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
+                                    //alert("kek");
                                 }else{
-                                    console.log("date now = " + new Date(date).getTime());
-                                    console.log("date selected = "+new Date(e.target.value).getTime());
-                                    console.log(e.target.value);
+                                    alert("Start cannot be a date before today!")
+                                    document.getElementById("sDate~"+id).value = "";
+                                    //console.log(date);
+                                    //console.log("date now = " + new Date(date).getTime());
+                                    //console.log("date selected = "+new Date(e.target.value).getTime());
+                                    //console.log(e.target.value);
+                                }
+                            }else{
+                                if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
+                                    console.log("start date is fine");
+                                    console.log(date);
+                                }else{
+                                    alert("Start date cannot be a date during the previous cycle");
+                                    document.getElementById("sDate~"+id).value = "";
                                 }
                             }
                            //alert(edate);
@@ -790,6 +808,8 @@
                                 document.getElementById("eDate~"+id).value = "";
                             }else{
                                 console.log("Fine");
+                                date = e.target.value;
+                                console.log("setting the date = "+date);
                             }
                             
                             //console.log(id);
