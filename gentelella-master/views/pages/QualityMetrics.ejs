@@ -151,10 +151,12 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th></th>
+                                            <th>Term</th>
+                                            <th>TotalTerm</th>
                                             <th>GoalID</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
+                                            
                                         </thead>
                                     </table>
 
@@ -421,12 +423,14 @@
                                                                                         <th>Progress</th>
                                                                                     <% } else { %>
                                                                                         <th></th>
-                                                                                    <% } %>
+                                                                                    <% } %> 
+                                                                                    <th></th>
                                                                                     <th></th>
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tbody>
-                                                                                <% if (cycles.status == 4) { %>
+                                                                            <tbody> 
+                                                                                <!--TERMLY REPORT VIEW-->
+                                                                                <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
@@ -471,8 +475,55 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>
+                                                                                    <% } %> 
+                                                                                    <!--ANNUAL REPORT-->
+                                                                                <% } else if (cycles.status == 4 && cycles.termnum == cycles.totalterm) { %> 
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Description %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                            <%for (var group of dataC){%>
+                                                                                            <% if(measure_audit.GroupAssigned==group.Group_ID){%>
+                                                                                            
+                                                                                                <%= group.Group_Name %>
+                                                                                            
+                                                                                            <%}%>
+                                                                                            <%}%>
+                                                                                        </td>
+                                                                                            <td>
+                                                                                                <% for (var targets_audit of dataJ) { %>
+                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                -
+                                                                                                <%= targets_audit.target %><br>
+                                                                                                <% } %>
+        
+                                                                                                <% } %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                    <% for (var targets_audit of dataJ) { %>
+                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                        <%= targets_audit.progress %><br>
+                                                                                                        <% } %>
+                
+                                                                                                        <% } %>
+                                                                                            </td> 
+                                                                                            <td>TESTING</td>
+                                                                                            <td>
+                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
+                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                                                            </form>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <% } %>
                                                                                     <% } %>
-                                                                                
                                                                                 <% } else { %>
                                                                                 <% for (var measurement of dataE) { %>
                                                                                 <% if (measurement.cycle_ID == cycles.cycle_ID) { %>
@@ -740,7 +791,7 @@
                                     var rowID = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>test</td><td>" + gid + "</td><td id='cellSDate~" +rowID+"'></td><td id='cellEDate~" +rowID+"'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>"+ CNT+"</td><td>"+ termNum+"</td><td>" + gid + "</td><td id='cellSDate~" +rowID+"'></td><td id='cellEDate~" +rowID+"'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;

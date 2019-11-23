@@ -337,12 +337,16 @@ module.exports = {
             var sd = UID[key]["StartDate"];
             var ed = UID[key]["EndDate"];
             var gi = UID[key]["GoalID"];
+            var tr = UID[key]["Term"];
+            var tt = UID[key]["TotalTerm"];
+            console.log(tr);
+            console.log(tt);
             console.log(cn);
             console.log(sd);
             console.log(ed);
             console.log(gi);
-            var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`) VALUES (?, ?, ?, ?);";
-            var values = [cn, sd, ed, gi];
+            var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`) VALUES (?, ?, ?, ?, ?, ?);";
+            var values = [cn, sd, ed, gi, tr, tt];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
