@@ -321,7 +321,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -1487,7 +1487,7 @@ module.exports = {
         } else {
             var MID = req.body.MID;
             var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
-            console.log("Activity test"+ MID);
+            console.log("Activity test"+  MID);
             var values = [MID]
             
             connection.query(sql, values, function (err, results, fields) {
@@ -1498,7 +1498,7 @@ module.exports = {
                         dataC:results[2],
                         current_user:sess.user
                     }); 
-                    console.log(results[2]);
+                    console.log();
                     console.log ("activities are loaded");
                     
             
@@ -1511,6 +1511,35 @@ module.exports = {
     BackToMeasurement: function (req, resp) { 
         resp.redirect('./pages/QualityMetrics.ejs');
         console.log("Back To Quality Metrics");
+    }, 
+
+    AnnualReport: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var MID = req.body.MID;
+            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?);"
+            console.log("ANNUAL REPORT TEST CUH "+ MID);
+            var values = [MID]
+            
+            connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/AnnualReport.ejs' , {
+                        data:result,
+                        
+                        current_user:sess.user
+                    }); 
+                    
+                    console.log ("reports are loaded are loaded boi");
+                    
+            
+
+            });
+
+        } 
     },
 
 }
