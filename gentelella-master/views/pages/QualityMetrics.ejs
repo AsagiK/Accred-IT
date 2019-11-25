@@ -243,18 +243,20 @@
 
 
 
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <table class="table table-striped" name="TargetT" id="TargetT">
+                                    
+                                        <table class="table table-bordered" name="TargetT" id="TargetT">
                                             <thead>
                                                 <tr>
-                                                    <th>Targets:
-                                                    </th>
+                                                    <th>Targets</th>
+                                                    <th>Type</th>
+                                                    <th>Target Description</th>
+                                                    <th></th>
+                                                    <th>targettype</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tBody">
                                             </tbody>
                                         </table>
-                                    </div>
                                     <!--Goal ID input field-->
                                     <div class="form-group">
                                         <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
@@ -762,15 +764,18 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
+                                var newCell3 = newRow.insertCell(4);
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode(percent);
                                 var newText2 = document.createTextNode(td);
+                                var newText3 = document.createTextNode("0");
                                 cancel.innerHTML =
                                     "<input type='button' value='X' onclick='deleteRow(this)'>";
                                 newCell.appendChild(newText);
                                 newCell1.appendChild(newText1);
                                 newCell2.appendChild(newText2);
+                                newCell3.appendChild(newText3);
                             } else if (qt != "" && check.checked==false) {
                                 // Get a reference to the table
                                 var tableRef = document.getElementById("tBody");
@@ -781,15 +786,18 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
+                                var newCell3 = newRow.insertCell(4);
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
-                                var newText1 = document.createTextNode("");
+                                var newText1 = document.createTextNode("count");
                                 var newText2 = document.createTextNode(td);
+                                var newText3 = document.createTextNode("1");
                                 cancel.innerHTML =
                                     "<input type='button' value='X' onclick='deleteRow(this)'>";
                                 newCell.appendChild(newText);
                                 newCell1.appendChild(newText1);
                                 newCell2.appendChild(newText2);
+                                newCell3.appendChild(newText3);
                             } else {
                                 alert("please give an input");
                             }

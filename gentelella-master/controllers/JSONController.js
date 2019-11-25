@@ -271,9 +271,11 @@ module.exports = {
                 console.log(result)
                 var MID = result.insertId;
                 async.forEachOf(UID, function (value, key, callback) {
-                    var target = UID[key]["Targets:"];
-                    var sql = " INSERT INTO `capstone`.`measurements_targets` (`measurementID`, `target`) VALUES (?, ?)";
-                    var values = [MID, target];
+                    var target = UID[key]["Targets"];
+                    var targettype = UID[key]["targettype"];
+                    var targetdesc = UID[key]["Target Description"];
+                    var sql = " INSERT INTO `capstone`.`measurements_targets` (`measurementID`, `target`, `target_Type`, `target_Desc`) VALUES (?, ?, ?, ?)";
+                    var values = [MID, target, targettype, targetdesc];
                     connection.query(sql, values, function (err, result) {
                         if (err) {
                             console.log(err);
