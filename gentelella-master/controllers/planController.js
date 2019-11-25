@@ -634,10 +634,11 @@ module.exports = {
                 }
             }
             var MID = (req.query.MID);
+            var CID = (req.query.CID);
             console.log(MID);
-            var values = [MID, MID, MID];
+            var values = [MID, MID, MID, CID];
 
-            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets;"
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.users; SELECT * FROM capstone.cycle WHERE cycle_ID = ?;"
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -652,6 +653,8 @@ module.exports = {
                         dataG: results[6],
                         dataH: results[7],
                         dataI: results[8],
+                        dataJ: results[9],
+                        dataK: results[10],
                         current_user: sess.user,
                         notif: passData
                     })
@@ -1346,13 +1349,15 @@ module.exports = {
                         async.forEachOf(resdata, function (value, key, callback) {
                             var mi = resdata[key]["measurementID"];
                             var ta = resdata[key]["target"];
-                            var pr = resdata[key]["progress"]
-                            var ti = resdata[key]["target_ID"]
+                            var pr = resdata[key]["progress"];
+                            var ti = resdata[key]["target_ID"];
+                            var tt = resdata[key]["target_Type"];
+                            var td = resdata[key]["target_Desc"];
 
-                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID`) VALUES (?,?,?,?,?);"
+                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID` , `target_Type` , `target_Desc`) VALUES (?,?,?,?,?,?,?);"
 
 
-                            var values = [MAID, mi, ta, pr, ti];
+                            var values = [MAID, mi, ta, pr, ti, tt, td];
                             connection.query(sql, values, function (err, result) {
                                 if (err) callback(err);
                                 if (result) {

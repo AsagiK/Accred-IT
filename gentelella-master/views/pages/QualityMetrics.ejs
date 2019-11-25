@@ -425,11 +425,12 @@
                                                                                     </th>
                                                                                     <th>Group Assigned</th>
                                                                                     <th>Quality Target</th>
-                                                                                    <% if (cycles.status == 4) { %>
+                                                                                    <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
                                                                                     <% } else { %>
                                                                                         <th></th>
                                                                                     <% } %> 
+                                                                                    <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                 </tr>
@@ -458,7 +459,10 @@
                                                                                             <td>
                                                                                                 <% for (var targets_audit of dataJ) { %>
                                                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                - <%= targets_audit.target %><br>
+                                                                                                <%= targets_audit.target %>
+                                                                                                <% if (targets_audit.target_Type == 0) { %> 
+                                                                                                    %
+                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
                                                                                                 <% } %>
         
                                                                                                 <% } %>
@@ -504,8 +508,10 @@
                                                                                             <td>
                                                                                                 <% for (var targets_audit of dataJ) { %>
                                                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                -
-                                                                                                <%= targets_audit.target %><br>
+                                                                                                <%= targets_audit.target %>
+                                                                                                <% if (targets_audit.target_Type == 0) { %> 
+                                                                                                    %
+                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
                                                                                                 <% } %>
         
                                                                                                 <% } %>
@@ -565,10 +571,25 @@
 
                                                                                         <% } %>
                                                                                     </td>
+                                                                                    <% if (cycles.status == 3) { %>
+                                                                                    <td>
+                                                                                        <% for (var targets of dataF) { %>
+                                                                                            <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                            <%= targets.progress %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } %>
+                                                                                            <br>
+                                                                                            <% } %>
+    
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <% } %>
                                                                                     <td>
                                                                                         <!--VIEW MEASUREMENT BUTTON-->
                                                                                         <form method="get" action="ViewMeasurementDetails">
                                                                                             <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                            <input type="hidden" name="CID" value="<%= measurement.cycle_ID %>">
                                                                                             <button type="submit" class="btn btn-primary">View
                                                                                                 Measurement
                                                                                                 Details</button>

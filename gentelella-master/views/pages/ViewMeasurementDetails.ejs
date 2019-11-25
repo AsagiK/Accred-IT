@@ -156,11 +156,12 @@
                                                             <% for(var targets of dataI) { %>
                                                                 <% if (data[0].measurement_ID == targets.measurementID) { %> 
                                                                     <%= targets.target %> 
-                                                                    <% if (targets.progress == null) { %>
-                                                                    - No Progress
+                                                                    <% if (targets.target_Type == 0) { %>
+                                                                    %
                                                                     <% } else { %>
-                                                                    - <%= targets.progress %> 
-                                                                    <% } %>
+                                                                    #
+                                                                    <% } %> 
+                                                                    - <%= targets.target_Desc %>
                                                                     <br>
                                                                 <% } %>
                                                             <% } %>
@@ -208,6 +209,7 @@
                                                                 <th>Description</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
+                                                                <th>Assigned Members</th>
                                                                 <th></th>
                                                                 <th></th>
                                                                 <% if (current_user[0].Role == 1) { %>
@@ -240,6 +242,17 @@
                                                                                 </td>
                                                                                 <td><%= activities.deadline %></td>
                                                                                 <td>
+                                                                                    <% for (actMembers of dataH) { %>
+                                                                                        <% if(activities.activity_ID == actMembers.activity_ID) { %>
+                                                                                            <% for (users of dataJ) { %>
+                                                                                                <% if(users.User_ID == actMembers.activity_Member) { %>
+                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                                <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= data[0].cycle_ID %>">
@@ -248,21 +261,23 @@
                                                                                         </button>
                                                                                     </form>
                                                                                     <br>
-                                                                                    
+                                                                                    <% if (dataK[0].status == 0) { %>
                                                                                     <button class="btn btn-primary" href="#my_modaloutputs"
                                                                                         data-toggle="modal"
                                                                                         data-book-id="<%= activities.activity_ID %>">Add
                                                                                         expected output/s</button>
-                                                                                    
+                                                                                    <% } %>
                                                                                 </td>
                                                                                 
                                                                                 <td>
+                                                                                    <% if (dataK[0].status == 0) { %>
                                                                                     <form method="get" action="AssignActivityToMember">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
                                                                                         <button type="submit" class="btn btn-primary">Assign Members
                                                                                         </button>
                                                                                     </form>
+                                                                                    <% } %>
                                                                                 </td>
                                                                                 
                                                                             </tr>
@@ -294,6 +309,17 @@
                 
                                                                                 </td>
                                                                                 <td><%= activities.deadline %></td>
+                                                                                <td>
+                                                                                    <% for (actMembers of dataH) { %>
+                                                                                        <% if(activities.activity_ID == actMembers.activity_ID) { %>
+                                                                                            <% for (users of dataJ) { %>
+                                                                                                <% if(users.User_ID == actMembers.activity_Member) { %>
+                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
