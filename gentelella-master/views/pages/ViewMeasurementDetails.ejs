@@ -178,7 +178,7 @@
                                 <div class="x_content">
 
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
-                                    <% if (current_user[0].Role == 1) { %>
+                                    <% if (current_user[0].Role == 1 && dataK[0].status == 0) { %>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
                                             Create Activities
                                         </button>
