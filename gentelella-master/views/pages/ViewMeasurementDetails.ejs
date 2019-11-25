@@ -209,6 +209,7 @@
                                                                 <th>Description</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
+                                                                <th>Assigned Members</th>
                                                                 <th></th>
                                                                 <th></th>
                                                                 <% if (current_user[0].Role == 1) { %>
@@ -240,6 +241,17 @@
                 
                                                                                 </td>
                                                                                 <td><%= activities.deadline %></td>
+                                                                                <td>
+                                                                                    <% for (actMembers of dataH) { %>
+                                                                                        <% if(activities.activity_ID == actMembers.activity_ID) { %>
+                                                                                            <% for (users of dataJ) { %>
+                                                                                                <% if(users.User_ID == actMembers.activity_Member) { %>
+                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
@@ -295,6 +307,17 @@
                 
                                                                                 </td>
                                                                                 <td><%= activities.deadline %></td>
+                                                                                <td>
+                                                                                    <% for (actMembers of dataH) { %>
+                                                                                        <% if(activities.activity_ID == actMembers.activity_ID) { %>
+                                                                                            <% for (users of dataJ) { %>
+                                                                                                <% if(users.User_ID == actMembers.activity_Member) { %>
+                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
