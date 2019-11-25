@@ -425,11 +425,12 @@
                                                                                     </th>
                                                                                     <th>Group Assigned</th>
                                                                                     <th>Quality Target</th>
-                                                                                    <% if (cycles.status == 4) { %>
+                                                                                    <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
                                                                                     <% } else { %>
                                                                                         <th></th>
                                                                                     <% } %> 
+                                                                                    <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                 </tr>
@@ -565,6 +566,20 @@
 
                                                                                         <% } %>
                                                                                     </td>
+                                                                                    <% if (cycles.status == 3) { %>
+                                                                                    <td>
+                                                                                        <% for (var targets of dataF) { %>
+                                                                                            <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                            <%= targets.progress %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } %>
+                                                                                            <br>
+                                                                                            <% } %>
+    
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <% } %>
                                                                                     <td>
                                                                                         <!--VIEW MEASUREMENT BUTTON-->
                                                                                         <form method="get" action="ViewMeasurementDetails">
