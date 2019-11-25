@@ -276,7 +276,7 @@ module.exports = {
             var id = (req.query.MID);
             console.log(id+ "------------------------------------------------------------------------");
             var values = [id, id];
-            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT measurements_targets.measurementID, measurements_targets.target, measurements_targets.target_ID FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results[1]);
