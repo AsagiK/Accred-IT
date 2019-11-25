@@ -156,11 +156,12 @@
                                                             <% for(var targets of dataI) { %>
                                                                 <% if (data[0].measurement_ID == targets.measurementID) { %> 
                                                                     <%= targets.target %> 
-                                                                    <% if (targets.progress == null) { %>
-                                                                    - No Progress
+                                                                    <% if (targets.target_Type == 0) { %>
+                                                                    %
                                                                     <% } else { %>
-                                                                    - <%= targets.progress %> 
-                                                                    <% } %>
+                                                                    #
+                                                                    <% } %> 
+                                                                    - <%= targets.target_Desc %>
                                                                     <br>
                                                                 <% } %>
                                                             <% } %>
