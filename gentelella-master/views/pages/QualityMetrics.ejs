@@ -458,8 +458,7 @@
                                                                                             <td>
                                                                                                 <% for (var targets_audit of dataJ) { %>
                                                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                -
-                                                                                                <%= targets_audit.target %><br>
+                                                                                                - <%= targets_audit.target %><br>
                                                                                                 <% } %>
         
                                                                                                 <% } %>
@@ -467,10 +466,10 @@
                                                                                             <td>
                                                                                                     <% for (var targets_audit of dataJ) { %>
                                                                                                         <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                        <%= targets_audit.progress %><br>
+                                                                                                            <%= targets_audit.progress %><br>
                                                                                                         <% } %>
                 
-                                                                                                        <% } %>
+                                                                                                    <% } %>
                                                                                             </td> 
                                                                                             <td>
                                                                                                  <!-- VIEW ACTIVITIES BUTTON-->
@@ -551,11 +550,17 @@
                                                                                     <td><%= group.Group_Name %>
                                                                                     </td>
                                                                                     <%}%>
-                                                                                                        <%}%>
+                                                                                    <%}%>
                                                                                     <td>
                                                                                         <% for (var targets of dataF) { %>
                                                                                         <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                        <%= targets.target %><br>
+                                                                                        <%= targets.target %>
+                                                                                        <% if (targets.target_Type == 0) { %>
+                                                                                        %
+                                                                                        <% } else { %>
+                                                                                        #
+                                                                                        <% } %> 
+                                                                                        - <%= targets.target_Desc %> <br>
                                                                                         <% } %>
 
                                                                                         <% } %>
