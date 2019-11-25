@@ -1527,16 +1527,14 @@ module.exports = {
         } else {
             var MID = req.body.MID; 
             
-            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurements_targets where capstone.measurements_targets_audit.target_ID = capstone.measurements_targets.target_ID;"
+            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); "
             console.log("ANNUAL REPORT TEST CUH "+ MID);
             var values = [MID]
             
-            connection.query(sql, values, function (err, results, fields) {
+            connection.query(sql, values, function (err, result, fields) {
                 if (err) throw err; 
                     resp.render('./pages/AnnualReport.ejs' , {
-                        data:results[0],
-                        dataB:results[1],
-                        
+                        data:result,
                         current_user:sess.user
                     }); 
                     

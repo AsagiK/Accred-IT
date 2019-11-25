@@ -69,22 +69,18 @@
                                         
                                        
                                             <% for (var report of data) { %> 
-                                               <% for (var desc of dataB) { %>
+                                             
                                             <tr>
                                                 <td><%= report.measurementID %></td>
                                                 <td><%= report.measurement_Name %></td>
                                                 <td>
-                                                    <% if (report.target_ID == desc.target_ID) { %>
-                                                        <%= desc.target %><%= desc.target_Desc %>
-                                                    <% } else { %> 
-                                                        -NA-
-                                                    <% } %>
+                                                    <%=report.target %> <%= report.target_Desc %>
 
                                                 </td>
                                                 <td><%= report.progress %></td>
                                                 
                                             </tr> 
-                                                <% } %> 
+                    
                                             <% } %>
                                         
                                 
