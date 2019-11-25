@@ -1346,13 +1346,15 @@ module.exports = {
                         async.forEachOf(resdata, function (value, key, callback) {
                             var mi = resdata[key]["measurementID"];
                             var ta = resdata[key]["target"];
-                            var pr = resdata[key]["progress"]
-                            var ti = resdata[key]["target_ID"]
+                            var pr = resdata[key]["progress"];
+                            var ti = resdata[key]["target_ID"];
+                            var tt = resdata[key]["target_Type"];
+                            var td = resdata[key]["target_Desc"];
 
-                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID`) VALUES (?,?,?,?,?);"
+                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID` , `target_Type` , `target_Desc`) VALUES (?,?,?,?,?,?,?);"
 
 
-                            var values = [MAID, mi, ta, pr, ti];
+                            var values = [MAID, mi, ta, pr, ti, tt, td];
                             connection.query(sql, values, function (err, result) {
                                 if (err) callback(err);
                                 if (result) {
