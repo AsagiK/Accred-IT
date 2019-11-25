@@ -230,10 +230,14 @@
                                     <br>
                                     <!--Quality Target Input field-->
 
-                                    <label for="Assign Goal">Quality
-                                        Target:</label>
+                                    
                                     <div id="newInp">
-                                        <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target">
+                                        <label for="Assign Goal">Quality
+                                        Target:</label>
+                                        <input type="number" id="QualityTarget" name="QualityTarget" required="required" size="1" maxlength="3" min="1" max="100"><br> 
+                                        <label for="Assign Goal">
+                                        Target Description:</label><input type="text" id="targetDesc" name="targetDesc" required="required"><br>
+                                        <input type="checkbox" id="Percent" value="%"> Percent<br>
                                         <button type="button" id="addRow" onclick="addQT()">+</button>
                                     </div>
 
@@ -734,7 +738,7 @@
                     <input type="hidden" name="passdata" value="0">
                     <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                 </form>
-
+                <!--Do Me-->
                 <!script for dynamic text area>
                     <script>
                         function textAreaAdjust(o) {
@@ -744,20 +748,48 @@
 
                         function addQT(tBody) {
                             var qt = document.getElementById("QualityTarget").value;
+                            var td = document.getElementById("targetDesc").value;
+                            var percent= document.getElementById("Percent").value;
+                            var check=document.getElementById("Percent");
                             console.log(qt);
-                            if (qt != "") {
+                            if (qt != "" && check.checked==true) {
                                 // Get a reference to the table
                                 var tableRef = document.getElementById("tBody");
                                 // Insert a row at the end of the table
                                 var newRow = tableRef.insertRow(0);
                                 // Insert a cell in the row at index 0
                                 var newCell = newRow.insertCell(0);
-                                var cancel = newRow.insertCell(1);
+                                var newCell1= newRow.insertCell(1);
+                                var newCell2= newRow.insertCell(2); 
+                                var cancel = newRow.insertCell(3);
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
+                                var newText1 = document.createTextNode(percent);
+                                var newText2 = document.createTextNode(td);
                                 cancel.innerHTML =
                                     "<input type='button' value='X' onclick='deleteRow(this)'>";
                                 newCell.appendChild(newText);
+                                newCell1.appendChild(newText1);
+                                newCell2.appendChild(newText2);
+                            } else if (qt != "" && check.checked==false) {
+                                // Get a reference to the table
+                                var tableRef = document.getElementById("tBody");
+                                // Insert a row at the end of the table
+                                var newRow = tableRef.insertRow(0);
+                                // Insert a cell in the row at index 0
+                                var newCell = newRow.insertCell(0);
+                                var newCell1= newRow.insertCell(1);
+                                var newCell2= newRow.insertCell(2); 
+                                var cancel = newRow.insertCell(3);
+                                // Append a text node to the cell
+                                var newText = document.createTextNode(qt);
+                                var newText1 = document.createTextNode("");
+                                var newText2 = document.createTextNode(td);
+                                cancel.innerHTML =
+                                    "<input type='button' value='X' onclick='deleteRow(this)'>";
+                                newCell.appendChild(newText);
+                                newCell1.appendChild(newText1);
+                                newCell2.appendChild(newText2);
                             } else {
                                 alert("please give an input");
                             }
