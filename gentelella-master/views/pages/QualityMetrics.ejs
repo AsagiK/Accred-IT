@@ -236,7 +236,7 @@
                                         Target:</label>
                                         <input type="number" id="QualityTarget" name="QualityTarget" required="required" size="1" maxlength="3" min="1" max="100"><br> 
                                         <label for="Assign Goal">
-                                        Target Description:</label><input type="text" id="targetDesc" name="targetDesc" required="required"><br>
+                                            Target Description:</label><br><textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea><br>
                                         <input type="checkbox" id="Percent" value="%"> Percent<br>
                                         <button type="button" id="addRow" onclick="addQT()">+</button>
                                     </div>
@@ -946,6 +946,7 @@
 
                             $("#toJSON").click(function() {
                                 console.log("Hello");
+                                
                                 var table = JSON.stringify($('#TargetT')
                                     .tableToJSON());
                                 var mname = document.getElementById(
