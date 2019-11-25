@@ -113,8 +113,6 @@ width: 775px;
 
                                 <% for (var mes of data) { %> 
 
-                                    
-
                                     <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead >
                                             <tr>
@@ -149,7 +147,7 @@ width: 775px;
 
                
 
-                        <!METRIC>
+                        <!MEASUREMENTS>
                         <div class="col-md-6">
                             <div class="x_panel">
                                 <div class="x_title">
@@ -174,13 +172,14 @@ width: 775px;
                                 <div class="dash2">
                                     <!--MEASRUEMENTS-->  
                                 <% for (var meas of dataB) { %> 
-
-                                    <% if(user.Group == meas.GroupAssigned) { %>
+                                    <% for (var targets of dataG) { %>
+                                    
                                         <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead>
                                             <tr>
                                                 <th>Measurement Name</th>
                                                 <th>Description</th> 
+                                                <th>Quality Target/s</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -190,6 +189,18 @@ width: 775px;
                                             <tr>
                                                 <td> <%= meas.measurement_Name %> </td>
                                                 <td><%= meas.measurement_Description %> </td> 
+
+                                                <td>
+                                                    <% if (meas.measurement_ID == targets.measurementID) { %> 
+                                                        <% if (targets.target_Type == 0) { %>
+                                                            <%= targets.target%> % <%= targets.target_Desc %>
+                                                        <% } else if (targets.target_Type == 1) { %>
+                                                            <%= targets.target%> # <%= targets.target_Desc %>
+                                                        <% } %>
+                                                    <%  }  else { %> 
+                                                        <!-- NONE WILL DISPLAY-->
+                                                    <% } %>
+                                                </td>
                                                 <td><button type="submit" class="btn btn-primary">View Details</button></td>
                                             </tr>
 
@@ -197,11 +208,11 @@ width: 775px;
                                         </tbody>
                                     </table>
 
-                                    <% } else if (user.Group != meas.GroupAssigned) { %>
-                                            <!--NONE WILL BE LOADED-->
-                                    <% } %>
+                                   
                                 
-                                <% } %>
+                                    
+                                <% } %>  
+                            <% } %>      
                                     
 
                                 </div>
