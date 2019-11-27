@@ -98,7 +98,47 @@
         color: black;
     }
 
+    ul.panel-collapse, ul.panel-collapse ul {
+    list-style: none;
+     margin: 0;
+     padding: 0;
+   } 
+   ul.panel-collapse ul {
+     margin-left: 10px;
+   }
+   ul.panel-collapse li {
+     margin: 0;
+     padding: 0 7px;
+     line-height: 20px;
+     color: #369;
+     font-weight: bold;
+     border-left:1px solid rgb(100,100,100);
+
+   }
+   ul.panel-collapse li:last-child {
+       border-left:none;
+   }
+   ul.panel-collapse li:before {
+      position:relative;
+      top:-0.3em;
+      height:1em;
+      width:15px;
+      color:white;
+      border-bottom:1px solid rgb(100,100,100);
+      content:"";
+      display:inline-block;
+      left:-7px;
+   }
+   ul.panel-collapse li:last-child:before {
+      border-left:1px solid rgb(100,100,100);   
+   }
+
+   .panel-body{
+       background-color: #F1F5F8;
+   }
+
 </style>
+
 
 <body class="nav-md">
     <div class="container body">
@@ -298,16 +338,15 @@
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                 <!-- FIRST PANEL FOR GOALS -->
                                                 <div class="panel">
-                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
-                                                        <h4 class="panel-title"><%= goals.metric_ID %> - <%= goals.metric_Name %>
+                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
+                                                        <h4 class="panel-title"> <span class="fa fa-chevron-down"></span> <%= goals.metric_ID %> - <%= goals.metric_Name %>
                                                         </h4>
-                                                    </a>
-                                                    <div id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                    </li>
+                                                    <ul id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                         <div class="panel-body">
-
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
-                                                            <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>">Create Cycles</button>
-
+                                                            <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
+                                                            
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
@@ -330,15 +369,14 @@
                                                                     </td>
                                                                 </tbody>
                                                             </table>
-
-
+                                                            
                                                             <!-- SECOND PANEL FOR CYCLES-->
 
                                                             <% for (var cycles of dataD) { %>
                                                             <% if (cycles.goal_ID == goals.metric_ID) { %>
-                                                            <div class="panel">
-                                                                <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>">
-                                                                    <h4 class="panel-title">
+                                                            <ul>
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>">
+                                                                    
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
                                                                         <% } else if( cycles.status  == 1) { %> Do Phase
@@ -346,18 +384,18 @@
                                                                         Phase
                                                                         <% } else if( cycles.status  == 3) { %> Act Phase
                                                                         <% } else if( cycles.status  == 4) { %> Cycle
-                                                                        Ended<% } %></h4>
+                                                                        Ended<% } %>
                                                                     <% var endDate = cycles.end_Date %>
                                                                     <% var date = new Date(); %>
                                                                     <% var dateNow = new Date(date.getFullYear(), date.getMonth(), date.getDate()); %>
                                                                     <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                     <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
                                                                     <% if (Difference_In_Days > 0) { %>
-                                                                        <h4>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %></h4>
+                                                                        <br>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %>
                                                                     <% } else { %>
-                                                                        <h4>Cycle ended on: </h4>
+                                                                        <br>Cycle ended on: 
                                                                     <% } %>
-                                                                </a>
+                                                                    </li>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body">
 
@@ -625,14 +663,15 @@
 
 
                                                                     </div>
-                                                                </div>
+                                                                
                                                             </div>
+                                                            </ul>
                                                             <% } %>
                                                             <% } %>
 
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </ul>
 
                                             </div>
                                             <!-- end of accordion -->
