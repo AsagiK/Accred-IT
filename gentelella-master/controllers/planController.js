@@ -1160,11 +1160,11 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var AID = req.query.AID;
-            var GID = req.query.GID;
-            console.log("GROUP ID-------------------" + GID)
+            //var GID = req.query.GID;
+            //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
             var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
-            var values = [GID, AID, AID];
+            var values = [AID, AID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
