@@ -273,7 +273,7 @@
                                                                                     <% if (dataK[0].status == 0) { %>
                                                                                     <form method="get" action="AssignActivityToMember">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="hidden" name="GID" value="<%= data[0].GroupAssigned %>">
+                                                                                        <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
                                                                                         <button type="submit" class="btn btn-primary">Assign Members
                                                                                         </button>
                                                                                     </form>

@@ -1163,7 +1163,7 @@ module.exports = {
             var GID = req.query.GID;
             console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
+            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
             var values = [GID, AID, AID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
