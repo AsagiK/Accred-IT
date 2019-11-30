@@ -209,7 +209,7 @@
                                                                 <th>Description</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
-                                                                <th>Assigned Group</th>
+                                                                <th>Assigned Members</th>
                                                                 <th></th>
                                                                 <th></th>
                                                                 <% if (current_user[0].Role == 1) { %>
@@ -245,7 +245,7 @@
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
                                                                                             <% for (users of dataJ) { %>
-                                                                                                <% if(users.User_ID == actMembers.activity_Member) { %>
+                                                                                                <% if(users.Group == actMembers.activity_Member) { %>
                                                                                                     <%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                 <% } %>
                                                                                             <% } %>

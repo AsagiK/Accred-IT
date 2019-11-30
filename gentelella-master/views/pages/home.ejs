@@ -245,7 +245,7 @@ width: 775px;
                                         <!--ACTIVITIES-->   
                                         <% for (var mem of dataD) { %> 
                                             <% for (var act of dataC) { %> 
-                                                <%if (current_user[0].User_ID == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
+                                                <%if (current_user[0].Group == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
                                         <table class="table table-bordered" style="table-layout: fixed;">
                                                 <thead>
                                                     <tr>
@@ -309,7 +309,7 @@ width: 775px;
                                             <!--ACTIVITIES-->   
                                             <% for (var mem of dataD) { %> 
                                                 <% for (var act of dataC) { %> 
-                                                    <%if (current_user[0].User_ID == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
+                                                    <%if (current_user[0].Group == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
                                             <table class="table table-bordered" style="table-layout:fixed;">
                                                     <thead>
                                                         <tr>
