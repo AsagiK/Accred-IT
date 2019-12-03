@@ -138,6 +138,17 @@
                                                             placeholder="Report Description"></textarea>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Expected Output</label></td>
+                                                    <td>
+                                                            <select style="width: 500px;" class="js-example-basic-multiple" name="" id="" multiple="multiple">
+                                                                    <option value="">test</option>
+                                                                    <option value="">test2</option>
+                                                                    <option value="">test3</option>
+                                                                    <option value="">test4s</option>
+                                                                </select>
+                                                    </td>
+                                                </tr>
                                                 <tr style="display: none;">
                                                     <td><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
@@ -387,6 +398,8 @@
                     button.click();
 
                 };
+
+                $('.js-example-basic-multiple').select2();
 
 
             });

@@ -347,7 +347,7 @@
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
                                                             <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
                                                             
-                                                            <table class="table table-bordered">
+                                                            <table class="table table-bordered" style="background-color: white;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Goal Description</th>
@@ -375,7 +375,7 @@
                                                             <% for (var cycles of dataD) { %>
                                                             <% if (cycles.goal_ID == goals.metric_ID) { %>
                                                             <ul>
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>">
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span> 
                                                                     
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
@@ -453,7 +453,7 @@
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
-                                                                        <table class="table table-bordered">
+                                                                        <table class="table table-bordered" style="background-color: white;">
                                                                             <thead>
 
                                                                                 <tr>
