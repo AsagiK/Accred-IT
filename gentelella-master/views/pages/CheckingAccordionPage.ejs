@@ -80,7 +80,7 @@
                                                             <% for (var measure_Activity of dataF) { %>
                                                             <% if (activity.activity_ID == measure_Activity.activity_ID && measure_Activity.measurement_ID == measure.measurement_ID) { %>
                                                          
-                                                        <div class="panel-body">
+                                                        <div style="background-color: white;" class="panel-body">
                                                             <!--Group 1 table-->
         
                                                             <div class="panel"> <!--PANEL FOR ACTIVITIES-->
@@ -92,21 +92,33 @@
                                                                 </a>
                                                                 <div id="collapses<%= activity.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="HeadGroupOne">
                                                                     <input type="hidden" name="MID" value="<%= activity.activity_ID %>">
-                                                                    <table class="table table-bordered">
+                                                                    <br>
+                                                                    <table style="background-color: white;" class="table table-bordered">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td>Activity Description</td>
                                                                                 <td><%= activity.description %></td>
                                                                             </tr>
+                                                                            <tr>
+                                                                                <td>Expected Outputs</td>
+                                                                                <td>
+                                                                                    <% for (outputs of dataG) { %>
+                                                                                        <% if (outputs.activity_ID == activity.activity_ID) { %>
+                                                                                            - <%= outputs.output %> <br>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                            </tr>
                                                                         </tbody>
                                                                     </table>
                                                                     <br>
     
-                                                                                <table class="table table-bordered">
+                                                                                <table style="background-color: white;" class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 
-                                                                                                <th>Submission Description</th>   
+                                                                                                <th>Submission Description</th> 
+                                                                                                <th>Selected Outputs</th>  
                                                                                                 <th></th>
                                                                                                 
                                                                                             </tr>
@@ -119,10 +131,19 @@
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
                                                                                                 <td> <%= subs.description %> </td>
+                                                                                                <td>
+                                                                                                    <% for (pendingoutputs of dataH) { %>
+                                                                                                        <% for (outputs2 of dataG) { %>
+                                                                                                            <% if (pendingoutputs.pendingID == subs.pending_ID && pendingoutputs.outputID == outputs2.output_ID) { %> 
+                                                                                                            - <%= outputs2.output %> <br>
+                                                                                                            <% } %>
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+                                                                                                </td>
                                                                                                 <td>  
                                                                                                     <form method="get" action="ViewActivityEvidences">
                                                                                                         <input type="text" name="PID"
-                                                                                                            value="<%= subs.pending_ID %>">
+                                                                                                            value="<%= subs.pending_ID %>" style="display: none;">
                                                                                                         <button type="submit" class="btn btn-primary">View
                                                                                                             Evidence
                                                                                                         </button>
