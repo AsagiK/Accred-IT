@@ -1013,8 +1013,8 @@ module.exports = {
             var id = (req.query.UID);
             var cid = req.query.CID;
             console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
+            var values = [id, id];
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?", values, function (err, results) {
                 if (err) throw err;
                 if (results) {
                     console.log(results);
@@ -1022,6 +1022,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataD: results[3],
                         CID: cid,
                         current_user: sess.user
                     })

@@ -141,13 +141,26 @@
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Expected Output</label></td>
                                                     <td>
-                                                            <select style="width: 500px;" class="js-example-basic-multiple" name="" id="" multiple="multiple">
-                                                                    <option value="">test</option>
-                                                                    <option value="">test2</option>
-                                                                    <option value="">test3</option>
-                                                                    <option value="">test4s</option>
-                                                                </select>
+                                                            <select class="form-control" style="width: 500px;" name="outputs" id="outputs">
+                                                                <% for (outputs of dataD) { %>
+                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>"><%= outputs.output %></option>
+                                                                <% } %>  
+                                                            </select>
+                                                            <br>
+                                                            <a class="btn btn-primary" id="addoutput">Add output</a>
+                                                            <br>
+                                                            <table id="tableoutputs" class="table table-striped table-bordered" style="width=100%; height=100%;">
+                                                                    <thead>
+                                                                        <th>ID</th>
+                                                                        <th>Output</th>
+                                                                        <th></th>
+                                                                    </thead>
+                                                                    <tbody>
+    
+                                                                    </tbody>
+                                                            </table>
                                                     </td>
+                                                    
                                                 </tr>
                                                 <tr style="display: none;">
                                                     <td><label
@@ -355,9 +368,24 @@
 
                 });
 
+                $("#addoutput").click(function(){
+                    var output = document.getElementById("outputs").value;
+                    console.log(output);
+                    var outputID = output.substr(0, output.lastIndexOf('~'));
+                    var outputName = output.substr(output.lastIndexOf('~') + 1);
+                    console.log("OUTPUT ID = " + outputID);
+                    console.log("OUTPUT NAME = " + outputName);
+                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-primary' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    $("#tableoutputs tbody").append(markup);
+                });
+
+                
+
+
                 $("#toJSON").click(function () {
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
+                    var table2 = JSON.stringify($('#tableoutputs').tableToJSON());
                     var AID = document.getElementById("activityID").value
                     var name = document.getElementById("activityName").value
                     var code = document.getElementById("code").value
@@ -389,7 +417,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2);
 
                 });
 
@@ -406,11 +434,15 @@
         </script>
 
         <script>
+            var outputArr;
             function textAreaAdjust(o) {
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
 
+            function deleteRow(r) {
+                    r.closest("tr").remove();
+                }
 
             function test() {
                 alert("1");
