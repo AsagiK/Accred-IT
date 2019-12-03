@@ -67,7 +67,8 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Activity  Name</th>
-                                                    <th>Activity Description</th>
+                                                    <th>Activity Description</th> 
+                                                    <th>Activity Deadline </th>
                                                     <th>Evidences Submitted</th> 
         
                                                 </tr>
@@ -80,6 +81,7 @@
                                                             <td><%= act.activity_ID %></td>
                                                             <td><%= act.activity_name %> </td>
                                                             <td><%= act.description %> </td>  
+                                                            <td><%= act.deadline %></td>
                                                             <td> 
                                                             <% for (var evi of dataB) { %> 
                                                                 <% for (var doc of dataC) { %>
