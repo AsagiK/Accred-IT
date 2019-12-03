@@ -308,29 +308,28 @@
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
                                                             <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>">Create Cycles</button>
 
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Goal Description</th>
-                                                                        <th>Duration</th>
-                                                                        <th>Goal Source</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <td><%= goals.metric_Desc%></td>
+                                                            
 
-                                                                    <td><%= goals.duration%></td>
-                                                                    <td>
-                                                                        <% for (var source of dataH) { %>
-                                                                        <% if (source.source_ID == goals.source_ID) { %>
-                                                                        <%= source.source_Name %> -
-                                                                        <% } %>
-                                                                        <% } %>
-                                                                        <%= goals.source_Type%>
-                                                                    </td>
-                                                                </tbody>
-                                                            </table>
+                                                            <div class="title_left"> 
+                                                               <h2> Goal Description:</h2> 
+                                                               <h4><%= goals.metric_Desc%></h4>
+                                                               <br>
+                                                               <h2> Goal Duration: </h2>
+                                                               <h4><%= goals.duration%></h4>
+                                                               <br> 
+                                                               <h2> Goal Source: </h2>
 
+                                                               <h4>  <% for (var source of dataH) { %>
+                                                                    <% if (source.source_ID == goals.source_ID) { %>
+                                                                    <%= source.source_Name %> -
+                                                                    <% } %>
+                                                                    <% } %>
+                                                                    <%= goals.source_Type%>
+                                                               </h4>          
+                                                               <br>
+                                                            </div>
+
+                                                            
 
                                                             <!-- SECOND PANEL FOR CYCLES-->
 

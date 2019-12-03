@@ -109,7 +109,7 @@ width: 775px;
                                 <div class="dash">
                                     <!--METRIC TABLE-->  
 
-                     <% for (var user of dataD) { %>           
+                           
 
                                 <% for (var mes of data) { %> 
 
@@ -243,9 +243,9 @@ width: 775px;
                                 </div>
                                 <div class="dash2">
                                         <!--ACTIVITIES-->   
-                                        <% for (var mem of dataD) { %> 
+                                         
                                             <% for (var act of dataC) { %> 
-                                                <%if (current_user[0].Group == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
+                                                <% if (current_user[0].Group == act.activity_Member) { %>
                                         <table class="table table-bordered" style="table-layout: fixed;">
                                                 <thead>
                                                     <tr>
@@ -273,13 +273,13 @@ width: 775px;
                                         <% } %>
 
                                  <% } %>
-                                 <% } %>
+                                 
                                     
                                 </div>
                             </div>
                         </div> 
 
-                        <% } %>
+                        
                 </div> 
 
                 <% }  else if (current_user[0].Role == 4) { %>
@@ -306,39 +306,37 @@ width: 775px;
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="dash">
-                                            <!--ACTIVITIES-->   
-                                            <% for (var mem of dataD) { %> 
-                                                <% for (var act of dataC) { %> 
-                                                    <%if (current_user[0].Group == mem.activity_Member && mem.activity_ID == act.activity_ID) { %>
-                                            <table class="table table-bordered" style="table-layout:fixed;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Activity Name</th>
-                                                            <th>Description</th> 
-                                                            <th>Deadline</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead> 
-                                       
-                                                <tbody>
-        
+                                           <!--ACTIVITIES-->   
+                                         
+                                            <% for (var act of dataC) { %> 
+                                                <% if (current_user[0].Group == act.activity_Member) { %>
+                                        <table class="table table-bordered" style="table-layout: fixed;">
+                                                <thead>
                                                     <tr>
-                                                        <td> <%= act.activity_name %> </td>
-                                                        <td><%= act.description %> </td>
-                                                        <td><%= act.deadline %></td> 
-                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                        <th>Activity Name</th>
+                                                        <th>Description</th> 
+                                                        <th>Deadline</th>
+                                                        <th></th>
                                                     </tr>
+                                                </thead> 
+                                   
+                                            <tbody>
+    
+                                                <tr>
+                                                    <td> <%= act.activity_name %> </td>
+                                                    <td><%= act.description %> </td>
+                                                    <td><%= act.deadline %></td> 
+                                                    <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                </tr>
 
-        
-                                                </tbody>
-                                      
-                                            </table> 
+    
+                                            </tbody>
+                                  
+                                        </table> 
 
-                                            <% } %>
+                                        <% } %>
 
-                                     <% } %>
-                                     <% } %>
-                                        
+                                 <% } %>
                                     </div>
                                 </div>
 
