@@ -278,8 +278,6 @@ width: 775px;
                                 </div>
                             </div>
                         </div> 
-
-                        
                 </div> 
 
                 <% }  else if (current_user[0].Role == 4) { %>
@@ -368,10 +366,11 @@ width: 775px;
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="dash">
-                                            <!--ACTIVITIES-->   
+                                            <!--SUBMISSIONS-->   
                                             <% for (var pending of dataF) { %> 
                                             <% if (current_user[0].User_ID == pending.user_ID) { %>
-                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                            <table class="table table-bordered" style="table-layout: fixed;"> 
+                                                
                                                     <thead>
                                                         <tr>
                                                             <th>Activity Name</th>
@@ -379,6 +378,7 @@ width: 775px;
                                                             <th>Suggested Score</th>
                                                             <th>Date Updated</th>
                                                             <th>Comments</th>
+                                                            <th>Document Name</th>>
                                                             <th></th>
                                                         </tr>
                                                     </thead> 
@@ -397,7 +397,8 @@ width: 775px;
                                                         </td> 
                                                         <td><%= pending.suggested_Score %></td>
                                                         <td><%= pending.dateupdated %></td>
-                                                        <td><%= pending.comment %></td>
+                                                        <td><%= pending.comment %></td> 
+                                                        <td><%= pending.Document_Name %></td>
                                                          
                                                         <td><button type="submit" class="btn btn-primary">View Details</button></td>
                                                     </tr>
