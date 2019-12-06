@@ -136,7 +136,15 @@
                             <div class="x_content">
 
                                 <div class="title_left">
-                                    <h1 align="left">View Measurement Details Title: <%= data[0].measurement_Name %></h1>
+                                    <h1 align="left">View Measurement Details Title: <%= data[0].measurement_Name %> <br>
+                                        Date of Start Cycle: 
+                                        <% var date = new Date(dataK[0].start_Date) %> 
+                                        <% var year = date.getFullYear(); %>
+                                        <% var month = date.getMonth() + 1; %>
+                                        <% var day = date.getDate(); %>
+                                        <% var newDate = year + "-" + month + "-" + day %>
+                                        <%= newDate %>
+                                    </h1>
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                     <h4 align="left"><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
                                 </div>
@@ -240,7 +248,7 @@
                                                                                     <% } %>
                 
                                                                                 </td>
-                                                                                <td><%= activities.deadline %></td>
+                                                                                <td><%= activities.deadline.toString().substr(0, 15) %></td>
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
@@ -308,7 +316,7 @@
                                                                                     <% } %>
                 
                                                                                 </td>
-                                                                                <td><%= activities.deadline %></td>
+                                                                                <td><%= activities.deadline.toString().substr(0, 15) %></td>
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
@@ -389,7 +397,7 @@
                             <span aria-hidden="true">×</span>
                         </button>
                         <h4 class="modal-title" id="myModalLabel">
-                            Create Activities
+                            Create Activities - <%= newDate %>
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -442,7 +450,7 @@
                                 <br>
                                 <label> Deadline
                                     <br>
-                                    <input type="date" name="deadline" id="deadline" value="">
+                                    <input type="date" name="deadline" id="deadline" value="" min="<%= newDate %>">
                                     <br><br>
 
                                     <button type="button" class="btn btn-default add-row2">Add</button>
