@@ -354,6 +354,227 @@ width: 775px;
                     <!--SUBMISSIONS TABLE -->
 
                 
+                <% } else { %> 
+                    <div class="row">
+                            <!MEASUREMENT>
+                                <div class="col-md-12 col-sm-15 col-xs-15">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>METRICS</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="dash col-md-12">
+                                            <!--METRIC TABLE-->  
+                                        <% for (var mes of data) { %> 
+        
+                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Metric Name</th>
+                                                        <th>Description</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+        
+        
+                                                    <tr> 
+                                                        
+                                                        <td> <%= mes.metric_Name %> </td>
+                                                        <td><%= mes.metric_Desc %> </td>
+                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td> 
+        
+                                                    </tr>
+        
+        
+                                                </tbody>
+                                            </table> 
+        
+                                           
+        
+                                        <% } %>
+                                            
+        
+                                        </div> 
+                                    </div>
+                                </div> 
+        
+                       
+        
+                                <!MEASUREMENTS>
+                                <div class="col-md-6">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>MEASUREMENTS</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="dash2">
+                                            <!--MEASRUEMENTS-->  
+                                        <% for (var meas of dataB) { %> 
+                                            <% for (var targets of dataG) { %>
+                                            
+                                                <table class="table table-bordered" style="table-layout: fixed;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Measurement Name</th>
+                                                        <th>Description</th> 
+                                                        <th>Quality Target/s</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+        
+        
+                                                    <tr>
+                                                        <td> <%= meas.measurement_Name %> </td>
+                                                        <td><%= meas.measurement_Description %> </td> 
+        
+                                                        <td>
+                                                            <% if (meas.measurement_ID == targets.measurementID) { %> 
+                                                                <% if (targets.target_Type == 0) { %>
+                                                                    <%= targets.target%> % <%= targets.target_Desc %>
+                                                                <% } else if (targets.target_Type == 1) { %>
+                                                                    <%= targets.target%> # <%= targets.target_Desc %>
+                                                                <% } %>
+                                                            <%  }  else { %> 
+                                                                <!-- NONE WILL DISPLAY-->
+                                                            <% } %>
+                                                        </td>
+                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                    </tr>
+        
+        
+                                                </tbody>
+                                            </table>
+        
+                                           
+                                        
+                                            
+                                        <% } %>  
+                                    <% } %>      
+                                            
+        
+                                        </div>
+                                    </div>
+                                </div> 
+        
+                                <!ACTIVITIES>
+                                <div class="col-md-6">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>ACTIVITIES</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="dash2">
+                                                <!--ACTIVITIES-->   
+                                                 
+                                                <% for (var act of dataC) { %> 
+                                                    <% if (current_user[0].Group == act.activity_Member) { %> 
+    
+                                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> 
+                                                            <!--ACTIVITIES PANEL-->
+                                                                <div class="panel">
+                                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= act.activity_ID %>" aria-expanded="true" aria-controls="collapseOne<%= act.activity_ID %>">
+                                                                        <h4 class="panel-title">
+                                                                            <%= act.activity_ID %> - <%= act.activity_name %>
+                                                                        </h4>
+                                                                    </a> 
+                                                                    <div id="collapseOne<%= act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                                        <div class="panel-body"> 
+    
+                                                                            <div class="title_left">
+    
+                                                                                    <h2>Description:</h2> 
+                                                                                    <h4><%= act.description %></h4>
+                                                                                    <br>
+                                                                                    <h2> Deadline </h2>
+                                                                                    <h4><%= act.deadline.toString().substr(0, 15) %></h4>
+                                                                                    <br> 
+                                                                                    <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                    <br>
+                                                                                    <br>
+    
+                                                                            </div>
+    
+                                                                                <!--SUBMISSIONS PANEL-->
+    
+                                                                                <% for (var pending of dataF) { %> 
+                                                                                <% if (current_user[0].User_ID == pending.user_ID) { %>
+                                                                                <div class="panel">
+                                                                                    <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= pending.pending_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= pending.pending_ID %>">
+    
+                                                                                        <h4 class="panel-title">
+                                                                                            SUBMISSION # - <%= pending.pending_ID %>
+                                                                                        </h4>
+    
+                                                                                    </a>
+    
+                                                                                    <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
+    
+                                                                                        <div class="panel-body">
+                                                                                                <table class="table table-bordered" style="table-layout: fixed;"> 
+                                                    
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th>Activity Name</th>
+                                                                                                                <th>Status</th> 
+                                                                                                                <th>Suggested Score</th>
+                                                                                                                <th>Date Updated</th>
+                                                                                                                <th>Comments</th>
+                                                                                                                <th>Document Name</th>>
+                                                                                                                <th></th>
+                                                                                                            </tr>
+                                                                                                        </thead> 
+                                                                                           
+                                                                                                    <tbody>
+                                                            
+                                                                                                        <tr>
+                                                                                                            <td> <%= pending.activity_name %> </td>
+                                                                                                            <td><% if (pending.status == 0) { %> 
+                                                                                                                    P E N D I N G
+                                                                                                                <% } else if (pending.status == 1) { %>
+                                                                                                                    A P P R O V E D 
+                                                                                                                <% } else if (pending.status == 2) { %>
+                                                                                                                    D I S A P P R O V E D
+                                                                                                                <% } %>
+                                                                                                            </td> 
+                                                                                                            <td><%= pending.suggested_Score %></td>
+                                                                                                            <td><%= pending.dateupdated.toString().substr(0, 15) %></td>
+                                                                                                            <td><%= pending.comment %></td> 
+                                                                                                            <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
+                                                                                                             
+                                                                                                            <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                                                                        </tr>
+                                                    
+                                                            
+                                                                                                    </tbody>
+                                                                                          
+                                                                                                </table>
+                                                                                        </div>
+    
+                                                                                    </div>
+    
+                                                                                </div>    
+    
+    
+                                                                                <% } %>
+                                                                                <% } %>
+                                                                            
+                                                                        </div>
+    
+                                                                    </div>
+                                                                </div>
+                    
+                                                        </div>
+    
+                                            <% } %>
+    
+                                     <% } %>
+                                        </div>
+                                    </div>
+                                </div> 
+                        </div> 
+
                 <% } %>
                 <!-- /page content -->
 
