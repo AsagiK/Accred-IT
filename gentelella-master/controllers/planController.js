@@ -1131,7 +1131,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities ; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities JOIN capstone.activity_members WHERE approved_activities.activity_ID = activity_members.activity_ID; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_activities; SELECT pending_ID, user_ID ,activityID, activity_name,status, suggested_score, dateupdated, comment, documentID, Document_Name FROM capstone.pending_activities JOIN capstone.activity_evidences, capstone.documents where pending_activities.activity_ID = activity_evidences.activityID AND documents.Document_ID = activity_evidences.documentID AND pending_activities.pending_ID = activity_evidences.pendingID; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.approved_activities", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/home.ejs', {
@@ -1142,12 +1142,13 @@ module.exports = {
                         dataE: results[4],
                         dataF: results[5],
                         dataG: results[6],
+                        dataH: results[7],
                         current_user: sess.user
                     });
                     //console.log(results);
-                   // console.log(results[3]);
-                    //console.log(results[4]);
-                    console.log(results[6]);
+                   console.log(results[3]);
+                    console.log(results[2]);
+                    //console.log(results[6]);
                     
                     console.log("Dashboards Loaded"); 
                 
@@ -1163,11 +1164,11 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var AID = req.query.AID;
-            var GID = req.query.GID;
-            console.log("GROUP ID-------------------" + GID)
+            //var GID = req.query.GID;
+            //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
-            var values = [GID, AID, AID];
+            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
+            var values = [AID, AID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])

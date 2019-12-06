@@ -168,7 +168,7 @@ module.exports = {
 
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
-            var uid = UID[key]["User ID"];
+            var uid = UID[key]["Group ID"];
             var mid = UID[key]["Measurement ID"];
             console.log(aid);
             console.log(uid);
