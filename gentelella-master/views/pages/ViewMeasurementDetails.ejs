@@ -137,13 +137,13 @@
 
                                 <div class="title_left">
                                     <h1 align="left">View Measurement Details Title: <%= data[0].measurement_Name %> <br>
-                                        Date of Start Cycle: 
+                                       
                                         <% var date = new Date(dataK[0].start_Date) %> 
                                         <% var year = date.getFullYear(); %>
                                         <% var month = date.getMonth() + 1; %>
                                         <% var day = date.getDate(); %>
                                         <% var newDate = year + "-" + month + "-" + day %>
-                                        <%= newDate %>
+                                        
                                     </h1>
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                     <h4 align="left"><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
