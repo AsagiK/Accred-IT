@@ -255,7 +255,7 @@
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="hidden" name="CID" value="<%= data[0].cycle_ID %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <button type="submit" class="btn btn-primary">Submit
                                                                                             Evidence
                                                                                         </button>
@@ -323,7 +323,7 @@
                                                                                 <td>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="hidden" name="CID" value="<%= data[0].cycle_ID %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <button type="submit" class="btn btn-primary">Submit
                                                                                             Evidence
                                                                                         </button>
@@ -478,12 +478,14 @@
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="1">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                 <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                             </form>
 
                             <form method="get" action="/ViewMeasurementDetails">
                                 <input type="hidden" name="passdata" value="0">
                                 <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                 <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                             </form>
 
@@ -565,12 +567,14 @@
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="1">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                             <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
                         </form>
 
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="0">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                             <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
                         </form>
 
@@ -655,6 +659,7 @@
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="1">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                             <button type="submit" class="btn btn-success" style="display: none;"
                                 id="backsuccess">Hi</button>
                         </form>
@@ -662,6 +667,7 @@
                         <form method="get" action="/ViewMeasurementDetails">
                             <input type="hidden" name="passdata" value="0">
                             <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                             <button type="submit" class="btn btn-success" style="display: none;"
                                 id="backfail">Hi</button>
                         </form>

@@ -371,9 +371,11 @@
                                                             </table>
                                                             
                                                             <!-- SECOND PANEL FOR CYCLES-->
-
+                                                            
                                                             <% for (var cycles of dataD) { %>
-                                                            <% if (cycles.goal_ID == goals.metric_ID) { %>
+                                                            <% for (var measurementcount of dataK) { %> 
+                                                            <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
+                                                            
                                                             <ul>
                                                                 <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span> 
                                                                     
@@ -391,10 +393,14 @@
                                                                     <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                     <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
                                                                     <% if (Difference_In_Days > 0) { %>
-                                                                        <br>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %>
+                                                                        <br>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %><br>
                                                                     <% } else { %>
-                                                                        <br>Cycle ended on: 
+                                                                        <br>Cycle ended on: <br>
                                                                     <% } %>
+                                                                    <% if (measurementcount.cycle_ID == cycles.cycle_ID) { %>
+                                                                        # of Measurements: <%= measurementcount.MeasurementCount %> 
+                                                                    <% } %>
+                                                                    
                                                                     </li>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body">
@@ -666,6 +672,7 @@
                                                                 
                                                             </div>
                                                             </ul>
+                                                            <% } %>
                                                             <% } %>
                                                             <% } %>
 
