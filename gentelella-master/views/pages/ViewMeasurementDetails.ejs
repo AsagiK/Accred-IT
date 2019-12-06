@@ -143,7 +143,7 @@
                                         <% var month = date.getMonth() + 1; %>
                                         <% var day = date.getDate(); %>
                                         <% var newDate = year + "-" + month + "-" + day %>
-                                        
+
                                     </h1>
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                     <h4 align="left"><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
@@ -220,14 +220,14 @@
                                                                 <th>Assigned Members</th>
                                                                 <th></th>
                                                                 <th></th>
-                                                                <% if (current_user[0].Role == 1) { %>
+                                                                <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3 ) { %>
                                                                 <th></th>
                                                                 <% } %>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <!--VIEW OF ADMIN OR QA OR DEP CHAIR-->
-                                                            <% if (current_user[0].Role == 1) { %>
+                                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                 <% for (actMeasures of dataG) { %> 
                                                                     <% for (activities of dataB) { %> 
                                                                         <% if (data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMeasures.activity_ID) { %>
