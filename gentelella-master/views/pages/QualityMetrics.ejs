@@ -471,9 +471,8 @@
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
-                                                                                    <% } else { %>
-                                                                                        <th></th>
-                                                                                    <% } %> 
+                                                                                    <% } %>
+                                                                                    <th># of Activities</th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
@@ -568,7 +567,7 @@
                 
                                                                                                         <% } %>
                                                                                             </td> 
-                                                                                            <td>TESTING</td>
+                                                                                            <td></td>
                                                                                             <td>
                                                                                                  <!-- VIEW ACTIVITIES BUTTON-->
                                                                                             <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
@@ -586,7 +585,8 @@
                                                                                     <% } %>
                                                                                 <% } else { %>
                                                                                 <% for (var measurement of dataE) { %>
-                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID) { %>
+                                                                                    <% for (var activitycount of dataL) { %>
+                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID) { %>
                                                                                 <tr>
 
                                                                                     <td><%= measurement.measurement_ID %>
@@ -613,6 +613,11 @@
                                                                                         - <%= targets.target_Desc %> <br>
                                                                                         <% } %>
 
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <% if (measurement.measurement_ID == activitycount.measurement_ID) { %>
+                                                                                            <%= activitycount.ActivityCount %>
                                                                                         <% } %>
                                                                                     </td>
                                                                                     <% if (cycles.status == 3) { %>
@@ -661,6 +666,7 @@
                                                                                         <% } %>
                                                                                     </td>
                                                                                 </tr>
+                                                                                <% } %>
                                                                                 <% } %>
                                                                                 <% } %>
                                                                                 <% } %>
