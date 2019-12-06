@@ -377,7 +377,7 @@
                                                             <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
                                                             
                                                             <ul>
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span> 
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span>
                                                                     
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
@@ -386,19 +386,20 @@
                                                                         Phase
                                                                         <% } else if( cycles.status  == 3) { %> Act Phase
                                                                         <% } else if( cycles.status  == 4) { %> Cycle
-                                                                        Ended<% } %>
+                                                                        Ended<% } %><br>
+                                                                        <span class="fa fa-angle-right"></span>Cycle Duration: <%= cycles.start_Date.toString().substr(0, 15) %> - <%= cycles.end_Date.toString().substr(0, 15) %>
                                                                     <% var endDate = cycles.end_Date %>
                                                                     <% var date = new Date(); %>
                                                                     <% var dateNow = new Date(date.getFullYear(), date.getMonth(), date.getDate()); %>
                                                                     <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                     <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
                                                                     <% if (Difference_In_Days > 0) { %>
-                                                                        <br>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %><br>
+                                                                        <br><span class="fa fa-angle-right"></span>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %><br>
                                                                     <% } else { %>
-                                                                        <br>Cycle ended on: <br>
+                                                                        <br><span class="fa fa-angle-right"></span>Cycle ended on: <br>
                                                                     <% } %>
                                                                     <% if (measurementcount.cycle_ID == cycles.cycle_ID) { %>
-                                                                        # of Measurements: <%= measurementcount.MeasurementCount %> 
+                                                                        <span class="fa fa-angle-right"></span># of Measurements: <%= measurementcount.MeasurementCount %> 
                                                                     <% } %>
                                                                     
                                                                     </li>
