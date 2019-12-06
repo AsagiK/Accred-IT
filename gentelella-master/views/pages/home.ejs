@@ -9,8 +9,8 @@ width: 1300px;
 
 .dash2 {
 overflow-y: scroll;
-height: 350px;
-width: 775px;
+height: 400px;
+width: 790px;
 }
 </style>
 <html lang="en">
@@ -110,7 +110,9 @@ width: 775px;
                                                 
                                                 <td> <%= mes.metric_Name %> </td>
                                                 <td><%= mes.metric_Desc %> </td>
-                                                <td><button type="submit" class="btn btn-primary">View Details</button></td> 
+                                                <td><form method="get" action="QualityMetrics">
+                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                    </form></td> 
 
                                             </tr>
 
@@ -168,7 +170,9 @@ width: 775px;
                                                         <!-- NONE WILL DISPLAY-->
                                                     <% } %>
                                                 </td>
-                                                <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                <td><form method="get" action="QualityMetrics">
+                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                    </form></td>
                                             </tr>
 
 
@@ -196,8 +200,8 @@ width: 775px;
                                 <div class="dash2">
                                         <!--ACTIVITIES-->   
                                          
-                                            <% for (var act of dataC) { %> 
-                                                <% if (current_user[0].Group == act.activity_Member) { %>
+                                            <% for (var acti of dataH) { %> 
+                                                
                                         <table class="table table-bordered" style="table-layout: fixed;">
                                                 <thead>
                                                     <tr>
@@ -211,10 +215,12 @@ width: 775px;
                                             <tbody>
     
                                                 <tr>
-                                                    <td> <%= act.activity_name %> </td>
-                                                    <td><%= act.description %> </td>
-                                                    <td><%= act.deadline.toString().substr(0, 15) %></td> 
-                                                    <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                    <td> <%= acti.activity_name %> </td>
+                                                    <td><%= acti.description %> </td>
+                                                    <td><%= acti.deadline.toString().substr(0, 15) %></td> 
+                                                    <td><form method="get" action="QualityMetrics">
+                                                            <button type="submit" class="btn btn-primary">View Details</button>
+                                                        </form></td>
                                                 </tr>
 
     
@@ -222,7 +228,7 @@ width: 775px;
                                   
                                         </table> 
 
-                                        <% } %>
+                                        
 
                                  <% } %>
                                  
@@ -265,7 +271,9 @@ width: 775px;
                                                                                 <h2> Deadline </h2>
                                                                                 <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                 <br> 
-                                                                                <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                <form method="get" action="QualityMetrics">
+                                                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                    </form>
                                                                                 <br>
                                                                                 <br>
 
@@ -318,7 +326,9 @@ width: 775px;
                                                                                                         <td><%= pending.comment %></td> 
                                                                                                         <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                          
-                                                                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                                                                        <td><form method="get" action="QualityMetrics">
+                                                                                                                <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                                            </form></td>
                                                                                                     </tr>
                                                 
                                                         
@@ -382,7 +392,9 @@ width: 775px;
                                                         
                                                         <td> <%= mes.metric_Name %> </td>
                                                         <td><%= mes.metric_Desc %> </td>
-                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td> 
+                                                        <td><form method="get" action="QualityMetrics">
+                                                                <button type="submit" class="btn btn-primary">View Details</button>
+                                                            </form></td> 
         
                                                     </tr>
         
@@ -440,7 +452,11 @@ width: 775px;
                                                                 <!-- NONE WILL DISPLAY-->
                                                             <% } %>
                                                         </td>
-                                                        <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                        <td>
+                                                            <form method="get" action="QualityMetrics">
+                                                                    <button type="submit" class="btn btn-primary">View Details</button>
+                                                                </form>
+                                                        </td>
                                                     </tr>
         
         
@@ -490,7 +506,9 @@ width: 775px;
                                                                                     <h2> Deadline </h2>
                                                                                     <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                     <br> 
-                                                                                    <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                    <form method="get" action="QualityMetrics">
+                                                                                            <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                        </form>
                                                                                     <br>
                                                                                     <br>
     
@@ -499,7 +517,7 @@ width: 775px;
                                                                                 <!--SUBMISSIONS PANEL-->
     
                                                                                 <% for (var pending of dataF) { %> 
-                                                                                <% if (current_user[0].User_ID == pending.user_ID) { %>
+                                                                                
                                                                                 <div class="panel">
                                                                                     <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= pending.pending_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= pending.pending_ID %>">
     
@@ -543,7 +561,9 @@ width: 775px;
                                                                                                             <td><%= pending.comment %></td> 
                                                                                                             <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                              
-                                                                                                            <td><button type="submit" class="btn btn-primary">View Details</button></td>
+                                                                                                            <td><form method="get" action="QualityMetrics">
+                                                                                                                    <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                                                </form></td>
                                                                                                         </tr>
                                                     
                                                             
@@ -557,7 +577,7 @@ width: 775px;
                                                                                 </div>    
     
     
-                                                                                <% } %>
+                                                                                
                                                                                 <% } %>
                                                                             
                                                                         </div>
