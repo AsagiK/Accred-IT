@@ -1274,8 +1274,9 @@ module.exports = {
             var mname = req.body.measurementName;
             var mdesc = req.body.measurementDesc;
             var group = req.body.group;
-            var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ? WHERE (`measurement_ID` = ?)";
-            var values = [group, mname, mdesc, MID]
+            var priority = req.body.priority;
+            var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ? , `priority_Level` = ? WHERE (`measurement_ID` = ?)";
+            var values = [group, mname, mdesc, MID, priority]
             connection.query(sql, values, function (err, result, fields) {
                 if (err) throw err;
                 if (result) {

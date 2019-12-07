@@ -99,6 +99,39 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Priority Level:<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--Priority INPUT-->
+                                            <select class="form-control" name="priority" id ="priority">
+                                                <% for (var priority of data) { %>
+                                                    <% if (priority.priority_Level == data[0].priority_Level) { %>
+                                                        <option value="<%priority.priority_Level%>" selected="selected">
+                                                            <%if(priority.priority_Level==1){%>
+                                                                High Priority
+                                                            <%}else if(priority.priority_Level==2){%>
+                                                                Medium Priority
+                                                            <%}else if(priority.priority_Level==3){%>
+                                                                Low Priority
+                                                            <%}%>
+                                                        </option>
+                                                        <%if(priority.priority_Level==1){%>
+                                                                <option value=2 selected="selected">Medium Priority</option>
+                                                                <option value=3 selected="selected">Low Priority</option>
+                                                            <%}else if(priority.priority_Level==2){%>
+                                                                <option value=1 selected="selected">High Priority</option>
+                                                                <option value=3 selected="selected">Low Priority</option>
+                                                            <%}else if(priority.priority_Level==3){%>
+                                                                <option value=1 selected="selected">High Priority</option>
+                                                                <option value=2 selected="selected">Medium Priority</option>
+                                                            <%}%>
+                                                    <% } %>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="modal-footer">
                                         <a type="button" class="btn btn-default" href="/QualityMetric">
                                             cancel
@@ -157,6 +190,39 @@
                                                 </select>
                                             </div>
                                         </div>
+                                         <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="first-name">Priority Level:<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--Priority INPUT-->
+                                            <select class="form-control" name="priority" id ="priority">
+                                                <% for (var priority of data) { %>
+                                                    <% if (priority.priority_Level == data[0].priority_Level) { %>
+                                                        <option value="<%priority.priority_Level%>" selected="selected">
+                                                            <%if(priority.priority_Level==1){%>
+                                                                High Priority
+                                                            <%}else if(priority.priority_Level==2){%>
+                                                                Medium Priority
+                                                            <%}else if(priority.priority_Level==3){%>
+                                                                Low Priority
+                                                            <%}%>
+                                                        </option>
+                                                        <%if(priority.priority_Level==1){%>
+                                                                <option value=2 selected="selected">Medium Priority</option>
+                                                                <option value=3 selected="selected">Low Priority</option>
+                                                            <%}else if(priority.priority_Level==2){%>
+                                                                <option value=1 selected="selected">High Priority</option>
+                                                                <option value=3 selected="selected">Low Priority</option>
+                                                            <%}else if(priority.priority_Level==3){%>
+                                                                <option value=1 selected="selected">High Priority</option>
+                                                                <option value=2 selected="selected">Medium Priority</option>
+                                                            <%}%>
+                                                    <% } %>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
                                         <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                     for="first-name">Cycle:<span class="required">*</span>

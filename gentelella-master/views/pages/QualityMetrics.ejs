@@ -276,6 +276,18 @@
                                         <% } %>
                                     </select>
                                     <br>
+                                     <!--Assign Priority field-->
+
+                                    <label for="MeasurementDesc">Priority Level:
+                                        <!--Edited-->
+                                        <span class="required">*</span></label>
+
+                                    <select class="form-control" name="priority" id="priority" required="required">
+                                        <option value="1">High Priority</option>
+                                        <option value="2">Medium Priority</option>
+                                         <option value="3">Low Priority</option>
+                                    </select>
+                                    <br>
                                     <!--Quality Target Input field-->
 
                                     
@@ -353,28 +365,34 @@
                                                     <ul id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                         <div class="panel-body">
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
-                                                            <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>">Create Cycles</button>
 
-                                                            
+                                                                <%if (goals.cycle_Created==0){%>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
+                                                                <%}else{%>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" style="display: none;">Create Cycles</button>
+                                                                <%}%>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Goal Description</th>
+                                                                        <th>Duration</th>
+                                                                        <th>Goal Source</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <td><%= goals.metric_Desc%></td>
 
-                                                            <div class="title_left"> 
-                                                               <h2> Goal Description:</h2> 
-                                                               <h4><%= goals.metric_Desc%></h4>
-                                                               <br>
-                                                               <h2> Goal Duration: </h2>
-                                                               <h4><%= goals.duration%></h4>
-                                                               <br> 
-                                                               <h2> Goal Source: </h2>
-
-                                                               <h4>  <% for (var source of dataH) { %>
-                                                                    <% if (source.source_ID == goals.source_ID) { %>
-                                                                    <%= source.source_Name %> -
-                                                                    <% } %>
-                                                                    <% } %>
-                                                                    <%= goals.source_Type%>
-                                                               </h4>          
-                                                               <br>
-                                                            </div>
+                                                                    <td><%= goals.duration%></td>
+                                                                    <td>
+                                                                        <% for (var source of dataH) { %>
+                                                                        <% if (source.source_ID == goals.source_ID) { %>
+                                                                        <%= source.source_Name %> -
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                        <%= goals.source_Type%>
+                                                                    </td>
+                                                                </tbody>
+                                                            </table>
 
                                                             
 
@@ -468,7 +486,9 @@
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
+
                                                                         <table id="" class="display col-md-12" style="background-color: white; height: 100%; width: 100%;">
+
                                                                             <thead>
 
                                                                                 <tr>
@@ -477,11 +497,14 @@
                                                                                     <th>Measurement Description
                                                                                     </th>
                                                                                     <th>Group Assigned</th>
+                                                                                    <th>Priority Level</th>
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
+
                                                                                     <% } %>
                                                                                     <th># of Activities</th>
+
                                                                                     <th></th>
                                                                                     
                                                                                 </tr>
@@ -602,12 +625,19 @@
                                                                                     <td><%= measurement.measurement_Name %>
                                                                                     </td>
                                                                                     <td><%= measurement.measurement_Description %>
-                                                                                    </td>
+                                                                                    </td> 
                                                                                     <%for (var group of dataC){%>
                                                                                     <% if(measurement.GroupAssigned==group.Group_ID){%>
                                                                                     <td><%= group.Group_Name %>
                                                                                     </td>
                                                                                     <%}%>
+                                                                                    <%}%>
+                                                                                    <%if(measurement.priority_Level==1){%>
+                                                                                        <td><%= measurement.priority_Level %> - High</td>
+                                                                                    <%}else if(measurement.priority_Level==2){%>
+                                                                                        <td><%= measurement.priority_Level %> - Medium</td>
+                                                                                    <%}else if(measurement.priority_Level==3){%>
+                                                                                        <td><%= measurement.priority_Level %> - Low</td>
                                                                                     <%}%>
                                                                                     <td>
                                                                                         <% for (var targets of dataF) { %>
@@ -1059,7 +1089,9 @@
                                 var group = e.options[e.selectedIndex].value;
                                 var gid = document.getElementById("GoalID").value;
                                 console.log(group);
-
+                                var p = document.getElementById("priority");
+                                var priority = p.options[p.selectedIndex].value;
+                                console.log(priority);
                                 var xhr = new XMLHttpRequest();
                                 xhr.open('POST', '/AddMeasurementsJSON', true);
                                 xhr.setRequestHeader('Content-Type',
@@ -1083,8 +1115,8 @@
 
 
                                 xhr.send("table=" + table + "&mname=" + mname +
-                                    "&desc=" + desc + "&group=" + group +
-                                    "&gid=" + gid);
+                                    "&desc=" + desc + "&group=" + group+ "&priority=" + priority +
+                                    "&gid=" + gid );
 
                             });
 
@@ -1174,6 +1206,7 @@
                     <!-- Custom Theme Scripts -->
                     <script src="assets/build/js/custom.min.js"></script>
                     <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+
                     <!-- Datatables -->
                     <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
                     <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -1190,6 +1223,7 @@
                     <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
                     </body>
 
 </html>

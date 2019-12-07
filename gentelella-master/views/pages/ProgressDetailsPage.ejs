@@ -96,7 +96,7 @@
                                                 <input class="form-control" type="text" id="mname" name="mname" value="<%= data[0].measurement_Name %>" readonly>
                                                 <br>
                                                 <label>Target: </label>
-                                                <select class="form-control" id="target" name="target">
+                                                <select class="form-control" id="target" name="target" onchange="remSelect()">
                                                     <% for( var targs of dataB) { %>
         
                                     
