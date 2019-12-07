@@ -31,6 +31,13 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+    
+     <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -468,7 +475,7 @@
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
-                                                                        <table class="table table-bordered">
+                                                                        <table id="" class="display">
                                                                             <thead>
 
                                                                                 <tr>
@@ -481,12 +488,9 @@
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
-                                                                                    <% } else { %>
-                                                                                        <th></th>
                                                                                     <% } %> 
                                                                                     <th></th>
-                                                                                    <th></th>
-                                                                                    <th></th>
+                                                                                    
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody> 
@@ -612,11 +616,11 @@
                                                                                     <%}%>
                                                                                     <%}%>
                                                                                     <%if(measurement.priority_Level==1){%>
-                                                                                        <td>High</td>
+                                                                                        <td><%= measurement.priority_Level %> - High</td>
                                                                                     <%}else if(measurement.priority_Level==2){%>
-                                                                                        <td>Medium</td>
+                                                                                        <td><%= measurement.priority_Level %> - Medium</td>
                                                                                     <%}else if(measurement.priority_Level==3){%>
-                                                                                        <td>Medium</td>
+                                                                                        <td><%= measurement.priority_Level %> - Low</td>
                                                                                     <%}%>
                                                                                     <td>
                                                                                         <% for (var targets of dataF) { %>
@@ -1170,6 +1174,22 @@
                     <!-- Custom Theme Scripts -->
                     <script src="assets/build/js/custom.min.js"></script>
                     <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+                <!-- Datatables -->
+            <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+            <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+            <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+            <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
                     </body>
 
 </html>
