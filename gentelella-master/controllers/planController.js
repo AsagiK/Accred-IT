@@ -1164,11 +1164,12 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var AID = req.query.AID;
+            var CID = req.query.CID;
             //var GID = req.query.GID;
             //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
-            var values = [AID, AID];
+            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; "
+            var values = [AID, AID, CID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
@@ -1177,6 +1178,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataD: results[3],
                         current_user: sess.user
                     });
                     console.log("Assign Activity to Member Page");
@@ -1276,7 +1278,7 @@ module.exports = {
             var group = req.body.group;
             var priority = req.body.priority;
             var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ? , `priority_Level` = ? WHERE (`measurement_ID` = ?)";
-            var values = [group, mname, mdesc, MID, priority]
+            var values = [group, mname, mdesc, priority, MID]
             connection.query(sql, values, function (err, result, fields) {
                 if (err) throw err;
                 if (result) {
@@ -1297,7 +1299,6 @@ module.exports = {
             var MID = req.body.MID;
             var mname = req.body.measurementName;
             var mdesc = req.body.measurementDesc;
-            var group = req.body.group;
             var cycle = req.body.cycle;
             getmeasurement(MID, auditmeasurement)
 
@@ -1332,8 +1333,8 @@ module.exports = {
             }
 
             function updatemeasurement() {
-                var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ?, `cycle_ID` = ?  WHERE (`measurement_ID` = ?)";
-                var values = [group, mname, mdesc, cycle, MID]
+                var sql = "UPDATE `capstone`.`measurement` SET `measurement_Name` = ?, `measurement_Description` = ?, `cycle_ID` = ?, `priority_Level` = ?  WHERE (`measurement_ID` = ?)";
+                var values = [mname, mdesc, cycle, priority, MID]
                 connection.query(sql, values, function (err, result, fields) {
                     if (err) throw err;
                     if (result) {

@@ -261,21 +261,7 @@
 
                                     <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                                     <br>
-                                    <!--Assign Group field-->
-
-                                    <label for="MeasurementDesc">Assign
-                                        Group:
-                                        <!--Edited-->
-                                        <span class="required">*</span></label>
-
-                                    <select class="form-control" name="group" id="group">
-                                        <% for (var group of dataC) { %>
-                                        <option value="<%= group.Group_ID %>">
-                                            <%= group.Group_Name %>
-                                        </option>
-                                        <% } %>
-                                    </select>
-                                    <br>
+                                   
                                      <!--Assign Priority field-->
 
                                     <label for="MeasurementDesc">Priority Level:
@@ -420,12 +406,12 @@
                                                                     <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
                                                                     <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
                                                                     <% if (Difference_In_Days > 0) { %>
-                                                                        <br><span class="fa fa-angle-right"></span>DAYS TILL CYCLE ENDS : <%= Difference_In_Days %><br>
+                                                                        <!--<br><span class="fa fa-angle-right"></span>DAYS TILL CYCLE ENDS : <//%= Difference_In_Days %><br>-->
                                                                     <% } else { %>
-                                                                        <br><span class="fa fa-angle-right"></span>Cycle ended on: <br>
+                                                                        <!--<br><span class="fa fa-angle-right"></span>Cycle ended on: <br>-->
                                                                     <% } %>
                                                                     <% if (measurementcount.cycle_ID == cycles.cycle_ID) { %>
-                                                                        <span class="fa fa-angle-right"></span># of Measurements: <%= measurementcount.MeasurementCount %> 
+                                                                        <br><span class="fa fa-angle-right"></span># of Measurements: <%= measurementcount.MeasurementCount %> 
                                                                     <% } %>
                                                                     
                                                                     </li>
@@ -487,25 +473,26 @@
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
 
-                                                                        <table id="" class="display col-md-12" style="background-color: white; height: 100%; width: 100%;">
+                                                                        <table id="" class="display" style="background-color: white; height: 100%; width: 100%;">
 
                                                                             <thead>
 
                                                                                 <tr>
                                                                                     <th>ID</th>
                                                                                     <th>Measurement Name</th>
-                                                                                    <th>Measurement Description
-                                                                                    </th>
-                                                                                    <th>Group Assigned</th>
+                                                                                    <th>Measurement Description</th>
                                                                                     <th>Priority Level</th>
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                                                         <th>Progress</th>
-
-                                                                                    <% } %>
+                                                                                        <th></th>
+                                                                                        <th></th>
+                                                                                    <% } else { %>
                                                                                     <th># of Activities</th>
-
                                                                                     <th></th>
+                                                                                    
+                                                                                    <% } %>
+                                                                                    
                                                                                     
                                                                                 </tr>
                                                                             </thead>
@@ -521,15 +508,7 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Description %>
                                                                                             </td>
-                                                                                            <td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measure_audit.GroupAssigned==group.Group_ID){%>
-                                                                                            
-                                                                                                <%= group.Group_Name %>
-                                                                                            
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                        </td>
+                                                                                            <td><%= measure_audit.priority_Level %></td>
                                                                                             <td>
                                                                                                 <% for (var targets_audit of dataJ) { %>
                                                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
@@ -556,6 +535,7 @@
                                                                                                 <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
                                                                                             </form>
                                                                                             </td>
+                                                                                                <td></td>
                                                                                         </tr>
                                                                                         <% } %>
                                                                                     <% } %> 
@@ -570,15 +550,7 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Description %>
                                                                                             </td>
-                                                                                            <td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measure_audit.GroupAssigned==group.Group_ID){%>
-                                                                                            
-                                                                                                <%= group.Group_Name %>
-                                                                                            
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                        </td>
+                                                                                            <td><%= measure_audit.priority_Level %></td>
                                                                                             <td>
                                                                                                 <% for (var targets_audit of dataJ) { %>
                                                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
@@ -626,12 +598,6 @@
                                                                                     </td>
                                                                                     <td><%= measurement.measurement_Description %>
                                                                                     </td> 
-                                                                                    <%for (var group of dataC){%>
-                                                                                    <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                    <td><%= group.Group_Name %>
-                                                                                    </td>
-                                                                                    <%}%>
-                                                                                    <%}%>
                                                                                     <%if(measurement.priority_Level==1){%>
                                                                                         <td><%= measurement.priority_Level %> - High</td>
                                                                                     <%}else if(measurement.priority_Level==2){%>
@@ -969,7 +935,7 @@
                                 $('.display').DataTable({
                                     rowReorder: true,
                                     columnDefs: [
-                                        { orderable: true, className: 'reorder', targets: 0 },
+                                        { orderable: true, className: 'reorder', targets: 3 },
                                         { orderable: false, targets: '_all' }
                                     ]
                                 } );

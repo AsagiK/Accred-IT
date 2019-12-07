@@ -203,6 +203,7 @@
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
@@ -210,6 +211,7 @@
 
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>

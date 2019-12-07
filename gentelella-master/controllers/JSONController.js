@@ -258,13 +258,13 @@ module.exports = {
         console.log(UID);
         var mname = req.body.mname;
         var desc = req.body.desc;
-        var group = req.body.group;
+        //var group = req.body.group;
         var priority = req.body.priority;
         var gid = req.body.gid;
         console.log("Hello"+ priority);
         UID = JSON.parse(UID);
-        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES (?, ?, ?, ?, ?)";
-        var values2 = [group, gid, mname, desc, priority];
+        var sql2 = " INSERT INTO `capstone`.`measurement` ( `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES ( ?, ?, ?, ?)";
+        var values2 = [gid, mname, desc, priority];
         connection.query(sql2, values2, function (err, result) {
             if (err){
                 console.log(err);

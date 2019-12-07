@@ -81,24 +81,7 @@
                                             value="<%= data[0].measurement_Description %>" required="required"><%= data[0].measurement_Description %></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Groups:<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <!--GROUP INPUT-->
-                                            <select class="form-control" name="group" id ="group">
-                                                <% for (var ogGroup of dataB) { %>
-                                                    <% if (ogGroup.Group_ID == data[0].GroupAssigned) { %>
-                                                        <option value="<%= data[0].GroupAssigned %>" selected="selected"><%= ogGroup.Group_Name %></option>
-                                                    <% } %>
-                                                <% } %>
-                                                <% for (var group of dataB) { %>
-                                                    <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                <% } %>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Priority Level:<span class="required">*</span>
@@ -106,29 +89,26 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Priority INPUT-->
                                             <select class="form-control" name="priority" id ="priority">
-                                                <% for (var priority of data) { %>
-                                                    <% if (priority.priority_Level == data[0].priority_Level) { %>
-                                                        <option value="<%priority.priority_Level%>" selected="selected">
-                                                            <%if(priority.priority_Level==1){%>
+                                                <option value="<%data[0].priority_Level%>" selected="selected">
+                                                    <%if(data[0].priority_Level==1){%>
                                                                 High Priority
-                                                            <%}else if(priority.priority_Level==2){%>
+                                                            <%}else if(data[0].priority_Level==2){%>
                                                                 Medium Priority
-                                                            <%}else if(priority.priority_Level==3){%>
+                                                            <%}else if(data[0].priority_Level==3){%>
                                                                 Low Priority
                                                             <%}%>
-                                                        </option>
-                                                        <%if(priority.priority_Level==1){%>
-                                                                <option value=2 selected="selected">Medium Priority</option>
-                                                                <option value=3 selected="selected">Low Priority</option>
-                                                            <%}else if(priority.priority_Level==2){%>
-                                                                <option value=1 selected="selected">High Priority</option>
-                                                                <option value=3 selected="selected">Low Priority</option>
-                                                            <%}else if(priority.priority_Level==3){%>
-                                                                <option value=1 selected="selected">High Priority</option>
-                                                                <option value=2 selected="selected">Medium Priority</option>
+															</option>
+                                                           
+                                                        <%if(data[0].priority_Level==1){%>
+                                                                <option value=2>Medium Priority</option>
+                                                                <option value=3>Low Priority</option>
+                                                            <%}else if(data[0].priority_Level==2){%>
+                                                                <option value=1>High Priority</option>
+                                                                <option value=3>Low Priority</option>
+                                                            <%}else if(data[0].priority_Level==3){%>
+                                                                <option value=1>High Priority</option>
+                                                                <option value=2>Medium Priority</option>
                                                             <%}%>
-                                                    <% } %>
-                                                <% } %>
                                             </select>
                                         </div>
                                     </div>
@@ -172,24 +152,7 @@
                                                 value="<%= data[0].measurement_Description %>" required="required"><%= data[0].measurement_Description %></textarea>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Groups:<span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <!--GROUP INPUT-->
-                                                <select class="form-control" name="group" id ="group">
-                                                    <% for (var ogGroup of dataB) { %>
-                                                        <% if (ogGroup.Group_ID == data[0].GroupAssigned) { %>
-                                                            <option value="<%= data[0].GroupAssigned %>" selected="selected"><%= ogGroup.Group_Name %></option>
-                                                        <% } %>
-                                                    <% } %>
-                                                    <% for (var group of dataB) { %>
-                                                        <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
                                          <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Priority Level:<span class="required">*</span>
@@ -197,29 +160,25 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Priority INPUT-->
                                             <select class="form-control" name="priority" id ="priority">
-                                                <% for (var priority of data) { %>
-                                                    <% if (priority.priority_Level == data[0].priority_Level) { %>
-                                                        <option value="<%priority.priority_Level%>" selected="selected">
-                                                            <%if(priority.priority_Level==1){%>
+                                                <option value="<%data[0].priority_Level%>" selected="selected"><%if(data[0].priority_Level==1){%>
                                                                 High Priority
-                                                            <%}else if(priority.priority_Level==2){%>
+                                                            <%}else if(data[0].priority_Level==2){%>
                                                                 Medium Priority
-                                                            <%}else if(priority.priority_Level==3){%>
+                                                            <%}else if(data[0].priority_Level==3){%>
                                                                 Low Priority
                                                             <%}%>
-                                                        </option>
-                                                        <%if(priority.priority_Level==1){%>
-                                                                <option value=2 selected="selected">Medium Priority</option>
-                                                                <option value=3 selected="selected">Low Priority</option>
-                                                            <%}else if(priority.priority_Level==2){%>
-                                                                <option value=1 selected="selected">High Priority</option>
-                                                                <option value=3 selected="selected">Low Priority</option>
-                                                            <%}else if(priority.priority_Level==3){%>
-                                                                <option value=1 selected="selected">High Priority</option>
-                                                                <option value=2 selected="selected">Medium Priority</option>
+															</option>
+                                                           
+                                                        <%if(data[0].priority_Level==1){%>
+                                                                <option value="2">Medium Priority</option>
+                                                                <option value="3">Low Priority</option>
+                                                            <%}else if(data[0].priority_Level==2){%>
+                                                                <option value="1">High Priority</option>
+                                                                <option value="3">Low Priority</option>
+                                                            <%}else if(data[0].priority_Level==3){%>
+                                                                <option value="1">High Priority</option>
+                                                                <option value="2">Medium Priority</option>
                                                             <%}%>
-                                                    <% } %>
-                                                <% } %>
                                             </select>
                                         </div>
                                     </div>
@@ -260,7 +219,9 @@
                     </div>
                 </div>
 
-
+<script>
+    var value=document.getElementById()
+</script>
                 <!-- /page content -->
 
                 <!-- footer content -->
