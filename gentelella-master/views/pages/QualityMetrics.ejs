@@ -28,9 +28,17 @@
     <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+    
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -460,7 +468,7 @@
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
-                                                                        <table class="table table-bordered" style="background-color: white;">
+                                                                        <table id="" class="display col-md-12" style="background-color: white; height: 100%; width: 100%;">
                                                                             <thead>
 
                                                                                 <tr>
@@ -475,8 +483,7 @@
                                                                                     <% } %>
                                                                                     <th># of Activities</th>
                                                                                     <th></th>
-                                                                                    <th></th>
-                                                                                    <th></th>
+                                                                                    
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody> 
@@ -928,8 +935,16 @@
                                 }
                             });
 
-
-                            
+                            $(document).ready(function() {
+                                $('.display').DataTable({
+                                    rowReorder: true,
+                                    columnDefs: [
+                                        { orderable: true, className: 'reorder', targets: 0 },
+                                        { orderable: false, targets: '_all' }
+                                    ]
+                                } );
+                            } );
+                                                        
                         });
 
                          
@@ -938,7 +953,7 @@
                         var m = n.getMonth() + 1;
                         var d = n.getDate();
                         var date = y + "-" + m + "-" + d;
-                        var dateToday1 = new Date();
+                        var dateToday = new Date();
                         var y = dateToday.getFullYear();
                         var m = dateToday.getMonth() + 1;
                         var d = dateToday.getDate();
@@ -1159,6 +1174,22 @@
                     <!-- Custom Theme Scripts -->
                     <script src="assets/build/js/custom.min.js"></script>
                     <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+                    <!-- Datatables -->
+                    <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+                    <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+                    <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+                    <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+                    <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+                    <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+                    <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+                    <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+                    <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+                    <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
                     </body>
 
 </html>
