@@ -259,10 +259,12 @@ module.exports = {
         var mname = req.body.mname;
         var desc = req.body.desc;
         var group = req.body.group;
+        var priority = req.body.priority;
         var gid = req.body.gid;
+        console.log("Hello"+ priority);
         UID = JSON.parse(UID);
-        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `cycle_ID`, `measurement_Name`, `measurement_Description`) VALUES (?, ?, ?, ?)";
-        var values2 = [group, gid, mname, desc]
+        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES (?, ?, ?, ?, ?)";
+        var values2 = [group, gid, mname, desc, priority];
         connection.query(sql2, values2, function (err, result) {
             if (err){
                 console.log(err);
@@ -347,8 +349,8 @@ module.exports = {
             console.log(sd);
             console.log(ed);
             console.log(gi);
-            var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`) VALUES (?, ?, ?, ?, ?, ?);";
-            var values = [cn, sd, ed, gi, tr, tt];
+            var sql = "UPDATE capstone.metric SET cycle_Created = '1' WHERE (metric.metric_ID = ?); INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`) VALUES (?, ?, ?, ?, ?, ?);";
+            var values = [gi, cn, sd, ed, gi, tr, tt];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
