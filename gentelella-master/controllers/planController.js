@@ -842,8 +842,8 @@ module.exports = {
                 }
             }
             var SID = req.query.SID;
-            var sql = "SELECT * FROM capstone.metric WHERE metric.source_ID = ?; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;"
-            var values = [SID];
+            var sql = "SELECT * FROM capstone.metric WHERE metric.source_ID = ?; SELECT * FROM capstone.source WHERE source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;"
+            var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
