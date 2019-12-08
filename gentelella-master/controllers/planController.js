@@ -816,9 +816,34 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Measurement Not Created"
+                    }
+                } else if (alert == 1) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Created"
+                    }
+                } else if (alert == 2) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Not Edited"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Edited"
+                    }
+                }
+            }
             var SID = req.query.SID;
-            var sql = "Select metric.metric_ID,metric.source_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = (?); Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;SELECT * FROM capstone.source;SELECT * FROM capstone.measurement;SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.sourcetype;"
-            var values = [SID, SID];
+            var sql = "SELECT * FROM capstone.metric WHERE metric.source_ID = ?; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;"
+            var values = [SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
@@ -827,11 +852,16 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
-                        dataH: results[4],
-                        dataE: results[5],
-                        dataF: results[6],
-                        dataG: results[7],
-                        current_user: sess.user
+                        dataE: results[4],
+                        dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
+                        dataI: results[8],
+                        dataJ: results[9],
+                        dataK: results[10],
+                        dataL: results[11],
+                        current_user: sess.user,
+                        notif: passData
                     });
                     console.log(results);
                     console.log("RECOMMENDATION NON AJAX");

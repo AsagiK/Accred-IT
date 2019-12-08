@@ -219,7 +219,7 @@
                                                                 <th>Deadline</th>
                                                                 <th>Assigned Members</th>
                                                                 <th></th>
-                                                                <th></th>
+                                                                
                                                                 <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3 ) { %>
                                                                 <th></th>
                                                                 <% } %>
@@ -261,6 +261,7 @@
                                                                                     <% } %>
                                                                                 </td>
                                                                                 <td>
+                                                                                    <% if (dataK[0].status == 1) { %>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
@@ -268,6 +269,7 @@
                                                                                             Evidence
                                                                                         </button>
                                                                                     </form>
+                                                                                    <% } %>
                                                                                     <br>
                                                                                     <% if (dataK[0].status == 0) { %>
                                                                                     <button class="btn btn-primary" href="#my_modaloutputs"
@@ -330,6 +332,7 @@
                                                                                     <% } %>
                                                                                 </td>
                                                                                 <td>
+                                                                                    <% if (dataK[0].status == 0) { %>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
@@ -337,7 +340,7 @@
                                                                                             Evidence
                                                                                         </button>
                                                                                     </form>
-                                                                                   
+                                                                                   <% } %>
                                                                                     
                                                                                 </td>
                                                                                 
@@ -620,7 +623,7 @@
                             
                             <br>
                             <input type="hidden" name="measurementID" id="measurementID" required="required"
-                                class="form-control col-md-7 col-xs-12" value="<%= data[0].measurement_ID %>">
+                                class="form-control col-md-7 col-xs-12" value="<%= data[0].measurement_ID %>" style="display: none;">
                             <br>
                             <label for="measurementName">Measurement Name</label>
                             <br>
