@@ -1300,8 +1300,9 @@ module.exports = {
             var mname = req.body.measurementName;
             var mdesc = req.body.measurementDesc;
             var cycle = req.body.cycle;
-            getmeasurement(MID, auditmeasurement)
-
+            var priority = req.body.priority;
+            getmeasurement(MID, auditmeasurement);
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  " + priority)
             function getmeasurement(MID, callback) {
                 var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?);"
                 var values = [MID]
@@ -1319,8 +1320,8 @@ module.exports = {
             function auditmeasurement(resdata, callback, callback2) {
                 var date = new Date();
                 var current = date.toISOString().split('T')[0];
-                var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`, `audit_date`) VALUES (?,?,?,?,?,?,?,?,?,?);"
-                var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID, current]
+                var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`, `audit_date`, `priority_Level` ) VALUES (?,?,?,?,?,?,?,?,?,?,?);"
+                var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID, current, priority]
                 connection.query(sql, values, function (err, result, fields) {
                     if (err) throw err;
                     if (result) {
