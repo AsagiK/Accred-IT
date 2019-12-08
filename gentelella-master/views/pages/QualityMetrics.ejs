@@ -199,11 +199,11 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th>Term</th>
-                                            <th>TotalTerm</th>
-                                            <th>GoalID</th>
-                                            <th>StartDate</th>
-                                            <th>EndDate</th>
+                                            <th style="display: none;">Term</th>
+                                            <th style="display: none;">TotalTerm</th>
+                                            <th style="display: none;">GoalID</th>
+                                            <th style="display: none;">StartDate</th>
+                                            <th style="display: none;">EndDate</th>
                                             
                                         </thead>
                                     </table>
@@ -309,8 +309,8 @@
                                                 Goal ID: <span class="required">*</span></label>-->
                                         <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <label>CYCLE ID</label>
-                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
+                                            
+                                            <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -932,7 +932,7 @@
                                     var rowID = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>"+ CNT+"</td><td>"+ termNum+"</td><td>" + gid + "</td><td id='cellSDate~" +rowID+"'></td><td id='cellEDate~" +rowID+"'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td style='display:none;'>"+ CNT+"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
