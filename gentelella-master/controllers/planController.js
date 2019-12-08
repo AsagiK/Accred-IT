@@ -737,8 +737,24 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Source not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Source added"
+                    }
+                }
+            }
             resp.render('./pages/CreateSource.ejs', {
-                current_user: sess.user
+                current_user: sess.user,
+                notif: passData
             });
             console.log("CREATE SOURCE PAGE");
         }
@@ -1230,7 +1246,6 @@ module.exports = {
                     dataC: results[2],
                     current_user: sess.user
                 });
-                console.log(results)
             });
         }
 
