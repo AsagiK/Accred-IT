@@ -336,8 +336,9 @@
 
                                     <div class="x_content">
                                         <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
+                                        <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
-
+                                        <% } %>
                                             <% for (var goals of data) { %>
 
                                             <!-- start accordion -->
@@ -351,24 +352,25 @@
                                                     <ul id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                         <div class="panel-body">
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
-
+                                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                 <%if (goals.cycle_Created==0){%>
                                                                     <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
                                                                 <%}else{%>
                                                                     <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" style="display: none;">Create Cycles</button>
                                                                 <%}%>
+                                                            <% } %>
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Goal Description</th>
-                                                                        <th>Duration</th>
+                                                                        
                                                                         <th>Goal Source</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <td><%= goals.metric_Desc%></td>
 
-                                                                    <td><%= goals.duration%></td>
+                                                                    
                                                                     <td>
                                                                         <% for (var source of dataH) { %>
                                                                         <% if (source.source_ID == goals.source_ID) { %>
@@ -417,12 +419,14 @@
                                                                     </li>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body">
-
+                                                                        <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
                                                                             <button class="btn btn-default" type="submit">Start Do Phase</button>
                                                                         </form>
+
+                                                                        
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
                                                                         <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
@@ -440,6 +444,8 @@
                                                                             <button class="btn btn-default" type="submit">Back to Plan Phase</button>
 
                                                                         </form>
+
+                                                                        <a href="/CheckingAccordionPage" class="btn btn-default">Check Submissions</a>
                                                                         <% } else if (cycles.status  == 2) { %>
                                                                         <form action="actPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
@@ -466,6 +472,7 @@
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
                                                                         <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
                                                                             Measurement</button>
+                                                                        <% } %>
                                                                         <% } %>
 
 
@@ -770,14 +777,7 @@
                                             <textarea type="text" id="metricDesc" name="metricDesc" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Description"></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
-                                            Duration<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" />
-                                        </div>
-                                    </div>
+                                   
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             Close

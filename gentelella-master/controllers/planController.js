@@ -352,16 +352,16 @@ module.exports = {
         var sourceType = source.substr(source.lastIndexOf('~') + 1);
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
-        var duration = (req.body.duration);
+        //var duration = (req.body.duration);
         var startStatus = "Active"
         console.log(metricName);
         console.log(metricDesc);
         console.log(source);
-        console.log(duration);
+        
         console.log("SOURCE ID - " + sourceID);
         console.log("SOURCE TYPE = " + sourceType);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `duration`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?, ?)";
-        var values = [metricName, metricDesc, sourceID, duration, startStatus, sourceType];
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?)";
+        var values = [metricName, metricDesc, sourceID, startStatus, sourceType];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
