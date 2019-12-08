@@ -62,24 +62,19 @@
                                         <th>MeasurementID</th>
                                         <th>Measurement</th>
                                         <th>Description</th>
-                                        <th>Group Assigned</th>
+                                        
                                         <th>Quality Target</th>
                                         <th>Progress</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
                                         <% for (var measurements of data) { %>
-                                            <% for(var groups of dataC) { %>
-                                                <% if (measurements.GroupAssigned == groups.Group_ID) { %>
+                                            
                                         <tr>
                                             <td><%= measurements.measurement_ID %></td>
                                             <td><%= measurements.measurement_Name %></td>
                                             <td><%= measurements.measurement_Description %></td>
-                                            <td>
-                                                
-                                                    <%= groups.Group_Name %>
-                                                
-                                            </td>
+                                           
                                             <td>
                                                 <% for(var targets of dataB) { %>
                                                     <% if(targets.measurementID == measurements.measurement_ID) { %>
@@ -112,8 +107,7 @@
                                                 </form>
                                             </td>                                            
                                         </tr>
-                                        <% } %>
-                                            <% } %>
+                                        
                                         <% } %>
                                     </tbody>
                                 </table>

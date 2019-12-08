@@ -100,6 +100,7 @@ router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
 
 //--SessCtrl
+router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
 router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);

@@ -1458,9 +1458,9 @@ module.exports = {
                             var ui = resdata[key]["user_ID"];
                             var com = resdata[key]["comment"];
                             var ci = resdata[key]["cycle_ID"];
-                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?);"
+                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?); UPDATE `capstone`.`pending_activities` SET `isActive` = 0 WHERE (`pending_ID` = ?);"
 
-                            var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci];
+                            var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci, pi];
                             connection.query(sql, values, function (err, result) {
                                 if (err) callback2(err);
                                 if (result) {

@@ -45,9 +45,11 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var name = req.body.DocName;
+            var files = req.files.DocFile;
             var filename = req.files.DocFile.name;
             var path = 'uploads/' + req.files.DocFile.name
             var desc = req.body.DocDesc;
+            var md5 = files.md5;
             var point = filename.lastIndexOf(".");
             var ext = filename.substr(point);
             var folderId = UPLOAD_PATH.data.id;
@@ -62,8 +64,8 @@ module.exports = {
                 if (err) return console.log("file not moved to server");
                 else console.log("File uploaded");
             })
-            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `upload_id`) VALUES (? , ? , ?, ?, ?);"
-            var values = [name, path, desc, ext, req.session.user[0].User_ID];
+            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `upload_id`, `md5`) VALUES (? , ? , ?, ?, ?, ?);"
+            var values = [filename, path, desc, ext, req.session.user[0].User_ID, md5];
 
             connection.query(sql, values, function (err, result) {
                 if (err) console.log("file not saved to local server");
@@ -433,7 +435,7 @@ module.exports = {
                     else console.log("File uploaded");
                 })
                 var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
-                var values = [name, path, desc, ext, md5, req.session.user[0].User_ID];
+                var values = [filename, path, desc, ext, md5, req.session.user[0].User_ID];
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result) {
@@ -588,7 +590,7 @@ module.exports = {
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
                 console.log("Empty");
-                resp.send(pendingID);
+                
             } else {
                 async.forEachOf(Doc, function (value, key, callback) {
                     var did = Doc[key]["Document ID"];
@@ -610,6 +612,7 @@ module.exports = {
                         //resp.send("Not OK")
                     } else {
                         console.log("Passed");
+                        
                     }
                 })
             }

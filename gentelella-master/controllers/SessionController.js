@@ -44,7 +44,7 @@ module.exports = {
             connection.query(sql, values, function (err, result) {
                 if (err) {
                     console.log("Username already exists");
-                    resp.redirect('/debug');
+                    resp.redirect('/RegisterAdminPage');
                 } else {
                     console.log("Admin Created");
                     resp.redirect('/login');
@@ -132,6 +132,11 @@ module.exports = {
     Logout: function (req, resp) {
         req.session.destroy();
         resp.redirect('/login');
+    },
+
+    RegisterAdminPage: function (req, resp) {
+       
+        resp.redirect('/RegisterAdminPage.ejs');
     }
 
 }

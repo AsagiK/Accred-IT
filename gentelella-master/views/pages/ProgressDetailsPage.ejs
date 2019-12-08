@@ -68,7 +68,7 @@
                                             <% for (var PenActs of dataF) { %>
                                                 <% for (var ActEvidences of dataE) { %>
                                                     
-                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1) { %>
+                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1 && PenActs.isActive == 1) { %>
                                                     
                                                         <a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
@@ -106,7 +106,7 @@
                                                       </select> 
                                                 <br>
                                                 <label>Progress: </label>
-                                                <input class="form-control" type="text" id="progress" name="progress" >
+                                                <input class="form-control" type="number" id="progress" name="progress" >
                                                 <br>
                                                 
                                                 <br>
