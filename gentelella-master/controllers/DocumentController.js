@@ -568,13 +568,15 @@ module.exports = {
         var score = req.body.score;
         var today = new Date();
         var current = today.toISOString().split('T')[0];
-        var values2 = [AID, name, code, description, score, current, UID]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`) VALUES (? , ?, ?, ?, ?, ?, ?);"
+        var CID = req.body.CID;
+        var values2 = [AID, name, code, description, score, current, UID, CID]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`, `cycle_ID`) VALUES (? , ?, ?, ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
             if (results) {
                 console.log("Pending activity inserted")
                 inserttable(results.insertId);
+                inserttable2(results.insertId);
             }
         });
 
@@ -595,10 +597,44 @@ module.exports = {
                     connection.query(sql, values, function (err, result) {
                         if (err) {
                             console.log(err);
-                            callback(err);
+                            //callback(err);
                         }
                         if (result) {
                             console.log("Document linked to DB");
+                            //callback();
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        console.log("Failed");
+                        //resp.send("Not OK")
+                    } else {
+                        console.log("Passed");
+                    }
+                })
+            }
+        }
+        function inserttable2(pending) {
+            var pendingID = pending;
+            pendingID = pendingID.toString();
+
+            var output = req.body.table2;
+            output = JSON.parse(output)
+            if (Object.keys(output).length == 0) {
+                console.log("Empty");
+                resp.send(pendingID);
+            } else {
+                async.forEachOf(output, function (value, key, callback) {
+                    var oid = output[key]["ID"];
+                    var sql = "INSERT INTO `capstone`.`pending_outputs` (`activityID`, `outputID`, `pendingID`) VALUES (?, ?, ?); ";
+                    var values = [AID, oid, pendingID];
+                    connection.query(sql, values, function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        }
+                        if (result) {
+                            console.log("Output linked to submission");
                             callback();
                         }
                     });

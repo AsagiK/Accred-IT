@@ -31,8 +31,71 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
 </head>
 
+
+<style>
+    .myAlert-top {
+        position: fixed;
+        top: 5px;
+        left: 15%;
+        width: 80%;
+    }
+
+</style>
+
+
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
@@ -111,7 +174,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
+                                            <a href="/ViewUsers" class="btn btn-primary" type="button">Cancel</a>
                                             <button class="btn btn-primary" type="reset">Reset</button>
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </div>

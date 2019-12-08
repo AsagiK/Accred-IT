@@ -168,7 +168,7 @@ module.exports = {
 
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
-            var uid = UID[key]["User ID"];
+            var uid = UID[key]["Group ID"];
             var mid = UID[key]["Measurement ID"];
             console.log(aid);
             console.log(uid);
@@ -258,11 +258,13 @@ module.exports = {
         console.log(UID);
         var mname = req.body.mname;
         var desc = req.body.desc;
-        var group = req.body.group;
+        //var group = req.body.group;
+        var priority = req.body.priority;
         var gid = req.body.gid;
+        console.log("Hello"+ priority);
         UID = JSON.parse(UID);
-        var sql2 = " INSERT INTO `capstone`.`measurement` (`GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`) VALUES (?, ?, ?, ?)";
-        var values2 = [group, gid, mname, desc]
+        var sql2 = " INSERT INTO `capstone`.`measurement` ( `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES ( ?, ?, ?, ?)";
+        var values2 = [gid, mname, desc, priority];
         connection.query(sql2, values2, function (err, result) {
             if (err){
                 console.log(err);
@@ -271,9 +273,11 @@ module.exports = {
                 console.log(result)
                 var MID = result.insertId;
                 async.forEachOf(UID, function (value, key, callback) {
-                    var target = UID[key]["Targets:"];
-                    var sql = " INSERT INTO `capstone`.`measurements_targets` (`measurementID`, `target`) VALUES (?, ?)";
-                    var values = [MID, target];
+                    var target = UID[key]["Targets"];
+                    var targettype = UID[key]["targettype"];
+                    var targetdesc = UID[key]["Target Description"];
+                    var sql = " INSERT INTO `capstone`.`measurements_targets` (`measurementID`, `target`, `target_Type`, `target_Desc`) VALUES (?, ?, ?, ?)";
+                    var values = [MID, target, targettype, targetdesc];
                     connection.query(sql, values, function (err, result) {
                         if (err) {
                             console.log(err);
@@ -326,5 +330,84 @@ module.exports = {
             }
         })
     },
+
+    AddCyclesJSON: function (req, resp) {
+        var UID = req.body.table;
+        var MID = req.body.mid;
+        UID = JSON.parse(UID);
+        console.log(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var cn = UID[key]["Cycle Name"];
+            var sd = UID[key]["StartDate"];
+            var ed = UID[key]["EndDate"];
+            var gi = UID[key]["GoalID"];
+            var tr = UID[key]["Term"];
+            var tt = UID[key]["TotalTerm"];
+            console.log(tr);
+            console.log(tt);
+            console.log(cn);
+            console.log(sd);
+            console.log(ed);
+            console.log(gi);
+            var sql = "UPDATE capstone.metric SET cycle_Created = '1' WHERE (metric.metric_ID = ?); INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`) VALUES (?, ?, ?, ?, ?, ?);";
+            var values = [gi, cn, sd, ed, gi, tr, tt];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+
+    },
+
+    CreateSourcesJSON: function (req, resp) {
+        console.log(req.body);
+        var SID = req.body.table;
+        SID = JSON.parse(SID);
+        var sname = req.body.sname;
+        var sdesc = req.body.sdesc;
+        var sql = "INSERT INTO `capstone`.`source` (`source_Name`, `source_Description`) VALUES (? , ?)";
+        var values = [sname, sdesc];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            if (result) {
+                console.log("Record Inserted");
+                insertdatatypes(result.insertId)
+            }
+        });
+
+        function insertdatatypes(id) {
+            async.forEachOf(SID, function (value, key, callback) {
+                var dtype = SID[key]["Data Types:"];
+                var sql = "INSERT INTO capstone.sourcetype (stype_ID, SourceType) VALUES (?,?)";
+                var values = [id, dtype];
+                connection.query(sql, values, function (err, result) {
+                    if (err) callback(err);
+                    if (result) {
+                        console.log("source = sourcetype")
+                        callback();
+                    }
+                });
+            }, function (err) {
+                if (err) {
+                    console.log("Failed");
+                    resp.send("Not OK")
+                } else {
+                    console.log("Passed");
+                    resp.send("OK");
+                }
+            })
+
+        }
+    }
 
 }

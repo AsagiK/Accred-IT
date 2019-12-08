@@ -71,27 +71,30 @@
                                 <li><a><i class="fa fa-users"></i> Sources <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                             <li><a href="/ViewSources">View Sources</a></li>
-                                            <li><a href="/CreateSources">Create Sources</a></li>
+                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
+                                                <li><a href="/CreateSources">Create Sources</a></li>
+                                            <% } %>
                                     </ul>
                                 </li>
-
+                                <!--
                                 <li><a><i class="fa fa-users"></i> Meetings (NO PAGES YET) <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                             <li><a>Create Meeting/s</a></li>
                                             <li><a>View Scheduled Meeting/s</a></li>
                                     </ul>
                                 </li>
-
+                                -->
+                                <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                 <li><a><i class="fa fa-users"></i> Checking <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                             <li><a href="/CheckingAccordionPage">Checking Evidence Submission Page</a></li>
                                             <li><a href="/ProgressPage">Reviewing Evidence and Progress Page</a></li>
                                     </ul>
                                 </li>
-
+                                <% } %>
                                 <li><a href="QualityMetric">Quality Metrics</a></li>
 
-                                <li><a href="CheckingPage">Checking Page</a></li>
+                                <!--li><a href="CheckingPage">Checking Page</a></li-->
 
                                 <li><a href="Viewcycle">View Cycles</a></li>
                                 <% } %>

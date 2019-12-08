@@ -117,7 +117,7 @@
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
-                        <div class="title_left">
+                        <div class="title_left"> 
                             <h3>Acivity Name: <%= dataB[0].activity_name %></h3>
                         </div>
                     </div>
@@ -133,9 +133,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>User ID</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
+                                                    <th>Group ID</th>
+                                                    <th>Group Name</th>
                                                     <th style="display: none;">Activity ID</th>
                                                     <th style="display: none;">Measurement ID</th>
                                                 </tr>
@@ -147,19 +146,17 @@
                                                     <td>
                                                         <label class="containercheckbox">
                                                                 <input type='checkbox' name='record'
-                                                                id='<%= user.User_ID %>'>
+                                                                id='<%= user.Group_ID %>'>
                                                                 <span class="checkmark"></span>
                                                               </label>
-                                                    </td>
-                                                    <td id="UID<%= user.User_ID %>" value="<%= user.User_ID %>">
-                                                        <%= user.User_ID %></td>
-                                                    <td id="first<%= user.User_ID %>" value="<%= user.User_First %>">
-                                                        <%= user.User_First %></td>
-                                                    <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
-                                                        <%= user.User_Last %></td>
-                                                    <td style="display: none;" id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                    </td> 
+                                                    <td id="GID<%= user.Group_ID %>" value="<%= user.Group_ID %>">
+                                                        <%= user.Group_ID %></td>
+                                                    <td id="GroupName<%= user.Group_ID %>" value="<%= user.Group_Name %>">
+                                                        <%= user.Group_Name %></td>
+                                                    <td style="display: none;" id='hidden<%= user.Group_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td style="display: none;" id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                    <td style="display: none;" id='measure<%= user.Group_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
@@ -178,9 +175,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>User ID</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
+                                                    <th>Group ID</th>
+                                                    <th>Group Name</th>
                                                     <th style="display: none;">Activity ID</th>
                                                     <th style="display: none;">Measurement ID</th>
                                                 </tr>
@@ -198,11 +194,16 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-primary" type="button">Cancel</button>
+                                        <form method="get" action="/ViewMeasurementDetails">
+                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
+                                        </form>
+                                        <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
                                         <button class="btn btn-primary" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
                                             <input type="hidden" name="passdata" value="1">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
@@ -210,6 +211,7 @@
 
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>
@@ -246,17 +248,17 @@
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var UID = $('#UID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
+                        var GID = $('#GID' + index).attr("value");
+                        var GroupName = $('#GroupName' + index).attr("value");
                         // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            index + "><span class='checkmark'></span></label></td><td id= GID" + index + " value=" + GID + ">" + GID +
+                            "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
+                            
                             "</td><td style='display: none;' id= hidden" + index + " value=" + hidden +
                             ">" + hidden + "</td><td style='display: none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
@@ -270,17 +272,17 @@
                 $("#table2 tbody tr").find('input[name="record"]').each(function () {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var UID = $('#UID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
+                        var GID = $('#GID' + index).attr("value");
+                        var GroupName = $('#GroupName' + index).attr("value");
                         // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            index + "><span class='checkmark'></span></label></td><td id= GID" + index + " value=" + GID + ">" + GID +
+                                "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
+                            
                             "</td><td id= hidden" + index + " value=" + hidden +
                             " >" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table1 tbody").append(markup);
@@ -294,10 +296,10 @@
             $("#toJSON").click(function () {
 
                 var table = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3]
+                    ignoreColumns: [0, 2]
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3]
+                    ignoreColumns: [0, 2 ]
                 })); // 
 
                 var xhr = new XMLHttpRequest();
@@ -337,6 +339,10 @@
 
             };
 
+            $("#cancel").click(function(){
+                var button = document.getElementById('backcancel');
+                button.click();
+            });
 
 
         });

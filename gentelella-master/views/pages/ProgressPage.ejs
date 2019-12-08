@@ -46,7 +46,7 @@
                     <div class="page-title">
                         <div class="title_left">
                             <h3>Review Evidences and Progress Page</h3>
-                         
+                            <a class="btn btn-primary" href="/QualityMetrics">Go Back Goals</a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,11 @@
                                             <td>
                                                 <% for(var targets of dataB) { %>
                                                     <% if(targets.measurementID == measurements.measurement_ID) { %>
-                                                        Target ID: <%= targets.target_ID %><br> <%= targets.target %> <br>
+                                                        <%= targets.target %>
+                                                        <% if (targets.target_Type == 0) { %>
+                                                        %
+                                                        <% } %> 
+                                                        - <%= targets.target_Desc %> <br>
                                                     <% } %>
                                                 <% } %>
                                             </td>
@@ -91,9 +95,12 @@
                                                     <% for(var targets of dataB) { %>
                                                         <% if(targets.measurementID == measurements.measurement_ID) { %>
                                                             <% if (targets.progress == null) { %> 
-                                                                Target ID: <%= targets.target_ID %><br> No Progress <br>
+                                                                No Progress <br>
                                                             <% } else { %> 
-                                                                Target ID: <%= targets.target_ID %><br> <%= targets.progress %> <br>
+                                                                <%= targets.progress %>
+                                                                <% if (targets.target_Type == 0) { %>
+                                                                %
+                                                                <% } %> <br>
                                                             <% } %>
                                                         <% } %>
                                                     <% } %>

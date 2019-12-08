@@ -28,56 +28,37 @@
     <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet" />
+    
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-    <style>
-        .alert {
-            padding: 20px;
-            background-color: #f44336;
-            color: white;
-            opacity: 1;
-            transition: opacity 0.6s;
-            margin-bottom: 15px;
-        }
 
-        .alert.success {
-            background-color: #4CAF50;
-        }
-
-        .alert.info {
-            background-color: #2196F3;
-        }
-
-        .alert.warning {
-            background-color: #ff9800;
-        }
-
-        .closebtn {
-            margin-left: 15px;
-            color: white;
-            font-weight: bold;
-            float: right;
-            font-size: 22px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .closebtn:hover {
-            color: black;
-        }
-
-    </style>
 
 </head>
 
-<% if(locals.notif){ %>
-<% if(notif.goodStatus == 1) {%>
+<% if(locals.notif){%>
+<%if(notif.goodStatus == 0){%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else if(notif.goodStatus == 1) {%>
 <div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else if(notif.goodStatus == 2){%>
+<div class="alert">
     <span class="closebtn">&times;</span>
     <%= notif.msg %>
 </div>
@@ -87,1277 +68,962 @@
     <%= notif.msg %>
 </div>
 <%}%>
-    <%}%>
+<%}%>
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+    }
+
+    .alert.success {
+        background-color: #4CAF50;
+    }
+
+    .alert.info {
+        background-color: #2196F3;
+    }
+
+    .alert.warning {
+        background-color: #ff9800;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+    ul.panel-collapse, ul.panel-collapse ul {
+    list-style: none;
+     margin: 0;
+     padding: 0;
+   } 
+   ul.panel-collapse ul {
+     margin-left: 10px;
+   }
+   ul.panel-collapse li {
+     margin: 0;
+     padding: 0 7px;
+     line-height: 20px;
+     color: #369;
+     font-weight: bold;
+     border-left:1px solid rgb(100,100,100);
+
+   }
+   ul.panel-collapse li:last-child {
+       border-left:none;
+   }
+   ul.panel-collapse li:before {
+      position:relative;
+      top:-0.3em;
+      height:1em;
+      width:15px;
+      color:white;
+      border-bottom:1px solid rgb(100,100,100);
+      content:"";
+      display:inline-block;
+      left:-7px;
+   }
+   ul.panel-collapse li:last-child:before {
+      border-left:1px solid rgb(100,100,100);   
+   }
+
+   .panel-body{
+       background-color: #F1F5F8;
+   }
+
+</style>
+
 
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
             <%- include ./nav.ejs %>
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Quality Management - <%= dataD.length %></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <!BUTTONS FOR CREATE OF RECOMENDATION AND CYCLE TIME>
-
-                                    <%
-                                        var x=dataD.length -1
-                                        var y=0
-                                        var z=dataD.length
-                                    %>
-                                    <% if (z==0){ %>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
-
-
-                                    <% } else{ %>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals" style="visibility:collapse;">Create Goals</button>
-                                    <%}%>
-                                <% if (dataD.length == 0) { %>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle">
-                                        Create Cycle
-                                    </button>
-                                <% } else { %>
-                                    <% for (var cycle of dataD) { %>
-                                    <% if (y==x){ %>
-                                    <% if ( cycle.status  == 4 || cycle.status==null){ %>
-                                    <br>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle">
-                                        Create Cycle
-                                    </button>
-                                    <% } else{ %>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createCycle" id="createCycle" style="visibility:collapse;">
-                                        Create Cycle
-                                    </button>
-                                    <%}%>
-                                            
-                                        <%}%>
-
-                                    <% y=y+1}%>
-                                <%}%>
-
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="x_panel">
-                                            <div class="x_content">
-                                                <br />
-
-
-                                                <div class="col-md-12 col-sm-6 col-xs-12">
-
-                                                    <div class="x_title">
-                                                        <h2><i class="fa fa-align-left"></i>Quality Cycles
-                                                        </h2>
-
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="x_content">
-
-                                                        <!-- start accordion    -->
-                                                        <% for (var cycle of dataD) { %>
-
-                                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" value="">
-                                                            <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= cycle.cycle_ID %>" aria-expanded="true" aria-controls="collapse<%= cycle.cycle_ID %>">
-                                                                    <h4 class="panel-title">
-                                                                        CYCLE NAME: <%= cycle.cycle_Name %> - Status:
-                                                                        <% if ( cycle.status == 0) { %> Planning Phase
-                                                                        <% } else if( cycle.status  == 1) { %> Do Phase
-                                                                        <% } else if( cycle.status  == 2) { %> Check Phase
-                                                                        <% } else if( cycle.status  == 3) { %> Act Phase
-                                                                        <% } else if( cycle.status  == 4) { %> Cycle Ended<% } %>
-                                                                        <input id="<%= cycle.cycle_Name %>" value="<%=cycle.status%>" style="visibility:collapse;">
-                                                                    </h4>
-
-                                                                </a>
-
-                                                                <div id="collapse<%= cycle.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                                    <!--Phase Button Start-->
-                                                                    <% if(cycle.status  == 0) { %>
-                                                                    <form action="doPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Start Do Phase</button>
-                                                                    </form>
-                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
-
-                                                                    <br>
-                                                                    <% for (var metric of data) { %>
-                                                                    <% if (metric.cycle_Status == "Active") { %>
-
-                                                                    <div class="panel-body">
-                                                                        <!--Group 1 table-->
-
-                                                                        <div class="panel">
-
-                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-
-                                                                                <h3 class="panel-title">
-                                                                                    GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
-                                                                                </h3>
-
-                                                                            </a>
-                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                <div>
-
-                                                                                    <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                                    <button class="btn btn-primary" href="#my_modal" data-toggle="modal" data-book-id="<%=metric.metric_ID%>">Create Measurement</button>
-
-                                                                                    <!--CREATE MEASUREMENTS-->
-                                                                                    <div class="modal fade createMeasurement" id="my_modal">
-                                                                                        <div class="modal-dialog modal-lg2">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <button type="button" class="close" data-dismiss="modal3">
-                                                                                                        <span aria-hidden="true">×</span>
-                                                                                                    </button>
-                                                                                                    <h4 class="modal-title" id="ModalLabel1">
-                                                                                                        Create Measurements for: <%=metric.metric_Name%>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-                                                                                                    
-
-                                                                                                        <!--Measurement Name input field-->
-
-                                                                                                        <label for="MeasurementName">
-                                                                                                            Measurement Name: <span class="required">*</span></label>
-                                                                                                        <!--Edited-->
-
-                                                                                                        <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-
-                                                                                                        <br>
-
-                                                                                                        <!--Measurement Description field-->
-
-                                                                                                        <label for="MeasurementDesc">Measurement
-                                                                                                            Description:
-                                                                                                            <!--Edited-->
-                                                                                                            <span class="required">*</span></label>
-
-                                                                                                        <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                        <br>
-                                                                                                        <!--Assign Group field-->
-
-                                                                                                        <label for="MeasurementDesc">Assign Group:
-                                                                                                            <!--Edited-->
-                                                                                                            <span class="required">*</span></label>
-
-                                                                                                        <select class="form-control" name="group" id="group">
-                                                                                                            <% for (var group of dataC) { %>
-                                                                                                            <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                                                                            <% } %>
-                                                                                                        </select>
-                                                                                                        <br>
-                                                                                                        <!--Quality Target Input field-->
-
-                                                                                                        <label for="Assign Goal">Quality Target:</label>
-                                                                                                        <div id="newInp">
-                                                                                                            <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target">
-                                                                                                            <button type="button" id="addRow" onclick="addQT()">+</button>
-                                                                                                        </div>
-                                                                                                        
-                                                                                                        
-
-                                                                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                                                            <table class="table table-striped" name="TargetT" id="TargetT">
-                                                                                                                <thead>
-                                                                                                                    <tr>
-                                                                                                                        <th>Targets:</th>
-                                                                                                                    </tr>
-                                                                                                                </thead>
-                                                                                                                <tbody id="tBody"></tbody>
-                                                                                                            </table>
-                                                                                                        </div>
-                                                                                                        <!--Goal ID input field-->
-                                                                                                        <div class="form-group">
-                                                                                                            <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
-                                                                                                    Goal ID: <span class="required">*</span></label>-->
-                                                                                                            <!--Edited-->
-                                                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                                <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="modal-footer">
-                                                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                                                                                Close
-                                                                                                            </button>
-                                                                                                            <button type="submit" class="btn btn-primary" id="toJSON">
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
-                                                                                                    
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
-                                                                                    <table class="table table-bordered">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Goal Description</th>
-                                                                                                <th>Duration</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <td><%= metric.metric_Desc%></td>
-                                                                                            <td><%= metric.duration%></td>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <!--Edited-->
-                                                                                       <tr>
-                                                                                            <th>ID</th>
-                                                                                            <th>Measurement Name</th>
-                                                                                            <th>Measurement Description</th>
-                                                                                            <th>Group Assigned</th>
-                                                                                            <th>Quality Target</th>
-                                                                                            <th></th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <% for (var measurement of dataE) { %>
-                                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
-                                                                                        <tr>
-                                                                                            <!--Edited-->
-                                                                                            <td><%= measurement.measurement_ID %></td>
-                                                                                            <td><%= measurement.measurement_Name %></td>
-                                                                                            <td><%= measurement.measurement_Description %></td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                                <td><%= group.Group_Name %></td>
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                            <td>
-                                                                                                <% for (var targets of dataF) { %>
-                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                        - <%= targets.target %><br>
-                                                                                                    <% } %>
-                                                                                                
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <form method="get" action="ViewMeasurementDetails">
-                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                                    <button type="submit" class="btn btn-primary">View Measurement Details</button>
-                                                                                                    <!--Edited-->
-                                                                                                </form>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <%}%>
-                                                                                        <% } %>
-                                                                                    </tbody>
-                                                                                </table>
-
-
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <!--End of Group 1 Table -->
-                                                                    <% } %>
-                                                                    <% } %>
-
-                                                                    <% } else if (cycle.status  == 1) { %>
-                                                                    <form action="checkPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Start Check Phase</button>
-
-                                                                    </form>
-
-                                                                    <form action="planPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Back to Plan Phase</button>
-
-                                                                    </form>
-
-                                                                    <% for (var metric of data) { %>
-                                                                    <% if (metric.cycle_Status == "Active") { %>
-
-                                                                    <div class="panel-body">
-                                                                        <!--Group 1 table-->
-
-                                                                        <div class="panel">
-
-                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-
-                                                                                <h3 class="panel-title">
-                                                                                    GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
-                                                                                </h3>
-
-                                                                            </a>
-                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                
-                                                                                    <!--CREATE MEASUREMENTS
-                                                                                    <div class="modal fade createMeasurement" id="my_modal">
-                                                                                        <div class="modal-dialog modal-lg2">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <button type="button" class="close" data-dismiss="modal3">
-                                                                                                        <span aria-hidden="true">×</span>
-                                                                                                    </button>
-                                                                                                    <h4 class="modal-title" id="ModalLabel1">
-                                                                                                        Create Measurements for: <%=metric.metric_Name%>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-
-
-                                                                                                    <!--Measurement Name input field
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                                                                            Measurement Name: <span class="required">*</span></label>
-                                                                                                        <!--Edited
-                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                            <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                    <!--Measurement Description field
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
-                                                                                                            Description:
-                                                                                                            <!--Edited
-                                                                                                            <span class="required">*</span></label>
-                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                            <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <!--Quality Target Input field
-                                                                                                    <div class="form-group" id="form">
-                                                                                                        <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
-                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12" id="newInp">
-                                                                                                            <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target" class="form-control col-md-7 col-xs-12">
-                                                                                                        </div>
-                                                                                                        <button type="button" id="addRow" onclick="addQT()">+</button>
-                                                                                                    </div>
-                                                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                                                        <table class="table table-striped" name="TargetT" id="TargetT">
-                                                                                                            <thead>
-                                                                                                                <tr>
-                                                                                                                    <th>Targets:</th>
-                                                                                                                </tr>
-                                                                                                            </thead>
-                                                                                                            <tbody id="tBody"></tbody>
-                                                                                                        </table>
-                                                                                                    </div>
-                                                                                                    <!--Goal ID input field
-                                                                                                    <div class="form-group">
-                                                                                                        <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
-                                                                                                    Goal ID: <span class="required">*</span></label>-->
-                                                                                                        <!--Edited
-                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="modal-footer">
-                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                                                                            Close
-                                                                                                        </button>
-                                                                                                        <button type="submit" class="btn btn-primary" id="toJSON">
-                                                                                                            Submit
-                                                                                                        </button>
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>-->
-                                                                                <div>
-                                                                                    <table class="table table-bordered">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Goal Description</th>
-                                                                                                <th>Duration</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <td><%= metric.metric_Desc%></td>
-                                                                                            <td><%= metric.duration%></td>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <!--Edited-->
-                                                                                        <tr>
-                                                                                            <th>ID</th>
-                                                                                            <th>Measurement Name</th>
-                                                                                            <th>Measurement Description</th>
-                                                                                            <th>Group Assigned</th>
-                                                                                            <th>Quality Target</th>
-                                                                                            <th></th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <% for (var measurement of dataE) { %>
-                                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
-                                                                                        <tr>
-                                                                                            <!--Edited-->
-                                                                                            <td><%= measurement.measurement_ID %></td>
-                                                                                            <td><%= measurement.measurement_Name %></td>
-                                                                                            <td><%= measurement.measurement_Description %></td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                                <td><%= group.Group_Name %></td>
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                            <td>
-                                                                                                <% for (var targets of dataF) { %>
-                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                        - <%= targets.target %><br>
-                                                                                                    <% } %>
-                                                                                                
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <form method="get" action="ViewMeasurementDetails">
-                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                                    <button type="submit" class="btn btn-primary">View Measurement Details</button>
-                                                                                                    <!--Edited-->
-                                                                                                </form>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <%}%>
-                                                                                        <% } %>
-                                                                                    </tbody>
-                                                                                </table>
-
-
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <!--End of Group 1 Table -->
-                                                                    <% } %>
-                                                                    <% } %>
-
-                                                                    <% } else if (cycle.status  == 2) { %>
-                                                                    <form action="actPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Start Act Phase</button>
-
-                                                                    </form>
-
-                                                                    <form action="doPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Back to Do Phase</button>
-                                                                    </form>
-
-                                                                    <% for (var metric of data) { %>
-                                                                        <% if (metric.cycle_Status == "Active") { %>
-    
-                                                                        <div class="panel-body">
-                                                                            <!--Group 1 table-->
-    
-                                                                            <div class="panel">
-    
-                                                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-    
-                                                                                    <h3 class="panel-title">
-                                                                                        GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
-                                                                                    </h3>
-    
-                                                                                </a>
-                                                                                <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                    <div>
-
-
-
-                                                                                        <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
-                                                                                        <table class="table table-bordered">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>Goal Description</th>
-                                                                                                    <th>Duration</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <td><%= metric.metric_Desc%></td>
-                                                                                                <td><%= metric.duration%></td>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-    
-                                                                                    <table class="table table-bordered">
-                                                                                        <thead>
-                                                                                            <!--Edited-->
-                                                                                            <tr>
-                                                                                                <th>ID</th>
-                                                                                                <th>Measurement Name</th>
-                                                                                                <th>Measurement Description</th>
-                                                                                                <th>Group Assigned</th>
-                                                                                                <th>Quality Target</th>
-                                                                                                <th>Progress</th>
-                                                                                                <th></th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <% for (var measurement of dataE) { %>
-                                                                                            <%if(measurement.metric_ID==metric.metric_ID){%>
-                                                                                            <tr>
-                                                                                                <!--Edited-->
-                                                                                                <td><%= measurement.measurement_ID %></td>
-                                                                                                <td><%= measurement.measurement_Name %></td>
-                                                                                                <td><%= measurement.measurement_Description %></td>
-                                                                                                <%for (var group of dataC){%>
-                                                                                                <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                                    <td><%= group.Group_Name %></td>
-                                                                                                <%}%>
-                                                                                                <%}%>
-                                                                                                <td>
-                                                                                                    <% for (var targets of dataF) { %>
-                                                                                                        <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                            Target ID - <%= targets.target_ID %>:<br> <%= targets.target %><br>
-                                                                                                        <% } %>
-                                                                                                    
-                                                                                                    <% } %>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                        <% for (var targets of dataF) { %>
-                                                                                                            <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                                Target ID - <%= targets.target_ID %>:<br> <%= targets.progress %><br>
-                                                                                                            <% } %>
-                                                                                                        
-                                                                                                        <% } %>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <form method="get" action="ViewMeasurementDetails">
-                                                                                                        <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                                        <button type="submit" class="btn btn-primary">View Measurement Details</button>
-                                                                                                        <!--Edited-->
-                                                                                                    </form>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <%}%>
-                                                                                        <%}%>
-                                                                                        </tbody>
-                                                                                    </table>
-    
-    
-                                                                                </div>
-    
-                                                                            </div>
-    
-                                                                        </div>
-    
-                                                                        <!--End of Group 1 Table -->
-                                                                        <% } %>
-                                                                        <% } %>
-    
-
-                                                                    <% } else if (cycle.status  == 3) { %>
-                                                                    <form action="endPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">End Cycle</button>
-
-                                                                    </form>
-                                                                    <form action="checkPhase" method="post">
-                                                                        <input type="hidden" name="CID" value="<%= cycle.cycle_ID %>">
-                                                                        <button class="btn btn-default" type="submit">Back to Check Phase</button>
-                                                                    </form>
-
-                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
-
-                                                                    <% for (var metric of data) { %>
-                                                                    <% if (metric.cycle_Status == "Active") { %>
-
-                                                                    <div class="panel-body">
-                                                                        <!--Group 1 table-->
-
-                                                                        <div class="panel">
-
-                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-
-                                                                                <h3 class="panel-title">
-                                                                                    GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
-                                                                                </h3>
-
-                                                                            </a>
-                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                <div>
-
-                                                                                    <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                                    <button class="btn btn-primary" href="#my_modal" data-toggle="modal" data-book-id="<%=metric.metric_ID%>">Create Measurement</button>
-
-                                                                                    <!--CREATE MEASUREMENTS-->
-                                                                                    <div class="modal fade createMeasurement" id="my_modal">
-                                                                                        <div class="modal-dialog modal-lg2">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <button type="button" class="close" data-dismiss="modal3">
-                                                                                                        <span aria-hidden="true">×</span>
-                                                                                                    </button>
-                                                                                                    <h4 class="modal-title" id="ModalLabel1">
-                                                                                                        Create Measurements for: <%=metric.metric_Name%>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-
-
-                                                                                                    <!--Measurement Name input field-->
-
-                                                                                                    <label for="MeasurementName">
-                                                                                                        Measurement Name: <span class="required">*</span></label>
-                                                                                                    <!--Edited-->
-
-                                                                                                    <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-
-                                                                                                    <br>
-
-                                                                                                    <!--Measurement Description field-->
-
-                                                                                                    <label for="MeasurementDesc">Measurement
-                                                                                                        Description:
-                                                                                                        <!--Edited-->
-                                                                                                        <span class="required">*</span></label>
-
-                                                                                                    <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                                                                                    <br>
-                                                                                                    <!--Assign Group field-->
-
-                                                                                                    <label for="MeasurementDesc">Assign Group:
-                                                                                                        <!--Edited-->
-                                                                                                        <span class="required">*</span></label>
-
-                                                                                                    <select class="form-control" name="group" id="group">
-                                                                                                        <% for (var group of dataC) { %>
-                                                                                                        <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                                                                        <% } %>
-                                                                                                    </select>
-                                                                                                    <br>
-                                                                                                    <!--Quality Target Input field-->
-
-                                                                                                    <label for="Assign Goal">Quality Target:</label>
-                                                                                                    <div id="newInp">
-                                                                                                        <input type="text" id="QualityTarget" name="QualityTarget" required="required" placeholder="Quality Target">
-                                                                                                    </div>
-                                                                                                    <button type="button" id="addRow" onclick="addQT()">+</button>
-
-                                                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                                                        <table class="table table-striped" name="TargetT" id="TargetT">
-                                                                                                            <thead>
-                                                                                                                <tr>
-                                                                                                                    <th>Targets:</th>
-                                                                                                                </tr>
-                                                                                                            </thead>
-                                                                                                            <tbody id="tBody"></tbody>
-                                                                                                        </table>
-                                                                                                    </div>
-                                                                                                    <!--Goal ID input field-->
-                                                                                                    <div class="form-group">
-                                                                                                        <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
-                                                                                                    Goal ID: <span class="required">*</span></label>-->
-                                                                                                        <!--Edited-->
-                                                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="modal-footer">
-                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                                                                            Close
-                                                                                                        </button>
-                                                                                                        <button type="submit" class="btn btn-primary" id="toJSON">
-                                                                                                            Submit
-                                                                                                        </button>
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createMeasurement" >Create Measurements</button-->
-                                                                                    <table class="table table-bordered">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Goal Description</th>
-                                                                                                <th>Duration</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <td><%= metric.metric_Desc%></td>
-                                                                                            <td><%= metric.duration%></td>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <!--Edited-->
-                                                                                        <tr>
-                                                                                            <th>ID</th>
-                                                                                            <th>Measurement Name</th>
-                                                                                            <th>Measurement Description</th>
-                                                                                            <th>Group Assigned</th>
-                                                                                            <th>Quality Target</th>
-                                                                                            <th></th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <% for (var measurement of dataE) { %>
-                                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
-                                                                                        <tr>
-                                                                                            <!--Edited-->
-                                                                                            <td><%= measurement.measurement_ID %></td>
-                                                                                            <td><%= measurement.measurement_Name %></td>
-                                                                                            <td><%= measurement.measurement_Description %></td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                                <td><%= group.Group_Name %></td>
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                            <td>
-                                                                                                <% for (var targets of dataF) { %>
-                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                        - <%= targets.target %><br>
-                                                                                                    <% } %>
-                                                                                                
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <form method="get" action="ViewMeasurementDetails">
-                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
-                                                                                                    <button type="submit" class="btn btn-primary">View Measurement Details</button>
-                                                                                                    <!--Edited-->
-                                                                                                </form>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <%}%>
-                                                                                    <%}%>
-                                                                                    </tbody>
-                                                                                </table>
-
-
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <!--End of Group 1 Table -->
-                                                                    <% } %>
-                                                                    <% } %>
-
-                                                                    <% } else if (cycle.status  == 4) { %>
-                                                                    
-                                                                    <% for (var metric of data) { %>
-                                                                    <% if (metric.cycle_Status == "Active") { %>
-
-                                                                    <div class="panel-body">
-                                                                        <!--Group 1 table-->
-
-                                                                        <div class="panel">
-
-                                                                            <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= metric.metric_ID %>" aria-expanded="true" aria-controls="Collapse<%= metric.metric_ID %>">
-
-                                                                                <h3 class="panel-title">
-                                                                                    GOAL NAME:<%= metric.metric_Name %><input id="<%=metric.metric_Name%>" value="<%=metric.metric_ID%>" style="visibility:collapse;">
-                                                                                </h3>
-
-                                                                            </a>
-                                                                            <div id="Collapse<%= metric.metric_ID %>" class="collapse">
-                                                                                <div>
-
-                                                                                    <table class="table table-bordered">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Goal Description</th>
-                                                                                                <th>Duration</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <td><%= metric.metric_Desc%></td>
-                                                                                            <td><%= metric.duration%></td>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <!--Edited-->
-                                                                                        <tr>
-                                                                                            <th>ID</th>
-                                                                                            <th>Measurement Name</th>
-                                                                                            <th>Measurement Description</th>
-                                                                                            <th>Group Assigned</th>
-                                                                                            <th>Quality Target</th>
-                                                                                            <th>Target Progress</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <% for (var measurement of dataE) { %>
-                                                                                        <%if(measurement.metric_ID==metric.metric_ID){%>
-                                                                                        <tr>
-                                                                                            <!--Edited-->
-                                                                                            <td><%= measurement.measurement_ID %></td>
-                                                                                            <td><%= measurement.measurement_Name %></td>
-                                                                                            <td><%= measurement.measurement_Description %></td>
-                                                                                            <%for (var group of dataC){%>
-                                                                                            <% if(measurement.GroupAssigned==group.Group_ID){%>
-                                                                                                <td><%= group.Group_Name %></td>
-                                                                                            <%}%>
-                                                                                            <%}%>
-                                                                                            <td>
-                                                                                                <% for (var targets of dataF) { %>
-                                                                                                    <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                                        - <%= targets.target %><br>
-                                                                                                    <% } %>
-                                                                                                
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <%}%>
-                                                                                    <%}%>
-                                                                                    </tbody>
-                                                                                </table>
-
-
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <!--End of Group 1 Table -->
-                                                                    <% } %>
-                                                                    <% } %>
-                                                                <%}%>
-                                                    <!-- end of accordion -->
-
-
-
-
-                                                </div>
-                                            </div>
-
-                                        <%}%>
-                                        </div>
-                                    </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <!-- /page content -->
-
-
-
-            <!--Modal for Create Goals -->
-            <div class="modal fade createGoals" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel2">
-                                Create Goals
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="CreateGoals" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Source:<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select class="form-control" name="source">
-                                            <% for (var source of dataB) { %>
-                                            <option value="<%= source.source_ID %>"><%= source.source_Name %></option>
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
-                                        Name<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="Name" name="metricName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
-                                        Description<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="metricDesc" name="metricDesc" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Description"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
-                                        Duration<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" />
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" onclick="test1()" form="CreateGoals">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script>
-                function test1() {
-                    var source = document.getElementByName("source");
-                    var name = document.getElementById("Name")
-                    console.log(source);
-                }
-
-
-
-                $('#my_modal').on('show.bs.modal.fade', function(e) {
-                    var bookId = $(e.relatedTarget).data('book-id');
-                    //alert(bookId);
-                    $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
-                });
-
-                $('#my_modal').on('show.bs.modal', function(e) {
-                    var bookId = $(e.relatedTarget).data('book-id');
-                    $(e.currentTarget).find('input[name="bookId"]').val(bookId);
-                });
-
-            </script>
-
-
-            <!--div class="modal fade createMeasurement" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg2">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal3">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="ModalLabel1">
-                        Create Measurements for:
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form id="createMeasurement" data-parsley-validate class="form-horizontal form-label-left" action="SendMeasurement" method="POST">
-                        <form id="create" data-parsley-validate class="form-horizontal form-label-left" method="post" action="SendMeasurement">
-
-                            <!--Measurement Name input field>
-                            <div class="form-group">
-                                <label for="MeasurementName" class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Measurement Name: <span class="required">*</span></label>
-                                <!--Edited>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
-                                </div>
-                            </div>
-
-                            <!--Measurement Description field>
-                            <div class="form-group">
-                                <label for="MeasurementDesc" class="control-label col-md-3 col-sm-3 col-xs-12">Measurement
-                                    Description:
-                                    <!--Edited>
-                                    <span class="required">*</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                                </div>
-                            </div>
-                            <!--Quality Target Input field>
-                            <div class="form-group">
-                                 <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Quality Target:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="number" id="QualityTarget" name="QualityTarget" required="required" class="form-control col-md-7 col-xs-12" placeholder="Quality Target">
-                                </div>
-                            </div>
-                            <!--Goal ID input field>
-                            <div class="form-group">
-                                <label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" style="visibility:collapse;">
-                                    Goal ID: <span class="required">*</span></label>
-                                <!--Edited>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12" style="visibility:collapse;">
-                                </div>
-                            </div>
-                            <!--Assign to Goal Input field>
-                            <!--<div class="form-group">
-                                <label for="Assign Goal" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Goal: </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="AssignGoal">
-                                    <% for (var metric of data) { %>
-                                        <option value="<%= metric.metric_Name %>"><%= metric.metric_Name %></option>
-                                    <% } %>
-                                </select>
-                                </div>
-                            </div>>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-primary" form="createMeasurement" onclick="transVal()">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                </div>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Quality Management</h3>
             </div>
         </div>
     </div>
-    <!--Create Duration-->
-            <!--  <div class="modal fade createDuration" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel2">
-                                Create Goal Duration
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <form id="CreateDuration" data-parsley-validate class="form-horizontal form-label-left" action="addduration" method="POST">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Duration
-                                        Name<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="durationName" name="durationName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Duration Name" />
-                                    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <!--MODAL FOR CYCLE CREATION-->
+                    <div class="modal fade createCycle" id="my_modalCYCLE">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal2" value="Edit">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title">Create Cycle</h4>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Goal Duration
-                                        :<span class="required"></span>
+                                <div class="modal-body">
+                                    <input type="hidden" id="gid" name="gid" class="form-control col-md-7 col-xs-12" />
+
+                                    <label for="cycleName">Goal Duration(in years):<span class="required">*</span>
                                     </label>
-                                    <form class="form-group">
+                                    <div>
+                                        <input type="number" id="yearNum" name="yearNum" required="required" class="form-control col-md-7 col-xs-12" placeholder="(ex.5)" />
+                                    </div>
+                                    <br>
+                                    <label for="cycleName">Terms Per Year:<span class="required">*</span>
+                                    </label>
+                                    <div>
+                                        <input type="number" id="termNum" name="termNum" required="required" class="form-control col-md-7 col-xs-12" placeholder="(ex.5)" />
+                                    </div>
+                                    <br>
+                                    <button type="button" class="btn btn-default add-row-cycles">Add</button>
+
+                                    <table class="table table-bordered" id="tableCycles">
+                                        <thead>
+                                            <th>Cycle Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Term</th>
+                                            <th>TotalTerm</th>
+                                            <th>GoalID</th>
+                                            <th>StartDate</th>
+                                            <th>EndDate</th>
+                                            
+                                        </thead>
+                                    </table>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <!SUBMIT BUTTON TO JSON HERE>
+                                            <button type="button" class="btn btn-success" id="toJSONCycles">SUBMIT</button>
+                                            <!--button type="button" class="btn btn-success" id="checkTotal">SUBMIT</button-->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!------------------------------------------END OF CREATE CYCLE MODAL------------------------------------------------------------->
+
+                    <!--CREATE MEASUREMENTS MODAL-->
+                    <div class="modal fade createMeasurement" id="my_modalCreateMeasures">
+                        <div class="modal-dialog modal-lg2">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal3">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="ModalLabel1">
+                                        Create
+                                        Measurements
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <!--Measurement Name input field-->
+
+                                    <label for="MeasurementName">
+                                        Measurement
+                                        Name: <span class="required">*</span></label>
+                                    <!--Edited-->
+
+                                    <input type="text" id="MeasurementName" name="MeasurementName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Measurment Name">
+
+                                    <br>
+
+                                    <!--Measurement Description field-->
+
+                                    <label for="MeasurementDesc">Measurement
+                                        Description:
+                                        <!--Edited-->
+                                        <span class="required">*</span></label>
+
+                                    <textarea class="form-control" rows="3" id="MeasurementDesc" name="MeasurementDesc" placeholder="Measurement Description" required="required" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                    <br>
+                                   
+                                     <!--Assign Priority field-->
+
+                                    <label for="MeasurementDesc">Priority Level:
+                                        <!--Edited-->
+                                        <span class="required">*</span></label>
+
+                                    <select class="form-control" name="priority" id="priority" required="required">
+                                        <option value="1">High Priority</option>
+                                        <option value="2">Medium Priority</option>
+                                         <option value="3">Low Priority</option>
+                                    </select>
+                                    <br>
+                                    <!--Quality Target Input field-->
+
+                                    
+                                    <div id="newInp">
+                                        <label for="Assign Goal">Quality
+                                        Target:</label>
+                                        <input type="number" id="QualityTarget" name="QualityTarget" required="required" size="1" maxlength="3" min="1" max="100"><br> 
+                                        <label for="Assign Goal">
+                                            Target Description:</label><br><textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea><br>
+                                        <input type="checkbox" id="Percent" value="%"> Percent<br>
+                                        <button type="button" id="addRow" onclick="addQT()">+</button>
+                                    </div>
+
+
+
+                                    
+                                        <table class="table table-bordered" name="TargetT" id="TargetT">
+                                            <thead>
+                                                <tr>
+                                                    <th>Targets</th>
+                                                    <th>Type</th>
+                                                    <th>Target Description</th>
+                                                    <th></th>
+                                                    <th>targettype</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tBody">
+                                            </tbody>
+                                        </table>
+                                    <!--Goal ID input field-->
+                                    <div class="form-group">
+                                        <!--<label for="GoalID" class="control-label col-md-3 col-sm-3 col-xs-12" >
+                                                Goal ID: <span class="required">*</span></label>-->
+                                        <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="input-prepend input-group">
-                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                        <input type="date" id="txtDate" required="Required" class="form-control" name="txtDate" onchange="prepDate()" />
-                                                    </div>
-                                                </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" onclick="test1()" form="CreateDuration">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                      Select for Duration
-                                        <select class="form-control" name="duration">
-                                          
-                                        </select>
-
-                <script>
-                    function test1(){
-                        var date = document.getElementById("txtDate").value;
-                        console.log(date);
-                    }
-                </script>
--->
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by
-                    <a href="https://colorlib.com">Colorlib</a>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-
-
-            <!--MODAL FOR CREATE CYCLE-->
-            <div class="modal fade createCycle" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal2" value="Edit">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel2">Create Cycle</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="CreateCycle" data-parsley-validate class="form-horizontal form-label-left" action="addcycle" method="POST">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cycle
-                                        Name<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="first-name" name="cycleName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                            <label>CYCLE ID</label>
+                                            <input type="text" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
+                                        </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" id="toJSON">
+                                            Submit
+                                        </button>
+                                    </div>
+
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Duration
-                                        Date:<span class="required"></span>
-                                    </label>
-                                    <form class="form-group">
-                                        <fieldset>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <div class="controls">
-                                                    <div class="input-prepend input-group">
-                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                        <input type="text" style="width: 200px" name="date" id="reservation" class="form-control" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <!----------------------------------END OF CREATE MEASUREMENT MODAL------------------------------------------------------>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <br />
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+
+                                    <div class="x_content">
+                                        <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
+
+                                            <% for (var goals of data) { %>
+
+                                            <!-- start accordion -->
+                                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                                <!-- FIRST PANEL FOR GOALS -->
+                                                <div class="panel">
+                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
+                                                        <h4 class="panel-title"> <span class="fa fa-chevron-down"></span> <%= goals.metric_ID %> - <%= goals.metric_Name %>
+                                                        </h4>
+                                                    </li>
+                                                    <ul id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                        <div class="panel-body">
+                                                            <!--BUTTON AND MODAL FOR CREATION CYCLES -->
+
+                                                                <%if (goals.cycle_Created==0){%>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
+                                                                <%}else{%>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" style="display: none;">Create Cycles</button>
+                                                                <%}%>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Goal Description</th>
+                                                                        <th>Duration</th>
+                                                                        <th>Goal Source</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <td><%= goals.metric_Desc%></td>
+
+                                                                    <td><%= goals.duration%></td>
+                                                                    <td>
+                                                                        <% for (var source of dataH) { %>
+                                                                        <% if (source.source_ID == goals.source_ID) { %>
+                                                                        <%= source.source_Name %> -
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                        <%= goals.source_Type%>
+                                                                    </td>
+                                                                </tbody>
+                                                            </table>
+
+                                                            
+
+                                                            <!-- SECOND PANEL FOR CYCLES-->
+                                                            
+                                                            <% for (var cycles of dataD) { %>
+                                                            <% for (var measurementcount of dataK) { %> 
+                                                            <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
+                                                            
+                                                            <ul>
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span>
+                                                                    
+                                                                        Cycle Name - <%= cycles.cycle_Name %> - Status:
+                                                                        <% if ( cycles.status == 0) { %> Planning Phase
+                                                                        <% } else if( cycles.status  == 1) { %> Do Phase
+                                                                        <% } else if( cycles.status  == 2) { %> Check
+                                                                        Phase
+                                                                        <% } else if( cycles.status  == 3) { %> Act Phase
+                                                                        <% } else if( cycles.status  == 4) { %> Cycle
+                                                                        Ended<% } %><br>
+                                                                        <span class="fa fa-angle-right"></span>Cycle Duration: <%= cycles.start_Date.toString().substr(0, 15) %> - <%= cycles.end_Date.toString().substr(0, 15) %>
+                                                                    <% var endDate = cycles.end_Date %>
+                                                                    <% var date = new Date(); %>
+                                                                    <% var dateNow = new Date(date.getFullYear(), date.getMonth(), date.getDate()); %>
+                                                                    <% var Difference_In_Time = endDate.getTime() - dateNow.getTime(); %>
+                                                                    <% var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); %>
+                                                                    <% if (Difference_In_Days > 0) { %>
+                                                                        <!--<br><span class="fa fa-angle-right"></span>DAYS TILL CYCLE ENDS : <//%= Difference_In_Days %><br>-->
+                                                                    <% } else { %>
+                                                                        <!--<br><span class="fa fa-angle-right"></span>Cycle ended on: <br>-->
+                                                                    <% } %>
+                                                                    <% if (measurementcount.cycle_ID == cycles.cycle_ID) { %>
+                                                                        <br><span class="fa fa-angle-right"></span># of Measurements: <%= measurementcount.MeasurementCount %> 
+                                                                    <% } %>
+                                                                    
+                                                                    </li>
+                                                                <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                    <div class="panel-body">
+
+                                                                        <% if(cycles.status  == 0) { %>
+                                                                        <form action="doPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Start Do Phase</button>
+                                                                        </form>
+
+                                                                        <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                            Measurement</button>
+
+                                                                        <% } else if (cycles.status  == 1) { %>
+                                                                        <form action="checkPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Start Check Phase</button>
+
+                                                                        </form>
+
+                                                                        <form action="planPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Back to Plan Phase</button>
+
+                                                                        </form>
+                                                                        <% } else if (cycles.status  == 2) { %>
+                                                                        <form action="actPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Start Act Phase</button>
+
+                                                                        </form>
+
+                                                                        <form action="doPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Back to Do Phase</button>
+                                                                        </form>
+
+                                                                        <% } else if (cycles.status  == 3) { %>
+                                                                        <form action="endPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">End Cycle</button>
+
+                                                                        </form>
+                                                                        <form action="checkPhase" method="post">
+                                                                            <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <button class="btn btn-default" type="submit">Back to Check Phase</button>
+                                                                        </form>
+
+                                                                        <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                            Measurement</button>
+                                                                        <% } %>
+
+
+
+
+                                                                        <!-- MEASUREMENTS LOOP PART-->
+
+                                                                        <table id="" class="display" style="background-color: white; height: 100%; width: 100%;">
+
+                                                                            <thead>
+
+                                                                                <tr>
+                                                                                    <th>ID</th>
+                                                                                    <th>Measurement Name</th>
+                                                                                    <th>Measurement Description</th>
+                                                                                    <th>Priority Level</th>
+                                                                                    <th>Quality Target</th>
+                                                                                    <% if (cycles.status == 4 || cycles.status == 3) { %>
+                                                                                        <th>Progress</th>
+                                                                                        <th></th>
+                                                                                        <th></th>
+                                                                                    <% } else { %>
+                                                                                    <th># of Activities</th>
+                                                                                    <th></th>
+                                                                                    
+                                                                                    <% } %>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody> 
+                                                                                <!--TERMLY REPORT VIEW-->
+                                                                                <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Description %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.priority_Level %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets_audit of dataJ) { %>
+                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                <%= targets_audit.target %>
+                                                                                                <% if (targets_audit.target_Type == 0) { %> 
+                                                                                                    %
+                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
+                                                                                                <% } %>
+        
+                                                                                                <% } %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                    <% for (var targets_audit of dataJ) { %>
+                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                            <%= targets_audit.progress %><br>
+                                                                                                        <% } %>
+                
+                                                                                                    <% } %>
+                                                                                            </td> 
+                                                                                            <td>
+                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
+                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                                                            </form>
+                                                                                            </td>
+                                                                                                <td></td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                    <% } %> 
+                                                                                    <!--ANNUAL REPORT-->
+                                                                                <% } else if (cycles.status == 4 && cycles.termnum == cycles.totalterm) { %> 
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Description %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.priority_Level %></td>
+                                                                                            <td>
+                                                                                                <% for (var targets_audit of dataJ) { %>
+                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                <%= targets_audit.target %>
+                                                                                                <% if (targets_audit.target_Type == 0) { %> 
+                                                                                                    %
+                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
+                                                                                                <% } %>
+        
+                                                                                                <% } %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                    <% for (var targets_audit of dataJ) { %>
+                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                                                                        <%= targets_audit.progress %><br>
+                                                                                                        <% } %>
+                
+                                                                                                        <% } %>
+                                                                                            </td> 
+                                                                                            <td></td>
+                                                                                            <td>
+                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
+                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                                                            </form> 
+
+                                                                                            <form id="annualreport" method="post" action="AnnualReport">
+                                                                                                    <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                    <button type="submit" class="btn btn-primary" form="annualreport">View Annual Report</button> 
+                                                                                                </form>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                <% } else { %>
+                                                                                <% for (var measurement of dataE) { %>
+                                                                                    <% for (var activitycount of dataL) { %>
+                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID) { %>
+                                                                                <tr>
+
+                                                                                    <td><%= measurement.measurement_ID %>
+                                                                                    </td>
+                                                                                    <td><%= measurement.measurement_Name %>
+                                                                                    </td>
+                                                                                    <td><%= measurement.measurement_Description %>
+                                                                                    </td> 
+                                                                                    <%if(measurement.priority_Level==1){%>
+                                                                                        <td><%= measurement.priority_Level %> - High</td>
+                                                                                    <%}else if(measurement.priority_Level==2){%>
+                                                                                        <td><%= measurement.priority_Level %> - Medium</td>
+                                                                                    <%}else if(measurement.priority_Level==3){%>
+                                                                                        <td><%= measurement.priority_Level %> - Low</td>
+                                                                                    <%}%>
+                                                                                    <td>
+                                                                                        <% for (var targets of dataF) { %>
+                                                                                        <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                        <%= targets.target %>
+                                                                                        <% if (targets.target_Type == 0) { %>
+                                                                                        %
+                                                                                        <% } else { %>
+                                                                                        #
+                                                                                        <% } %> 
+                                                                                        - <%= targets.target_Desc %> <br>
+                                                                                        <% } %>
+
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <% if (measurement.measurement_ID == activitycount.measurement_ID) { %>
+                                                                                            <%= activitycount.ActivityCount %>
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <% if (cycles.status == 3) { %>
+                                                                                    <td>
+                                                                                        <% for (var targets of dataF) { %>
+                                                                                            <% if (targets.measurementID == measurement.measurement_ID) { %>
+                                                                                            <%= targets.progress %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } %>
+                                                                                            <br>
+                                                                                            <% } %>
+    
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <% } %>
+                                                                                    <td>
+                                                                                        <!--VIEW MEASUREMENT BUTTON-->
+                                                                                        <form method="get" action="ViewMeasurementDetails">
+                                                                                            <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                            <input type="hidden" name="CID" value="<%= measurement.cycle_ID %>">
+                                                                                            <button type="submit" class="btn btn-primary">View
+                                                                                                Measurement
+                                                                                                Details</button>
+                                                                                        </form>
+                                                                                        <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
+                                                                                            <% if (cycles.status == 0) { %>
+                                                                                                <!--EDIT MEASUREMENT BUTTON PLAN PHASE-->
+                                                                                                <form method="get" action="EditMeasurement">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="CASE" value="0">
+                                                                                                    <button type="submit" class="btn btn-primary">Edit
+                                                                                                        Measurement
+                                                                                                        Details</button>
+                                                                                                </form>
+                                                                                                <% } else if (cycles.status == 3) { %>
+                                                                                                <!--EDIT BUTTON ACTION PHASE-->
+                                                                                                <form method="get" action="EditMeasurement">
+                                                                                                    <input type="hidden" name="GID" value="<%= cycles.goal_ID %>">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="CASE" value="1">
+                                                                                                    <button type="submit" class="btn btn-primary">Edit
+                                                                                                        Measurement and Move to next cycle </button>
+                                                                                                </form>
+                                                                                                <% } %>    
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <% } %>
+                                                                                <% } %>
+                                                                                <% } %>
+                                                                                <% } %>
+                                                                            </tbody>
+                                                                        </table>
+
+
+                                                                    </div>
+                                                                
+                                                            </div>
+                                                            </ul>
+                                                            <% } %>
+                                                            <% } %>
+                                                            <% } %>
+
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </ul>
+
                                             </div>
-                                        </fieldset>
-                                    </form>
+                                            <!-- end of accordion -->
+
+                                            <% } %>
+
+                                    </div>
+
                                 </div>
-                                <!--<div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Set Cycle Duration
-                                        Date:<span class="required"></span>
-                                    </label>
-                                    <form class="form-group">
-                                        <fieldset>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <div class="controls">
-                                                    <div class="input-prepend input-group">
-                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                        <input type="text" name="reservation-time" id="reservation-time" class="form-control" value="" onchange="printOut()" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>-->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" form="CreateCycle">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- /page content -->
+
+
+
+                <!--Modal for Create Goals -->
+                <div class="modal fade createGoals" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel2">
+                                    Create Goals
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="CreateGoals" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Source:<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="source">
+                                                <% for (var source of dataB) { %>
+                                                <%for (var sourcetype of dataG) { %>
+                                                <% if (source.source_ID==sourcetype.stype_ID){ %>
+                                                <option value="<%= source.source_ID %>~<%= sourcetype.SourceType%>">
+                                                    <%= source.source_Name %>-<%= sourcetype.SourceType%></option>
+                                                <%}%>
+                                                                            <%}%>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
+                                            Name<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="Name" name="metricName" required="required" class="form-control col-md-7 col-xs-12" placeholder="Name" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
+                                            Description<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea type="text" id="metricDesc" name="metricDesc" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Goal
+                                            Duration<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="duration" name="duration" required="required" class="form-control col-md-7 col-xs-12" placeholder="Goal Duration" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" onclick="test1()" form="CreateGoals">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <form method="get" action="/QualityMetrics">
-                <input type="hidden" name="passdata" value="1">
-                <button type="submit" class="btn btn-success" style="display: none;" id="backsuccess">Hi</button>
-            </form>
-            <form method="get" action="/QualityMetrics">
-                <input type="hidden" name="passdata" value="0">
-                <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
-            </form>
-
-            <!script for dynamic text area>
                 <script>
-                    function textAreaAdjust(o) {
-                        o.style.height = "1px";
-                        o.style.height = (25 + o.scrollHeight) + "px";
-                    }
-
-                    function addQT(tBody) {
-                        var qt = document.getElementById("QualityTarget").value;
-                        console.log(qt);
-                        if (qt != "") {
-                            // Get a reference to the table
-                            var tableRef = document.getElementById("tBody");
-                            // Insert a row at the end of the table
-                            var newRow = tableRef.insertRow(0);
-                            // Insert a cell in the row at index 0
-                            var newCell = newRow.insertCell(0);
-                            var cancel = newRow.insertCell(1);
-                            // Append a text node to the cell
-                            var newText = document.createTextNode(qt);
-                            cancel.innerHTML = "<input type='button' value='X' onclick='deleteRow(this)'>";
-                            newCell.appendChild(newText);
-                        } else {
-                            alert("please give an input");
-                        }
+                    $('#my_modalCYCLE').on('show.bs.modal.fade.createCycle', function(e) {
+                        var bookId = $(e.relatedTarget).data('book-id');
+                        console.log("Create Cycle Modal");
+                        $(e.currentTarget).find('input[name="gid"]').val(bookId);
+                    });
 
 
-                    }
 
-                    function deleteRow(r) {
-                        var i = r.parentNode.parentNode.rowIndex;
-                        document.getElementById("tBody").deleteRow(i - 1);
-                    }
+                    $('#my_modalCreateMeasures').on('show.bs.modal.fade.createMeasurement', function(e) {
+                        var bookId = $(e.relatedTarget).data('book-id');
+                        console.log("Create Measurement Modal");
+                        $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+                    });
 
-                    var close = document.getElementsByClassName("closebtn");
-                    var i;
-
-                    for (i = 0; i < close.length; i++) {
-                        close[i].onclick = function() {
-                            var div = this.parentElement;
-                            div.style.opacity = "0";
-                            setTimeout(function() {
-                                div.style.display = "none";
-                            }, 600);
-                        }
-                    }
+                    $('#my_modal').on('show.bs.modal.fade.createMeasurement', function(e) {
+                        var bookId = $(e.relatedTarget).data('book-id');
+                        alert("CALLING THE SECCOND MODAL");
+                        $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+                    });
 
                 </script>
 
-                <script type="text/javascript">
-                    $(document).ready(function() {
 
-                        $("#toJSON").click(function() {
-                            console.log("Hello");
-                            var table = JSON.stringify($('#TargetT').tableToJSON());
-                            var mname = document.getElementById("MeasurementName").value;
-                            var desc = document.getElementById("MeasurementDesc").value;
-                            var e = document.getElementById("group");
-                            var group = e.options[e.selectedIndex].value;
-                            var gid = document.getElementById("GoalID").value;
-                            console.log(group);
 
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', '/AddMeasurementsJSON', true);
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onload = function() {
-                                console.log(xhr.responseText);
-                            };
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by
+                        <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
 
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState == 4) {
-                                    var respData = xhr.responseText;
-                                    if (respData == "OK") {
-                                        console.log("Good");
-                                        backsuccess();
-                                    } else {
-                                        console.log("Not Good");
-                                        backfail();
+
+
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="1">
+                    <button type="submit" class="btn btn-success" id="backsuccess" style="display: none;">Hi</button>
+                </form>
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="0">
+                    <button type="submit" class="btn btn-success" style="display: none;" id="backfail">Hi</button>
+                </form>
+                <!--Do Me-->
+                <!script for dynamic text area>
+                    <script>
+                        function textAreaAdjust(o) {
+                            o.style.height = "1px";
+                            o.style.height = (25 + o.scrollHeight) + "px";
+                        }
+
+                        function addQT(tBody) {
+                            var qt = document.getElementById("QualityTarget").value;
+                            var td = document.getElementById("targetDesc").value;
+                            var percent= document.getElementById("Percent").value;
+                            var check=document.getElementById("Percent");
+                            console.log(qt);
+                            if (qt != "" && check.checked==true) {
+                                // Get a reference to the table
+                                var tableRef = document.getElementById("tBody");
+                                // Insert a row at the end of the table
+                                var newRow = tableRef.insertRow(0);
+                                // Insert a cell in the row at index 0
+                                var newCell = newRow.insertCell(0);
+                                var newCell1= newRow.insertCell(1);
+                                var newCell2= newRow.insertCell(2); 
+                                var cancel = newRow.insertCell(3);
+                                var newCell3 = newRow.insertCell(4);
+                                // Append a text node to the cell
+                                var newText = document.createTextNode(qt);
+                                var newText1 = document.createTextNode(percent);
+                                var newText2 = document.createTextNode(td);
+                                var newText3 = document.createTextNode("0");
+                                cancel.innerHTML =
+                                    "<input type='button' value='X' onclick='deleteRow(this)'>";
+                                newCell.appendChild(newText);
+                                newCell1.appendChild(newText1);
+                                newCell2.appendChild(newText2);
+                                newCell3.appendChild(newText3);
+                            } else if (qt != "" && check.checked==false) {
+                                // Get a reference to the table
+                                var tableRef = document.getElementById("tBody");
+                                // Insert a row at the end of the table
+                                var newRow = tableRef.insertRow(0);
+                                // Insert a cell in the row at index 0
+                                var newCell = newRow.insertCell(0);
+                                var newCell1= newRow.insertCell(1);
+                                var newCell2= newRow.insertCell(2); 
+                                var cancel = newRow.insertCell(3);
+                                var newCell3 = newRow.insertCell(4);
+                                // Append a text node to the cell
+                                var newText = document.createTextNode(qt);
+                                var newText1 = document.createTextNode("count");
+                                var newText2 = document.createTextNode(td);
+                                var newText3 = document.createTextNode("1");
+                                cancel.innerHTML =
+                                    "<input type='button' value='X' onclick='deleteRow(this)'>";
+                                newCell.appendChild(newText);
+                                newCell1.appendChild(newText1);
+                                newCell2.appendChild(newText2);
+                                newCell3.appendChild(newText3);
+                            } else {
+                                alert("please give an input");
+                            }
+
+
+                        }
+
+                        function deleteRow(r) {
+                            var i = r.parentNode.parentNode.rowIndex;
+                            document.getElementById("tBody").deleteRow(i - 1);
+                        }
+
+                        var close = document.getElementsByClassName("closebtn");
+                        var i;
+
+                        for (i = 0; i < close.length; i++) {
+                            close[i].onclick = function() {
+                                var div = this.parentElement;
+                                div.style.opacity = "0";
+                                setTimeout(function() {
+                                    div.style.display = "none";
+                                }, 600);
+                            }
+                        }
+
+                        $(document).ready(function() {
+                            $(".add-row-cycles").click(function test() {
+                                //console.log("testing test");
+                                if (!checkEmptyInput()) {
+                                    var yearNum = $("#yearNum").val();
+                                    var termNum = $("#termNum").val();
+                                    var cycleNum= yearNum*termNum;
+                                    var gid = $("#gid").val();
+                                    var CNT = 1;
+                                    var CNY = 1;
+                                    var rowID = 1;
+                                    for(var i=0;i<yearNum;i++){
+                                        for(var j=0;j<termNum;j++){
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td>"+ CNT+"</td><td>"+ termNum+"</td><td>" + gid + "</td><td id='cellSDate~" +rowID+"'></td><td id='cellEDate~" +rowID+"'></td></tr>";
+                                            var table = document.getElementById("tableCycles")
+                                            $(table).append(markup);
+                                            CNT++;
+                                            rowID++;
+                                        }
+                                        CNT=1;
+                                        CNY++;
                                     }
+                                 
                                 }
-                            };
+                            });
 
-
-                            xhr.send("table=" + table + "&mname=" + mname + "&desc=" + desc + "&group=" + group + "&gid=" + gid);
-
+                            $(document).ready(function() {
+                                $('.display').DataTable({
+                                    rowReorder: true,
+                                    columnDefs: [
+                                        { orderable: true, className: 'reorder', targets: 3 },
+                                        { orderable: false, targets: '_all' }
+                                    ]
+                                } );
+                            } );
+                                                        
                         });
+
+                         
+                        var n =  new Date();
+                        var y = n.getFullYear();
+                        var m = n.getMonth() + 1;
+                        var d = n.getDate();
+                        var date = y + "-" + m + "-" + d;
+                        var dateToday = new Date();
+                        var y = dateToday.getFullYear();
+                        var m = dateToday.getMonth() + 1;
+                        var d = dateToday.getDate();
+                        var dateTodayFinal = y + "-" + m + "-" + d;
+                        
+                        function checkStartDate(e){
+                            var id = e.target.name.substr(e.target.name.lastIndexOf('~') + 1);
+                            var edate = document.getElementById("eDate~"+id).value;
+                            //alert(date);
+                            if(date == dateTodayFinal){
+                                
+                                //alert("checking start date");
+                                if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
+                                    //alert("kek");
+                                    console.log("FIRST DATE INPUT IS OK");
+                                    document.getElementById("cellSDate~"+id).innerHTML = e.target.value;
+                                }else{
+                                    alert("Start cannot be a date before today!")
+                                    document.getElementById("sDate~"+id).value = "";
+                                    //console.log(date);
+                                    //console.log("date now = " + new Date(date).getTime());
+                                    //console.log("date selected = "+new Date(e.target.value).getTime());
+                                    //console.log(e.target.value);
+                                }
+                            }else{
+                                if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
+                                    console.log("start date is fine");
+                                    console.log(date);
+                                    document.getElementById("cellSDate~"+id).innerHTML = e.target.value;
+                                }else{
+                                    alert("Start date cannot be a date during the previous cycle");
+                                    document.getElementById("sDate~"+id).value = "";
+                                }
+                            }
+                           //alert(edate);
+                            //console.log(id);
+                        }
+
+                        function checkEndDate(e){
+                            var id = e.target.name.substr(e.target.name.lastIndexOf('~') + 1);
+                            var sdate = document.getElementById("sDate~"+id).value;
+                            var edate = document.getElementById("eDate~"+id).value;
+
+                            if( (new Date(edate).getTime() < new Date(sdate).getTime()))
+                            {
+                                alert("End Date cannot be before Start Date!");
+                                document.getElementById("eDate~"+id).value = "";
+                            }else{
+                                console.log("Fine");
+                                date = e.target.value;
+                                console.log("setting the date = "+date);
+                                document.getElementById("cellEDate~"+id).innerHTML = e.target.value;
+                            }
+                            
+                            //console.log(id);
+                            //console.log(sdate);
+                        }
+
+                        function checkEmptyInput() {
+                            var isEmpty = false,
+                                yearNum = document.getElementById("yearNum").value,
+                                termNum = document.getElementById("termNum").value;
+
+                            if (yearNum === "") {
+                                alert("Cycle Name cannot Be Empty");
+                                isEmpty = true;
+                            } else if (termNum === "") {
+                                alert("Cycle Duration Cannot Be Empty");
+                                isEmpty = true;
+                            }
+                            return isEmpty;
+                        }
+
+                        
 
                         function backsuccess() {
                             var button = document.getElementById('backsuccess');
@@ -1371,45 +1037,159 @@
 
                         };
 
-                    });
+                    </script>
 
-                </script>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+
+                            $("#toJSON").click(function() {
+                                console.log("Hello");
+                                
+                                var table = JSON.stringify($('#TargetT')
+                                    .tableToJSON());
+                                var mname = document.getElementById(
+                                    "MeasurementName").value;
+                                var desc = document.getElementById(
+                                    "MeasurementDesc").value;
+                                var e = document.getElementById("group");
+                                var group = e.options[e.selectedIndex].value;
+                                var gid = document.getElementById("GoalID").value;
+                                console.log(group);
+                                var p = document.getElementById("priority");
+                                var priority = p.options[p.selectedIndex].value;
+                                console.log(priority);
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/AddMeasurementsJSON', true);
+                                xhr.setRequestHeader('Content-Type',
+                                    'application/x-www-form-urlencoded');
+                                xhr.onload = function() {
+                                    console.log(xhr.responseText);
+                                };
+
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4) {
+                                        var respData = xhr.responseText;
+                                        if (respData == "OK") {
+                                            console.log("Good");
+                                            backsuccess();
+                                        } else {
+                                            console.log("Not Good");
+                                            backfail();
+                                        }
+                                    }
+                                };
 
 
-                <!-- Bootstrap -->
-                <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-                <!-- FastClick -->
-                <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-                <!-- NProgress -->
-                <script src="assets/vendors/nprogress/nprogress.js"></script>
-                <!-- bootstrap-progressbar -->
-                <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-                <!-- iCheck -->
-                <script src="assets/vendors/iCheck/icheck.min.js"></script>
-                <!-- bootstrap-daterangepicker -->
-                <script src="assets/vendors/moment/min/moment.min.js"></script>
-                <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-                <!-- bootstrap-wysiwyg -->
-                <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-                <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-                <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-                <!-- jQuery Tags Input -->
-                <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-                <!-- Switchery -->
-                <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-                <!-- Select2 -->
-                <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-                <!-- Parsley -->
-                <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-                <!-- Autosize -->
-                <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-                <!-- jQuery autocomplete -->
-                <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-                <!-- starrr -->
-                <script src="assets/vendors/starrr/dist/starrr.js"></script>
-                <!-- Custom Theme Scripts -->
-                <script src="assets/build/js/custom.min.js"></script>
-                <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
-</body>
+                                xhr.send("table=" + table + "&mname=" + mname +
+                                    "&desc=" + desc + "&group=" + group+ "&priority=" + priority +
+                                    "&gid=" + gid );
+
+                            });
+
+
+                            $("#toJSONCycles").click(function() {
+                            console.log("JSON CYCLES");
+                            var table = JSON.stringify($('#tableCycles').tableToJSON());
+                            //var mid = document.getElementById("mid").value
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '/AddCyclesJSON', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                console.log(xhr.responseText);
+                            };
+
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState == 4) {
+                                    var respData = xhr.responseText;
+                                    if (respData == "OK") {
+                                        console.log("Hi");
+                                        backsuccess();
+                                    } else {
+                                        backfail();
+                                    }
+                                }
+                            };
+
+
+                            xhr.send("table=" + table);
+
+                        });
+
+                            function backsuccess() {
+                                var button = document.getElementById('backsuccess');
+                                button.click();
+
+                            };
+
+                            function backfail() {
+                                var button = document.getElementById('backfail');
+                                button.click();
+
+                            };
+
+                        });
+
+                    </script>
+
+
+                    <!-- Bootstrap -->
+                    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+                    <!-- FastClick -->
+                    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+                    <!-- NProgress -->
+                    <script src="assets/vendors/nprogress/nprogress.js"></script>
+                    <!-- bootstrap-progressbar -->
+                    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js">
+                    </script>
+                    <!-- iCheck -->
+                    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+                    <!-- bootstrap-daterangepicker -->
+                    <script src="assets/vendors/moment/min/moment.min.js"></script>
+                    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js">
+                    </script>
+                    <!-- bootstrap-wysiwyg -->
+                    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js">
+                    </script>
+                    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+                    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+                    <!-- jQuery Tags Input -->
+                    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js">
+                    </script>
+                    <!-- Switchery -->
+                    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+                    <!-- Select2 -->
+                    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+                    <!-- Parsley -->
+                    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+                    <!-- Autosize -->
+                    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+                    <!-- jQuery autocomplete -->
+                    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js">
+                    </script>
+                    <!-- starrr -->
+                    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+                    <!-- Custom Theme Scripts -->
+                    <script src="assets/build/js/custom.min.js"></script>
+                    <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+
+                    <!-- Datatables -->
+                    <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+                    <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                    <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+                    <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+                    <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+                    <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+                    <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+                    <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+                    <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+                    <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+                    <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+                    </body>
 
 </html>
