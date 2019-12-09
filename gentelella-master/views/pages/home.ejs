@@ -176,8 +176,11 @@ width: 100%;
                                                         <!-- NONE WILL DISPLAY-->
                                                     <% } %>
                                                 </td>
-                                                <td><form method="get" action="QualityMetrics">
-                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                <td> <form method="get" action="ViewMeasurementDetails">
+                                                        <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
+                                                        <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
+                                                        <button type="submit" class="btn btn-primary">View
+                                                            Details</button>
                                                     </form></td>
                                             </tr>
 
@@ -459,9 +462,12 @@ width: 100%;
                                                             <% } %>
                                                         </td>
                                                         <td>
-                                                            <form method="get" action="QualityMetrics">
-                                                                    <button type="submit" class="btn btn-primary">View Details</button>
-                                                                </form>
+                                                                <form method="get" action="ViewMeasurementDetails">
+                                                                        <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
+                                                                        <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
+                                                                        <button type="submit" class="btn btn-primary">View
+                                                                            Details</button>
+                                                                    </form>
                                                         </td>
                                                     </tr>
         

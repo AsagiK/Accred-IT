@@ -65,7 +65,7 @@
                                     <table class="table table-bordered" style="table-layout: fixed;">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>Activity  Name</th>
                                                     <th>Activity Description</th> 
                                                     <th>Activity Deadline </th>
@@ -78,7 +78,7 @@
                                                     
                                                        
                                                     <tr> 
-                                                            <td><%= act.activity_ID %></td>
+                                                            <td style="display: none;"><%= act.activity_ID %></td>
                                                             <td><%= act.activity_name %> </td>
                                                             <td><%= act.description %> </td>  
                                                             <td><%= act.deadline %></td>

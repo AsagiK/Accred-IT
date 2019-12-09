@@ -77,7 +77,7 @@
                                                     <td><%= submissions.description %></td>
                                                     <td>
                                                         <form method="get" action="ViewUsersSubmissionDetails">
-                                                            <input type=text name="subID" id="subID" value="<%= submissions.pending_ID %>">
+                                                            <input type="hidden" name="subID" id="subID" value="<%= submissions.pending_ID %>">
                                                             <button type="submit" class="btn btn-primary">Update Evidence</button>
                                                         </form>
                                                     </td>
