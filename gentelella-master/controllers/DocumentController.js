@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
+const TOKEN_PATH = require('../config/token.json');
+var UPLOAD_PATH = require('../config/accredit.json');;
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -29,12 +31,7 @@ server.use(fileUpload({
     preserveExtension: 10
 }));
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
-const TOKEN_PATH = 'token.json';
 var mime = require('mime-types');
-var UPLOAD_PATH = '';
-if (fs.existsSync('accredit.json')) {
-    UPLOAD_PATH = require('../accredit.json');
-}
 var sess
 module.exports = {
 
@@ -81,7 +78,7 @@ module.exports = {
             });
 
             function uploadfile() {
-                fs.readFile('credentials.json', (err, content) => {
+                fs.readFile('../config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), uploadtodrive);
                 });

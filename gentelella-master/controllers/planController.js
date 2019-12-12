@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');

@@ -9,11 +9,11 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
-const UPLOAD_PATH = 'accredit.json';
+const TOKEN_PATH = './config/token.json';
+const UPLOAD_PATH = './config/accredit.json';
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
+fs.readFile('./config/credentials.json', (err, content) => {
     if (err) return console.log('Error loading client secret file:', err);
     // Authorize a client with credentials, then call the Google Drive API.
     authorize(JSON.parse(content), listFiles);
@@ -78,7 +78,7 @@ function getAccessToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function listFiles(auth) {
-    if (!fs.existsSync('accredit.json')) {
+    if (!fs.existsSync('./config/accredit.json')) {
         const drive = google.drive({
             version: 'v3',
             auth
