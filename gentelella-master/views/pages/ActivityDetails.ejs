@@ -31,6 +31,13 @@
 
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -132,11 +139,35 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Expected Output</label></td>
+                                                    <td>
+                                                            <select class="form-control" style="width: 500px;" name="outputs" id="outputs">
+                                                                <% for (outputs of dataD) { %>
+                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>"><%= outputs.output %></option>
+                                                                <% } %>  
+                                                            </select>
+                                                            <br>
+                                                            <a class="btn btn-primary" id="addoutput">Add output</a>
+                                                            <br>
+                                                            <table id="tableoutputs" class="table table-striped table-bordered" style="width=100%; height=100%;">
+                                                                    <thead>
+                                                                        <th>ID</th>
+                                                                        <th>Output</th>
+                                                                        <th></th>
+                                                                    </thead>
+                                                                    <tbody>
+    
+                                                                    </tbody>
+                                                            </table>
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr style="display: none;">
                                                     <td><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
                                                             Progress: </label></td>
                                                     <td>
-                                                        <input type="number" name="score" id="score"
+                                                        <input type="number" name="score" id="score" value="0"
                                                             placeholder="Suggested Progress">
                                                     </td>
                                                 </tr>
@@ -154,7 +185,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td style="width=100%; height=100%;">
+                                                    <td style="width: 100%; height: 100%;">
                                                         <table id="table2" class="table table-striped table-bordered"
                                                             style="width=100%; height=100%;">
                                                             <thead>
@@ -173,7 +204,7 @@
 
 
                                                         </table>
-                                                        <button type="button" class="delete-row">Delete Row</button>
+                                                        <button type="button" id="delete-row" class="btn btn-dark">Delete Row</button>
                                                     </td>
                                                 </tr>
                                                 <tr style="display: none;">
@@ -188,6 +219,8 @@
                                                             class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" id="PID" name="PID" value=""
                                                             class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" id="CID" name="CID" value="<%= CID %>"
+                                                            class="form-control col-md-7 col-xs-12">
                                                     </td>
                                                     <td>
                                                         <button type="submit" id="passdocuments"
@@ -197,8 +230,7 @@
                                                 </tr>
                                             </form>
                                             <td></td>
-                                            <td><button type="submit" class="btn btn-success"
-                                                    id="toJSON">Submit</button></td>
+                                            <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
                                         </tbody>
 
 
@@ -235,14 +267,14 @@
                         <h4 class="modal-title" id="myModalLabel2">Choose Evidence</h4>
                     </div>
                     <div class="modal-body">
-                        <table name="table1" id="table1" class="table table-striped table-bordered">
+                        <table name="table1" id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Check</th>
                                     <th>Document ID</th>
                                     <th>File Name</th>
                                     <th>Routes</th>
-                                    <th style="visibility:collapse;">Group ID</th>
+                                    <th style="display: none">Group ID</th>
                                 </tr>
                             </thead>
 
@@ -261,7 +293,7 @@
                                         <%= doc.Document_Name %></td>
                                     <td id="Route" value="<%= doc.Document_Route %>">
                                         <%= doc.Document_Route %></td>
-                                    <td id='hidden' value="" style="visibility:collapse;">test</td>
+                                    <td id='hidden' value="" style="display: none;">test</td>
                                 </tr>
                                 <% } %>
                             </tbody>
@@ -269,7 +301,7 @@
 
                         </table>
                     </div>
-                    <button type="button" class="add-row">Add Row</button>
+                    <button type="button" id="add-row" class="btn btn-primary" style="margin-left: 10px;">Add Row</button>
 
                 </div>
             </div>
@@ -279,8 +311,8 @@
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $(".add-row").click(function () {
-                    $("#table1 tbody").find('input[name="record"]').each(function () {
+                $("#add-row").click(function () {
+                    $("#datatable-fixed-header tbody").find('input[name="record"]').each(function () {
                         //console.log('test');
                         if ($(this).is(":checked")) {
                             var index = $(this).attr("id");
@@ -307,7 +339,7 @@
 
                 // Find and remove selected table rows
 
-                $(".delete-row").click(function () {
+                $("#delete-row").click(function () {
                     $("#table2 tbody tr").find('input[name="record"]').each(function () {
 
                         if ($(this).is(":checked")) {
@@ -336,9 +368,24 @@
 
                 });
 
+                $("#addoutput").click(function(){
+                    var output = document.getElementById("outputs").value;
+                    console.log(output);
+                    var outputID = output.substr(0, output.lastIndexOf('~'));
+                    var outputName = output.substr(output.lastIndexOf('~') + 1);
+                    console.log("OUTPUT ID = " + outputID);
+                    console.log("OUTPUT NAME = " + outputName);
+                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-primary' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    $("#tableoutputs tbody").append(markup);
+                });
+
+                
+
+
                 $("#toJSON").click(function () {
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
+                    var table2 = JSON.stringify($('#tableoutputs').tableToJSON());
                     var AID = document.getElementById("activityID").value
                     var name = document.getElementById("activityName").value
                     var code = document.getElementById("code").value
@@ -347,6 +394,7 @@
                     var UID = document.getElementById("UID").value
                     var target = document.getElementById("target").value
                     var score = document.getElementById("score").value
+                    var CID = document.getElementById("CID").value
 
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
@@ -369,7 +417,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2);
 
                 });
 
@@ -379,16 +427,22 @@
 
                 };
 
+                $('.js-example-basic-multiple').select2();
+
 
             });
         </script>
 
         <script>
+            var outputArr;
             function textAreaAdjust(o) {
                 o.style.height = "1px";
                 o.style.height = (25 + o.scrollHeight) + "px";
             }
 
+            function deleteRow(r) {
+                    r.closest("tr").remove();
+                }
 
             function test() {
                 alert("1");
@@ -456,6 +510,23 @@
         <!-- Custom Theme Scripts -->
         <script src="assets/build/js/custom.min.js"></script>
         <script src="assets/js/JSONjs/jquery.tabletojson.js"></script>
+
+        <!-- Datatables -->
+        <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+        <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 

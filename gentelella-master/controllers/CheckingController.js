@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -197,7 +197,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_activities; ", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; ", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -208,6 +208,8 @@ module.exports = {
                     dataD: results[3],
                     dataE: results[4],
                     dataF: results[5],
+                    dataG: results[6],
+                    dataH: results[7],
                     current_user: sess.user
                 });
                 console.log(results);
@@ -251,7 +253,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -259,6 +261,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataD: results[3],
                         current_user: sess.user
                     })
                 }
@@ -275,7 +278,7 @@ module.exports = {
             var id = (req.query.MID);
             console.log(id+ "------------------------------------------------------------------------");
             var values = [id, id];
-            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT measurements_targets.measurementID, measurements_targets.target, measurements_targets.target_ID FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results[1]);

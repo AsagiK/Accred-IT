@@ -45,7 +45,7 @@
                         <div class="page-title">
                             <div class="title_left">
 
-                                <h3>  Checking Page </h3> 
+                                <h3>Checking Submissions Page </h3> 
 
                             </div>
                         </div>
@@ -58,64 +58,67 @@
 
                                             <!-- start accordion    --> 
         
-                                            <% for (var goal of data) { %> 
+                                            <% for (var measure of dataB) { %> 
                                                 
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> 
                                                 <div class="panel"> <!--PANEL FOR GOAL-->
-                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= goal.metric_ID %>" aria-expanded="true" aria-controls="collapse<%= goal.metric_ID %>">
+                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapse<%= measure.measurement_ID %>">
                                                         <h4 class="panel-title"> 
-                                                            <!--CHANGED TO GOAL NAME-->
-                                                            GOAL NAME:  <%= goal.metric_Name %> <%= goal.metric_ID %>
+                                                            <!--MEAASUREMENT NAME-->
+                                                            MEASUREMENT NAME:  <%= measure.measurement_Name %> <%= measure.measurement_ID %>
                                                         </h4>
         
                                                     </a>      
 
                                                     
 
-                                                    <div id="collapse<%= goal.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                        <input type="hidden" name="GID" value="<%= goal.metric_ID %>">   
+                                                    <div id="collapse<%= measure.measurement_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                        <input type="hidden" name="GID" value="<%= measure.measurement_ID %>">   
                                                         
                                                         <br>
-                                                        <% for (var meas of dataB) { %>
-                                                            <% if (meas.metric_ID == goal.metric_ID) { %>
+                                                        <% for (var activity of dataC) { %>
+                                                            <% for (var measure_Activity of dataF) { %>
+                                                            <% if (activity.activity_ID == measure_Activity.activity_ID && measure_Activity.measurement_ID == measure.measurement_ID) { %>
                                                          
-                                                        <div class="panel-body">
+                                                        <div style="background-color: white;" class="panel-body">
                                                             <!--Group 1 table-->
         
-                                                            <div class="panel"> <!--PANEL FOR MEASUREMENT-->
+                                                            <div class="panel"> <!--PANEL FOR ACTIVITIES-->
         
-                                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#collapses<%= meas.measurement_ID %>" aria-expanded="true" aria-controls="collapses<%= meas.measurement_ID %>">
+                                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#collapses<%= activity.activity_ID %>" aria-expanded="true" aria-controls="collapses<%= activity.activity_ID %>">
                                                                     <h3 class="panel-title">
-                                                                        Measurement: <%= meas.measurement_Name %> 
+                                                                        Activity: <%= activity.activity_name %> 
                                                                     </h3>
                                                                 </a>
-                                                                <div id="collapses<%= meas.measurement_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="HeadGroupOne">
-                                                                    <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
-        
-                                                                    <% for (var activity of dataC ) { %> 
-                                                                        <% for (var activities_measurements of dataF) { %>
-                                                                    
-                                                                    <% if (meas.measurement_ID == activities_measurements.measurement_ID && activities_measurements.activity_ID == activity.activity_ID) { %> 
-                                                                        
-                                                                    <div class="panel-body">
-                                                                        <div class="panel"> <!--PANEL FOR ACTIVITIES-->
-                                                                        
-                                                                        <a class="panel-heading" role="tab" id="HeadGroupTwo" data-toggle="collapse" data-parent="#HeadGroupOne" href="#Collapse<%=activity.activity_ID%>" aria-expanded="true" aria-controls="Collapse<%=activity.activity_ID%>">
-                                                                        
-                                                                            <h4 class="panel-title">
-                                                                                    Activity:<%= activity.activity_name%> - <%= activity.activity_ID%> 
-                                                                            </h4>
-                                                                        </a>
-                                                                        
-                                                                       
-                                                                            
-                                                                        <div id="Collapse<%=activity.activity_ID%>" class="collapse"> 
-
-                                                                                <table class="table table-bordered">
+                                                                <div id="collapses<%= activity.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="HeadGroupOne">
+                                                                    <input type="hidden" name="MID" value="<%= activity.activity_ID %>">
+                                                                    <br>
+                                                                    <table style="background-color: white;" class="table table-bordered">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>Activity Description</td>
+                                                                                <td><%= activity.description %></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Expected Outputs</td>
+                                                                                <td>
+                                                                                    <% for (outputs of dataG) { %>
+                                                                                        <% if (outputs.activity_ID == activity.activity_ID) { %>
+                                                                                            - <%= outputs.output %> <br>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br>
+    
+                                                                                <table style="background-color: white;" class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 
-                                                                                                <th>Description</th>   
+                                                                                                <th>Submission Description</th> 
+                                                                                                <th>Selected Outputs</th>  
                                                                                                 <th></th>
                                                                                                 
                                                                                             </tr>
@@ -128,10 +131,19 @@
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
                                                                                                 <td> <%= subs.description %> </td>
+                                                                                                <td>
+                                                                                                    <% for (pendingoutputs of dataH) { %>
+                                                                                                        <% for (outputs2 of dataG) { %>
+                                                                                                            <% if (pendingoutputs.pendingID == subs.pending_ID && pendingoutputs.outputID == outputs2.output_ID) { %> 
+                                                                                                            - <%= outputs2.output %> <br>
+                                                                                                            <% } %>
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+                                                                                                </td>
                                                                                                 <td>  
                                                                                                     <form method="get" action="ViewActivityEvidences">
                                                                                                         <input type="text" name="PID"
-                                                                                                            value="<%= subs.pending_ID %>">
+                                                                                                            value="<%= subs.pending_ID %>" style="display: none;">
                                                                                                         <button type="submit" class="btn btn-primary">View
                                                                                                             Evidence
                                                                                                         </button>
@@ -146,15 +158,7 @@
                                                                                         </tbody>
                                                                                     </table>
                                                                         
-                                                                        </div>
                                                                         
-                                                                        </div> 
-                                                                        
-                                                                        
-                                                                    </div>
-                                                                    <% } %>
-                                                                    <% } %>
-                                                                    <% } %>
                                                                 </div> 
                                                                 
                                                                 
@@ -163,7 +167,7 @@
                                                         </div>
         
                                                         <!--End of Group 1 Table -->
-                                                        
+                                                        <% } %>
                                                         <% } %> 
                                                         <% } %>
                                                         

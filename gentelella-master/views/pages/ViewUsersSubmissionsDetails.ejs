@@ -32,6 +32,11 @@
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
@@ -48,6 +53,7 @@
                             <h3>View Submissions Details</h3>
                             <h2>Testing User - <%= current_user[0].User_First %> - <%= current_user[0].User_ID %></h2>
                             <h2>Current Submission - <%= data[0].pending_ID %> - <%= data[0].activity_name %></h2>
+
                         </div>
                     </div>
                 </div>
@@ -56,7 +62,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <input type="text" name="PID" id="PID" value="<%= data[0].pending_ID %>">
+                                <input type="hidden" name="PID" id="PID" value="<%= data[0].pending_ID %>">
 
                                 <br />
                                 <!--DROPDOWN TO SELECT EVIDENCE TO UPDATE>
@@ -93,28 +99,23 @@
                                         <% for (var docs of dataB) { %>
                                         <% for (var evidence of dataC) { %>
                                         <% if (evidence.pendingID == data[0].pending_ID && evidence.documentID == docs.Document_ID) { %>
+                                        <form action="UpdateDocumentsJSON" method="POST" name="updateform"
+                                            enctype="multipart/form-data">
+                                            <tr>
+                                                <td><%= data[0].pending_ID %></td>
+                                                <td class="docs"><%= docs.Document_Name %></td>
+                                                <td><input type='file' name='DocFile' id='DocFile<%= evidence.documentID %>'></td>
+                                                <td class="nr"><%= evidence.documentID %></td>
+                                                <td><button class="btn btn-primary" name="btnsubmit<%= evidence.documentID %>"
+                                                        id="btnsubmit<%= evidence.documentID %>" onClick="submit_ID(this.id)"
+                                                        disabled>Submit</button></td>
+                                                <input type="hidden" name="DID" value="<%= evidence.documentID %>">
+                                                <input type="hidden" name="AID" value="<%= data[0].activity_ID %>">
+                                                <input type="hidden" name="PID" value="<%= data[0].pending_ID %>">
+                                                <input type="hidden" name="DocuID" value="<%= evidence.documentID %>">
 
-                                        <tr>
-                                            <td><%= data[0].pending_ID %></td>
-                                            <td><%= docs.Document_Name %></td>
-                                            <td><input type='file' name='DocFile<%= x %>' id='DocFile<%= x %>'></td>
-                                            <td><%= evidence.documentID %></td>
-                                            <td><button class="btn btn-primary" name="btnsubmit<%= x %>"
-                                                    id="btnsubmit<%= x %>" onClick="submit_ID(this.id)" disabled>Submit</button></td>
-                                            <script>
-                                                $(document).ready(function () {
-                                                    $('input[type=file]').change(function () {
-                                                        var name = $("#DocFile<%= x %>").attr("name");
-                                                        console.log(name);
-                                                        if ($('input[type=file]').val() == '') {
-                                                            $('button').attr('disabled', true)
-                                                        } else {
-                                                            $('button').attr('disabled', false);
-                                                        }
-                                                    })
-                                                });
-                                            </script>
-                                        </tr>
+                                            </tr>
+                                        </form>
 
                                         <% } %>
                                         <% } %>
@@ -142,6 +143,87 @@
             </div>
         </div>
 
+        <script>
+
+            $(document).ready(function () {
+
+                $('input[type=file]').change(function () {
+                    var $row = $(this).closest("tr");
+                    var $text = $row.find(".nr").text();
+                    var docfile = $(this).attr("id");
+                    //var file = docfile.val();
+                    //var docSubmit = document.getElementById()
+                    //console.log(file);
+                    //console.log("GETTING THE EVIDENCE ID " + $text);
+                    //console.log("CHOSEN DOCUMENT FILE = " + $('input[type=file]').val());
+                    //console.log("DOCFILE NAME = " + $(this).attr("name"));
+                    if ($('docfile').val() == '') {
+                        $('#btnsubmit' + $text).attr('disabled', true)
+                    } else {
+                        $('#btnsubmit' + $text).attr('disabled', false);
+                    }
+                })
+
+                $('form[name="updateform"]').submit(function (event) {
+                    event.preventDefault();
+                    var post_url = $(this).attr("action");
+                    var request_method = $(this).attr("method");
+                    var form_data = new FormData(this)
+                    var fdata = $(this).serializeArray();
+                    
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: form_data,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        success: function (data) {
+                            processdata(data, fdata);
+                        },
+                    })
+                });
+
+                function processdata(data, fdata) {
+                    console.log(data);
+                    if (data.case == "0") {
+                        new PNotify({
+                            title: 'Error: Document already exists',
+                            text: data.message,
+                            hide: false,
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        });
+                    } else {
+                        new PNotify({
+                            title: 'Evidence Updated!',
+                            text: data.message,
+                            type: 'success',
+                            hide: false,
+                            styling: 'bootstrap3'
+                        });
+                        
+                        var target = "DocFile"+fdata[3].value;
+                        var target2 = "btnsubmit"+fdata[3].value; 
+                        //console.log(target2);
+                        document.getElementById(target).style = "display:none;";
+                        document.getElementById(target).value = "";
+                        document.getElementById(target2).style = "display:none;";
+                        //$(target2).innerHTML("Submitted");
+                        //document.getElementById(target2).removeClass = "btn btn-primary";
+                    }
+
+                };
+
+
+            });
+
+
+
+        </script>
+
+
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".addEvidence").click(function test() {
@@ -162,11 +244,11 @@
                     $(table).append(markup);
                 });
 
-                function submit_ID(id){
-                    alert(id);
-                }
+
 
             });
+
+
         </script>
 
         <!Script for dynamic text area>
@@ -175,6 +257,7 @@
                     o.style.height = "1px";
                     o.style.height = (25 + o.scrollHeight) + "px";
                 }
+
             </script>
 
             <!-- jQuery -->
@@ -212,6 +295,10 @@
             <script src="assets/vendors/starrr/dist/starrr.js"></script>
             <!-- Custom Theme Scripts -->
             <script src="assets/build/js/custom.min.js"></script>
+            <!-- PNotify -->
+            <script src="assets/vendors/pnotify/dist/pnotify.js"></script>
+            <script src="assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
+            <script src="assets/vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 </body>
 

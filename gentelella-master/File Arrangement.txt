@@ -1,4 +1,0 @@
-htmls > views/pages
-css and js > public/assets
-
-app > routes > controller

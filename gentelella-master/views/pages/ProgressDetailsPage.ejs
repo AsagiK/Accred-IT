@@ -68,7 +68,7 @@
                                             <% for (var PenActs of dataF) { %>
                                                 <% for (var ActEvidences of dataE) { %>
                                                     
-                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1) { %>
+                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1 && PenActs.isActive == 1) { %>
                                                     
                                                         <a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
@@ -90,21 +90,25 @@
                                 <div class="x_content">
                                         <div>
 
-                                                <label>MeasureID: </label>
-                                                <input class="form-control" type="text" id="mid" name="mid" value="<%= data[0].measurement_ID %>">
-                                                <br>
-                                                <label>Progress: </label>
-                                                <input class="form-control" type="text" id="progress" name="progress" >
+                                                <!-- MEASURE ID-->
+                                                <input class="form-control" type="hidden" id="mid" name="mid" value="<%= data[0].measurement_ID %>">
+                                                <label>Measurment Name:</label>
+                                                <input class="form-control" type="text" id="mname" name="mname" value="<%= data[0].measurement_Name %>" readonly>
                                                 <br>
                                                 <label>Target: </label>
-                                                <select class="form-control" id="target" name="target">
+                                                <select class="form-control" id="target" name="target" onchange="remSelect()">
                                                     <% for( var targs of dataB) { %>
         
                                     
-                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>"><%= targs.target %></option>
+                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>"><%= targs.target %> - <%= targs.target_Desc %></option>
                                                         
                                                         <% } %>
-                                                      </select>
+                                                      </select> 
+                                                <br>
+                                                <label>Progress: </label>
+                                                <input class="form-control" type="number" id="progress" name="progress" >
+                                                <br>
+                                                
                                                 <br>
                                                 <button type="button" class="btn btn-default add-row-targetProg">Add</button>
                                                 <br>
@@ -122,7 +126,7 @@
                                                     </tbody>
                                                 </table>
 
-                                                <button type="button" class="btn btn-success" id="toJSONAssignProgress">SUBMIT to json button</button>
+                                                <button type="button" class="btn btn-success" id="toJSONAssignProgress">SUBMIT</button>
         
                                         </div>
                                         <form method="get" action="/ProgressPage">

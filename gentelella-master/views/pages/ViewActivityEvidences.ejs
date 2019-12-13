@@ -60,10 +60,7 @@
                                 <table class="table table-bordered">
                                     
                                     <tbody>
-                                        <tr>
-                                            <td>Status</td>
-                                            <td><%= data[0].status %></td>
-                                        </tr>
+                                        
                                         <tr>
                                             <td>Submission Report: </td>
                                             <td><%= data[0].description %></td>
@@ -95,7 +92,7 @@
 
                                         </tr>
                                         <tr>
-                                            <td><input type=text id="PID" name="PID" value="<%= data[0].pending_ID %>"></td>
+                                            <td><input type=hidden id="PID" name="PID" value="<%= data[0].pending_ID %>"></td>
                                             <td>
                                                     <button type="submit" name="subtype" value="1">Approve
                                                             Evidence</button>

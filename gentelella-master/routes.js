@@ -48,6 +48,12 @@ router.route('/SendMeasurement').post(planCtrl.SendMeasurement);
 router.route('/alterplan').post(planCtrl.alterplan);
 router.route('/ViewMeasurementDetails').get(planCtrl.ViewMeasurementDetails);
 router.route('/QualityMetrics').get(planCtrl.QualityMetric);
+router.route('/EditMeasurement').get(planCtrl.EditMeasurement);
+router.route('/UpdateMeasurement').post(planCtrl.UpdateMeasurement);
+router.route('/AuditMeasurement').post(planCtrl.AuditMeasurement); 
+router.route('/ViewActivitiesUnderMeasurement').post(planCtrl.ViewActivitiesUnderMeasurement);
+router.route('/BackToMeasurement').get(planCtrl.BackToMeasurement); 
+router.route('/AnnualReport').post(planCtrl.AnnualReport); 
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
@@ -79,6 +85,8 @@ router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
 router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
+router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
+router.route('/CreateSourcesJSON').post(JSONCtrl.CreateSourcesJSON);
 
 
 
@@ -88,8 +96,11 @@ router.route('/SubmitReport').post(DocCtrl.SubmitReport);
 router.route('/SendDocuments').post(DocCtrl.SendDocuments);
 router.route('/PreCheck').post(DocCtrl.PreCheck);
 router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
+router.route('/TestingJSON').post(DocCtrl.TestingJSON);
+router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
 
 //--SessCtrl
+router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
 router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);

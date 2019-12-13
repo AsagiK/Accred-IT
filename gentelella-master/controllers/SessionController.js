@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -44,7 +44,7 @@ module.exports = {
             connection.query(sql, values, function (err, result) {
                 if (err) {
                     console.log("Username already exists");
-                    resp.redirect('/debug');
+                    resp.redirect('/RegisterAdminPage');
                 } else {
                     console.log("Admin Created");
                     resp.redirect('/login');
@@ -105,7 +105,7 @@ module.exports = {
                         console.log("User validated");
 
 
-                        var sessql = "SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.group, users.ContactNo, users.username FROM capstone.users where binary username = ?"
+                        var sessql = "SELECT users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where binary username = ?"
                         var sesvalues = [user];
 
                         connection.query(sessql, sesvalues, function (err2, result2, fields2) {
@@ -132,6 +132,11 @@ module.exports = {
     Logout: function (req, resp) {
         req.session.destroy();
         resp.redirect('/login');
+    },
+
+    RegisterAdminPage: function (req, resp) {
+       
+        resp.redirect('/RegisterAdminPage.ejs');
     }
 
 }

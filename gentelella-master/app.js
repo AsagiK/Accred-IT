@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
-var connection = require('./db');
+var connection = require('./config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -40,9 +40,14 @@ server.set('view engine', 'ejs');
 
 server.get('/', function (req, resp) {
 
-    resp.redirect('/login');
+    sess = req.session;
+    if (!req.session.user) {
+        console.log("No session")
+        resp.redirect('/login');
+    } else {
 
-    console.log("Login Page");
+        resp.redirect('/home')
+    }
 });
 
 server.get('/debug', function (req, resp) {
@@ -133,7 +138,7 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
 });
 
 function checktoken() {
-    if (fs.existsSync('token.json') && fs.existsSync('accredit.json')) {
+    if (fs.existsSync('./config/token.json') && fs.existsSync('./config/accredit.json')) {
         console.log("\x1b[32m%s\x1b[0m", "Google Drive connection is configured");
     } else {
         console.log("\x1b[31m", "")

@@ -5,8 +5,9 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const async = require("async");
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -50,6 +51,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
+            
             connection.query("SELECT * FROM capstone.roles where Role_ID > 1; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
@@ -219,7 +221,7 @@ module.exports = {
             var values = [id];
             connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=26; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
                 if (err) throw err;
-                if(results){
+                if (results) {
                     console.log(results);
                     resp.render('./pages/Recommendations.ejs', {
                         data: results[0],
@@ -255,7 +257,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var alert = req.query.passdata;
-            var passData
+            var passData;
             if (alert) {
                 if (alert == 0) {
                     passData = {
@@ -302,14 +304,24 @@ module.exports = {
                         goodStatus: 0,
                         msg: "Measurement Not Created"
                     }
-                } else {
+                } else if (alert == 1) {
                     passData = {
                         goodStatus: 1,
                         msg: "Measurement Created"
                     }
+                } else if (alert == 2) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Not Edited"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Edited"
+                    }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -319,11 +331,16 @@ module.exports = {
                         dataD: results[3],
                         dataE: results[4],
                         dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
+                        dataI: results[8],
+                        dataJ: results[9],
+                        dataK: results[10],
+                        dataL: results[11],
                         current_user: sess.user,
                         notif: passData
                     });
                 }
-                //console.log(results);
                 console.log("QUALITY METRICS NON AJAX");
             });
         }
@@ -331,16 +348,20 @@ module.exports = {
 
     addmetric: function (req, resp) {
         var source = (req.body.source);
+        var sourceID = source.substr(0, source.indexOf('~'));
+        var sourceType = source.substr(source.lastIndexOf('~') + 1);
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
-        var duration = (req.body.duration);
+        //var duration = (req.body.duration);
         var startStatus = "Active"
         console.log(metricName);
         console.log(metricDesc);
         console.log(source);
-        console.log(duration);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `duration`, `cycle_Status`) VALUES ( ?, ?, ?, ?, ?)";
-        var values = [metricName, metricDesc, source, duration, startStatus];
+        
+        console.log("SOURCE ID - " + sourceID);
+        console.log("SOURCE TYPE = " + sourceType);
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?)";
+        var values = [metricName, metricDesc, sourceID, startStatus, sourceType];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
@@ -615,28 +636,31 @@ module.exports = {
                 }
             }
             var MID = (req.query.MID);
+            var CID = (req.query.CID);
             console.log(MID);
-            var values = [MID, MID, MID];
+            var values = [MID, MID, CID];
 
-            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets;"
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.users; SELECT * FROM capstone.cycle WHERE cycle_ID = ?;"
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                if(results){
-                resp.render('./pages/ViewMeasurementDetails.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    dataD: results[3],
-                    dataE: results[4],
-                    dataF: results[5],
-                    dataG: results[6],
-                    dataH: results[7],
-                    dataI: results[8],
-                    current_user: sess.user,
-                    notif: passData
-                })
-                //console.log(results);
+                if (results) {
+                    resp.render('./pages/ViewMeasurementDetails.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        dataE: results[4],
+                        dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
+                        dataI: results[8],
+                        dataJ: results[9],
+                        dataK: results[10],
+                        current_user: sess.user,
+                        notif: passData
+                    })
+                    //console.log(results);
                 }
             });
             console.log("VIEW MEASUREMENT DETAILS");
@@ -713,8 +737,24 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Source not added"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Source added"
+                    }
+                }
+            }
             resp.render('./pages/CreateSource.ejs', {
-                current_user: sess.user
+                current_user: sess.user,
+                notif: passData
             });
             console.log("CREATE SOURCE PAGE");
         }
@@ -776,8 +816,33 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var alert = req.query.passdata;
+            var passData
+            if (alert) {
+                if (alert == 0) {
+                    passData = {
+                        goodStatus: 0,
+                        msg: "Measurement Not Created"
+                    }
+                } else if (alert == 1) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Created"
+                    }
+                } else if (alert == 2) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Not Edited"
+                    }
+                } else {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "Measurement Edited"
+                    }
+                }
+            }
             var SID = req.query.SID;
-            var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.cycle_ID, group.Group_Name, source.source_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID join capstone.source on metric.source_ID = source.source_ID where source.source_ID = (?); Select * FROM capstone.source where source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;"
+            var sql = "SELECT * FROM capstone.metric WHERE metric.source_ID = ?; SELECT * FROM capstone.source WHERE source.source_ID = ?; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;"
             var values = [SID, SID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -787,7 +852,16 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
-                        current_user: sess.user
+                        dataE: results[4],
+                        dataF: results[5],
+                        dataG: results[6],
+                        dataH: results[7],
+                        dataI: results[8],
+                        dataJ: results[9],
+                        dataK: results[10],
+                        dataL: results[11],
+                        current_user: sess.user,
+                        notif: passData
                     });
                     console.log(results);
                     console.log("RECOMMENDATION NON AJAX");
@@ -945,8 +1019,6 @@ module.exports = {
         });
     },
 
-
-
     UploadDocument: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
@@ -987,16 +1059,19 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var id = (req.query.UID);
+            var cid = req.query.CID;
             console.log(id);
-            var values = [id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs;", values, function (err, results) {
+            var values = [id, id];
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?", values, function (err, results) {
                 if (err) throw err;
                 if (results) {
                     console.log(results);
                     resp.render('./pages/ActivityDetails.ejs', {
                         data: results[0],
                         dataB: results[1],
-                        dataC: results [2],
+                        dataC: results[2],
+                        dataD: results[3],
+                        CID: cid,
                         current_user: sess.user
                     })
                 }
@@ -1102,7 +1177,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities ; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.pending_activities;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities JOIN capstone.activity_members WHERE approved_activities.activity_ID = activity_members.activity_ID; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_activities; SELECT pending_ID, user_ID ,activityID, activity_name,status, suggested_score, dateupdated, comment, documentID, Document_Name FROM capstone.pending_activities JOIN capstone.activity_evidences, capstone.documents where pending_activities.activity_ID = activity_evidences.activityID AND documents.Document_ID = activity_evidences.documentID AND pending_activities.pending_ID = activity_evidences.pendingID; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.approved_activities", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/home.ejs', {
@@ -1112,13 +1187,14 @@ module.exports = {
                         dataD: results[3],
                         dataE: results[4],
                         dataF: results[5],
-                        
+                        dataG: results[6],
+                        dataH: results[7],
                         current_user: sess.user
                     });
                     //console.log(results);
-                   // console.log(results[3]);
-                    //console.log(results[4]);
-                    console.log(results[6]);
+                   console.log(results[3]);
+                    console.log(results[2]);
+                    //console.log(results[6]);
                     
                     console.log("Dashboards Loaded"); 
                 
@@ -1134,29 +1210,28 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var AID = req.query.AID;
-            var GID = req.query.GID;
-            console.log("GROUP ID-------------------" + GID)
+            var CID = req.query.CID;
+            //var GID = req.query.GID;
+            //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = (?) && users.Role != 1 ; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); "
-            var values = [GID, AID, AID];
+            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; "
+            var values = [AID, AID, CID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 console.log(results[1])
-                if(results){
-                resp.render('./pages/AssignActivityToMember.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user
-                });
-                console.log("Assign Activity to Member Page");
+                if (results) {
+                    resp.render('./pages/AssignActivityToMember.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        current_user: sess.user
+                    });
+                    console.log("Assign Activity to Member Page");
                 }
             });
         }
-    }, 
-
-    
-
+    },
 
     ViewUsersSubmission: function (req, resp) {
         sess = req.session;
@@ -1164,8 +1239,8 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var userid= req.query.sess;
-            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?);";
+            var userid = req.query.sess;
+            var sql = "SELECT * FROM capstone.pending_activities WHERE user_ID = (?);";
             var values = [sess.user[0].User_ID];
             console.log(sess.user[0].User_ID);
             connection.query(sql, values, function (err, results, fields) {
@@ -1187,9 +1262,9 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var userid= req.query.sess;
+            var userid = req.query.sess;
             var SID = req.query.subID;
-            var sql= "SELECT * FROM capstone.pending_activities WHERE user_ID = (?) && pending_ID = (?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
+            var sql = "SELECT * FROM capstone.pending_activities WHERE user_ID = (?) && pending_ID = (?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
             var values = [sess.user[0].User_ID, SID, SID];
             console.log(sess.user[0].User_ID);
             console.log(SID);
@@ -1201,11 +1276,327 @@ module.exports = {
                     dataC: results[2],
                     current_user: sess.user
                 });
-                console.log(results)
             });
         }
 
 
+    },
+
+    EditMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var CASE = req.query.CASE;
+            var MID = req.query.MID;
+            var GID = req.query.GID;
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric"
+            var values = [MID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/EditMeasurement.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    CASE: CASE,
+                    GID: GID,
+                    current_user: sess.user
+                });
+                //console.log(results);
+                console.log("EDIT MEASUREMENT PAGE");
+            });
+        }
+    },
+
+    UpdateMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            console.log(req.body);
+            var MID = req.body.MID;
+            var mname = req.body.measurementName;
+            var mdesc = req.body.measurementDesc;
+            var group = req.body.group;
+            var priority = req.body.priority;
+            var sql = "UPDATE `capstone`.`measurement` SET `GroupAssigned` = ?, `measurement_Name` = ?, `measurement_Description` = ? , `priority_Level` = ? WHERE (`measurement_ID` = ?)";
+            var values = [group, mname, mdesc, priority, MID]
+            connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err;
+                if (result) {
+                    resp.redirect('/QualityMetrics?passdata=3')
+                }
+            });
+
+        }
+    },
+
+    AuditMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            console.log(req.body);
+            var MID = req.body.MID;
+            var mname = req.body.measurementName;
+            var mdesc = req.body.measurementDesc;
+            var cycle = req.body.cycle;
+            var priority = req.body.priority;
+            getmeasurement(MID, auditmeasurement);
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  " + priority)
+            function getmeasurement(MID, callback) {
+                var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?);"
+                var values = [MID]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log(result)
+                        var resdata = JSON.parse(JSON.stringify(result[0]))
+                        console.log(resdata + "measurement to audit")
+                        callback(resdata, updatemeasurement, audittargets)
+                    }
+                });
+            }
+
+            function auditmeasurement(resdata, callback, callback2) {
+                var date = new Date();
+                var current = date.toISOString().split('T')[0];
+                var sql = "INSERT INTO `capstone`.`measurement_audit` (`measurement_ID`, `QualityTarget`, `Procedures`, `GroupAssigned`, `metric_ID`, `measurement_Name`, `measurement_Description`, `Deadline`, `cycle_ID`, `audit_date`, `priority_Level` ) VALUES (?,?,?,?,?,?,?,?,?,?,?);"
+                var values = [resdata.measurement_ID, resdata.QualityTarget, resdata.Procedures, resdata.GroupAssigned, resdata.metric_ID, resdata.measurement_Name, resdata.measurement_Description, resdata.Deadline, resdata.cycle_ID, current, priority]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log("Measurement Audited")
+                        var MAID = result.insertId;
+                        callback()
+                        callback2(MAID, auditactivities, resdata)
+                    }
+                });
+            }
+
+            function updatemeasurement() {
+                var sql = "UPDATE `capstone`.`measurement` SET `measurement_Name` = ?, `measurement_Description` = ?, `cycle_ID` = ?, `priority_Level` = ?  WHERE (`measurement_ID` = ?)";
+                var values = [mname, mdesc, cycle, priority, MID]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log("Measurement Updated")
+                        resp.redirect('/QualityMetrics')
+                    }
+                });
+            }
+
+            function audittargets(MAID, auditactivities, resdata) { //MAID == Measurementt Audit ID
+                var sql = "SELECT * FROM capstone.measurements_targets WHERE measurementID = (?)"
+                var values = [MID]
+                var resdatamain = resdata;
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var mi = resdata[key]["measurementID"];
+                            var ta = resdata[key]["target"];
+                            var pr = resdata[key]["progress"];
+                            var ti = resdata[key]["target_ID"];
+                            var tt = resdata[key]["target_Type"];
+                            var td = resdata[key]["target_Desc"];
+
+                            var sql = "INSERT INTO `capstone`.`measurements_targets_audit` (`measurements_auditID`, `measurementID`, `target`, `progress`, `target_ID` , `target_Type` , `target_Desc`) VALUES (?,?,?,?,?,?,?);"
+
+
+                            var values = [MAID, mi, ta, pr, ti, tt, td];
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback(err);
+                                if (result) {
+                                    callback();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Failed");
+                            } else {
+                                console.log("Passed");
+                                auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain, auditactivitydata);
+                            }
+                        })
+                    }
+                });
+            }
+
+            function auditactivities(MID, MAID, auditpendingactivities, resdata, resdatamain, auditactivitydata) {
+                var sql = "SELECT * FROM capstone.measurements_activities WHERE measurement_ID = (?)"
+                var values = [MID];
+                var CID = resdatamain.cycle_ID;
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var mi = resdata[key]["measurement_ID"];
+                            var ai = resdata[key]["activity_ID"];
+                            var sql = "INSERT INTO `capstone`.`measurements_activities_audit` (`measurements_auditID`, `measurement_ID`, `activity_ID`) VALUES (?,?,?);"
+                            var values = [MAID, mi, ai];
+                            console.log(values + "audit values")
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback(err);
+                                if (result) {
+                                    var MAAID = result.insertId;
+                                    var aii = ai;
+                                    auditpendingactivities(MAID, MAAID, CID, aii);
+                                    auditactivitydata(MAID, ai);
+                                    callback();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Audit Activities Failed");
+                                console.log(err)
+                            } else {
+                                console.log("Audit Activities Passed");
+                            }
+                        })
+                    }
+                });
+            }
+
+            function auditpendingactivities(MAID, MAAID, CID, ai) {
+                var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = 1 && pending_activities.cycle_ID = ?;"
+                var values2 = [ai, CID];
+                console.log(values2 + " pending values")
+                connection.query(sql2, values2, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback2) {
+                            var pi = resdata[key]["pending_ID"];
+                            var ai = resdata[key]["activity_ID"];
+                            var an = resdata[key]["activity_name"];
+                            var ta = resdata[key]["target"];
+                            var co = resdata[key]["code"];
+                            var de = resdata[key]["description"];
+                            var mi = resdata[key]["measurement_ID"];
+                            var cs = resdata[key]["current_Score"];
+                            var st = resdata[key]["status"];
+                            var ss = resdata[key]["suggested_Score"];
+                            var du = new Date(resdata[key]["dateupdated"]).toISOString().split('T')[0];
+                            var ac = resdata[key]["active"];
+                            var ui = resdata[key]["user_ID"];
+                            var com = resdata[key]["comment"];
+                            var ci = resdata[key]["cycle_ID"];
+                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?); UPDATE `capstone`.`pending_activities` SET `isActive` = 0 WHERE (`pending_ID` = ?);"
+
+                            var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci, pi];
+                            connection.query(sql, values, function (err, result) {
+                                if (err) callback2(err);
+                                if (result) {
+                                    var CID = resdata.cycle_ID;
+                                    var MAAID = result.insertId;
+                                    auditpendingactivities(MAID, MAAID, CID, ai);
+                                    callback2();
+                                }
+                            });
+                        }, function (err) {
+                            if (err) {
+                                console.log("Audit Pending Failed");
+                                console.log(err);
+                            } else {
+                                console.log("Audit Pending Passed");
+                            }
+                        })
+                    }
+                });
+            }
+
+            function auditactivitydata(MAID, ai) {
+                var sql = "SELECT * FROM capstone.approved_activities where approved_activities.activity_ID = ?;"
+                var values = [ai]
+                connection.query(sql, values, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result[0]))
+                        var sql2 = "INSERT INTO `capstone`.`approved_activities_audit` (`measurement_auditID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `deadline`) VALUES (?,?,?,?,?,?,?,?,?);"
+                        var deadline = new Date(resdata.deadline).toISOString().split('T')[0];
+                        var values2 = [MAID, resdata.activity_ID, resdata.activity_name, resdata.target, resdata.code, resdata.description, resdata.measurement_ID, resdata.current_Score, deadline]
+                        connection.query(sql2, values2, function (err, result, fields) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log("activity data audited");
+                            }
+                        });
+                    }
+                });
+
+            }
+
+        }
+    }, 
+
+    ViewActivitiesUnderMeasurement: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var MID = req.body.MID;
+            var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
+            console.log("Activity test"+  MID);
+            var values = [MID]
+            
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/ViewActivitiesUnderMeasurement.ejs' , {
+                        data:results[0],
+                        dataB:results[1],
+                        dataC:results[2],
+                        current_user:sess.user
+                    }); 
+                    console.log();
+                    console.log ("activities are loaded");
+                    
+            
+
+            });
+
+        }
+    }, 
+
+    BackToMeasurement: function (req, resp) { 
+        resp.redirect('./pages/QualityMetrics.ejs');
+        console.log("Back To Quality Metrics");
+    }, 
+
+    AnnualReport: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var MID = req.body.MID; 
+            
+            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); "
+            console.log("ANNUAL REPORT TEST CUH "+ MID);
+            var values = [MID]
+            
+            connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/AnnualReport.ejs' , {
+                        data:result,
+                        current_user:sess.user
+                    }); 
+                    
+                    console.log ("reports are loaded are loaded boi");
+                    
+            
+
+            });
+
+        } 
     },
 
 }
