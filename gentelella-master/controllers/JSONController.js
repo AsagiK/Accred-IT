@@ -343,14 +343,15 @@ module.exports = {
             var gi = UID[key]["GoalID"];
             var tr = UID[key]["Term"];
             var tt = UID[key]["TotalTerm"];
+            var ind = UID[key]["Index"];
             console.log(tr);
             console.log(tt);
             console.log(cn);
             console.log(sd);
             console.log(ed);
             console.log(gi);
-            var sql = "UPDATE capstone.metric SET cycle_Created = '1' WHERE (metric.metric_ID = ?); INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`) VALUES (?, ?, ?, ?, ?, ?);";
-            var values = [gi, cn, sd, ed, gi, tr, tt];
+            var sql = "UPDATE capstone.metric SET cycle_Created = '1' WHERE (metric.metric_ID = ?); INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`, `goal_ID`,`termnum`, `totalterm`, `Index`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            var values = [gi, cn, sd, ed, gi, tr, tt, ind];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
