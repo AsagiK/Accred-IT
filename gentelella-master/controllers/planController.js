@@ -1282,32 +1282,7 @@ module.exports = {
 
     }, 
 
-    EditActivities: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
-            resp.redirect('/login?status=0');
-        } else {
-            var userid= req.query.sess;
-            var SID = req.query.subID;
-            var sql= "SELECT  activity_name, approved_activities.description, activity_Member FROM capstone.approved_activities JOIN capstone.activity_members where approved_activities.activity_ID = activity_members.activity_ID; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
-            var values = [sess.user[0].User_ID, SID, SID];
-            console.log(sess.user[0].User_ID);
-            console.log(SID);
-            connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err;
-                resp.render('./pages/AlterActivities.ejs', {
-                    data: results[0],
-                    dataB: results[1],
-                    dataC: results[2],
-                    current_user: sess.user
-                });
-                console.log(results)
-            });
-        }
-
-
-    }, 
+    
 
     EditMeasurement: function (req, resp) {
         sess = req.session;
@@ -1624,6 +1599,58 @@ module.exports = {
             });
 
         } 
+    }, 
+
+    EditActivities: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            
+            var AID = req.query.AID;
+            var sql= "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); ";
+            var value = [AID];
+            console.log(AID);
+            connection.query(sql, value, function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/AlterActivities.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+                console.log(result)
+            });
+        }
+
+
+    }, 
+
+    AlterActivities: function (req, resp) { 
+        sess=req.session;
+        if(!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = req.body.AID;
+            var an = req.body.activityname;
+            var ds = req.body.description;
+            var dl = req.body.deadline;
+            console.log(id);
+            console.log(an);
+            console.log(ds);
+            console.log(dl);
+            var sql = "UPDATE capstone.approved_activities SET activity_name = ?, description = ?, deadline = ? WHERE activity_ID = ?; ";
+            var values = [an, ds, dl, id];
+            connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err;
+                console.log(err);
+                if (result) {
+                    resp.redirect('./pages/QualityMetrics.ejs');
+                }
+            }); 
+            console.log("ACTIVITY UPDATED");
+        }
+        
     },
 
 }
