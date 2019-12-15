@@ -51,7 +51,7 @@ router.route('/QualityMetrics').get(planCtrl.QualityMetric);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
-
+router.route('/AlterActivity').get(planCtrl.EditActivities);
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
