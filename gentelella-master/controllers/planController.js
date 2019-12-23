@@ -1599,4 +1599,30 @@ module.exports = {
         } 
     },
 
+    ViewUserAccount: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
+            connection.query(sql, function (err, results, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/ViewUserAccount.ejs' , {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        current_user:sess.user
+                    }); 
+                    
+                    console.log ("VIEW USER ACCOUNT PAGE");
+                    
+            
+
+            });
+        }
+    },
+
 }
