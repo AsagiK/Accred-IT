@@ -117,7 +117,7 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
 
 //OTHERS
-router.route('/TestPage').get(planCtrl.Recommendations);
+router.route('/TestPage').get(planCtrl.TestPage);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
 router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
 

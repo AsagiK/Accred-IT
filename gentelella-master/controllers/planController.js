@@ -210,7 +210,7 @@ module.exports = {
         });
     },
 
-    Recommendations: function (req, resp) {
+    TestPage: function (req, resp) {
         sess = req.session;
         if (!req.session.user) {
             console.log("No session")
@@ -223,7 +223,7 @@ module.exports = {
                 if (err) throw err;
                 if (results) {
                     console.log(results);
-                    resp.render('./pages/Recommendations.ejs', {
+                    resp.render('./pages/TestPage.ejs', {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
