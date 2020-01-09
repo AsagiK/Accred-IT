@@ -411,7 +411,27 @@ module.exports = {
     },
     
     CreateNotif: function(req, resp){
+        console.log(req.body);
+        var notif = req.body.notif;
+        notif = JSON.parse(notif);
+        var body = notif.body;
+        var sender = notif.sender;
+        var receiver = notif.receiver;
+        var group = notif.group;
+        var range = notif.range;
+        var admin = notif.admin;
+        var sysadmin = notif.sysadminl
+        var triggerdate = notif.triggerdate;
         
-    }
+        
+    },
+    
+    GetNotif: function(req, resp){
+        
+    },
+    
+    SetRead: function(req, resp){
+        
+    },
 
 }
