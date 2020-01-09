@@ -418,7 +418,7 @@ module.exports = {
 //        range 3 = group gets notified
 //        range 4 = group and sender gets notified
         
-
+// sample notification object
         var notifobject = {
             "body": "test", //message body, cannot be null
             "sender": "46", //ID of sender, can be set to null
@@ -429,19 +429,13 @@ module.exports = {
             "sysadmin": "1", // same as above
             "triggerdate": "" //set to "" to notify instantly, otherwise provide a date
         }
-        console.log("Hello");
+        
+// call this function to create a notification        
         Notif.CreateNotif(notifobject);
 
 
 
     },
 
-    GetNotif: function (req, resp) {
-
-    },
-
-    SetRead: function (req, resp) {
-
-    },
 
 }
