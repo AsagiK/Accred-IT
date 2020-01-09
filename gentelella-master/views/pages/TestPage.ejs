@@ -76,11 +76,15 @@
                             <div class="x_content">
                                 <br />
                                 <!--BUTTON 1-->
-                                <button name="btnsubmit" id="btnsubmit">BUTTON 1</button>
+                                <button name="btnsubmit" id="btnsubmit">Creat Notifs</button>
                                 <br>
                                 <br>
                                 <!--BUTTON 2-->
-                                <button name="btnsubmit2" id="btnsubmit2">BUTTON 2</button>
+                                <button name="btnsubmit2" id="btnsubmit2">Get Notifs</button>
+                                <br>
+                                <br>
+                                <!--BUTTON 3-->
+                                <button name="btnsubmit3" id="btnsubmit3">Set Notifs as read</button>
 
 
 
@@ -112,12 +116,33 @@
                         })
                     });
 
-                    $("#btnsubmit").click(function(event) {
+                    $("#btnsubmit2").click(function(event) {
                         event.preventDefault();
 
                         $.ajax({
-                            url: '/GetNotif',
-                            type: 'GET',
+                            url: "/GetNotif",
+                            type: "GET",
+                            dataType: "json",
+                            complete: function() {
+                                console.log('process complete');
+                            },
+
+                            success: function(data) {
+                                console.log(data);
+                            },
+
+                            error: function() {
+                                console.log('process error');
+                            },
+                        });
+                    });
+
+                    $("#btnsubmit3").click(function(event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: '/SetRead',
+                            type: 'POST',
                             processData: false,
                             contentType: false,
                             dataType: 'json',
