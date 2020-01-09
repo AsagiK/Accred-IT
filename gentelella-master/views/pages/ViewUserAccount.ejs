@@ -76,15 +76,16 @@ table, th, td {
                                 <br />
 
                                 <!--view table for all submissions-->
-                                <table id="" class="display" style="background-color: white; height: 100%; width: 100%;">
+                                <table id="datatable-fixed-header" class="table table-bordered" style="background-color: white; height: 100%; width: 100%;">
                                     <thead>
                                         <th>Submission Description</th>
                                         <th>Expected outputs chosen</th>
+                                        <th>Status</th>
                                         <th>View Details Button</th>
                                     </thead>
                                     <tbody>
                                         <% for (var submission of data) { %>
-                                            <% if (submission.user_ID == current_user[0].User_ID) { %>
+                                            <% if (submission.user_ID == current_user[0].User_ID && submission.active == 1) { %>
                                         <tr>
                                             <td><%= submission.description %></td>
                                             <td>
@@ -96,7 +97,25 @@ table, th, td {
                                                     <% } %>
                                                 <% } %>
                                             </td>
-                                            <td><button class="btn btn-primary">View Evidences</button></td>
+                                            
+                                                <% if(submission.status == 0) { %>
+                                                    <td>Pending</td>
+                                                <% } else if(submission.status == 1) { %> 
+                                                    <td>Approved</td>
+                                                <% } else { %>
+                                                    <td>Disapproved</td>
+                                                <% } %>
+                                        
+                                            <% if(submission.status == 0) { %>
+                                                <td>
+                                                    <form method="get" action="ViewUsersSubmissionDetails">
+                                                        <input type="hidden" name="subID" id="subID" value="<%= submission.pending_ID %>">
+                                                        <button type="submit" class="btn btn-primary">Update Evidence</button>
+                                                    </form>
+                                                </td>
+                                            <% } else { %> 
+                                                <td><button class="btn btn-primary">View Evidences and Comment</button></td>
+                                            <% } %>
                                         </tr>
                                         <% } %>
                                         <% } %>
@@ -140,11 +159,24 @@ table, th, td {
                                             <th>View Details Button</th>
                                         </thead>
                                         <tbody>
+                                            <% for (var submission of data) { %>
+                                                <% if (submission.user_ID == current_user[0].User_ID && submission.active == 1 && submission.status == 1) { %>
                                             <tr>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
+                                                <td><%= submission.description %></td>
+                                                <td>
+                                                    <% for (var pending_outputs of dataD) { %>
+                                                        <% for (var outputs of dataC) { %>
+                                                            <% if (pending_outputs.pendingID == submission.pending_ID && pending_outputs.outputID == outputs.output_ID) { %>
+                                                                <%= outputs.output %> <br>
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% } %>
+                                                </td>
+                                                <td><button class="btn btn-primary">View Evidences</button></td>
+                                                
                                             </tr>
+                                            <% } %>
+                                            <% } %>
                                         </tbody>
                                         
                                         </table>
@@ -186,11 +218,23 @@ table, th, td {
                                             <th>View Details Button</th>
                                         </thead>
                                         <tbody>
+                                            <% for (var submission of data) { %>
+                                                <% if (submission.user_ID == current_user[0].User_ID && submission.active == 1 && submission.status == 2) { %>
                                             <tr>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
+                                                <td><%= submission.description %></td>
+                                                <td>
+                                                    <% for (var pending_outputs of dataD) { %>
+                                                        <% for (var outputs of dataC) { %>
+                                                            <% if (pending_outputs.pendingID == submission.pending_ID && pending_outputs.outputID == outputs.output_ID) { %>
+                                                                <%= outputs.output %> <br>
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% } %>
+                                                </td>
+                                                <td><button class="btn btn-primary">View Evidences</button></td>
                                             </tr>
+                                            <% } %>
+                                            <% } %>
                                         </tbody>
                                         
                                         </table>
