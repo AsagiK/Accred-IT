@@ -41,15 +41,16 @@
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-    
+
 </head>
 
 <style>
+    table,
+    th,
+    td {
+        border: .25px solid black;
 
-table, th, td {
-  border: .25px solid black;
-
-}
+    }
 
 </style>
 
@@ -75,15 +76,15 @@ table, th, td {
                             <div class="x_content">
                                 <br />
                                 <!--BUTTON 1-->
-                                <button>BUTTON 1</button>
+                                <button name="btnsubmit" id="btnsubmit">BUTTON 1</button>
                                 <br>
                                 <br>
                                 <!--BUTTON 2-->
-                                <button>BUTTON 2</button>
-                                
+                                <button name="btnsubmit2" id="btnsubmit2">BUTTON 2</button>
 
-                                
-                                
+
+
+
                                 <div class="ln_solid"></div>
                             </div>
                         </div>
@@ -92,20 +93,49 @@ table, th, td {
             </div>
 
             <script>
-            
-            $(document).ready(function() {
-                                $('.display').DataTable({
-                                    rowReorder: true
-                                } );
-                            } );
+                $(document).ready(function() {
 
-                            
+
+
+                    $("#btnsubmit").click(function(event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: '/TestNotif',
+                            type: 'POST',
+                            processData: false,
+                            contentType: false,
+                            dataType: 'json',
+                            success: function(data) {
+                                processdata(data, fdata);
+                            },
+                        })
+                    });
+
+                    $("#btnsubmit").click(function(event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: '/GetNotif',
+                            type: 'GET',
+                            processData: false,
+                            contentType: false,
+                            dataType: 'json',
+                            success: function(data) {
+                                processdata(data, fdata);
+                            },
+                        })
+                    });
+
+
+
+                });
 
             </script>
 
-            
 
-            
+
+
             <!-- Bootstrap -->
             <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
             <!-- FastClick -->

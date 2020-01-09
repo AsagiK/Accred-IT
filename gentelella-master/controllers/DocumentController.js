@@ -32,6 +32,7 @@ server.use(fileUpload({
 }));
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 var mime = require('mime-types');
+var Notif = require('../controllers/NotifController')
 var sess
 module.exports = {
 
