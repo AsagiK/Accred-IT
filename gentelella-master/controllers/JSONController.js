@@ -419,6 +419,8 @@ module.exports = {
 //        range 4 = group and sender gets notified
         
 // sample notification object
+        var today = new Date();
+        var current = today.toISOString().split('T')[0];
         var notifobject = {
             "body": "test", //message body, cannot be null
             "sender": "46", //ID of sender, can be set to null
@@ -427,7 +429,7 @@ module.exports = {
             "range": "4", //range of notification
             "admin": "1", // 0 if admin does not need to be notified, else 1
             "sysadmin": "1", // same as above
-            "triggerdate": "" //set to "" to notify instantly, otherwise provide a date
+            "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date
         }
         
 // call this function to create a notification        
