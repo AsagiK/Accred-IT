@@ -183,12 +183,12 @@ module.exports = {
 
 
     },
-//called on document ready
+    //called on document ready
     GetNotif: function (req, resp) {
         console.log(req.session.user[0].User_ID);
         var today = new Date();
         var current = today.toISOString().split('T')[0];
-        var sql = "SELECT notifications_read.Notifications_ID, Recipient_ID, notif_read, message, triggerdate FROM capstone.notifications_read join capstone.notifications on notifications_read.Notifications_ID = notifications.Notifications_ID where notifications_read.Recipient_ID = ? && DATE(triggerdate) <= DATE(NOW())" ;
+        var sql = "SELECT notifications_read.Notifications_ID, Recipient_ID, notif_read, message, triggerdate FROM capstone.notifications_read join capstone.notifications on notifications_read.Notifications_ID = notifications.Notifications_ID where notifications_read.Recipient_ID = ? && DATE(triggerdate) <= DATE(NOW())";
         var values = [req.session.user[0].User_ID]
         connection.query(sql, values, function (err, results, fields) {
             resp.send(results);
@@ -196,14 +196,14 @@ module.exports = {
         })
 
     },
-//called when the notification bar is clicked
+    //called when the notification bar is clicked
     SetRead: function (req, resp) {
         console.log(req.session.user[0].User_ID);
-        var sql = "Update capstone.notifications_read set notif_read = 1 where User_ID = ? && DATE(triggerdate) <= DATE(NOW())"
+        var sql = "Update notifications_read join notifications on notifications_read.Notifications_ID = notifications.Notifications_ID set notif_read = 1 where Recipient_ID = 46 && DATE(triggerdate) <= DATE(NOW())"
         var values = [req.session.user[0].User_ID]
         connection.query(sql, values, function (err, results, fields) {
             console.log("notifications read")
-            
+            console.log(results);
         })
     },
 }
