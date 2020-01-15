@@ -418,7 +418,11 @@ module.exports = {
 //        range 3 = group gets notified
 //        range 4 = group and sender gets notified
         
-// sample notification object
+// sample notification creation implementation
+        
+//
+// insert actual route stuff here, when it succeeds initialize the variables on the bottom      
+//        
         var today = new Date();
         var current = today.toISOString().split('T')[0];
         var notifobject = {
@@ -429,7 +433,7 @@ module.exports = {
             "range": "4", //range of notification
             "admin": "1", // 0 if admin does not need to be notified, else 1
             "sysadmin": "1", // same as above
-            "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date
+            "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
         }
         
 // call this function to create a notification        
