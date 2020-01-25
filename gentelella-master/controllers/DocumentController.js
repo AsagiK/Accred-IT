@@ -8,8 +8,12 @@ const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
 var connection = require('../config/db');
-const TOKEN_PATH = require('../config/token.json');
-var UPLOAD_PATH = require('../config/accredit.json');;
+try {
+    const TOKEN_PATH = require('../config/token.json');
+    var UPLOAD_PATH = require('../config/accredit.json');;
+} catch (e) {
+
+}
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -588,7 +592,7 @@ module.exports = {
             Doc = JSON.parse(Doc)
             if (Object.keys(Doc).length == 0) {
                 console.log("Empty");
-                
+
             } else {
                 async.forEachOf(Doc, function (value, key, callback) {
                     var did = Doc[key]["Document ID"];
@@ -610,11 +614,12 @@ module.exports = {
                         //resp.send("Not OK")
                     } else {
                         console.log("Passed");
-                        
+
                     }
                 })
             }
         }
+
         function inserttable2(pending) {
             var pendingID = pending;
             pendingID = pendingID.toString();
@@ -734,7 +739,7 @@ module.exports = {
         function insertfile(files, type, result) {
             if (type == 1) { // Case 1 Type 1 same filename
                 var vno = parseInt(result.version) + 1;
-                var newfilename = fname + "v"+ vno + ext;
+                var newfilename = fname + "v" + vno + ext;
                 var newfilepath = 'uploads/' + fname + "v" + vno + ext;
                 let uploadedimg = req.files.DocFile;
                 uploadedimg.mv('public/uploads/' + newfilename, function (err) {
