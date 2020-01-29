@@ -8,11 +8,12 @@ const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
 var connection = require('../config/db');
-try {
-    const TOKEN_PATH = require('../config/token.json');
-    var UPLOAD_PATH = require('../config/accredit.json');;
-} catch (e) {
-
+try{
+const TOKEN_PATH = JSON.parse(fs.readFileSync('./config/token.json', 'utf8'));
+const UPLOAD_PATH = JSON.parse(fs.readFileSync('./config/accredit.json', 'utf8'));
+}
+catch (e){
+    
 }
 // ---- URL PARSER
 var url = require('url');
