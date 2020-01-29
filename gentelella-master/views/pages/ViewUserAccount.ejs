@@ -114,7 +114,13 @@ table, th, td {
                                                     </form>
                                                 </td>
                                             <% } else { %> 
-                                                <td><button class="btn btn-primary">View Evidences and Comment</button></td>
+                                                <td>
+                                                    <form method="get" action="ViewSubmissionDetails">
+                                                        <input type="text" name="subID" id="subID" value="<%= submission.pending_ID %>">
+                                                        <button class="btn btn-primary">View Evidences and Comment</button>
+                                                    </form>
+                                                </td>
+                                                
                                             <% } %>
                                         </tr>
                                         <% } %>

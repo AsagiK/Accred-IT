@@ -1625,4 +1625,30 @@ module.exports = {
         }
     },
 
+    ViewSubmissionDetails: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var SID = req.query.subID;
+            console.log(SID);
+            var sql = "SELECT * FROM capstone.pending_activities WHERE pending_activities.pending_ID = ?;";
+            var values = [SID]
+            connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err;
+                if (result) {
+                    console.log(result);
+                    resp.render('./pages/ViewUserSubmissionAccountDetails.ejs' , {
+                        data: result,
+                        current_user:sess.user
+                    });
+                }
+                console.log("KEK")
+            });
+        }
+    },
+
+
 }
