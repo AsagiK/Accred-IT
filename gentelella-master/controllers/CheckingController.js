@@ -10,6 +10,7 @@ var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
+var Notif = require('../controllers/NotifController')
 // ---- DEFINE SESSION
 server.use(session({
     secret: 'ssshhhhh',
