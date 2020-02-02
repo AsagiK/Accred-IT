@@ -1634,17 +1634,19 @@ module.exports = {
         } else { 
             var SID = req.query.subID;
             console.log(SID);
-            var sql = "SELECT * FROM capstone.pending_activities WHERE pending_activities.pending_ID = ?;";
-            var values = [SID]
-            connection.query(sql, values, function (err, result, fields) {
+            var sql = "SELECT * FROM capstone.pending_activities WHERE pending_activities.pending_ID = ?; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
+            var values = [SID, SID]
+            connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                if (result) {
-                    console.log(result);
+                
+                    console.log(results);
                     resp.render('./pages/ViewUserSubmissionAccountDetails.ejs' , {
-                        data: result,
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
                         current_user:sess.user
                     });
-                }
+                
                 console.log("KEK")
             });
         }

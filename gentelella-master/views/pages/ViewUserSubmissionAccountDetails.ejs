@@ -62,15 +62,21 @@
                                     <tbody>
                                         
                                         <tr>
-                                            <td>Submission Report: </td>
-                                            <td><%= data.description %></td>
+                                            <td width="30%">Submission Report: </td>
+                                            <td width="70%"><%= data[0].description %></td>
                                         </tr>
                                         <tr>
                                             <td>Evidences: </td>
                                         
                                         
                                             <td>
-                                                    
+                                                <% for (var evidences of dataC) { %>
+                                                    <% for (var docs of dataB) { %>
+                                                        <% if (evidences.documentID == docs.Document_ID) { %>
+                                                            <a href="<%= docs.Document_Route %>" download><%= docs.Document_Name %></a> <br>
+                                                        <% } %>
+                                                    <% } %>
+                                                <% } %>    
                                             </td>
 
                                         </tr>
@@ -79,7 +85,7 @@
 
                                             <td>Comment: </td>
                                             <td>
-                                                    comment
+                                                    change
                                             </td>
 
                                         </tr>
