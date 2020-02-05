@@ -103,7 +103,7 @@ module.exports = {
                                     connection.query(sql2, values, function (err, result) {
                                         if (err) callback(err);
                                         if (result) callback();
-                                        //console.log("group notif sent")
+                                        console.log("individual group notif sent")
                                     })
                                 } else {
                                     console.log("Sender skipped");
@@ -112,7 +112,7 @@ module.exports = {
                                 connection.query(sql2, values, function (err, result) {
                                     if (err) callback(err);
                                     if (result) callback();
-                                    //console.log("group notif sent")
+                                    console.log("individual group notif sent")
                                 })
 
                             }
