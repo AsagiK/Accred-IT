@@ -53,10 +53,13 @@ module.exports = {
             var values = [Message, Sender, Receiver, Group, Range, Admin, Sysadmin]
             connection.query(sql, values, function (err, result) {
                 if (err) console.log(err);
-                if (result) {
+                if (result && Range != 5) {
                     checkrange(Sender, Range, result.insertId);
                     admin(Admin);
                     sysadmin(Sysadmin);
+                    console.log("notif added")
+                } else {
+                    checkrange(Sender, Range, result.insertId);
                     console.log("notif added")
                 }
             });
@@ -86,7 +89,7 @@ module.exports = {
                         console.log("range type 2")
                     }
                 });
-            } else {
+            } else if (range > 2 && range < 5) {
                 console.log("range type 3 - 4")
                 const sql = "SELECT * FROM capstone.users where users.Group = ?;"
                 const value = [Group];
@@ -127,6 +130,37 @@ module.exports = {
                         })
                     }
                 })
+            }
+            
+            else{
+                console.log("range type 5")
+                const sql = "SELECT * FROM capstone.users;"
+                const value = [Group];
+                connection.query(sql, value, function (err, result, fields) {
+                    if (err) throw err;
+                    if (result) {
+                        var resdata = JSON.parse(JSON.stringify(result))
+                        async.forEachOf(resdata, function (value, key, callback) {
+                            var ui = resdata[key]["User_ID"];
+                            const sql2 = "INSERT INTO `capstone`.`notifications_read` (`Notifications_ID`, `Recipient_ID`) VALUES (?,?);"
+                            const values = [insertid, ui];
+
+                                connection.query(sql2, values, function (err, result) {
+                                    if (err) callback(err);
+                                    if (result) callback();
+                                    console.log("individual group notif sent")
+                                })
+                        }, function (err) {
+                            if (err) {
+                                console.log("Failed");
+                                console.log(err);
+                            } else {
+                                console.log("Notif to all sent");
+                            }
+                        })
+                    }
+                })
+                
             }
         }
 
