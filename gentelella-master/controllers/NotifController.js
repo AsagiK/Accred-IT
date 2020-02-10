@@ -40,10 +40,13 @@ module.exports = {
             var values = [Message, Sender, Receiver, Group, Range, Admin, Sysadmin, Triggerdate]
             connection.query(sql, values, function (err, result) {
                 if (err) console.log(err);
-                if (result) {
-                    checkrange(Sender, Range, result.insertId)
+                if (result && Range != 5) {
+                    checkrange(Sender, Range, result.insertId);
                     admin(Admin);
                     sysadmin(Sysadmin);
+                    console.log("notif added")
+                } else {
+                    checkrange(Sender, Range, result.insertId);
                     console.log("notif added")
                 }
             });
