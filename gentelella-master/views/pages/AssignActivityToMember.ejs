@@ -133,30 +133,40 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group ID</th>
+                                                    <th>Group Area</th>
                                                     <th>Group Name</th>
+                                                    <th style="display: none;">Group ID</th>
                                                     <th style="display: none;">Activity ID</th>
                                                     <th style="display: none;">Measurement ID</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <% for (var user of data) { %>
+                                                <% for (var group of data) { %>
+                                                    
                                                 <tr>
                                                     <td>
                                                         <label class="containercheckbox">
                                                                 <input type='checkbox' name='record'
-                                                                id='<%= user.Group_ID %>'>
+                                                                id='<%= group.Group_ID %>'>
                                                                 <span class="checkmark"></span>
                                                               </label>
                                                     </td> 
-                                                    <td id="GID<%= user.Group_ID %>" value="<%= user.Group_ID %>">
-                                                        <%= user.Group_ID %></td>
-                                                    <td id="GroupName<%= user.Group_ID %>" value="<%= user.Group_Name %>">
-                                                        <%= user.Group_Name %></td>
-                                                    <td style="display: none;" id='hidden<%= user.Group_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                    
+                                                        <% for (var area of dataE) { %>
+                                                            <% if (area.Area_ID == group.Area_ID) { %>
+                                                                <td id="Area<%= group.Group_ID %>" value="<%= area.Area_Name %>">
+                                                                    <%= area.Area_Name %></td>
+                                                            <% } %>
+                                                        <% } %> 
+                                                    
+                                                    <td id="GroupName<%= group.Group_ID %>" value="<%= group.Group_Name %>">
+                                                        <%= group.Group_Name %></td>
+                                                    <td style="display: none;" id="GID<%= group.Group_ID %>" value="<%= group.Group_ID %>">
+                                                        <%= group.Group_ID %></td>
+                                                    <td style="display: none;" id='hidden<%= group.Group_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td style="display: none;" id='measure<%= user.Group_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                    <td style="display: none;" id='measure<%= group.Group_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
@@ -175,8 +185,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group ID</th>
+                                                    <th>Group Area</th>
                                                     <th>Group Name</th>
+                                                    <th style="display: none;">Group ID</th>
                                                     <th style="display: none;">Activity ID</th>
                                                     <th style="display: none;">Measurement ID</th>
                                                 </tr>
@@ -250,15 +261,15 @@
                         var index = $(this).attr("id");
                         var GID = $('#GID' + index).attr("value");
                         var GroupName = $('#GroupName' + index).attr("value");
+                        var Area = $('#Area' + index).attr("value");
                         // console.log(first);
                         //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= GID" + index + " value=" + GID + ">" + GID +
-                            "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
-                            
+                            index + "><span class='checkmark'></span></label></td><td id= Area" + index + " value=" + Area + ">" + Area +
+                            "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName + "<td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
                             "</td><td style='display: none;' id= hidden" + index + " value=" + hidden +
                             ">" + hidden + "</td><td style='display: none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
@@ -280,9 +291,8 @@
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= GID" + index + " value=" + GID + ">" + GID +
+                            index + "><span class='checkmark'></span></label></td><td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
                                 "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
-                            
                             "</td><td id= hidden" + index + " value=" + hidden +
                             " >" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table1 tbody").append(markup);

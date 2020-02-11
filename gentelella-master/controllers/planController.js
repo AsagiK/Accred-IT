@@ -1215,7 +1215,7 @@ module.exports = {
             //var GID = req.query.GID;
             //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; "
+            var sql = "SELECT * FROM capstone.group WHERE Group_ID NOT IN (SELECT MAX(0) FROM capstone.group) ORDER BY Group_ID Asc; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?;SELECT * FROM capstone.area; "
             var values = [AID, AID, CID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -1226,6 +1226,7 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
+                        dataE: results[4],
                         current_user: sess.user
                     });
                     console.log("Assign Activity to Member Page");
