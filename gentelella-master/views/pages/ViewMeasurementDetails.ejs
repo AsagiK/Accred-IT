@@ -272,7 +272,7 @@
                                                                                     <% } %>
                                                                                     
                                                                                     <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
-                                                                                    <br><button class="btn btn-primary" href="#my_modaloutputs"
+                                                                                    <button class="btn btn-primary" href="#my_modaloutputs"
                                                                                         data-toggle="modal"
                                                                                         data-book-id="<%= activities.activity_ID %>">Add
                                                                                         expected output/s</button>
@@ -285,7 +285,7 @@
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
-                                                                                        <button type="submit" class="btn btn-primary">Assign Members
+                                                                                        <button type="submit" class="btn btn-primary">Assign Group
                                                                                         </button>
                                                                                     </form>
                                                                                     <% } %>
