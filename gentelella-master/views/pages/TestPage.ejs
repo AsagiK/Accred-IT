@@ -94,6 +94,7 @@
             var picker = new google.picker.PickerBuilder().
             addViewGroup(
                 new google.picker.ViewGroup(google.picker.ViewId.DOCS).addView(google.picker.ViewId.DOCUMENTS).addView(google.picker.ViewId.PRESENTATIONS)).
+            enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
             setOAuthToken(oauthToken).
             setDeveloperKey(developerKey).
             setCallback(pickerCallback).
@@ -104,13 +105,32 @@
 
     // A simple callback implementation.
     function pickerCallback(data) {
-        var url = 'nothing';
         if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+
             var doc = data[google.picker.Response.DOCUMENTS][0];
-            url = doc[google.picker.Document.URL];
+            var url = doc[google.picker.Document.URL];
+            
+            var datastring = "url=" + data.docs[0].url + "&name=" + data.docs[0].name;
+
+            $.ajax({
+                type: 'POST',
+                url: '/PickerUploadJSON',
+                dataType: 'text',
+                cache: false,
+                data: datastring,
+                success: function(response) {
+                    console.log("Good")
+                },
+                error: function(response) {
+                    console.log("Not Good")
+                }
+            });
+
+
         }
         var message = 'You picked: ' + url;
         document.getElementById('result').innerHTML = message;
+        console.log(data[google.picker.Response.DOCUMENTS].length)
     }
 
 </script>

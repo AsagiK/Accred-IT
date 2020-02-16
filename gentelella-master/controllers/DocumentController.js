@@ -979,5 +979,11 @@ module.exports = {
                 //console.log(result)
             }
         });
+    },
+    
+    PickerUploadJSON: function(req, resp){
+        console.log("test picker called")
+        console.log(req.body);
     }
+    
 }

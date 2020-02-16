@@ -105,6 +105,7 @@ router.route('/PreCheck').post(DocCtrl.PreCheck);
 router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
 router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
+router.route('/PickerUploadJSON').post(DocCtrl.PickerUploadJSON);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
