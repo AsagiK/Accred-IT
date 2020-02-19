@@ -614,6 +614,28 @@ module.exports = {
         }
     },
 
+    editmembertogroup: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var GID = req.query.GID;
+            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = ? ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
+            var values = [GID, GID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                console.log(results[1])
+                resp.render('./pages/EditMemberToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log("Edit Member to Group Page");
+            });
+        }
+    },
+
     ViewMeasurementDetails: function (req, resp) {
 
         sess = req.session;

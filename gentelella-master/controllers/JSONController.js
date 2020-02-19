@@ -48,6 +48,31 @@ module.exports = {
         })
     },
 
+    EditGroupMemberJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var gid = UID[key]["Group ID"];
+            var uid = UID[key]["User ID"];
+            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
+            var values = [uid, gid, uid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
     AssignTaskJSON: function (req, resp) {
         var UID = req.body.table;
         UID = JSON.parse(UID);

@@ -26,6 +26,7 @@ router.route('/add-group').post(planCtrl.addgroup);
 router.route('/makeLeader').post(planCtrl.makeLeader);
 router.route('/makeMember').post(planCtrl.makeMember);
 router.route('/AssignMemberToGroup').get(planCtrl.assignmembertogroup);
+router.route('/EditMemberToGroup').get(planCtrl.editmembertogroup);
 
 //SOURCES ROUTES
 router.route('/CreateSources').get(planCtrl.CreateSources);
@@ -80,6 +81,7 @@ router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
+router.route('/EditGroupMemberJSON').post(JSONCtrl.EditGroupMemberJSON);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
