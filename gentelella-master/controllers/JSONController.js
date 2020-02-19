@@ -54,11 +54,17 @@ module.exports = {
         async.forEachOf(UID, function (value, key, callback) {
             var gid = UID[key]["Group ID"];
             var uid = UID[key]["User ID"];
-            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
+            
+            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ?, `Groupdetails_UserID` = ?);";
             var values = [uid, gid, uid];
+            console.log(values);
             connection.query(sql, values, function (err, result) {
-                if (err) callback(err);
+                if (err){
+                    console.log(err);
+                    callback(err);
+                } 
                 if (result) {
+                    console.log(result);
                     callback();
                 }
             });
