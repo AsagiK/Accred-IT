@@ -110,14 +110,17 @@
             var doc = data[google.picker.Response.DOCUMENTS][0];
             var url = doc[google.picker.Document.URL];
             
+
             var datastring = "url=" + data.docs[0].url + "&name=" + data.docs[0].name;
+            datastring = JSON.stringify(data.docs);
+            var senddata = "data=" + datastring;
 
             $.ajax({
                 type: 'POST',
                 url: '/PickerUploadJSON',
                 dataType: 'text',
                 cache: false,
-                data: datastring,
+                data: senddata,
                 success: function(response) {
                     console.log("Good")
                 },

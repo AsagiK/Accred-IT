@@ -984,6 +984,8 @@ module.exports = {
     PickerUploadJSON: function(req, resp){
         console.log("test picker called")
         console.log(req.body);
+        var DOCS = JSON.parse(req.body.data)
+        console.log(DOCS)
     }
     
 }
