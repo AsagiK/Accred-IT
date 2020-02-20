@@ -81,10 +81,15 @@ module.exports = {
                         goodStatus: 0,
                         msg: "User/s not added"
                     }
-                } else {
+                } else if (alert == 1) {
                     passData = {
                         goodStatus: 1,
                         msg: "User/s added"
+                    }
+                } else if (alert == 2) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "User/s Removed"
                     }
                 }
             }

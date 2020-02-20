@@ -55,7 +55,7 @@ module.exports = {
             var gid = UID[key]["Group ID"];
             var uid = UID[key]["User ID"];
             
-            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ?, `Groupdetails_UserID` = ?);";
+            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ? && `Groupdetails_UserID` = ?);";
             var values = [uid, gid, uid];
             console.log(values);
             connection.query(sql, values, function (err, result) {
