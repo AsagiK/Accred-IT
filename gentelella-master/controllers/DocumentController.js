@@ -192,7 +192,7 @@ module.exports = {
             });
 
             function uploadfile() {
-                fs.readFile('credentials.json', (err, content) => {
+                fs.readFile('../config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), uploadtodrive);
                 });
@@ -337,7 +337,7 @@ module.exports = {
                     });
 
                     function uploadfile() {
-                        fs.readFile('credentials.json', (err, content) => {
+                        fs.readFile('../config/credentials.json', (err, content) => {
                             if (err) return console.log('Error loading client secret file:', err);
                             authorize(JSON.parse(content), uploadtodrive);
                         });
@@ -456,7 +456,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('../config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -772,7 +772,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('../config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -881,7 +881,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('../config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
