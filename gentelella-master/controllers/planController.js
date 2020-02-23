@@ -52,7 +52,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
-            
+
             connection.query("SELECT * FROM capstone.roles where Role_ID > 1; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
@@ -140,11 +140,14 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+
         });
         resp.redirect('/CreateGroup');
     },
 
     adduser: function (req, resp) {
+        sess = req.session;
         console.log(req.body);
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
@@ -160,6 +163,22 @@ module.exports = {
             var values = [fn, ln, em, rl, co, un, hash];
             connection.query(sql, values, function (err, result) {
                 if (err) throw err;
+
+                //working example derived from the sample at jsoncontroller         
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "User " + fn + " " + ln + " has been created" , //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": result.insertId, //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "1", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
+                
                 console.log("Record Inserted");
             });
             resp.redirect('/Createusers');
@@ -358,7 +377,7 @@ module.exports = {
         console.log(metricName);
         console.log(metricDesc);
         console.log(source);
-        
+
         console.log("SOURCE ID - " + sourceID);
         console.log("SOURCE TYPE = " + sourceType);
         var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?)";
@@ -1193,12 +1212,13 @@ module.exports = {
                         current_user: sess.user
                     });
                     //console.log(results);
-                   console.log(results[3]);
+                    console.log(results[3]);
                     console.log(results[2]);
                     //console.log(results[6]);
-                    
-                    console.log("Dashboards Loaded"); 
-                
+
+                    console.log("Dashboards Loaded");
+                    console.log(sess.user[0]);
+
                 }
             });
         }
@@ -1349,6 +1369,7 @@ module.exports = {
             var priority = req.body.priority;
             getmeasurement(MID, auditmeasurement);
             console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  " + priority)
+
             function getmeasurement(MID, callback) {
                 var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?);"
                 var values = [MID]
@@ -1535,7 +1556,7 @@ module.exports = {
             }
 
         }
-    }, 
+    },
 
     ViewActivitiesUnderMeasurement: function (req, resp) {
         sess = req.session;
@@ -1545,31 +1566,31 @@ module.exports = {
         } else {
             var MID = req.body.MID;
             var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
-            console.log("Activity test"+  MID);
+            console.log("Activity test" + MID);
             var values = [MID]
-            
+
             connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err; 
-                    resp.render('./pages/ViewActivitiesUnderMeasurement.ejs' , {
-                        data:results[0],
-                        dataB:results[1],
-                        dataC:results[2],
-                        current_user:sess.user
-                    }); 
-                    console.log();
-                    console.log ("activities are loaded");
-                    
-            
+                if (err) throw err;
+                resp.render('./pages/ViewActivitiesUnderMeasurement.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log();
+                console.log("activities are loaded");
+
+
 
             });
 
         }
-    }, 
+    },
 
-    BackToMeasurement: function (req, resp) { 
+    BackToMeasurement: function (req, resp) {
         resp.redirect('./pages/QualityMetrics.ejs');
         console.log("Back To Quality Metrics");
-    }, 
+    },
 
     AnnualReport: function (req, resp) {
 
@@ -1578,26 +1599,26 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var MID = req.body.MID; 
-            
+            var MID = req.body.MID;
+
             var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); "
-            console.log("ANNUAL REPORT TEST CUH "+ MID);
+            console.log("ANNUAL REPORT TEST CUH " + MID);
             var values = [MID]
-            
+
             connection.query(sql, values, function (err, result, fields) {
-                if (err) throw err; 
-                    resp.render('./pages/AnnualReport.ejs' , {
-                        data:result,
-                        current_user:sess.user
-                    }); 
-                    
-                    console.log ("reports are loaded are loaded boi");
-                    
-            
+                if (err) throw err;
+                resp.render('./pages/AnnualReport.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+
+                console.log("reports are loaded are loaded boi");
+
+
 
             });
 
-        } 
+        }
     },
 
 }
