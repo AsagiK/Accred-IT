@@ -964,6 +964,7 @@ module.exports = {
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var dateStarted = (req.body.dateStarted);
         var status = "1"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -972,6 +973,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 resp.redirect('/QualityMetric');
+                dateStarted: dateStarted;
             }
         });
     },
@@ -1651,6 +1653,30 @@ module.exports = {
             console.log("ACTIVITY UPDATED");
         }
         
+    }, 
+
+    CategorizeActivities: function (req, resp) { 
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+
+            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.Index ASC; SELECT * FROM capstone.measurement_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID;", function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/CategorizeActivities.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results)
+            });
+        }
+
+
     },
+
+    
 
 }

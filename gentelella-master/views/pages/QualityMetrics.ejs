@@ -157,7 +157,11 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Quality Management</h3>
+                <h3>Quality Management</h3>                        
+                    <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
+                            <%= new Date().toString().substr(0,15)%> 
+                            
+                    </span>
             </div>
         </div>
     </div>
@@ -288,7 +292,7 @@
                                         <button type="button" id="addRow" onclick="addQT()">+</button>
                                     </div>
 
-
+                                    
 
                                     
                                         <table class="table table-bordered" name="TargetT" id="TargetT">
@@ -341,6 +345,12 @@
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".createGoals">Create Goals</button>
                                         <% } %>
                                             <% for (var goals of data) { %>
+                                            
+                                            <!-- Time display for phase comparison -->
+                                            <div class="title-left">
+                                                
+                                            </div>
+                                            
 
                                             <!-- start accordion -->
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -397,11 +407,16 @@
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
                                                                         <% } else if( cycles.status  == 1) { %> Do Phase
+                                                                        <input type="hidden" id="cycleStatus" name="cycleStatus" value="Do">
                                                                         <% } else if( cycles.status  == 2) { %> Check
                                                                         Phase
+                                                                        <input type="hidden" id="cycleStatus" name="cycleStatus" value="Check">
                                                                         <% } else if( cycles.status  == 3) { %> Act Phase
+                                                                        <input type="hidden" id="cycleStatus" name="cycleStatus" value="Act">
                                                                         <% } else if( cycles.status  == 4) { %> Cycle
-                                                                        Ended<% } %><br>
+                                                                        Ended
+                                                                        <input type="hidden" id="cycleStatus" name="cycleStatus" value="End">
+                                                                        <% } %><br>
                                                                         <span class="fa fa-angle-right"></span>Cycle Duration: <%= cycles.start_Date.toString().substr(0, 15) %> - <%= cycles.end_Date.toString().substr(0, 15) %>
                                                                     <% var endDate = cycles.end_Date %>
                                                                     <% var date = new Date(); %>
@@ -424,8 +439,10 @@
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
-                                                                            <button class="btn btn-default" type="submit">Start Do Phase</button>
+                                                                            <input type="hidden" name="dateStarted" id="dateStartedForm" value="0">
+                                                                        <button id="btnStartDoPhase" class="btn btn-default" type="submit">Start Do Phase</button>
                                                                         </form>
+                                                                        
 
                                                                         
 
@@ -434,9 +451,11 @@
                                                                             Measurement</button>
 
                                                                         <% } else if (cycles.status  == 1) { %>
+
+                                                                    
                                                                         <form action="checkPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
-                                                                            <button class="btn btn-default" type="submit">Start Check Phase</button>
+                                                                            <button id="btnStartCheckPhase" class="btn btn-default" type="submit" id="startCheck" disabled>Start Check Phase</button>
 
                                                                         </form>
 
@@ -447,6 +466,7 @@
                                                                         </form>
 
                                                                         <a href="/CheckingAccordionPage" class="btn btn-default">Check Submissions</a>
+
                                                                         <% } else if (cycles.status  == 2) { %>
                                                                         <form action="actPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
@@ -551,6 +571,11 @@
                                                                                             <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
                                                                                                 <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                                                                 <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                                                            </form> 
+
+                                                                                            <form id ="categorizeactivities" method="post" action="CategorizeActivities">
+                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities">Categorize Measurement</button>
                                                                                             </form>
                                                                                             </td>
                                                                                                 <td></td>
@@ -817,8 +842,15 @@
                     });
 
                 </script>
+                
+                <!-- Display time for phase checking
 
+                <script>
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); 
+                document.getElementById("demo").innerHTML = date;
+                </script> 
 
+                --> 
 
                 <!-- footer content -->
                 <footer>
@@ -843,6 +875,37 @@
                 <!--Do Me-->
                 <!script for dynamic text area>
                     <script>
+                        var DoStartDate;
+                        var CheckStartDate;
+                        //trial for get Date
+
+                        $("#btnStartDoPhase").click(function(){ 
+                            var date = new Date();
+                            DoStartDate = date.getDate();
+                        });
+
+                        alert($("#cycleStatus").val());
+/*
+                        if($("#cycleStatus").val()=="Do"){
+                            alert("Henlo nasa DO ka na");
+                            var date = new Date();
+                            var currentDate = date.getDate();
+                            if(currentDate == (DoStartDate-1)){
+                                $("#btnStartCheckPhase").submit();
+                            }
+                        }else{
+                            alert("hindi ko na alam nangyayare");
+                        }*/
+
+                        $("#btnStartCheckPhase").click(function(){ 
+                            var date = new Date();
+                            CheckStartDate = date.getDate();
+                        });
+
+                        $("#")
+
+
+
                         function textAreaAdjust(o) {
                             o.style.height = "1px";
                             o.style.height = (25 + o.scrollHeight) + "px";
@@ -922,6 +985,8 @@
                                 }, 600);
                             }
                         }
+
+
 
                         $(document).ready(function() {
                             $(".add-row-cycles").click(function test() {
@@ -1145,6 +1210,7 @@
                                 button.click();
 
                             };
+
 
                         });
 
