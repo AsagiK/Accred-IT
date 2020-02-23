@@ -39,9 +39,151 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="x_panel">
+                      <div class="col-md-12">
+                        
+                          <div class="x_panel">
+                            <h2>Folders</h2>
+                              <div class="x_content">
 
+                                <div>
+                                  <button class="btn btn-primary">Create Folder</button>
+                                  <br>
+                                  <button class="btn btn-primary">View your Uploads</button>
+                                </div>
+                                  <div class="row">
+
+                                      <% for (var doc of data) { 
+                    var filext = 0;
+                    var imgtype = '';
+                    var x = doc.Document_Ext;
+                    
+                  switch(x){ 
+                  case ".docx": 
+                    filext = 1
+                    imgtype = "images/docx.png"
+                    break;
+                  case ".doc": 
+                    filext = 1
+                    imgtype = "images/docx.png"
+                    break;
+                  case ".odt": 
+                    filext = 2
+                    imgtype = "images/odt.png"
+                    break;
+                  case ".pdf": 
+                    filext = 3
+                    imgtype = "images/pdf.png"
+                    break;
+                  case ".txt": 
+                    filext = 4
+                    imgtype = "images/txt.jpg"
+                    break;
+                  case ".pptx": 
+                    filext = 5
+                    imgtype = "images/pptx.png"
+                  case ".mp4": 
+                    filext = 6
+                    imgtype = "images/mp4.png"
+                  case ".m4a": 
+                    filext = 6
+                    imgtype = "images/mp4.png"
+                  case ".7z": 
+                    filext = 7
+                    imgtype = "images/zip.png"
+                  case ".rar": 
+                    filext = 7
+                    imgtype = "images/zip.png"
+                  case ".zip": 
+                    filext = 7
+                    imgtype = "images/zip.png"
+                  break;
+                    default:
+                    filext = 0
+                    break;
+                  } 
+                  %>
+                  
+                                      <div class="col-md-55">
+                                          <% if (doc.InDrive != 1){ %>
+                                          <div class="thumbnail">
+
+
+                                                  <div class="image view view-first">
+                                                  <% if (filext == "0"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
+                                                  <% } if (filext == "1"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "2"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "3"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "4"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "5"){ %>
+                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } %>
+
+                                                  <div class="mask no-caption">
+                                                      <div class="tools tools-bottom">
+                                                          <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
+                                                          <a href="#"><i class="fa fa-pencil"></i></a>
+                                                          <a href="#"><i class="fa fa-times"></i></a>
+                                                      </div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="caption">
+                                                      <p><strong><%= doc.Document_Name %></strong></p>
+                                                      <p><%= doc.Document_Desc %></p>
+                                                      <hr style="color: #f00;">
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                         <%} else {%>
+                                              <div class="thumbnail">
+
+                                                  <div class="image view view-first">
+                                                  <% if (filext == "0"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
+                                                  <% } if (filext == "1"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "2"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "3"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "4"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } if (filext == "5"){ %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } %>
+
+                                                  <div class="mask no-caption">
+                                                      <div class="tools tools-bottom">
+                                                          <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
+                                                          <a href="#"><i class="fa fa-pencil"></i></a>
+                                                          <a href="#"><i class="fa fa-times"></i></a>
+                                                      </div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="caption">
+                                                      <p><strong><%= doc.Document_Name %></strong></p>
+                                                      <p><%= doc.Document_Desc %></p>
+                                                      <hr style="color: #f00;">
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                          <%}%>
+                                      <% } %>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                          
+                            <div class="x_panel">
+                              <h2>All Evidences</h2>
                                 <div class="x_content">
 
                                     <div class="row">
