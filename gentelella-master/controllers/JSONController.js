@@ -7,10 +7,11 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
+var Notif = require('../controllers/NotifController')
 // ---- DEFINE SESSION
 server.use(session({
     secret: 'ssshhhhh',
@@ -143,8 +144,7 @@ module.exports = {
                             }
                         });
 
-                    }, function (err) {
-                    })
+                    }, function (err) {})
                 }
             });
         }, function (err) {
@@ -228,7 +228,7 @@ module.exports = {
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
-        
+
         async.forEachOf(UID, function (value, key, callback) {
             var measureID = UID[key]["MeasurementID"];
             var aid = UID[key]["ActivityID"];
@@ -249,7 +249,7 @@ module.exports = {
                 resp.send("OK");
             }
         })
-        
+
     },
 
     AddMeasurementsJSON: function (req, resp) {
@@ -261,12 +261,12 @@ module.exports = {
         //var group = req.body.group;
         var priority = req.body.priority;
         var gid = req.body.gid;
-        console.log("Hello"+ priority);
+        console.log("Hello" + priority);
         UID = JSON.parse(UID);
         var sql2 = " INSERT INTO `capstone`.`measurement` ( `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES ( ?, ?, ?, ?)";
         var values2 = [gid, mname, desc, priority];
         connection.query(sql2, values2, function (err, result) {
-            if (err){
+            if (err) {
                 console.log(err);
             };
             if (result) {
@@ -409,6 +409,40 @@ module.exports = {
             })
 
         }
-    }
+    },
+
+    TestNotif: function (req, resp) {
+        
+//        add this to actions you want to be notified to
+//        range 1 = only receiver gets notified
+//        range 2 = sender and receiver gets notified
+//        range 3 = group gets notified
+//        range 4 = group and sender gets notified
+        
+// sample notification creation implementation
+        
+//
+// insert actual route stuff here, when it succeeds initialize the variables on the bottom      
+//        
+        var today = new Date();
+        var current = today.toISOString().split('T')[0];
+        var notifobject = {
+            "body": "test", //message body, cannot be null
+            "sender": "46", //ID of sender, can be set to null
+            "receiver": "47", //ID of receiver
+            "group": "1", //Group ID, cannot be null
+            "range": "4", //range of notification
+            "admin": "1", // 0 if admin does not need to be notified, else 1
+            "sysadmin": "1", // same as above
+            "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+        }
+        
+// call this function to create a notification        
+        Notif.CreateNotif(notifobject);
+
+
+
+    },
+
 
 }

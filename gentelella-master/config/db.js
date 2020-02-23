@@ -1,10 +1,11 @@
 var mysql = require('mysql');
+var dbconfig = require('./dbconfig.json')
 
 var connection = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'capstone',
+    host: dbconfig.host,
+    user: dbconfig.user,
+    password: dbconfig.password,
+    database: dbconfig.schema,
     multipleStatements: true,
     connectionLimit: 30
 });

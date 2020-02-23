@@ -4,6 +4,7 @@ var JSONCtrl = require('./controllers/JSONController');
 var DocCtrl = require('./controllers/DocumentController');
 var SessCtrl = require('./controllers/SessionController');
 var CheckCtrl = require('./controllers/CheckingController');
+var NotifCtrl = require('./controllers/NotifController')
 var router = express.Router();
 //--PlanCtrl--
 //USERS ROUTES
@@ -89,6 +90,12 @@ router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
 router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
 router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
 router.route('/CreateSourcesJSON').post(JSONCtrl.CreateSourcesJSON);
+router.route('/TestNotif').post(JSONCtrl.TestNotif);
+
+//==NotifCtrl==
+router.route('/CreateNotif').post(NotifCtrl.CreateNotif);
+router.route('/GetNotif').get(NotifCtrl.GetNotif);
+router.route('/SetRead').post(NotifCtrl.SetRead);
 
 
 
@@ -119,7 +126,7 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
 
 //OTHERS
-router.route('/TestPage').get(planCtrl.Recommendations);
+router.route('/TestPage').get(planCtrl.TestPage);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
 router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
 

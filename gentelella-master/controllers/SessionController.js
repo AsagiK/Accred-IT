@@ -6,10 +6,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 var mysql = require('mysql');
-var connection = require('../db');
+var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
+var Notif = require('../controllers/NotifController')
 // ---- DEFINE SESSION
 server.use(session({
     secret: 'ssshhhhh',
