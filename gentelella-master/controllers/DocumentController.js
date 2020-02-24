@@ -1009,6 +1009,16 @@ module.exports = {
             };
             var media;
             downloadfile();
+            
+            /*
+            downloadfile
+            authorize
+            downloadtodrive
+            movetoserver
+            uploadfile
+            authorize
+            uploadtodrive
+            */
 
             function movetoserver(file, callback) {
 
@@ -1115,8 +1125,6 @@ module.exports = {
                     }
                 });
             }
-
-
 
             function addID(sql, values) {
                 connection.query(sql, values, function (err, result) {
