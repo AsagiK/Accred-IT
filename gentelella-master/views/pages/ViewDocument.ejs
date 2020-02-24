@@ -42,17 +42,59 @@
                       <div class="col-md-12">
                         
                           <div class="x_panel">
-                            <h2>Folders</h2>
+                            
                               <div class="x_content">
 
                                 <div>
-                                  <button class="btn btn-primary">Create Folder</button>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".CreateFolder">Create Folder</button>
+
+                                  <div class="modal fade CreateFolder" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                        <form id="folderCreate" action="CreateFolder" method="POST">
+
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                          </button>
+                                          <h4 class="modal-title" id="myModalLabel">Create Folder</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                          
+                                        <div class="form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            for="foldname">Folder Name <span class="required">*</span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                              <!--First name Input field-->
+                                              <input type="text" id="foldname" name="foldname" required="required"
+                                                  class="form-control col-md-7 col-xs-12" placeholder="Folder name">
+                                          </div>
+                                        </div>
+                                        
+                                        <input hidden id="isFolder" name="isFolder" value="1">
+                                        <input hidden id="route" name="route" value="kek">
+                                        <input hidden id="md5" name="md5" value="Is a Folder">
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-primary">Create</button>
+                                        </div>
+
+                                        </form>
+
+                                      </div>
+                                    </div>
+                                  </div>
                                   <br>
                                   <button class="btn btn-primary">View your Uploads</button>
                                 </div>
                                   <div class="row">
 
                                       <% for (var doc of data) { 
+                                        
+                                        
                     var filext = 0;
                     var imgtype = '';
                     var x = doc.Document_Ext;
@@ -96,38 +138,38 @@
                   case ".zip": 
                     filext = 7
                     imgtype = "images/zip.png"
+                  case "Folder": 
+                    filext = 8
+                    imgtype = "images/folder.png"
                   break;
                     default:
                     filext = 0
                     break;
                   } 
                   %>
+                  <% if (doc.Document_Ext == "Folder") { %>
                   
                                       <div class="col-md-55">
-                                          <% if (doc.InDrive != 1){ %>
+                                          
                                           <div class="thumbnail">
 
 
                                                   <div class="image view view-first">
                                                   <% if (filext == "0"){ %>
                                                   <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } if (filext == "1"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "2"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "3"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "4"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "5"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain' src="<%= imgtype %>" />
+                                                  <% } else { %>
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
                                                   <% } %>
+                                                  
 
                                                   <div class="mask no-caption">
                                                       <div class="tools tools-bottom">
-                                                          <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
-                                                          <a href="#"><i class="fa fa-pencil"></i></a>
-                                                          <a href="#"><i class="fa fa-times"></i></a>
+                                                        <form id="myform" action="ViewFolder" method="GET">
+                                                          <input id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
+                                                          <a href="#" onclick="document.getElementById('myform').submit()"><i class="fa fa-folder-open"></i></a>
+                                                        </form>
+                                                          
+                                                          
                                                       </div>
                                                   </div>
                                                   </div>
@@ -138,40 +180,8 @@
                                                   </div>
                                                   </div>
                                                   </div>
-                                         <%} else {%>
-                                              <div class="thumbnail">
-
-                                                  <div class="image view view-first">
-                                                  <% if (filext == "0"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } if (filext == "1"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "2"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "3"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "4"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } if (filext == "5"){ %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } %>
-
-                                                  <div class="mask no-caption">
-                                                      <div class="tools tools-bottom">
-                                                          <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
-                                                          <a href="#"><i class="fa fa-pencil"></i></a>
-                                                          <a href="#"><i class="fa fa-times"></i></a>
-                                                      </div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="caption">
-                                                      <p><strong><%= doc.Document_Name %></strong></p>
-                                                      <p><%= doc.Document_Desc %></p>
-                                                      <hr style="color: #f00;">
-                                                  </div>
-                                                  </div>
-                                                  </div>
-                                          <%}%>
+                                         
+                                      <% } %>
                                       <% } %>
 
                                   </div>

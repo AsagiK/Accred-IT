@@ -979,5 +979,26 @@ module.exports = {
                 //console.log(result)
             }
         });
-    }
+    },
+
+    CreateFolder: function (req, resp) {
+        var FolderName = (req.body.foldname);
+        var IsFolder = (req.body.isFolder);
+        var route = (req.body.route);
+        
+        var md5 = (req.body.md5);
+        var uploadID = 0;
+        console.log("Folder Name: " + FolderName);
+        console.log("Is folder: " + IsFolder);
+        console.log("md5: " + md5);
+        console.log("route: " + route);
+            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `md5` , `upload_id`, `isfolder`) VALUES (?, ?, ?, ?, ?)";
+            var values = [FolderName, route, md5, uploadID, IsFolder];
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                console.log("Folder Created");
+            });
+            resp.redirect('/ViewDocument');
+        
+    },
 }

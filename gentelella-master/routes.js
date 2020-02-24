@@ -109,6 +109,7 @@ router.route('/PreCheck').post(DocCtrl.PreCheck);
 router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
 router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
+router.route('/CreateFolder').post(DocCtrl.CreateFolder);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
