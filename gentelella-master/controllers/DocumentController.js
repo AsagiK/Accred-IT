@@ -1004,7 +1004,7 @@ module.exports = {
             var ext = filename.substr(point);
             var folderId = UPLOAD_PATH.data.id;
             var fileMetadata = {
-                'name': files[key].name,
+                'name': DOCS[key].name,
                 'parents': [folderId]
             };
             var media;
