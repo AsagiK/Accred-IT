@@ -43,7 +43,6 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var files = req.files.DocFile;
-            var count = 0;
             var name = files.name;
                 var filename = files.name;
                 var path = 'uploads/' + files.name;
@@ -110,8 +109,6 @@ module.exports = {
                         media: media,
                         fields: 'id'
                     }, function (err, file) {
-                        count = count + 1;
-                        console.log("File " + count + " of 1");
                         if (err) {
                             console.log(files.name + "Was not uploaded to Google Drive")
                         } else {
