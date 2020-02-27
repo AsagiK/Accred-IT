@@ -1688,7 +1688,6 @@ module.exports = {
             resp.redirect('/login');
         } else {
             var FID = req.query.FolderID;
-            console.log("---------------------------------------------------------------- "+FID);
             var sql = "SELECT * FROM capstone.documents; SELECT * FROM capstone.folder_documents WHERE folder_documents.folder_ID = ?; SELECT * FROM capstone.documents WHERE documents.Document_ID = ?;";
             var values = [FID, FID]
             connection.query(sql, values, function (err, results, fields) {

@@ -39,47 +39,66 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                      <div class="col-md-12">
-                        
-                          <div class="x_panel">
-                            
-                              <div class="x_content">
+                      
+                      <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                          
+                            <div class="x_panel">
+                              <h2><%= dataC[0].Document_Name %> Folder</h2>
+                                <div class="x_content">
 
-                                <div>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".CreateFolder">Create Folder</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
 
-                                  <div class="modal fade CreateFolder" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <!--MODAL FOR UPLOADING OF EVIDENCES-->
+                                  <div class="modal fade UploadEvidence" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                       <div class="modal-content">
 
-                                        <form id="folderCreate" action="CreateFolder" method="POST">
+                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
+                                        action="SendDocument" method="POST" encType="multipart/form-data">
 
                                         <div class="modal-header">
                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                           </button>
-                                          <h4 class="modal-title" id="myModalLabel">Create Folder</h4>
+                                          <h4 class="modal-title" id="myModalLabel">Upload</h4>
                                         </div>
                                         <div class="modal-body">
                                           
-                                        <div class="form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="foldname">Folder Name <span class="required">*</span>
-                                          </label>
-                                          <div class="col-md-6 col-sm-6 col-xs-12">
-                                              <!--First name Input field-->
-                                              <input type="text" id="foldname" name="foldname" required="required"
-                                                  class="form-control col-md-7 col-xs-12" placeholder="Folder name">
-                                          </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                for="first-name">Document Name <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <!--First name Input field-->
+                                                <input type="text" id="docname" name="DocName" required="required"
+                                                    class="form-control col-md-7 col-xs-12" placeholder="First name">
+                                            </div>
                                         </div>
-                                        
-                                        <input hidden id="isFolder" name="isFolder" value="1">
-                                        <input hidden id="route" name="route" value="kek">
-                                        <input hidden id="md5" name="md5" value="Is a Folder">
-                                        
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fileupload">Choose
+                                                File <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="file" id="DocFile" name="DocFile" required="required"
+                                                    class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                for="first-name">Description <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <!Document Description>
+                                                    <textarea id="description" name="DocDesc" required="required"
+                                                        class="form-control col-md-7 col-xs-12"
+                                                        onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                                            </div>
+                                        </div>
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn btn-primary">Create</button>
+                                          <button type="submit" class="btn btn-primary">Upload</button>
                                         </div>
 
                                         </form>
@@ -87,114 +106,8 @@
                                       </div>
                                     </div>
                                   </div>
-                                  <br>
+
                                   <a href="/ViewDocument" class="btn btn-primary">Go Back</a>
-                                </div>
-                                  <div class="row">
-
-                                      <% for (var doc of data) { 
-                                        
-                                        
-                    var filext = 0;
-                    var imgtype = '';
-                    var x = doc.Document_Ext;
-                    
-                  switch(x){ 
-                  case ".docx": 
-                    filext = 1
-                    imgtype = "images/docx.png"
-                    break;
-                  case ".doc": 
-                    filext = 1
-                    imgtype = "images/docx.png"
-                    break;
-                  case ".odt": 
-                    filext = 2
-                    imgtype = "images/odt.png"
-                    break;
-                  case ".pdf": 
-                    filext = 3
-                    imgtype = "images/pdf.png"
-                    break;
-                  case ".txt": 
-                    filext = 4
-                    imgtype = "images/txt.jpg"
-                    break;
-                  case ".pptx": 
-                    filext = 5
-                    imgtype = "images/pptx.png"
-                  case ".mp4": 
-                    filext = 6
-                    imgtype = "images/mp4.png"
-                  case ".m4a": 
-                    filext = 6
-                    imgtype = "images/mp4.png"
-                  case ".7z": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case ".rar": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case ".zip": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case "Folder": 
-                    filext = 8
-                    imgtype = "images/folder.png"
-                  break;
-                    default:
-                    filext = 0
-                    break;
-                  } 
-                  %>
-                  <% if (doc.Document_Ext == "Folder") { %>
-                  
-                                      <div class="col-md-55">
-                                          
-                                          <div class="thumbnail">
-
-
-                                                  <div class="image view view-first">
-                                                  <% if (filext == "0"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } else { %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } %>
-                                                  
-
-                                                  <div class="mask no-caption">
-                                                      <div class="tools tools-bottom">
-                                                        <form id="myform" action="ViewFolder" method="GET">
-                                                          <input id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
-                                                          <a href="#" onclick="document.getElementById('myform').submit()"><i class="fa fa-folder-open"></i></a>
-                                                        </form>
-                                                          
-                                                          
-                                                      </div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="caption">
-                                                      <p><strong><%= doc.Document_Name %></strong></p>
-                                                      <p><%= doc.Document_Desc %></p>
-                                                      <hr style="color: #f00;">
-                                                  </div>
-                                                  </div>
-                                                  </div>
-                                         
-                                      <% } %>
-                                      <% } %>
-
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <br>
-                    <div class="row">
-                        <div class="col-md-12">
-                          
-                            <div class="x_panel">
-                              <h2><%= dataC[0].Document_ID %></h2>
-                                <div class="x_content">
 
                                     <div class="row">
 
