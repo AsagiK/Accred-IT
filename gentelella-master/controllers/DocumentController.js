@@ -9,14 +9,9 @@ const async = require("async");
 var mysql = require('mysql');
 var connection = require('../config/db');
 
-try{
-const TOKEN_PATH = JSON.parse(fs.readFileSync('./config/token.json', 'utf8'));
+const TOKEN_PATH = './config/token.json'
 const UPLOAD_PATH = JSON.parse(fs.readFileSync('./config/accredit.json', 'utf8'));
-}
-catch (e){
-    
 
-}
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -41,6 +36,9 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
+
+
+console.log(JSON.parse(fs.readFileSync('./config/credentials.json')))
 module.exports = {
 
     SendDocument: function (req, resp) {
@@ -86,7 +84,7 @@ module.exports = {
             });
 
             function uploadfile() {
-                fs.readFile('../config/credentials.json', (err, content) => {
+                fs.readFileSync('./config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), uploadtodrive);
                 });
@@ -194,7 +192,7 @@ module.exports = {
             });
 
             function uploadfile() {
-                fs.readFile('../config/credentials.json', (err, content) => {
+                fs.readfilesync('./config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), uploadtodrive);
                 });
@@ -339,7 +337,7 @@ module.exports = {
                     });
 
                     function uploadfile() {
-                        fs.readFile('../config/credentials.json', (err, content) => {
+                        fs.readfilesync('./config/credentials.json', (err, content) => {
                             if (err) return console.log('Error loading client secret file:', err);
                             authorize(JSON.parse(content), uploadtodrive);
                         });
@@ -458,7 +456,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('../config/credentials.json', (err, content) => {
+                    fs.readfilesync('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -774,7 +772,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('../config/credentials.json', (err, content) => {
+                    fs.readfilesync('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -883,7 +881,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('../config/credentials.json', (err, content) => {
+                    fs.readfilesync('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -998,8 +996,7 @@ module.exports = {
             var name = DOCS[key].name;
             var filename = DOCS[key].name;
             var path = 'uploads/' + DOCS[key].name;
-                        var desc = req.body.DocDesc;
-                        var md5 = files[key].md5;
+                        var desc = "picker test";
             var point = filename.lastIndexOf(".");
             var ext = filename.substr(point);
             var folderId = UPLOAD_PATH.data.id;
@@ -1047,13 +1044,19 @@ module.exports = {
             }
 
             function downloadfile() {
-                fs.readFile('../config/credentials.json', (err, content) => {
+                console.log("downloadfile")
+               // console.log(JSON.parse(fs.readFileSync('./config/credentials.json')));
+                
+                fs.readFile('./config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), downloadtodrive);
+                    console.log(content)
                 });
+                
             }
 
             function authorize(credentials, callback) {
+                console.log("authorize")
                 const {
                     client_secret,
                     client_id,
@@ -1070,6 +1073,7 @@ module.exports = {
             }
 
             function downloadtodrive(auth) {
+                console.log("downloadtodrive")
                 const drive = google.drive({
                     version: 'v3',
                     auth
@@ -1091,6 +1095,7 @@ module.exports = {
             }
 
             function uploadtodrive(auth) {
+                console.log("uploadtodrive")
                 var fileMetadata = {
                     'name': newfilename,
                     parents: [folderId]
