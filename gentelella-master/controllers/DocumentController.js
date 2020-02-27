@@ -44,99 +44,100 @@ module.exports = {
         } else {
             var files = req.files.DocFile;
             var name = files.name;
-                var filename = files.name;
-                var path = 'uploads/' + files.name;
-                var desc = req.body.DocDesc;
-                var md5 = files.md5;
-                var point = filename.lastIndexOf(".");
-                var ext = filename.substr(point);
-                var folderId = UPLOAD_PATH.data.id
-                var fileMetadata = {
-                    'name': files.name,
-                    parents: [folderId]
-                };
-                var media;
-                let uploadedimg = files;
-                uploadedimg.mv('public/uploads/' + files.name, function (err) {
-                    if (err) return console.log(err);
-                    else console.log("File uploaded");
-                })
-                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
-                var values = [filename, path, desc, ext, md5, req.session.user[0].User_ID];
-                connection.query(sql, values, function (err, result) {
-                    if (err) console.log(err);
-                    if (result) {
-                        console.log("Record Inserted");
-                        media = {
-                            mimeType: mime.lookup('public/uploads/' + files.name),
-                            body: fs.createReadStream('public/uploads/' + files.name)
-                        };
-                        uploadfile();
-                        resp.redirect('/ViewDocument')
+            var filename = files.name;
+            var path = 'uploads/' + files.name;
+            var desc = req.body.DocDesc;
+            var md5 = files.md5;
+            var point = filename.lastIndexOf(".");
+            var ext = filename.substr(point);
+            var folderId = UPLOAD_PATH.data.id
+            var fileMetadata = {
+                'name': files.name,
+                parents: [folderId]
+            };
+            var media;
+            let uploadedimg = files;
+            uploadedimg.mv('public/uploads/' + files.name, function (err) {
+                if (err) return console.log(err);
+                else console.log("File uploaded");
+            })
+            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Desc`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
+            var values = [filename, path, desc, ext, md5, req.session.user[0].User_ID];
+            connection.query(sql, values, function (err, result) {
+                if (err) console.log(err);
+                if (result) {
+                    console.log("Record Inserted");
+                    media = {
+                        mimeType: mime.lookup('public/uploads/' + files.name),
+                        body: fs.createReadStream('public/uploads/' + files.name)
+                    };
+                    uploadfile();
+                    resp.redirect('/ViewDocument')
+                }
+            });
+
+            function uploadfile() {
+                fs.readFile('./config/credentials.json', (err, content) => {
+                    if (err) return console.log('Error loading client secret file:', err);
+                    authorize(JSON.parse(content), uploadtodrive);
+                    console.log(content)
+                });
+            }
+
+            function authorize(credentials, callback) {
+                const {
+                    client_secret,
+                    client_id,
+                    redirect_uris
+                } = credentials.installed;
+                const oAuth2Client = new google.auth.OAuth2(
+                    client_id, client_secret, redirect_uris[0]);
+
+                fs.readFile(TOKEN_PATH, (err, token) => {
+                    if (err) return getAccessToken(oAuth2Client, callback);
+                    oAuth2Client.setCredentials(JSON.parse(token));
+                    callback(oAuth2Client);
+                });
+            }
+
+            function uploadtodrive(auth) {
+                const drive = google.drive({
+                    version: 'v3',
+                    auth
+                });
+                drive.files.create({
+                    resource: fileMetadata,
+                    media: media,
+                    fields: 'id'
+                }, function (err, file) {
+                    if (err) {
+                        console.log(files.name + "Was not uploaded to Google Drive")
+                    } else {
+                        sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
+                        values = 'uploads/' + files.name;
+                        connection.query(sql, values, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log(files.name + " Uploaded to Google Drive")
+                                var fileid = file.data.id;
+                                sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                                values = [fileid, 'uploads/' + files.name];
+                                addID(sql, values);
+
+                            }
+                        });
                     }
                 });
+            }
 
-                function uploadfile() {
-                    fs.readFileSync('./config/credentials.json', (err, content) => {
-                        if (err) return console.log('Error loading client secret file:', err);
-                        authorize(JSON.parse(content), uploadtodrive);
-                    });
-                }
-
-                function authorize(credentials, callback) {
-                    const {
-                        client_secret,
-                        client_id,
-                        redirect_uris
-                    } = credentials.installed;
-                    const oAuth2Client = new google.auth.OAuth2(
-                        client_id, client_secret, redirect_uris[0]);
-
-                    fs.readFile(TOKEN_PATH, (err, token) => {
-                        if (err) return getAccessToken(oAuth2Client, callback);
-                        oAuth2Client.setCredentials(JSON.parse(token));
-                        callback(oAuth2Client);
-                    });
-                }
-
-                function uploadtodrive(auth) {
-                    const drive = google.drive({
-                        version: 'v3',
-                        auth
-                    });
-                    drive.files.create({
-                        resource: fileMetadata,
-                        media: media,
-                        fields: 'id'
-                    }, function (err, file) {
-                        if (err) {
-                            console.log(files.name + "Was not uploaded to Google Drive")
-                        } else {
-                            sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
-                            values = 'uploads/' + files.name;
-                            connection.query(sql, values, function (err, result) {
-                                if (err) throw err;
-                                if (result) {
-                                    console.log(files.name + " Uploaded to Google Drive")
-                                    var fileid = file.data.id;
-                                    sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
-                                    values = [fileid, 'uploads/' + files.name];
-                                    addID(sql, values);
-
-                                }
-                            });
-                        }
-                    });
-                }
-
-                function addID(sql, values) {
-                    connection.query(sql, values, function (err, result) {
-                        if (err) throw err;
-                        if (result) {
-                            console.log("ID inserted to DB");
-                        }
-                    });
-                }
+            function addID(sql, values) {
+                connection.query(sql, values, function (err, result) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log("ID inserted to DB");
+                    }
+                });
+            }
         }
     },
 
@@ -978,20 +979,20 @@ module.exports = {
         var FolderName = (req.body.foldname);
         var IsFolder = (req.body.isFolder);
         var route = (req.body.route);
-        
+
         var md5 = (req.body.md5);
         var uploadID = 0;
         console.log("Folder Name: " + FolderName);
         console.log("Is folder: " + IsFolder);
         console.log("md5: " + md5);
         console.log("route: " + route);
-            var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `md5` , `upload_id`, `isfolder`) VALUES (?, ?, ?, ?, ?)";
-            var values = [FolderName, route, md5, uploadID, IsFolder];
-            connection.query(sql, values, function (err, result) {
-                if (err) throw err;
-                console.log("Folder Created");
-            });
-            resp.redirect('/ViewDocument');
-        
+        var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `md5` , `upload_id`, `isfolder`) VALUES (?, ?, ?, ?, ?)";
+        var values = [FolderName, route, md5, uploadID, IsFolder];
+        connection.query(sql, values, function (err, result) {
+            if (err) throw err;
+            console.log("Folder Created");
+        });
+        resp.redirect('/ViewDocument');
+
     },
 }
