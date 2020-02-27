@@ -994,7 +994,7 @@ module.exports = {
             var name = DOCS[key].name;
             var filename = DOCS[key].name;
             var path = 'uploads/' + DOCS[key].name;
-                        var desc = "picker test";
+            var desc = "picker test";
             var point = filename.lastIndexOf(".");
             var ext = filename.substr(point);
             var folderId = UPLOAD_PATH.data.id;
@@ -1004,7 +1004,7 @@ module.exports = {
             };
             var media;
             downloadfile();
-            
+
             /*
             downloadfile
             authorize
@@ -1019,7 +1019,7 @@ module.exports = {
 
                 var point = file.lastIndexOf(".");
                 var ext = file.substr(point);
-                
+
                 fs.readFile('')
 
                 var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
@@ -1043,14 +1043,14 @@ module.exports = {
 
             function downloadfile() {
                 console.log("downloadfile")
-               // console.log(JSON.parse(fs.readFileSync('./config/credentials.json')));
-                
+                // console.log(JSON.parse(fs.readFileSync('./config/credentials.json')));
+
                 fs.readFile('./config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), downloadtodrive);
                     console.log(content)
                 });
-                
+
             }
 
             function authorize(credentials, callback) {
@@ -1080,7 +1080,8 @@ module.exports = {
                 var dest = fs.createWriteStream('public/uploads/' + DOCS[key].name)
                 drive.files.get({
                         fileId: DOCS[key].name,
-                        alt: 'media'
+                        alt: 'media',
+                        auth: auth
                     })
                     .on('end', function () {
                         console.log('Done');
