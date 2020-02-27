@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Document Page </title>
+    <title>View Personal Uploads</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +32,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3> Documents </h3>
+                            <h3>Your Documents </h3>
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@
                                     </div>
                                   </div>
                                   <br>
-                                  <button class="btn btn-primary">View your Uploads</button>
+                                  <a href="/ViewDocument" class="btn btn-primary">Go Back</a>
                                 </div>
                                   <div class="row">
 
@@ -164,9 +164,9 @@
 
                                                   <div class="mask no-caption">
                                                       <div class="tools tools-bottom">
-                                                        <form id="foldview" action="ViewFolder" method="GET">
-                                                          <input hidden id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
-                                                          <a href="#" onclick="document.getElementById('foldview').submit()"><i class="fa fa-folder-open"></i></a>
+                                                        <form id="myform" action="ViewFolder" method="GET">
+                                                          <input id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
+                                                          <a href="#" onclick="document.getElementById('myform').submit()"><i class="fa fa-folder-open"></i></a>
                                                         </form>
                                                           
                                                           
@@ -193,7 +193,7 @@
                         <div class="col-md-12">
                           
                             <div class="x_panel">
-                              <h2>All Evidences</h2>
+                              <h2><%= dataC[0].Document_ID %></h2>
                                 <div class="x_content">
 
                                     <div class="row">

@@ -46,6 +46,8 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+            var files = req.files.DocFile;
+            var count = 0;
             var name = files.name;
                 var filename = files.name;
                 var path = 'uploads/' + files.name;
@@ -75,15 +77,12 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
-                        values = [req.body.activityID, result.insertId, PID];
-                        addDoc(sql, values);
                         resp.redirect('/ViewDocument')
                     }
                 });
 
                 function uploadfile() {
-                    fs.readfilesync('./config/credentials.json', (err, content) => {
+                    fs.readFileSync('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -142,15 +141,6 @@ module.exports = {
                         if (err) throw err;
                         if (result) {
                             console.log("ID inserted to DB");
-                        }
-                    });
-                }
-
-                function addDoc(sql, values) {
-                    connection.query(sql, values, function (err, result) {
-                        if (err) throw err;
-                        if (result) {
-                            console.log("Document linked to DB");
                         }
                     });
                 }

@@ -1681,5 +1681,30 @@ module.exports = {
         }
     },
 
+    ViewFolder: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            var FID = req.query.FolderID;
+            console.log("---------------------------------------------------------------- "+FID);
+            var sql = "SELECT * FROM capstone.documents; SELECT * FROM capstone.folder_documents WHERE folder_documents.folder_ID = ?; SELECT * FROM capstone.documents WHERE documents.Document_ID = ?;";
+            var values = [FID, FID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/ViewYourDocument.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    });
+                    //console.log(results);
+                }
+            });
+            console.log("View Your Documents Page");
+        }
+    },
 
 }

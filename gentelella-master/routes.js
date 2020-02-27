@@ -132,6 +132,7 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 router.route('/TestPage').get(planCtrl.TestPage);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
 router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
+router.route('/ViewFolder').get(planCtrl.ViewFolder);
 
 router.route('/CreateGrades').get(planCtrl.CreateGrades);
 router.route('/assignplantomembers').get(planCtrl.assignplantomembers);
