@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                           
                             <div class="x_panel">
-                              <h2><%= dataC[0].Document_Name %> Folder</h2>
+                              <h2>Personal Uploads</h2>
                                 <div class="x_content">
 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
@@ -162,7 +162,7 @@
                     } 
                     %>
 
-
+                    <% if (doc.isfolder == 0) { %>
 
 
                                         <div class="col-md-55">
@@ -234,6 +234,7 @@
                                                     </div>
                                                     </div>
                                             <%}%>
+                                            <% } %>
                                         <% } %>
 
                                     </div>

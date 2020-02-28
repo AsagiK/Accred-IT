@@ -1066,11 +1066,12 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-            connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.documents; SELECT * FROM capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/ViewDocument.ejs', {
-                        data: results,
+                        data: results[0],
+                        dataB: results[1],
                         current_user: sess.user
                     });
                     //console.log(results);
@@ -1693,10 +1694,33 @@ module.exports = {
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
-                    resp.render('./pages/ViewYourDocument.ejs', {
+                    resp.render('./pages/ViewFolderDocument.ejs', {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        current_user: sess.user
+                    });
+                    //console.log(results);
+                }
+            });
+            console.log("View Folder Documents Page");
+        }
+    },
+
+    ViewPersonalFolder: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            var UID = req.query.UID;
+            var sql = "SELECT * FROM capstone.documents WHERE documents.upload_id = ?;";
+            var values = [UID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/ViewPersonalUploads.ejs', {
+                        data: results,
                         current_user: sess.user
                     });
                     //console.log(results);

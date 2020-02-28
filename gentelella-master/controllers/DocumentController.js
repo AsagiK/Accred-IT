@@ -981,7 +981,7 @@ module.exports = {
         var route = (req.body.route);
 
         var md5 = (req.body.md5);
-        var uploadID = 0;
+        var uploadID = (req.body.UID);
         console.log("Folder Name: " + FolderName);
         console.log("Is folder: " + IsFolder);
         console.log("md5: " + md5);
