@@ -42,12 +42,13 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-
+            var files = req.files.DocFile;
+            console.log(req.files)
+            var max = files.length;
             var count = 0;
-            console.log(files.length);
             if (files.length) {
                  async.forEachOf(files, function (value, key, callback) {
-                    var files = req.files.docfile
+                    
                     var name = files[key].name;
                     var filename = files[key].name;
                     var path = 'uploads/' + files[key].name;
