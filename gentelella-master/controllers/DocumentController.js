@@ -47,8 +47,8 @@ module.exports = {
             var max = files.length;
             var count = 0;
             if (files.length) {
-                 async.forEachOf(files, function (value, key, callback) {
-                    
+                async.forEachOf(files, function (value, key, callback) {
+
                     var name = files[key].name;
                     var filename = files[key].name;
                     var path = 'uploads/' + files[key].name;
@@ -79,16 +79,19 @@ module.exports = {
                                 body: fs.createReadStream('public/uploads/' + files[key].name)
                             };
                             uploadfile();
+                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                            values = [req.body.activityID, result.insertId, PID];
+                            addFolder(sql, values, req.body.folderid);
                             callback();
                         }
                     });
 
                     function uploadfile() {
-                    fs.readFile('./config/credentials.json', (err, content) => {
-                        if (err) return console.log('Error loading client secret file:', err);
-                        authorize(JSON.parse(content), uploadtodrive);
-                        console.log(content)
-                    })
+                        fs.readFile('./config/credentials.json', (err, content) => {
+                            if (err) return console.log('Error loading client secret file:', err);
+                            authorize(JSON.parse(content), uploadtodrive);
+                            console.log(content)
+                        })
                     }
 
                     function authorize(credentials, callback) {
@@ -146,6 +149,17 @@ module.exports = {
                             }
                         });
                     }
+
+                    function addFolder(sql, values, folderid) {
+                        if (folderid) {
+                            connection.query(sql, values, function (err, result) {
+                                if (err) throw err;
+                                if (result) {
+                                    console.log("Document linked to DB");
+                                }
+                            });
+                        }
+                    }
                 }, function (err) {
                     if (err) {
                         console.log("Failed");
@@ -188,6 +202,9 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                        values = [req.body.activityID, result.insertId, PID];
+                        addFolder(sql, values, req.body.folderid);
                         resp.redirect('/ViewDocument')
                     }
                 });
@@ -253,6 +270,17 @@ module.exports = {
                             console.log("ID inserted to DB");
                         }
                     });
+                }
+
+                function addFolder(sql, values, folderid) {
+                    if (folderid) {
+                        connection.query(sql, values, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log("Document linked to DB");
+                            }
+                        });
+                    }
                 }
             }
         }
