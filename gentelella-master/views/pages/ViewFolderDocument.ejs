@@ -80,7 +80,7 @@
                                                 File <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="file" id="DocFile" name="DocFile" required="required"
+                                                <input multiple type="file" id="DocFile" name="DocFile" required="required"
                                                     class="form-control col-md-7 col-xs-12" onchange="md5Generate(event)">
                                             </div>
                                         </div>
@@ -163,7 +163,7 @@
                     %>
 
                     <% for (var folddoc of dataB) { %>
-                      <% if (folddoc.folder_id == doc.Document_ID) { %>
+                      <% if (folddoc.document_id == doc.Document_ID) { %>
 
 
                                         <div class="col-md-55">

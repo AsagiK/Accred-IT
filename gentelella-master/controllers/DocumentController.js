@@ -79,9 +79,9 @@ module.exports = {
                                 body: fs.createReadStream('public/uploads/' + files[key].name)
                             };
                             uploadfile();
-                            sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
-                            values = [req.body.activityID, result.insertId, PID];
-                            addFolder(sql, values, req.body.folderid);
+                            sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`) VALUES (?, ?); "
+                            values = [req.body.FoldID, result.insertId];
+                            addFolder(sql, values, req.body.FoldID);
                             callback();
                         }
                     });
@@ -202,9 +202,9 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
-                        values = [req.body.activityID, result.insertId, PID];
-                        addFolder(sql, values, req.body.folderid);
+                        sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`) VALUES (?, ?); "
+                        values = [req.body.FoldID, result.insertId];
+                        addFolder(sql, values, req.body.FoldID);
                         resp.redirect('/ViewDocument')
                     }
                 });
