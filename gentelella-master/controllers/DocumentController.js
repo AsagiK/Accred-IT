@@ -38,7 +38,6 @@ var Notif = require('../controllers/NotifController')
 var sess
 
 
-console.log(JSON.parse(fs.readFileSync('./config/credentials.json')))
 module.exports = {
 
     SendDocument: function (req, resp) {
