@@ -82,22 +82,24 @@ width: 100%;
 
                 <div class="col-md-4  tile_stats_count">
                         
-                        <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
-                                <%= new Date().toString().substr(0,15)%>
+                        <span class="count_top" style="font-size: 30px; color: white;"><i class="fa fa-tasks"></i>
+                                <%= new Date().toString().substr(0,15)%> 
+                                
+
                         </span>
                         
                 </div> 
                 
              <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
-                <div class="row">
+                <div class="row" style="background-color: black;">
                     <!MEASUREMENT>
-                        <div class="col-md-12 col-sm-15 col-xs-15">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>METRICS</h2>
+                        <div class="col-md-12 col-sm-15 col-xs-15" >
+                            <div class="x_panel" style="background-color:black;">
+                                <div class="x_title" style="background-color::rgb(47,92,140);color: white; font-family:Georgia, Garamond, Serif; font-style: initial;">
+                                    <h2>GOALS</h2>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="dash col-md-12">
+                                <div class="dash col-md-12" style="background-color:black; font-family:Georgia, Garamond, Serif;">
                                     <!--METRIC TABLE-->  
                                     <% if (data.length == 0) { %>
                                     <h2>No Goals Created Yet</h2>
@@ -105,10 +107,10 @@ width: 100%;
                                     <% } else { %>
                                 <% for (var mes of data) { %> 
 
-                                    <table class="table table-bordered" style="table-layout: fixed;">
+                                    <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                         <thead>
                                             <tr>
-                                                <th>Metric Name</th>
+                                                <th>Goal Name</th>
                                                 <th>Description</th>
                                                 <th></th>
                                             </tr>
@@ -121,7 +123,7 @@ width: 100%;
                                                 <td> <%= mes.metric_Name %> </td>
                                                 <td><%= mes.metric_Desc %> </td>
                                                 <td><form method="get" action="QualityMetrics">
-                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                        <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
                                                     </form></td> 
 
                                             </tr>
@@ -143,8 +145,8 @@ width: 100%;
 
                         <!MEASUREMENTS>
                         <div class="col-md-6">
-                            <div class="x_panel">
-                                <div class="x_title">
+                            <div class="x_panel" style="background-color:black;">
+                                <div class="x_title" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                     <h2>MEASUREMENTS</h2>
                                     <div class="clearfix"></div>
                                 </div>
@@ -153,7 +155,7 @@ width: 100%;
                                 <% for (var meas of dataB) { %> 
                                     <% for (var targets of dataG) { %>
                                         
-                                        <table class="table table-bordered" style="table-layout: fixed;">
+                                        <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                         <thead>
                                             <tr>
                                                 <th>Measurement Name <%= meas.length %></th>
@@ -183,7 +185,7 @@ width: 100%;
                                                 <td> <form method="get" action="ViewMeasurementDetails">
                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
-                                                        <button type="submit" class="btn btn-primary">View
+                                                        <button type="submit" class="btn btn-primary" style="background-color: gray;">View
                                                             Details</button>
                                                     </form></td>
                                             </tr>
@@ -205,8 +207,8 @@ width: 100%;
 
                         <!ACTIVITIES>
                         <div class="col-md-6">
-                            <div class="x_panel">
-                                <div class="x_title">
+                            <div class="x_panel" style="background-color:black;">
+                                <div class="x_title" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                     <h2>ACTIVITIES</h2>
                                     <div class="clearfix"></div>
                                 </div>
@@ -215,7 +217,7 @@ width: 100%;
                                          
                                             <% for (var acti of dataH) { %> 
                                                 
-                                        <table class="table table-bordered" style="table-layout: fixed;">
+                                        <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                                 <thead>
                                                     <tr>
                                                         <th>Activity Name</th>
@@ -232,7 +234,7 @@ width: 100%;
                                                     <td><%= acti.description %> </td>
                                                     <td><%= acti.deadline.toString().substr(0, 15) %></td> 
                                                     <td><form method="get" action="QualityMetrics">
-                                                            <button type="submit" class="btn btn-primary">View Details</button>
+                                                            <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
                                                         </form></td>
                                                 </tr>
 
@@ -667,7 +669,26 @@ width: 100%;
         <script src="assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
 
         <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+        <script src="assets/build/js/custom.min.js"></script> 
+
+        <!-- RUNNING CLOCK SCIRPT--> 
+        <script>
+            function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML =
+            h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+            }
+        </script>
 
 </body>
 
