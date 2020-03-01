@@ -113,7 +113,7 @@
 
             var datastring = "url=" + data.docs[0].url + "&name=" + data.docs[0].name;
             datastring = JSON.stringify(data.docs);
-            var senddata = "data=" + datastring;
+            var senddata = "data=" + datastring + "&userauth=" + oauthToken;
 
             $.ajax({
                 type: 'POST',

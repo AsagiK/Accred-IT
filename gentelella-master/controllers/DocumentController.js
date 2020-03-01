@@ -986,7 +986,8 @@ module.exports = {
         console.log(DOCS)
         console.log(DOCS.length);
         var max = DOCS.length;
-        console.log(mime.extension('application/msword'))
+        var userauth = req.body.userauth;
+        console.log(userauth);
 
         var count = 0;
         async.forEachOf(DOCS, function (value, key, callback) {
@@ -1075,21 +1076,27 @@ module.exports = {
                     version: 'v3',
                     auth
                 });
-
-                var dest = fs.createWriteStream('public/uploads/' + DOCS[key].name)
+                var dest = fs.createWriteStream('public/uploads/' + DOCS[key].name);
                 drive.files.get({
-                        fileId: DOCS[key].name,
-                        alt: 'media',
-                        auth: auth
-                    })
-                    .on('end', function () {
-                        console.log('Done');
-                    })
-                    .on('error', function (err) {
-                        console.log('Error during download', err);
-                    })
-                    .pipe(dest);
-                movetoserver(DOCS[key].name, uploadfile);
+                    fileId: DOCS[key].name,
+                    alt: 'media',
+                    auth: userauth
+                }, function (err, result) {
+                    if (err) {
+                        throw err;
+                    } // Binary file content here
+                    else {
+                        let uploadedimg = result;
+                        uploadedimg.mv('public/uploads/' + files.name, function (err) {
+                            if (err) return console.log(err);
+                            else console.log("File uploaded");
+                        })
+                        movetoserver(DOCS[key].name, uploadfile);
+                    }
+                });
+
+
+
             }
 
             function uploadtodrive(auth) {
