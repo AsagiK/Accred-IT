@@ -287,12 +287,8 @@
 
             $("#toJSON").click(function () {
 
-                var table = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3]
-                }));
-                var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2, 3, 4]
-                })); // 
+                var table = JSON.stringify($('#table2').tableToJSON());
+                var table2 = JSON.stringify($('#table2').tableToJSON()); // 
 
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/AssignGroupJSON', true);
