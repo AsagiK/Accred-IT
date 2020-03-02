@@ -42,8 +42,8 @@ module.exports = {
                 if (err) console.log(err);
                 if (result && Range != 5) {
                     checkrange(Sender, Range, result.insertId);
-                    admin(Admin);
-                    sysadmin(Sysadmin);
+                    admin(Admin, result.insertId);
+                    sysadmin(Sysadmin, result.insertId);
                     console.log("notif added")
                 } else {
                     checkrange(Sender, Range, result.insertId);
@@ -58,8 +58,8 @@ module.exports = {
                 if (err) console.log(err);
                 if (result && Range != 5) {
                     checkrange(Sender, Range, result.insertId);
-                    admin(Admin);
-                    sysadmin(Sysadmin);
+                    admin(Admin, result.insertId);
+                    sysadmin(Sysadmin, result.insertId);
                     console.log("notif added")
                 } else {
                     checkrange(Sender, Range, result.insertId);
@@ -167,7 +167,7 @@ module.exports = {
             }
         }
 
-        function admin(Admin) {
+        function admin(Admin, insertid) {
             if (Admin == 1) {
                 var sql = "SELECT * FROM capstone.users where users.Role = 2;"
                 connection.query(sql, function (err, result, fields) {
@@ -192,7 +192,7 @@ module.exports = {
             }
         }
 
-        function sysadmin(Sysadmin) {
+        function sysadmin(Sysadmin, insertid) {
             if (Sysadmin == 1) {
                 var sql = "SELECT * FROM capstone.users where users.Role = 2;"
                 connection.query(sql, function (err, result, fields) {
