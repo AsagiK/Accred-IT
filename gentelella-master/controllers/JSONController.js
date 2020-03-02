@@ -24,6 +24,7 @@ var sess;
 module.exports = {
 
     AssignGroupJSON: function (req, resp) {
+        sess = req.session;
         var UID = req.body.table;
         UID = JSON.parse(UID);
         async.forEachOf(UID, function (value, key, callback) {
@@ -131,7 +132,7 @@ module.exports = {
     },
 
     AddActivitiesJSON: function (req, resp) {
-        console.log(req.session);
+        sess = req.session;
         var UID = req.body.table;
         var MID = req.body.mid;
         UID = JSON.parse(UID);
