@@ -302,6 +302,8 @@ module.exports = {
         //var group = req.body.group;
         var priority = req.body.priority;
         var gid = req.body.gid;
+        var GID = req.body.GID;
+        var GNAME = req.body.GName;
         console.log("Hello" + priority);
         UID = JSON.parse(UID);
         var sql2 = " INSERT INTO `capstone`.`measurement` ( `cycle_ID`, `measurement_Name`, `measurement_Description`, `priority_Level`) VALUES ( ?, ?, ?, ?)";
@@ -339,7 +341,7 @@ module.exports = {
                         var today = new Date();
                         var current = today.toISOString().split('T')[0];
                         var notifobject = {
-                            "body": "Measurements have been created", //message body, cannot be null
+                            "body": "Measurements have been created for Goal: "+ GNAME, //message body, cannot be null
                             "sender": sess.user[0].User_ID, //ID of sender taken from req session
                             "receiver": "", //ID of receiver, in this case the user that was created
                             "group": sess.user[0].Group, //Group ID taken from req session
