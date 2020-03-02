@@ -29,12 +29,29 @@ module.exports = {
         async.forEachOf(UID, function (value, key, callback) {
             var gid = UID[key]["Group ID"];
             var uid = UID[key]["User ID"];
+            var fn = UID[key]["First Name"]
+            var ln = UID[key]["Last Name"]
             var sql = "Update capstone.users set users.Group = ? where users.User_ID = ?; INSERT INTO `capstone`.`groupdetails` (`Groupdetails_ID`, `Groupdetails_UserID`) VALUES (? , ? ); ";
             var values = [gid, uid, gid, uid];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
                     callback();
+
+                    var today = new Date();
+                    var current = today.toISOString().split('T')[0];
+                    var notifobject = {
+                        "body": "User " + fn + " " + ln + " has been assigned to Group", //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
+                        "group": sess.user[0].Group, //Group ID taken from req session
+                        "range": "2", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject);
+
                 }
             });
         }, function (err) {
@@ -44,6 +61,8 @@ module.exports = {
             } else {
                 console.log("Passed");
                 resp.send("OK");
+
+
             }
         })
     },
@@ -123,6 +142,7 @@ module.exports = {
             measureID = measureID.split(",");
             var desc = UID[key]["Description"];
             var dead = UID[key]["Deadline"];
+            var mname = UID[key]["Measurement to assign"]
             console.log(an);
             var sql = "INSERT INTO `capstone`.`approved_activities` (`activity_name`, `description`, `deadline`) VALUES (?, ?, ?);";
             var values = [an, desc, dead];
@@ -144,7 +164,27 @@ module.exports = {
                             }
                         });
 
-                    }, function (err) {})
+                    }, function (err) {
+                        if (err) {
+                            console.log("Failed");
+                            resp.send("Not OK")
+                        } else {
+                            console.log("Passed");
+                            var today = new Date();
+                            var current = today.toISOString().split('T')[0];
+                            var notifobject = {
+                                "body": "Activities have been added to Measurement/s" + mname, //message body, cannot be null
+                                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                                "receiver": result.insertId, //ID of receiver, in this case the user that was created
+                                "group": sess.user[0].Group, //Group ID taken from req session
+                                "range": "2", //range of notification, refer to the JSONcontroller
+                                "admin": "1", // 0 if admin does not need to be notified, else 1
+                                "sysadmin": "1", // same as above
+                                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                            }
+                            Notif.CreateNotif(notifobject);
+                        }
+                    })
                 }
             });
         }, function (err) {
@@ -411,18 +451,18 @@ module.exports = {
     },
 
     TestNotif: function (req, resp) {
-        
-//        add this to actions you want to be notified to
-//        range 1 = only receiver gets notified
-//        range 2 = sender and receiver gets notified
-//        range 3 = group gets notified
-//        range 4 = group and sender gets notified
-//        range 5 = everyone gets notified        
-// sample notification creation implementation
-        
-//
-// insert actual route stuff here, when it succeeds initialize the variables on the bottom      
-//        
+
+        //        add this to actions you want to be notified to
+        //        range 1 = only receiver gets notified
+        //        range 2 = sender and receiver gets notified
+        //        range 3 = group gets notified
+        //        range 4 = group and sender gets notified
+        //        range 5 = everyone gets notified        
+        // sample notification creation implementation
+
+        //
+        // insert actual route stuff here, when it succeeds initialize the variables on the bottom      
+        //        
         var today = new Date();
         var current = today.toISOString().split('T')[0];
         var notifobject = {
@@ -435,8 +475,8 @@ module.exports = {
             "sysadmin": "1", // same as above
             "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
         }
-        
-// call this function to create a notification        
+
+        // call this function to create a notification        
         Notif.CreateNotif(notifobject);
 
 
