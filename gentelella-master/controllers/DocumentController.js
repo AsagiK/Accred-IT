@@ -1079,8 +1079,7 @@ module.exports = {
                 var dest = fs.createWriteStream('public/uploads/' + DOCS[key].name);
                 drive.files.get({
                     fileId: DOCS[key].name,
-                    alt: 'media',
-                    auth: userauth
+                    alt: 'media'
                 }, function (err, result) {
                     if (err) {
                         throw err;
