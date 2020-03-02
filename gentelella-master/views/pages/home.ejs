@@ -254,14 +254,14 @@ width: 100%;
                 </div> 
 
                 <% }  else if (current_user[0].Role == 4) { %>
-                    <div class="row"> 
+                    <div class="row" style="background-color: black;"> 
                             <div class="col-md-12 col-sm-15 col-xs-15">
-                                    <div class="x_panel">
+                                    <div class="x_panel" style="background-color:black;">
                                         <div class="x_title">
                                             <h2>ACTIVITIES</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash col-md-12">
+                                        <div class="dash col-md-12" style="background-color:black; font-family:Georgia, Garamond, Serif;">
                                            <!--ACTIVITIES-->   
                                         
                                             <% for (var act of dataC) { %> 
@@ -287,7 +287,7 @@ width: 100%;
                                                                                 <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                 <br> 
                                                                                 <form method="get" action="QualityMetrics">
-                                                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                        <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
                                                                                     </form>
                                                                                 <br>
                                                                                 <br>
@@ -310,7 +310,7 @@ width: 100%;
                                                                                 <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
 
                                                                                     <div class="panel-body">
-                                                                                            <table class="table table-bordered" style="table-layout: fixed;"> 
+                                                                                            <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;"> 
                                                 
                                                                                                     <thead>
                                                                                                         <tr>
@@ -342,7 +342,7 @@ width: 100%;
                                                                                                         <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                          
                                                                                                         <td><form method="get" action="QualityMetrics">
-                                                                                                                <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                                                <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
                                                                                                             </form></td>
                                                                                                     </tr>
                                                 
@@ -380,19 +380,19 @@ width: 100%;
 
                 
                 <% } else { %> 
-                    <div class="row">
+                    <div class="row" style="background-color: black;">
                             <!MEASUREMENT>
                                 <div class="col-md-12 col-sm-15 col-xs-15">
-                                    <div class="x_panel">
+                                    <div class="x_panel" style="background-color: black;">
                                         <div class="x_title">
                                             <h2>METRICS</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash col-md-12">
+                                        <div class="dash col-md-12" style="background-color:black; font-family:Georgia, Garamond, Serif;">
                                             <!--METRIC TABLE-->  
                                         <% for (var mes of data) { %> 
         
-                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                            <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                                 <thead>
                                                     <tr>
                                                         <th>Metric Name</th>
@@ -408,7 +408,7 @@ width: 100%;
                                                         <td> <%= mes.metric_Name %> </td>
                                                         <td><%= mes.metric_Desc %> </td>
                                                         <td><form method="get" action="QualityMetrics">
-                                                                <button type="submit" class="btn btn-primary">View Details</button>
+                                                                <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;" >View Details</button>
                                                             </form></td> 
         
                                                     </tr>
@@ -440,7 +440,7 @@ width: 100%;
                                         <% for (var meas of dataB) { %> 
                                             <% for (var targets of dataG) { %>
                                             
-                                                <table class="table table-bordered" style="table-layout: fixed;">
+                                                <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
                                                 <thead>
                                                     <tr>
                                                         <th>Measurement Name</th>
@@ -471,7 +471,7 @@ width: 100%;
                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
-                                                                        <button type="submit" class="btn btn-primary">View
+                                                                        <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View
                                                                             Details</button>
                                                                     </form>
                                                         </td>
@@ -525,7 +525,7 @@ width: 100%;
                                                                                     <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                     <br> 
                                                                                     <form method="get" action="QualityMetrics">
-                                                                                            <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                            <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View Details</button>
                                                                                         </form>
                                                                                     <br>
                                                                                     <br>
@@ -548,7 +548,7 @@ width: 100%;
                                                                                     <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
     
                                                                                         <div class="panel-body">
-                                                                                                <table class="table table-bordered" style="table-layout: fixed;"> 
+                                                                                                <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;"> 
                                                     
                                                                                                         <thead>
                                                                                                             <tr>
@@ -580,7 +580,7 @@ width: 100%;
                                                                                                             <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                              
                                                                                                             <td><form method="get" action="QualityMetrics">
-                                                                                                                    <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                                                    <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View Details</button>
                                                                                                                 </form></td>
                                                                                                         </tr>
                                                     
