@@ -310,7 +310,9 @@
                                         <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             
-                                            <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input  id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input  id="GID" name="GID" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input  id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -429,7 +431,7 @@
                                                                         
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%= goals.metric_ID %>" data-book-id3="<%= goals.metric_Name %>">Create
                                                                             Measurement</button>
 
                                                                         <% } else if (cycles.status  == 1) { %>
@@ -470,7 +472,7 @@
                                                                         </form>
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%= goals.metric_ID %>" data-book-id3="<%= goals.metric_Name %>">Create
                                                                             Measurement</button>
                                                                         <% } %>
                                                                         <% } %>
@@ -802,8 +804,12 @@
 
                     $('#my_modalCreateMeasures').on('show.bs.modal.fade.createMeasurement', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
+                        var bookId2 = $(e.relatedTarget).data('book-id2');
+                        var bookId3 = $(e.relatedTarget).data('book-id3');
                         console.log("Create Measurement Modal");
                         $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+                        $(e.currentTarget).find('input[name="GID"]').val(bookId2);
+                        $(e.currentTarget).find('input[name="GName"]').val(bookId3);
                     });
 
                     $('#my_modal').on('show.bs.modal.fade.createMeasurement', function(e) {
@@ -1066,6 +1072,8 @@
                                 var desc = document.getElementById(
                                     "MeasurementDesc").value;
                                 var gid = document.getElementById("GoalID").value;
+                                var GID = document.getElementById("GID").value;
+                                var GName = document.getElementById("GName").value;
                                 
                                 var p = document.getElementById("priority");
                                 var priority = p.options[p.selectedIndex].value;
@@ -1094,7 +1102,7 @@
 
                                 xhr.send("table=" + table + "&mname=" + mname +
                                     "&desc=" + desc + "&priority=" + priority +
-                                    "&gid=" + gid );
+                                    "&gid=" + gid + "&GID=" + GID + "&GName=" + GName);
 
                             });
 
