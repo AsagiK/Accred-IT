@@ -44,7 +44,7 @@ module.exports = {
                     var notifobject = {
                         "body": "User " + fn + " " + ln + " has been assigned to Group", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
+                        "receiver": uid, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
                         "range": "2", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
@@ -174,7 +174,7 @@ module.exports = {
                             var today = new Date();
                             var current = today.toISOString().split('T')[0];
                             var notifobject = {
-                                "body": "Activities have been added to Measurement/s" + mname, //message body, cannot be null
+                                "body": "Activities have been added to Measurement/s " + mname, //message body, cannot be null
                                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
                                 "receiver": result.insertId, //ID of receiver, in this case the user that was created
                                 "group": sess.user[0].Group, //Group ID taken from req session
