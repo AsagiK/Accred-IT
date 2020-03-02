@@ -131,7 +131,7 @@ module.exports = {
     },
 
     AddActivitiesJSON: function (req, resp) {
-        console.log(req.body);
+        console.log(req.session);
         var UID = req.body.table;
         var MID = req.body.mid;
         UID = JSON.parse(UID);
