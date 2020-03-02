@@ -294,6 +294,7 @@ module.exports = {
     },
 
     AddMeasurementsJSON: function (req, resp) {
+        sess = req.session;
         var UID = req.body.table;
         console.log("--------");
         console.log(UID);
