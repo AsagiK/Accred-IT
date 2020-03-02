@@ -397,12 +397,30 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+            //working example derived from the sample at jsoncontroller         
+            var today = new Date();
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": metricName + " has been created" , //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "1", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+            }
+            Notif.CreateNotif(notifobject);
             resp.redirect('/QualityMetric');
         });
+        
     },
 
     addmetrictosource: function (req, resp) {
         var source = (req.body.source);
+        var sourceID = source.substr(0, source.indexOf('~'));
+        var sourceType = source.substr(source.lastIndexOf('~') + 1);
         var metricName = (req.body.metricName);
         var metricDesc = (req.body.metricDesc);
         var priority = (req.body.priority);
@@ -418,11 +436,27 @@ module.exports = {
         console.log(priority);
         console.log(group);
         console.log(current);
-        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `priority_Level`, `date_insert`, `group_ID`, `source_ID`) VALUES (? , ? , ? , ?, ?, ?)";
-        var values = [metricName, metricDesc, priority, current, group, source];
+        var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`, `metric_Desc`, `date_insert`, `source_ID`, `source_Type`) VALUES (? , ? , ? , ?, ?)";
+        var values = [metricName, metricDesc, current, sourceID, sourceType];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+             //working example derived from the sample at jsoncontroller         
+             var today = new Date();
+             var current = today.toISOString().split('T')[0];
+             var notifobject = {
+                 "body": metricName + " has been created" , //message body, cannot be null
+                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                 "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                 "group": sess.user[0].Group, //Group ID taken from req session
+                 "range": "1", //range of notification, refer to the JSONcontroller
+                 "admin": "1", // 0 if admin does not need to be notified, else 1
+                 "sysadmin": "1", // same as above
+                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+             }
+             Notif.CreateNotif(notifobject); 
+
             resp.redirect('/ViewMetricofSource?SID=' + source);
         });
     },
