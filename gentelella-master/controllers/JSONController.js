@@ -176,7 +176,7 @@ module.exports = {
                             var notifobject = {
                                 "body": "Activities have been added to Measurement/s " + mname, //message body, cannot be null
                                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                                "receiver": "", //ID of receiver, in this case the user that was created
+                                "receiver": "0", //ID of receiver, in this case the user that was created
                                 "group": sess.user[0].Group, //Group ID taken from req session
                                 "range": "1", //range of notification, refer to the JSONcontroller
                                 "admin": "1", // 0 if admin does not need to be notified, else 1
@@ -344,7 +344,7 @@ module.exports = {
                         var notifobject = {
                             "body": "Measurements have been created for Goal: "+ GNAME, //message body, cannot be null
                             "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                            "receiver": "", //ID of receiver, in this case the user that was created
+                            "receiver": "0", //ID of receiver, in this case the user that was created
                             "group": sess.user[0].Group, //Group ID taken from req session
                             "range": "1", //range of notification, refer to the JSONcontroller
                             "admin": "1", // 0 if admin does not need to be notified, else 1
