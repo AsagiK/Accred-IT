@@ -982,10 +982,24 @@ module.exports = {
         var values = [sn, sd, id];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
-                resp.redirect('/ViewSources');
+            
+            //working example derived from the sample at jsoncontroller         
+            var today = new Date();
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": "Source: " + sn + " has been edited" , //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "1", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
             }
+            Notif.CreateNotif(notifobject);
+            
+                resp.redirect('/ViewSources');
+            
         });
     },
 
@@ -1031,72 +1045,152 @@ module.exports = {
 
     planPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var GName = (req.body.GName);
+        var CName = (req.body.CName);
         var status = "0"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
+            
+             //working example derived from the sample at jsoncontroller         
+             var today = new Date();
+             var current = today.toISOString().split('T')[0];
+             var notifobject = {
+                 "body": "Plan phase has begun for Goal: " + GName + " of Cycle: " + CName, //message body, cannot be null
+                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                 "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                 "group": sess.user[0].Group, //Group ID taken from req session
+                 "range": "5", //range of notification, refer to the JSONcontroller
+                 "admin": "1", // 0 if admin does not need to be notified, else 1
+                 "sysadmin": "1", // same as above
+                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+             }
+             Notif.CreateNotif(notifobject);
+
                 resp.redirect('/QualityMetric');
-            }
+            
         });
     },
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var GName = (req.body.GName);
+        var CName = (req.body.CName);
         var status = "1"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
-                resp.redirect('/QualityMetric');
+            
+            //working example derived from the sample at jsoncontroller         
+            var today = new Date();
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": "Do Phase has begun for Goal: " + GName + " of Cycle: " + CName, //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "5", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
             }
+            Notif.CreateNotif(notifobject);
+
+                resp.redirect('/QualityMetric');
+            
         });
     },
 
     checkPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var GName = (req.body.GName);
+        var CName = (req.body.CName);
         var status = "2"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
+            
+             //working example derived from the sample at jsoncontroller         
+             var today = new Date();
+             var current = today.toISOString().split('T')[0];
+             var notifobject = {
+                 "body": "Check Phase has begun for Goal: " + GName + " of Cycle: " + CName, //message body, cannot be null
+                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                 "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                 "group": sess.user[0].Group, //Group ID taken from req session
+                 "range": "5", //range of notification, refer to the JSONcontroller
+                 "admin": "1", // 0 if admin does not need to be notified, else 1
+                 "sysadmin": "1", // same as above
+                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+             }
+             Notif.CreateNotif(notifobject);
+
                 resp.redirect('/ProgressPage');
-            }
+            
         });
     },
 
     actPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var GName = (req.body.GName);
+        var CName = (req.body.CName);
         var status = "3"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
+            
+             //working example derived from the sample at jsoncontroller         
+             var today = new Date();
+             var current = today.toISOString().split('T')[0];
+             var notifobject = {
+                 "body": "Act Phase has begun for Goal: " + GName + " of Cycle: " + CName, //message body, cannot be null
+                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                 "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                 "group": sess.user[0].Group, //Group ID taken from req session
+                 "range": "5", //range of notification, refer to the JSONcontroller
+                 "admin": "1", // 0 if admin does not need to be notified, else 1
+                 "sysadmin": "1", // same as above
+                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+             }
+             Notif.CreateNotif(notifobject);
+
                 resp.redirect('/QualityMetric');
-            }
+            
         });
     },
 
 
     endPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var GName = (req.body.GName);
+        var CName = (req.body.CName);
         var status = "4"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log(result);
-            if (result) {
+           
+             //working example derived from the sample at jsoncontroller         
+             var today = new Date();
+             var current = today.toISOString().split('T')[0];
+             var notifobject = {
+                 "body": "Goal: " + GName + " of Cycle: " + CName + " has ended", //message body, cannot be null
+                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                 "receiver": sess.user[0].User_ID, //ID of receiver, in this case the user that was created
+                 "group": sess.user[0].Group, //Group ID taken from req session
+                 "range": "5", //range of notification, refer to the JSONcontroller
+                 "admin": "1", // 0 if admin does not need to be notified, else 1
+                 "sysadmin": "1", // same as above
+                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+             }
+             Notif.CreateNotif(notifobject);
+
                 resp.redirect('/QualityMetric');
-            }
+            
         });
     },
 
