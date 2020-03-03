@@ -570,7 +570,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var MID = req.query.UID;
+            var MID = req.query.GID;
             var sql = "Select metric.metric_ID, metric.metric_Name, metric.metric_Desc, metric.priority_Level, metric.date_insert, metric.group_ID, group.Group_ID, group.Group_Name FROM capstone.metric join capstone.group on metric.group_ID = group.Group_ID where metric.metric_ID = ?; Select group.Group_ID, group.Group_Name FROM capstone.group;"
             var values = [MID]
             connection.query(sql, values, function (err, results, fields) {
@@ -619,7 +619,7 @@ module.exports = {
             }
             Notif.CreateNotif(notifobject);
             
-                resp.redirect('/QualityMetric');
+            resp.redirect('/QualityMetric');
             
         });
         console.log("updating");

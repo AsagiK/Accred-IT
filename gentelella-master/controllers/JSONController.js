@@ -151,8 +151,9 @@ module.exports = {
                 if (err) callback(err);
                 if (result) {
                     callback();
-                    var trigger = Date.parse(dead).toISOString().split('T')[0];
-                    console.log(trigger);
+                    var trigger = new Date(dead);
+                    var trigdate = trigger.toISOString().split('T')[0];
+                    console.log(trigdate);
                     
                     
                     console.log(result);

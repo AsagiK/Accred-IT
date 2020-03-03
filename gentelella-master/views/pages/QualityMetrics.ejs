@@ -363,6 +363,14 @@
                                                                     <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" data-book-id2="<%= goals.metric_ID %>" data-book-id3="<%= goals.metric_Name %>" style="display: none;">Create Cycles</button>
                                                                 <%}%>
                                                             <% } %>
+                                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
+                                                                
+                                                                <form method="get" action="editmetric">
+                                                                    <input name="GID" id="GID" value="<%= goals.metric_ID %>">
+                                                                    <button type=submit class="btn btn-primary">Edit Goal</button>
+                                                                </form>
+                                                            <%}else{ }%>
+                                                            
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
