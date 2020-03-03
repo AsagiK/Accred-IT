@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Assign Member to Activity </title>
+    <title>Edit Member to Group </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -117,8 +117,10 @@
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
-                        <div class="title_left"> 
-                            <h3>Acivity Name: <%= dataB[0].activity_name %></h3>
+                        <div class="title_left">
+                            <h3>Area: <%= dataB[0].Area_Name %></h3>
+                            <h3>Group: <%= dataB[0].Group_Name %></h3>
+                            <input type="hidden" id="GID" value="<%= dataB[0].Group_ID %>">
                         </div>
                     </div>
                 </div>
@@ -133,41 +135,31 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group Area</th>
-                                                    <th>Group Name</th>
-                                                    <th style="display: none;">Group ID</th>
-                                                    <th style="display: none;">Activity ID</th>
-                                                    <th style="display: none;">Measurement ID</th>
+                                                    <th style='display:none;'>User ID</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th style="display:none;">Group ID</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <% for (var group of data) { %>
-                                                    
+                                                <% for (var user of data) { %>
                                                 <tr>
                                                     <td>
                                                         <label class="containercheckbox">
                                                                 <input type='checkbox' name='record'
-                                                                id='<%= group.Group_ID %>'>
+                                                                id='<%= user.User_ID %>'>
                                                                 <span class="checkmark"></span>
                                                               </label>
-                                                    </td> 
-                                                    
-                                                        <% for (var area of dataE) { %>
-                                                            <% if (area.Area_ID == group.Area_ID) { %>
-                                                                <td id="Area<%= group.Group_ID %>" value="<%= area.Area_Name %>">
-                                                                    <%= area.Area_Name %></td>
-                                                            <% } %>
-                                                        <% } %> 
-                                                    
-                                                    <td id="GroupName<%= group.Group_ID %>" value="<%= group.Group_Name %>">
-                                                        <%= group.Group_Name %></td>
-                                                    <td style="display: none;" id="GID<%= group.Group_ID %>" value="<%= group.Group_ID %>">
-                                                        <%= group.Group_ID %></td>
-                                                    <td style="display: none;" id='hidden<%= group.Group_ID %>' value="<%= dataB[0].activity_ID %>"
-                                                        ><%= dataB[0].activity_ID %></td>
-                                                    <td style="display: none;" id='measure<%= group.Group_ID %>' value="<%= dataC[0].measurement_ID %>"
-                                                        ><%= dataC[0].measurement_ID %></td>
+                                                    </td>
+                                                    <td id="UID<%= user.User_ID %>" value="<%= user.User_ID %>" style='display:none;'>
+                                                        <%= user.User_ID %></td>
+                                                    <td id="first<%= user.User_ID %>" value="<%= user.User_First %>">
+                                                        <%= user.User_First %></td>
+                                                    <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
+                                                        <%= user.User_Last %></td>
+                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>"
+                                                        style="display: none;"><%= dataB[0].Group_ID %></td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -185,11 +177,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group Area</th>
-                                                    <th>Group Name</th>
-                                                    <th style="display: none;">Group ID</th>
-                                                    <th style="display: none;">Activity ID</th>
-                                                    <th style="display: none;">Measurement ID</th>
+                                                    <th style='display:none;'>User ID</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th style="display:none;">Group ID</th>
                                                 </tr>
                                             </thead>
 
@@ -205,24 +196,15 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
-                                        </form>
-                                        <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
-                                        <button class="btn btn-primary" type="reset">Reset</button>
+                                        <a href="/ViewGroups" class="btn btn-primary" type="button">Cancel</a>
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
-                                        <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
-                                            <input type="hidden" name="passdata" value="1">
+                                        <form method="get" action="/ViewGroups">
+                                            <input type="hidden" name="passdata" value="2">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
                                         </form>
 
-                                        <form method="get" action="/ViewMeasurementDetails">
-                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
+                                        <form method="get" action="/ViewGroups">
                                             <input type="hidden" name="passdata" value="0">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>
@@ -259,19 +241,18 @@
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var GID = $('#GID' + index).attr("value");
-                        var GroupName = $('#GroupName' + index).attr("value");
-                        var Area = $('#Area' + index).attr("value");
+                        var UID = $('#UID' + index).attr("value");
+                        var first = $('#first' + index).attr("value");
                         // console.log(first);
-                        //var last = $("#last" + index).attr("value");
+                        var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= Area" + index + " value=" + Area + ">" + Area +
-                            "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName + "<td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
-                            "</td><td style='display: none;' id= hidden" + index + " value=" + hidden +
-                            ">" + hidden + "</td><td style='display: none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + " style='display:none;'>" + UID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
+                            "</td><td id= hidden" + index + " value=" + hidden +
+                            " style='display:none;'>" + hidden + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -283,18 +264,18 @@
                 $("#table2 tbody tr").find('input[name="record"]').each(function () {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var GID = $('#GID' + index).attr("value");
-                        var GroupName = $('#GroupName' + index).attr("value");
+                        var UID = $('#UID' + index).attr("value");
+                        var first = $('#first' + index).attr("value");
                         // console.log(first);
-                        //var last = $("#last" + index).attr("value");
+                        var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
-                        var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
-                                "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
+                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + " style='display:none;'>" + UID +
+                            "</td><td id= first" + index + " value=" + first + ">" + first +
+                            "</td><td id= last" + index + " value=" + last + ">" + last +
                             "</td><td id= hidden" + index + " value=" + hidden +
-                            " >" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            " style='display:none;'>" + hidden + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
@@ -306,14 +287,14 @@
             $("#toJSON").click(function () {
 
                 var table = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2]
+                    ignoreColumns: [0, 2, 3]
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2 ]
+                    ignoreColumns: [0, 2, 3, 4]
                 })); // 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignActivityJSON', true);
+                xhr.open('POST', '/EditGroupMemberJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     console.log(xhr.responseText);
@@ -326,7 +307,6 @@
                             console.log("Hi");
                             backsuccess();
                         } else {
-                            console.log("Not Hi");
                             backfail();
                         }
                     }
@@ -349,10 +329,6 @@
 
             };
 
-            $("#cancel").click(function(){
-                var button = document.getElementById('backcancel');
-                button.click();
-            });
 
 
         });

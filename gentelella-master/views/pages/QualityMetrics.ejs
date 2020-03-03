@@ -199,7 +199,7 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th style="display: none;">Term</th>
+                                            <th >Term</th>
                                             <th style="display: none;">TotalTerm</th>
                                             <th style="display: none;">GoalID</th>
                                             <th style="display: none;">StartDate</th>
@@ -282,7 +282,10 @@
                                         Target:</label>
                                         <input type="number" id="QualityTarget" name="QualityTarget" required="required" size="1" maxlength="3" min="1" max="100"><br> 
                                         <label for="Assign Goal">
-                                            Target Description:</label><br><textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea><br>
+                                            Target Description:</label>
+                                            <br>
+                                            <textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea>
+                                            <br>
                                         <input type="checkbox" id="Percent" value="%"> Percent<br>
                                         <button type="button" id="addRow" onclick="addQT()">+</button>
                                     </div>
@@ -297,7 +300,7 @@
                                                     <th>Type</th>
                                                     <th>Target Description</th>
                                                     <th></th>
-                                                    <th>targettype</th>
+                                                    <th hidden>targettype</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tBody">
@@ -849,6 +852,8 @@
                             var td = document.getElementById("targetDesc").value;
                             var percent= document.getElementById("Percent").value;
                             var check=document.getElementById("Percent");
+                            document.getElementById("QualityTarget").value=' ';
+                            document.getElementById("targetDesc").value=' ';
                             console.log(qt);
                             if (qt != "" && check.checked==true) {
                                 // Get a reference to the table
@@ -860,7 +865,8 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4);
+                                var newCell3 = newRow.insertCell(4).hidden;
+                                
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode(percent);
@@ -872,6 +878,7 @@
                                 newCell1.appendChild(newText1);
                                 newCell2.appendChild(newText2);
                                 newCell3.appendChild(newText3);
+                                
                             } else if (qt != "" && check.checked==false) {
                                 // Get a reference to the table
                                 var tableRef = document.getElementById("tBody");
@@ -882,7 +889,7 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4);
+                                var newCell3 = newRow.insertCell(4).hidden;
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode("count");
@@ -932,13 +939,13 @@
                                     var rowID = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td style='display:none;'>"+ CNT+"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td >"+ CNT +"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
                                             rowID++;
                                         }
-                                        CNT=1;
+                                        
                                         CNY++;
                                     }
                                  

@@ -15,6 +15,8 @@ router.route('/edituser').get(planCtrl.edituser);
 router.route('/alteruser').post(planCtrl.alteruser);
 router.route('/EditUserbyUser').get(planCtrl.EditUserAccount);
 router.route('/alteruserbyuser').post(planCtrl.alteruserbyuser);
+router.route('/ViewUserAccount').get(planCtrl.ViewUserAccount);
+router.route('/ViewSubmissionDetails').get(planCtrl.ViewSubmissionDetails);
 
 
 //GROUPS ROUTES
@@ -24,6 +26,7 @@ router.route('/add-group').post(planCtrl.addgroup);
 router.route('/makeLeader').post(planCtrl.makeLeader);
 router.route('/makeMember').post(planCtrl.makeMember);
 router.route('/AssignMemberToGroup').get(planCtrl.assignmembertogroup);
+router.route('/EditMemberToGroup').get(planCtrl.editmembertogroup);
 
 //SOURCES ROUTES
 router.route('/CreateSources').get(planCtrl.CreateSources);
@@ -78,6 +81,7 @@ router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
 //--JSONCtrl--
 router.route('/AssignGroupJSON').post(JSONCtrl.AssignGroupJSON);
+router.route('/EditGroupMemberJSON').post(JSONCtrl.EditGroupMemberJSON);
 router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
@@ -105,6 +109,8 @@ router.route('/PreCheck').post(DocCtrl.PreCheck);
 router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
 router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
+router.route('/CreateFolder').post(DocCtrl.CreateFolder);
+router.route('/PickerUploadJSON').post(DocCtrl.PickerUploadJSON);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
@@ -127,6 +133,8 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 router.route('/TestPage').get(planCtrl.TestPage);
 router.route('/ViewUsersSubmission').get(planCtrl.ViewUsersSubmission);
 router.route('/ViewUsersSubmissionDetails').get(planCtrl.ViewUsersSubmissionDetails);
+router.route('/ViewFolder').get(planCtrl.ViewFolder);
+router.route('/ViewPersonalFolder').get(planCtrl.ViewPersonalFolder);
 
 router.route('/CreateGrades').get(planCtrl.CreateGrades);
 router.route('/assignplantomembers').get(planCtrl.assignplantomembers);

@@ -48,6 +48,37 @@ module.exports = {
         })
     },
 
+    EditGroupMemberJSON: function (req, resp) {
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var gid = UID[key]["Group ID"];
+            var uid = UID[key]["User ID"];
+            
+            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ? && `Groupdetails_UserID` = ?);";
+            var values = [uid, gid, uid];
+            console.log(values);
+            connection.query(sql, values, function (err, result) {
+                if (err){
+                    console.log(err);
+                    callback(err);
+                } 
+                if (result) {
+                    console.log(result);
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
     AssignTaskJSON: function (req, resp) {
         var UID = req.body.table;
         UID = JSON.parse(UID);
@@ -417,7 +448,7 @@ module.exports = {
 //        range 2 = sender and receiver gets notified
 //        range 3 = group gets notified
 //        range 4 = group and sender gets notified
-        
+//        range 5 = everyone gets notified        
 // sample notification creation implementation
         
 //
@@ -426,11 +457,11 @@ module.exports = {
         var today = new Date();
         var current = today.toISOString().split('T')[0];
         var notifobject = {
-            "body": "test", //message body, cannot be null
+            "body": "test notify all", //message body, cannot be null
             "sender": "46", //ID of sender, can be set to null
             "receiver": "47", //ID of receiver
             "group": "1", //Group ID, cannot be null
-            "range": "4", //range of notification
+            "range": "5", //range of notification
             "admin": "1", // 0 if admin does not need to be notified, else 1
             "sysadmin": "1", // same as above
             "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD

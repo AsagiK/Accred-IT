@@ -52,7 +52,7 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
-            
+
             connection.query("SELECT * FROM capstone.roles where Role_ID > 1; Select users.User_ID from capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CreateUser.ejs', {
@@ -81,10 +81,15 @@ module.exports = {
                         goodStatus: 0,
                         msg: "User/s not added"
                     }
-                } else {
+                } else if (alert == 1) {
                     passData = {
                         goodStatus: 1,
                         msg: "User/s added"
+                    }
+                } else if (alert == 2) {
+                    passData = {
+                        goodStatus: 1,
+                        msg: "User/s Removed"
                     }
                 }
             }
@@ -140,11 +145,14 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+
         });
         resp.redirect('/CreateGroup');
     },
 
     adduser: function (req, resp) {
+        sess = req.session;
         console.log(req.body);
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
@@ -160,6 +168,22 @@ module.exports = {
             var values = [fn, ln, em, rl, co, un, hash];
             connection.query(sql, values, function (err, result) {
                 if (err) throw err;
+
+                //working example derived from the sample at jsoncontroller         
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "User " + fn + " " + ln + " has been created" , //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": result.insertId, //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "1", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
+                
                 console.log("Record Inserted");
             });
             resp.redirect('/Createusers');
@@ -322,7 +346,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle ORDER BY termnum ASC; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -358,7 +382,7 @@ module.exports = {
         console.log(metricName);
         console.log(metricDesc);
         console.log(source);
-        
+
         console.log("SOURCE ID - " + sourceID);
         console.log("SOURCE TYPE = " + sourceType);
         var sql = "INSERT INTO `capstone`.`metric` (`metric_Name`,`metric_Desc`,`source_ID`, `cycle_Status`, `source_Type`) VALUES ( ?, ?, ?, ?, ?)";
@@ -610,6 +634,28 @@ module.exports = {
                     current_user: sess.user
                 });
                 console.log("Assign Member to Group Page");
+            });
+        }
+    },
+
+    editmembertogroup: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var GID = req.query.GID;
+            var sql = "Select users.User_ID, users.User_First, users.User_Last, users.email_address, users.Role, users.Group, users.ContactNo, users.username FROM capstone.users where users.Group = ? ; SELECT group.Group_ID, group.Group_Name, area.Area_Name FROM capstone.group join capstone.area on group.Area_ID = area.Area_ID where group.Group_ID = ?;"
+            var values = [GID, GID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                console.log(results[1])
+                resp.render('./pages/EditMemberToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log("Edit Member to Group Page");
             });
         }
     },
@@ -1039,11 +1085,12 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login');
         } else {
-            connection.query("SELECT * FROM capstone.documents ;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.documents; SELECT * FROM capstone.users;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/ViewDocument.ejs', {
-                        data: results,
+                        data: results[0],
+                        dataB: results[1],
                         current_user: sess.user
                     });
                     //console.log(results);
@@ -1193,12 +1240,13 @@ module.exports = {
                         current_user: sess.user
                     });
                     //console.log(results);
-                   console.log(results[3]);
+                    console.log(results[3]);
                     console.log(results[2]);
                     //console.log(results[6]);
-                    
-                    console.log("Dashboards Loaded"); 
-                
+
+                    console.log("Dashboards Loaded");
+                    console.log(sess.user[0]);
+
                 }
             });
         }
@@ -1215,7 +1263,7 @@ module.exports = {
             //var GID = req.query.GID;
             //console.log("GROUP ID-------------------" + GID)
             console.log("ACTIVITY ID-------------------" + AID)
-            var sql = "SELECT * FROM capstone.`group`; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; "
+            var sql = "SELECT * FROM capstone.group WHERE Group_ID NOT IN (SELECT MAX(0) FROM capstone.group) ORDER BY Group_ID Asc; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = (?); SELECT * FROM capstone.measurements_activities WHERE measurements_activities.activity_ID=(?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?;SELECT * FROM capstone.area; "
             var values = [AID, AID, CID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -1226,6 +1274,7 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
+                        dataE: results[4],
                         current_user: sess.user
                     });
                     console.log("Assign Activity to Member Page");
@@ -1349,6 +1398,7 @@ module.exports = {
             var priority = req.body.priority;
             getmeasurement(MID, auditmeasurement);
             console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  " + priority)
+
             function getmeasurement(MID, callback) {
                 var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?);"
                 var values = [MID]
@@ -1535,7 +1585,7 @@ module.exports = {
             }
 
         }
-    }, 
+    },
 
     ViewActivitiesUnderMeasurement: function (req, resp) {
         sess = req.session;
@@ -1545,31 +1595,31 @@ module.exports = {
         } else {
             var MID = req.body.MID;
             var sql = "SELECT * FROM capstone.approved_activities_audit WHERE approved_activities_audit.measurement_auditID = (?); SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.documents JOIN capstone.approved_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.approved_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID;"
-            console.log("Activity test"+  MID);
+            console.log("Activity test" + MID);
             var values = [MID]
-            
+
             connection.query(sql, values, function (err, results, fields) {
-                if (err) throw err; 
-                    resp.render('./pages/ViewActivitiesUnderMeasurement.ejs' , {
-                        data:results[0],
-                        dataB:results[1],
-                        dataC:results[2],
-                        current_user:sess.user
-                    }); 
-                    console.log();
-                    console.log ("activities are loaded");
-                    
-            
+                if (err) throw err;
+                resp.render('./pages/ViewActivitiesUnderMeasurement.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log();
+                console.log("activities are loaded");
+
+
 
             });
 
         }
-    }, 
+    },
 
-    BackToMeasurement: function (req, resp) { 
+    BackToMeasurement: function (req, resp) {
         resp.redirect('./pages/QualityMetrics.ejs');
         console.log("Back To Quality Metrics");
-    }, 
+    },
 
     AnnualReport: function (req, resp) {
 
@@ -1578,26 +1628,127 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var MID = req.body.MID; 
-            
+            var MID = req.body.MID;
+
             var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); "
-            console.log("ANNUAL REPORT TEST CUH "+ MID);
+            console.log("ANNUAL REPORT TEST CUH " + MID);
             var values = [MID]
-            
+
             connection.query(sql, values, function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/AnnualReport.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+
+                console.log("reports are loaded are loaded boi");
+
+
+
+            });
+
+        }
+    },
+
+    ViewUserAccount: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
+            connection.query(sql, function (err, results, fields) {
                 if (err) throw err; 
-                    resp.render('./pages/AnnualReport.ejs' , {
-                        data:result,
+                    resp.render('./pages/ViewUserAccount.ejs' , {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
                         current_user:sess.user
                     }); 
                     
-                    console.log ("reports are loaded are loaded boi");
+                    console.log ("VIEW USER ACCOUNT PAGE");
                     
             
 
             });
+        }
+    },
 
-        } 
+    ViewSubmissionDetails: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var SID = req.query.subID;
+            console.log(SID);
+            var sql = "SELECT * FROM capstone.pending_activities WHERE pending_activities.pending_ID = ?; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
+            var values = [SID, SID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                
+                    console.log(results);
+                    resp.render('./pages/ViewUserSubmissionAccountDetails.ejs' , {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user:sess.user
+                    });
+                
+                console.log("KEK")
+            });
+        }
+    },
+
+    ViewFolder: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            var FID = req.query.FolderID;
+            var sql = "SELECT * FROM capstone.documents; SELECT * FROM capstone.folder_documents WHERE folder_documents.folder_ID = ?; SELECT * FROM capstone.documents WHERE documents.Document_ID = ?;";
+            var values = [FID, FID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/ViewFolderDocument.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    });
+                    //console.log(results);
+                }
+            });
+            console.log("View Folder Documents Page");
+        }
+    },
+
+    ViewPersonalFolder: function (req, resp) {
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login');
+        } else {
+            var UID = req.query.UID;
+            var sql = "SELECT * FROM capstone.documents WHERE documents.upload_id = ?;";
+            var values = [UID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/ViewPersonalUploads.ejs', {
+                        data: results,
+                        current_user: sess.user
+                    });
+                    //console.log(results);
+                }
+            });
+            console.log("View Your Documents Page");
+        }
     },
 
 }

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Document Page </title>
+    <title>View Folder Uploads</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -32,182 +32,23 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3> Documents </h3>
+                            <h3>Your Documents </h3>
                         </div>
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="row">
-                      <div class="col-md-12">
-                        
-                          <div class="x_panel">
-                            
-                              <div class="x_content">
-
-                                <div>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".CreateFolder">Create Folder</button>
-
-                                  <div class="modal fade CreateFolder" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                      <div class="modal-content">
-
-                                        <form id="folderCreate" action="CreateFolder" method="POST">
-
-                                        <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                          </button>
-                                          <h4 class="modal-title" id="myModalLabel">Create Folder</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                          
-                                        <div class="form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="foldname">Folder Name <span class="required">*</span>
-                                          </label>
-                                          <div class="col-md-6 col-sm-6 col-xs-12">
-                                              <!--First name Input field-->
-                                              <input type="text" id="foldname" name="foldname" required="required"
-                                                  class="form-control col-md-7 col-xs-12" placeholder="Folder name">
-                                          </div>
-                                        </div>
-                                        
-                                        <input hidden id="isFolder" name="isFolder" value="1">
-                                        <input hidden id="route" name="route" value="kek">
-                                        <input hidden id="md5" name="md5" value="Is a Folder">
-                                        <input hidden id="UID" name="UID" value="<%= current_user[0].User_ID %>">
-                                        
-                                        </div>
-                                        <br>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn btn-primary">Create</button>
-                                        </div>
-
-                                        </form>
-
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <br>
-                                  <form action="ViewPersonalFolder" method="GET">
-                                    <input id="UID" name="UID" value="<%= current_user[0].User_ID %>" hidden>
-                                    <button type="submit" class="btn btn-primary">View your Uploads</button>
-                                  </form>
-                                  
-                                </div>
-                                  <div class="row">
-
-                                      <% for (var doc of data) { 
-                                        
-                                        
-                    var filext = 0;
-                    var imgtype = '';
-                    var x = doc.Document_Ext;
-                    
-                  switch(x){ 
-                  case ".docx": 
-                    filext = 1
-                    imgtype = "images/docx.png"
-                    break;
-                  case ".doc": 
-                    filext = 1
-                    imgtype = "images/docx.png"
-                    break;
-                  case ".odt": 
-                    filext = 2
-                    imgtype = "images/odt.png"
-                    break;
-                  case ".pdf": 
-                    filext = 3
-                    imgtype = "images/pdf.png"
-                    break;
-                  case ".txt": 
-                    filext = 4
-                    imgtype = "images/txt.jpg"
-                    break;
-                  case ".pptx": 
-                    filext = 5
-                    imgtype = "images/pptx.png"
-                  case ".mp4": 
-                    filext = 6
-                    imgtype = "images/mp4.png"
-                  case ".m4a": 
-                    filext = 6
-                    imgtype = "images/mp4.png"
-                  case ".7z": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case ".rar": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case ".zip": 
-                    filext = 7
-                    imgtype = "images/zip.png"
-                  case "Folder": 
-                    filext = 8
-                    imgtype = "images/folder.png"
-                  break;
-                    default:
-                    filext = 0
-                    break;
-                  } 
-                  %>
-                  <% if (doc.Document_Ext == "Folder") { %>
-                  
-                                      <div class="col-md-55">
-                                          
-                                          <div class="thumbnail">
-
-
-                                                  <div class="image view view-first">
-                                                  <% if (filext == "0"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } else { %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } %>
-                                                  
-
-                                                  <div class="mask no-caption">
-                                                      <div class="tools tools-bottom">
-                                                        <form id="foldview" action="ViewFolder" method="GET">
-                                                          <input hidden id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
-                                                          <a href="#" onclick="document.getElementById('foldview').submit()"><i class="fa fa-folder-open"></i></a>
-                                                        </form>
-                                                          
-                                                          
-                                                      </div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="caption">
-                                                      <p><strong><%= doc.Document_Name %></strong></p>
-                                                      <% for (var user of dataB) { %>
-                                                        <% if (user.User_ID == doc.upload_id) { %>
-                                                          <p>Created by : <%= user.User_First %> <%= user.User_Last %></p>
-                                                        <% } %>
-                                                      <% } %>
-                                                      
-                                                      <hr style="color: #f00;">
-                                                  </div>
-                                                  </div>
-                                                  </div>
-                                         
-                                      <% } %>
-                                      <% } %>
-
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+                      
                       <br>
                     <div class="row">
                         <div class="col-md-12">
                           
                             <div class="x_panel">
-                              <h2>All Evidences</h2>
+                              <h2><%= dataC[0].Document_Name %> Folder</h2>
                                 <div class="x_content">
 
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
 
                                   <!--MODAL FOR UPLOADING OF EVIDENCES-->
                                   <div class="modal fade UploadEvidence" tabindex="-1" role="dialog" aria-hidden="true">
@@ -226,12 +67,12 @@
                                           
                                           <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Document Name <span class="required">*</span>
+                                                for="first-name">Folder ID <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <!--First name Input field-->
-                                                <input type="text" id="docname" name="DocName" required="required"
-                                                    class="form-control col-md-7 col-xs-12" placeholder="First name">
+                                                <input type="text" id="FoldID" name="FoldID" required="required"
+                                                    class="form-control col-md-7 col-xs-12" value="<%= dataC[0].Document_ID %>">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -265,6 +106,8 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  <a href="/ViewDocument" class="btn btn-primary">Go Back</a>
 
                                     <div class="row">
 
@@ -319,7 +162,8 @@
                     } 
                     %>
 
-
+                    <% for (var folddoc of dataB) { %>
+                      <% if (folddoc.document_id == doc.Document_ID) { %>
 
 
                                         <div class="col-md-55">
@@ -392,7 +236,8 @@
                                                     </div>
                                             <%}%>
                                         <% } %>
-
+                                        <% } %>
+                                      <% } %>
                                     </div>
                                 </div>
                             </div>

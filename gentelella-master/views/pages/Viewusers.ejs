@@ -81,10 +81,10 @@
                                     <tbody>
 
                                         <% for (var info of data) { %>
-                                        <form method="get" action="edituser">
+                                        
                                             <tr>
                                                 <th scope="row"><%= info.User_ID %></th>
-                                                <input type="hidden" name="UID" value="<%= info.User_ID %>">
+                                                
                                                 <td><%= info.User_First %></td>
                                                 <td><%= info.User_Last %></td>
                                                 <td><%= info.email_address %></td>
@@ -92,12 +92,15 @@
                                                 <td><%= info.Role_Name %></td>
                                                 <td><%= info.ContactNo %></td>
                                                 <% if (info.Role != "1") {%>
-                                                <td><button type="submit" class="btn btn-info">Edit</button></td>
+                                                <form method="get" action="edituser">
+                                                    <input type="hidden" name="UID" value="<%= info.User_ID %>">
+                                                    <td><button type="submit" class="btn btn-info">Edit</button></td>
+                                                </form>
                                                 <% }else { %>
                                                 <td></td>
                                                 <% } %>
                                             </tr>
-                                        </form>
+                                        
                                         <% } %>
                                     </tbody>
                                 </table>
@@ -111,7 +114,7 @@
                         <div class="page-title">
                             <div class="title_left">
 
-                                <h3>View Users Unssigned To Groups</h3>
+                                <h3>View Users Unassigned To Groups</h3>
 
                             </div>
                         </div>
