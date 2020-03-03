@@ -110,6 +110,7 @@ router.route('/SendDocumentsJSON').post(DocCtrl.SendDocumentsJSON);
 router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
 router.route('/CreateFolder').post(DocCtrl.CreateFolder);
+router.route('/PickerUploadJSON').post(DocCtrl.PickerUploadJSON);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);

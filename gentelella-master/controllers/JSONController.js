@@ -448,7 +448,7 @@ module.exports = {
 //        range 2 = sender and receiver gets notified
 //        range 3 = group gets notified
 //        range 4 = group and sender gets notified
-        
+//        range 5 = everyone gets notified        
 // sample notification creation implementation
         
 //
@@ -457,11 +457,11 @@ module.exports = {
         var today = new Date();
         var current = today.toISOString().split('T')[0];
         var notifobject = {
-            "body": "test", //message body, cannot be null
+            "body": "test notify all", //message body, cannot be null
             "sender": "46", //ID of sender, can be set to null
             "receiver": "47", //ID of receiver
             "group": "1", //Group ID, cannot be null
-            "range": "4", //range of notification
+            "range": "5", //range of notification
             "admin": "1", // 0 if admin does not need to be notified, else 1
             "sysadmin": "1", // same as above
             "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD

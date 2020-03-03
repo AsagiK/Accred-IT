@@ -1,6 +1,6 @@
+const fs = require('fs');
 var mysql = require('mysql');
-var dbconfig = require('./dbconfig.json')
-
+const dbconfig = JSON.parse(fs.readFileSync('./config/dbconfig.json', 'utf8'));
 var connection = mysql.createPool({
     host: dbconfig.host,
     user: dbconfig.user,

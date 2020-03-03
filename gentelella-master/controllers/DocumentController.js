@@ -8,8 +8,10 @@ const md5 = require('md5');
 const async = require("async");
 var mysql = require('mysql');
 var connection = require('../config/db');
+
 const TOKEN_PATH = './config/token.json'
 const UPLOAD_PATH = JSON.parse(fs.readFileSync('./config/accredit.json', 'utf8'));
+
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
@@ -34,6 +36,8 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
+
+
 module.exports = {
 
     SendDocument: function (req, resp) {
@@ -330,7 +334,7 @@ module.exports = {
             });
 
             function uploadfile() {
-                fs.readFile('credentials.json', (err, content) => {
+                fs.readFile('./config/credentials.json', (err, content) => {
                     if (err) return console.log('Error loading client secret file:', err);
                     authorize(JSON.parse(content), uploadtodrive);
                 });
@@ -475,7 +479,7 @@ module.exports = {
                     });
 
                     function uploadfile() {
-                        fs.readFile('credentials.json', (err, content) => {
+                        fs.readFile('./config/credentials.json', (err, content) => {
                             if (err) return console.log('Error loading client secret file:', err);
                             authorize(JSON.parse(content), uploadtodrive);
                         });
@@ -594,7 +598,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -910,7 +914,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -1019,7 +1023,7 @@ module.exports = {
                 });
 
                 function uploadfile() {
-                    fs.readFile('credentials.json', (err, content) => {
+                    fs.readFile('./config/credentials.json', (err, content) => {
                         if (err) return console.log('Error loading client secret file:', err);
                         authorize(JSON.parse(content), uploadtodrive);
                     });
@@ -1120,6 +1124,7 @@ module.exports = {
         });
     },
 
+
     CreateFolder: function (req, resp) {
         var FolderName = (req.body.foldname);
         var IsFolder = (req.body.isFolder);
@@ -1140,4 +1145,194 @@ module.exports = {
         resp.redirect('/ViewDocument');
 
     },
+
+    PickerUploadJSON: function (req, resp) {
+        console.log("test picker called")
+        console.log(req.body);
+        var DOCS = JSON.parse(req.body.data)
+        console.log(DOCS)
+        console.log(DOCS.length);
+        var max = DOCS.length;
+        var userauth = req.body.userauth;
+        console.log(userauth);
+
+        var count = 0;
+        async.forEachOf(DOCS, function (value, key, callback) {
+            var name = DOCS[key].name;
+            var filename = DOCS[key].name;
+            var path = 'uploads/' + DOCS[key].name;
+            var desc = "picker test";
+            var point = filename.lastIndexOf(".");
+            var ext = filename.substr(point);
+            var folderId = UPLOAD_PATH.data.id;
+            var fileMetadata = {
+                'name': DOCS[key].name,
+                'parents': [folderId]
+            };
+            var media;
+            downloadfile();
+
+            /*
+            downloadfile
+            authorize
+            downloadtodrive
+            movetoserver
+            uploadfile
+            authorize
+            uploadtodrive
+            */
+
+            function movetoserver(file, callback) {
+
+                var point = file.lastIndexOf(".");
+                var ext = file.substr(point);
+
+                fs.readFile('')
+
+                var sql = "INSERT INTO `capstone`.`documents` (`Document_Name`, `Document_Route`, `Document_Ext`, `md5`, `upload_id`) VALUES (? , ? , ?, ?, ?, ?);"
+                var values = [name, path, ext, md5, req.session.user[0].User_ID];
+
+                connection.query(sql, values, function (err, result) {
+                    if (err) callback(err);
+                    if (result) {
+                        console.log("Record Inserted");
+                        media = {
+                            mimeType: mime.lookup('public/uploads/' + files[key].name),
+                            body: fs.createReadStream('public/uploads/' + files[key].name)
+                        };
+                        sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); "
+                        values = [req.body.activityID, result.insertId, PID];
+                        addDoc(sql, values);
+                        callback();
+                    }
+                });
+            }
+
+            function downloadfile() {
+                console.log("downloadfile")
+                // console.log(JSON.parse(fs.readFileSync('./config/credentials.json')));
+
+                fs.readFile('./config/credentials.json', (err, content) => {
+                    if (err) return console.log('Error loading client secret file:', err);
+                    authorize(JSON.parse(content), downloadtodrive);
+                    console.log(content)
+                });
+
+            }
+
+            function authorize(credentials, callback) {
+                console.log("authorize")
+                const {
+                    client_secret,
+                    client_id,
+                    redirect_uris
+                } = credentials.installed;
+                const oAuth2Client = new google.auth.OAuth2(
+                    client_id, client_secret, redirect_uris[0]);
+
+                fs.readFile(TOKEN_PATH, (err, token) => {
+                    if (err) return getAccessToken(oAuth2Client, callback);
+                    oAuth2Client.setCredentials(JSON.parse(token));
+                    callback(oAuth2Client);
+                });
+            }
+
+            function downloadtodrive(auth) {
+                console.log("downloadtodrive")
+                const drive = google.drive({
+                    version: 'v3',
+                    auth
+                });
+                var dest = fs.createWriteStream('public/uploads/' + DOCS[key].name);
+                drive.files.get({
+                    fileId: DOCS[key].name,
+                    alt: 'media'
+                }, function (err, result) {
+                    if (err) {
+                        throw err;
+                    } // Binary file content here
+                    else {
+                        let uploadedimg = result;
+                        uploadedimg.mv('public/uploads/' + files.name, function (err) {
+                            if (err) return console.log(err);
+                            else console.log("File uploaded");
+                        })
+                        movetoserver(DOCS[key].name, uploadfile);
+                    }
+                });
+
+
+
+            }
+
+            function uploadtodrive(auth) {
+                console.log("uploadtodrive")
+                var fileMetadata = {
+                    'name': newfilename,
+                    parents: [folderId]
+                };
+                const drive = google.drive({
+                    version: 'v3',
+                    auth
+                });
+                drive.files.create({
+                    resource: fileMetadata,
+                    media: media,
+                    fields: 'id'
+                }, function (err, file) {
+                    count = count + 1;
+                    console.log("File " + count + " of 1");
+                    if (err) {
+                        console.log(newfilename + "Was not uploaded to Google Drive")
+                    } else {
+                        sql = "UPDATE `capstone`.`documents` SET `InDrive` = '1' WHERE (`Document_Route` = ?);"
+                        values = 'uploads/' + newfilename;
+                        connection.query(sql, values, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log(files.name + " Uploaded to Google Drive")
+                                var fileid = file.data.id;
+                                sql = "UPDATE `capstone`.`documents` SET `DriveID` = ? WHERE (`Document_Route` = ?)";
+                                values = [fileid, 'uploads/' + newfilename];
+                                addID(sql, values);
+
+                            }
+                        });
+                    }
+                });
+            }
+
+            function addID(sql, values) {
+                connection.query(sql, values, function (err, result) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log("ID inserted to DB");
+                    }
+                });
+            }
+
+            function addDoc(sql, values) {
+                connection.query(sql, values, function (err, result) {
+                    if (err) throw err;
+                    if (result) {
+                        console.log("Document linked to DB");
+                    }
+                });
+            }
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.redirect('/ViewDocument')
+            } else {
+                console.log("Passed")
+                resp.redirect('/ViewDocument')
+
+            }
+        })
+
+
+
+
+    },
+
 }
