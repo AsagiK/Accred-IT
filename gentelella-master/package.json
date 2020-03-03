@@ -10,6 +10,7 @@
     "author": "Brian De Castro, Anjelo Padua, Rovi Soriano, Jericho Mendoza",
     "license": "ISC",
     "dependencies": {
+        "add-subtract-date": "^1.0.14",
         "async": "^2.6.3",
         "autosize": "^4.0.2",
         "bcrypt": "^3.0.6",

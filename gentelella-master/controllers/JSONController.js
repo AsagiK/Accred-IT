@@ -5,6 +5,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const addSubtractDate = require("add-subtract-date");
 const async = require("async");
 var mysql = require('mysql');
 var connection = require('../config/db');
@@ -153,13 +154,16 @@ module.exports = {
                     callback();
                     var trigger = new Date(dead);
                     var trigdate = trigger.toISOString().split('T')[0];
-                    var sevendays = trigger.getDate()-7;
-                    var threedays = trigger.getDate()-3;
-                    var daybefore = trigger.getDate()-1;
+                    var sevendays = addSubtractDate.subtract(trigger, 7, "days");
+                    var threedays = addSubtractDate.subtract(trigger, 3, "days");
+                    var daybefore = addSubtractDate.subtract(trigger, 1, "day");
+                    var seventrig = trigger.toISOString().split('T')[0];
+                    var threetrig = trigger.toISOString().split('T')[0];
+                    var beforetrig = trigger.toISOString().split('T')[0];
                     console.log(trigdate);
-                    console.log(sevendays);
-                    console.log(threedays);
-                    console.log(daybefore);
+                    console.log(seventrig);
+                    console.log(threetrig);
+                    console.log(beforetrig);
                     
                     
                     console.log(result);
