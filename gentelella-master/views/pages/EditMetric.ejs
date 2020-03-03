@@ -76,33 +76,6 @@
                                             value="<%= data[0].metric_Desc%>" required="required"><%= data[0].metric_Desc%></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Priority
-                                            Level<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="priority">
-                                                <option value="<%= data[0].priority_Level%>"><%= data[0].priority_Level%></option>
-                                                <option value="High">High</option>
-                                                <option value="Medium">Medium</option>
-                                                <option value="Low">Low</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                            for="first-name">Change Group:<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="group" id ="group">
-                                                <option value="<%= data[0].group_ID %>"><%= data[0].Group_Name %></option>
-                                                <% for (var group of dataB) { %>
-                                                <option value="<%= group.Group_ID %>"><%= group.Group_Name %></option>
-                                                <% } %>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="modal-footer">
                                         <a type="button" class="btn btn-default" href="/QualityMetric">
                                             cancel
