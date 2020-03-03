@@ -438,10 +438,10 @@ module.exports = {
             } else {
                 console.log("Passed");
                 resp.send("OK");
-                                var today = new Date();
+                var today = new Date();
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
-                    "body": "Cycles have been created for Goal: " + gname,  //message body, cannot be null
+                    "body": "Cycles have been created for Goal: " + gname, //message body, cannot be null
                     "sender": sess.user[0].User_ID, //ID of sender taken from req session
                     "receiver": "0", //ID of receiver, in this case the user that was created
                     "group": sess.user[0].Group, //Group ID taken from req session
@@ -457,6 +457,7 @@ module.exports = {
     },
 
     CreateSourcesJSON: function (req, resp) {
+        sess = req.session;
         console.log(req.body);
         var SID = req.body.table;
         SID = JSON.parse(SID);
@@ -468,7 +469,20 @@ module.exports = {
             if (err) throw err;
             if (result) {
                 console.log("Record Inserted");
-                insertdatatypes(result.insertId)
+                insertdatatypes(result.insertId);
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Source has been created at name: " + sname, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "1", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
             }
         });
 
