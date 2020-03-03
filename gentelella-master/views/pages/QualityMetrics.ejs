@@ -179,6 +179,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" id="gid" name="gid" class="form-control col-md-7 col-xs-12" />
+                                    <input  id="GID" name="GID" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input  id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
 
                                     <label for="cycleName">Goal Duration(in years):<span class="required">*</span>
                                     </label>
@@ -356,9 +358,9 @@
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
                                                             <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                 <%if (goals.cycle_Created==0){%>
-                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" data-book-id2="<%= goals.metric_ID %>" data-book-id3="<%= goals.metric_Name %>">Create Cycles</button>
                                                                 <%}else{%>
-                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" style="display: none;">Create Cycles</button>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" data-book-id2="<%= goals.metric_ID %>" data-book-id3="<%= goals.metric_Name %>" style="display: none;">Create Cycles</button>
                                                                 <%}%>
                                                             <% } %>
                                                             <table class="table table-bordered">
@@ -796,8 +798,12 @@
                 <script>
                     $('#my_modalCYCLE').on('show.bs.modal.fade.createCycle', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
+                        var bookId2 = $(e.relatedTarget).data('book-id2');
+                        var bookId3 = $(e.relatedTarget).data('book-id3');
                         console.log("Create Cycle Modal");
                         $(e.currentTarget).find('input[name="gid"]').val(bookId);
+                        $(e.currentTarget).find('input[name="GID"]').val(bookId2);
+                        $(e.currentTarget).find('input[name="GName"]').val(bookId3);
                     });
 
 
@@ -1110,6 +1116,8 @@
                             $("#toJSONCycles").click(function() {
                             console.log("JSON CYCLES");
                             var table = JSON.stringify($('#tableCycles').tableToJSON());
+                            var GID = document.getElementById("GID").value;
+                            var GName = document.getElementById("GName").value;
                             //var mid = document.getElementById("mid").value
 
                             var xhr = new XMLHttpRequest();
@@ -1132,7 +1140,7 @@
                             };
 
 
-                            xhr.send("table=" + table);
+                            xhr.send("table=" + table + "&GID=" + GID + "&GName=" + GName);
 
                         });
 
