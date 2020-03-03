@@ -159,11 +159,11 @@ module.exports = {
                     var beforetrig = daybefore.toISOString().split('T')[0];
                     console.log(beforetrig);
 
-                    var threedays = addSubtractDate.subtract(trigger, 3, "days");
+                    var threedays = addSubtractDate.subtract(trigger, 2, "days");
                     var threetrig = threedays.toISOString().split('T')[0];
                     console.log(threetrig);
 
-                    var sevendays = addSubtractDate.subtract(trigger, 7, "days");
+                    var sevendays = addSubtractDate.subtract(trigger, 4, "days");
                     var seventrig = sevendays.toISOString().split('T')[0];
                     console.log(seventrig);
 
