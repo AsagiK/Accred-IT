@@ -157,12 +157,13 @@ module.exports = {
                     var notifobject = {
                         "body": "Activity: " + an + "is due today", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                        "receiver": "0", //ID of receiver, in this case the user that was created
+                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "range": "2", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
-                        "triggerdate": trigdate //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "triggerdate": trigdate, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "isactivity": "1"
                     }
                     Notif.CreateNotif(notifobject);
 
@@ -172,12 +173,13 @@ module.exports = {
                     var notifobject2 = {
                         "body": "Activity: " + an + "is due tomorrow", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                        "receiver": "0", //ID of receiver, in this case the user that was created
+                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "range": "2", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
-                        "triggerdate": beforetrig //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "triggerdate": beforetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "isactivity": "1"
                     }
                     Notif.CreateNotif(notifobject2);
 
@@ -187,12 +189,13 @@ module.exports = {
                     var notifobject3 = {
                         "body": "Activity: " + an + "is due in 3 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                        "receiver": "0", //ID of receiver, in this case the user that was created
+                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "range": "2", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
-                        "triggerdate": threetrig //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "triggerdate": threetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "isactivity": "1"
                     }
                     Notif.CreateNotif(notifobject3);
 
@@ -202,9 +205,9 @@ module.exports = {
                     var notifobject4 = {
                         "body": "Activity: " + an + "is due in 7 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                        "receiver": "0", //ID of receiver, in this case the user that was created
+                        "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "range": "2", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
                         "triggerdate": seventrig //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
@@ -239,7 +242,7 @@ module.exports = {
                                 "sender": sess.user[0].User_ID, //ID of sender taken from req session
                                 "receiver": "0", //ID of receiver, in this case the user that was created
                                 "group": sess.user[0].Group, //Group ID taken from req session
-                                "range": "1", //range of notification, refer to the JSONcontroller
+                                "range": "2", //range of notification, refer to the JSONcontroller
                                 "admin": "1", // 0 if admin does not need to be notified, else 1
                                 "sysadmin": "1", // same as above
                                 "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
