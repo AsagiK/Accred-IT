@@ -153,7 +153,13 @@ module.exports = {
                     callback();
                     var trigger = new Date(dead);
                     var trigdate = trigger.toISOString().split('T')[0];
+                    var sevendays = trigdate.getDate()-7;
+                    var threedays = trigdate.getDate()-3;
+                    var daybefore = trigdate.getDate()-1;
                     console.log(trigdate);
+                    console.log(sevendays);
+                    console.log(threedays);
+                    console.log(daybefore);
                     
                     
                     console.log(result);
