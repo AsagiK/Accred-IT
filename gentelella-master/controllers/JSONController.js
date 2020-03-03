@@ -407,6 +407,7 @@ module.exports = {
         sess = req.session;
         var UID = req.body.table;
         var MID = req.body.mid;
+        var gname = req.body.GName;
         UID = JSON.parse(UID);
         console.log(UID);
         async.forEachOf(UID, function (value, key, callback) {
@@ -440,7 +441,7 @@ module.exports = {
                                 var today = new Date();
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
-                    "body": "Progress has been declared for Measurement: " + mname, //message body, cannot be null
+                    "body": "Cycles have been created for Goal: " + gname,  //message body, cannot be null
                     "sender": sess.user[0].User_ID, //ID of sender taken from req session
                     "receiver": "0", //ID of receiver, in this case the user that was created
                     "group": sess.user[0].Group, //Group ID taken from req session
