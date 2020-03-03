@@ -157,9 +157,9 @@ module.exports = {
                     var sevendays = addSubtractDate.subtract(trigger, 7, "days");
                     var threedays = addSubtractDate.subtract(trigger, 3, "days");
                     var daybefore = addSubtractDate.subtract(trigger, 1, "day");
-                    var seventrig = trigger.toISOString().split('T')[0];
-                    var threetrig = trigger.toISOString().split('T')[0];
-                    var beforetrig = trigger.toISOString().split('T')[0];
+                    var seventrig = sevendays.toISOString().split('T')[0];
+                    var threetrig = threedays.toISOString().split('T')[0];
+                    var beforetrig = daybefore.toISOString().split('T')[0];
                     console.log(trigdate);
                     console.log(seventrig);
                     console.log(threetrig);
