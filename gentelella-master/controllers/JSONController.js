@@ -154,18 +154,20 @@ module.exports = {
                     callback();
                     var trigger = new Date(dead);
                     var trigdate = trigger.toISOString().split('T')[0];
-                    var sevendays = addSubtractDate.subtract(trigger, 7, "days");
-                    var threedays = addSubtractDate.subtract(trigger, 3, "days");
+
                     var daybefore = addSubtractDate.subtract(trigger, 1, "day");
-                    var seventrig = sevendays.toISOString().split('T')[0];
-                    var threetrig = threedays.toISOString().split('T')[0];
                     var beforetrig = daybefore.toISOString().split('T')[0];
-                    console.log(trigdate);
-                    console.log(seventrig);
-                    console.log(threetrig);
                     console.log(beforetrig);
-                    
-                    
+
+                    var threedays = addSubtractDate.subtract(trigger, 3, "days");
+                    var threetrig = threedays.toISOString().split('T')[0];
+                    console.log(threetrig);
+
+                    var sevendays = addSubtractDate.subtract(trigger, 7, "days");
+                    var seventrig = sevendays.toISOString().split('T')[0];
+                    console.log(seventrig);
+
+
                     console.log(result);
                     var activitytolink = result.insertId;
                     async.forEachOf(measureID, function (value, key, callback) {
