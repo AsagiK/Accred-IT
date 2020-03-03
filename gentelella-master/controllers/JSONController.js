@@ -162,7 +162,7 @@ module.exports = {
                         "range": "1", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
-                        "triggerdate": beforetrig //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                        "triggerdate": trigdate //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
                     }
                     Notif.CreateNotif(notifobject);
 
