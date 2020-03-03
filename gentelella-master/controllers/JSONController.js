@@ -151,6 +151,10 @@ module.exports = {
                 if (err) callback(err);
                 if (result) {
                     callback();
+                    var trigger = Date.parse(dead);
+                    console.log(trigger);
+                    
+                    
                     console.log(result);
                     var activitytolink = result.insertId;
                     async.forEachOf(measureID, function (value, key, callback) {
