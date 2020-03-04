@@ -34,19 +34,19 @@ module.exports = {
         const Sysadmin = notif.sysadmin;
         const Triggerdate = notif.triggerdate;
 
-        if (notif.isactivity) {
+        if (notif.isactivity.length > 0) {
             if (Triggerdate.length > 0) {
                 var sql = "INSERT INTO `capstone`.`notifications` (`message`, `sender`, `receiver`, `group_id`, `range`, `admin`, `sysadmin`, `triggerdate`, `isactivity`) VALUES (?,?,?,?,?,?,?,?,?);"
                 var values = [Message, Sender, Receiver, Group, Range, Admin, Sysadmin, Triggerdate, notif.isactivity]
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result && Range != 5) {
-                        checkrange(Sender, Range, result.insertId, 0);
+                        checkrange(Sender, Range, result.insertId, 1);
                         admin(Admin, result.insertId);
                         sysadmin(Sysadmin, result.insertId);
                         console.log("notif added")
                     } else {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 1);
                         console.log("notif added")
                     }
                 });
@@ -57,12 +57,12 @@ module.exports = {
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result && Range != 5) {
-                        checkrange(Sender, Range, result.insertId, 0);
+                        checkrange(Sender, Range, result.insertId, 1);
                         admin(Admin, result.insertId);
                         sysadmin(Sysadmin, result.insertId);
                         console.log("notif added")
                     } else {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 1);
                         console.log("notif added")
                     }
                 });
@@ -76,12 +76,12 @@ module.exports = {
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result && Range != 5) {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 0);
                         admin(Admin, result.insertId);
                         sysadmin(Sysadmin, result.insertId);
                         console.log("notif added")
                     } else {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 0);
                         console.log("notif added")
                     }
                 });
@@ -92,12 +92,12 @@ module.exports = {
                 connection.query(sql, values, function (err, result) {
                     if (err) console.log(err);
                     if (result && Range != 5) {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 0);
                         admin(Admin, result.insertId);
                         sysadmin(Sysadmin, result.insertId);
                         console.log("notif added")
                     } else {
-                        checkrange(Sender, Range, result.insertId);
+                        checkrange(Sender, Range, result.insertId, 0);
                         console.log("notif added")
                     }
                 });
