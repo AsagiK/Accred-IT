@@ -265,14 +265,12 @@ module.exports = {
         var current = today.toISOString().split('T')[0];
         var sql = "SELECT notifications_read.Notifications_ID, Recipient_ID, notif_read, message, triggerdate FROM capstone.notifications_read join capstone.notifications on notifications_read.Notifications_ID = notifications.Notifications_ID where notifications_read.Recipient_ID = ? && DATE(triggerdate) <= DATE(NOW())";
         /*
-SELECT notifications_read.Notifications_ID, Recipient_ID, notif_read, message, triggerdate, isactivity, group.Group_ID, activity_members.activity_ID, approved_activities.activity_ID
+SELECT notifications_read.Notifications_ID, Recipient_ID, notif_read, message, triggerdate, isactivity, activity_members.activity_Member , activity_members.activity_ID, approved_activities.activity_ID
 FROM capstone.notifications_read 
 join capstone.notifications 
 on notifications_read.Notifications_ID = notifications.Notifications_ID 
-join capstone.group
-on notifications_read.Recipient_ID = group.Group_ID
 join capstone.activity_members
-on group.Group_ID = activity_members.activity_ID
+on notifications_read.Recipient_ID  = activity_members.activity_ID
 join capstone.approved_activities
 on activity_members.activity_ID = approved_activities.activity_ID
 where notifications_read.Recipient_ID = 1 && notifications.isactivity = 1 && DATE(triggerdate) <= DATE(NOW())
