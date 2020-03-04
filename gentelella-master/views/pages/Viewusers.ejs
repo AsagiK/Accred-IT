@@ -94,7 +94,7 @@
                                                 <% if (info.Role != "1") {%>
                                                 <form method="get" action="edituser">
                                                     <input type="hidden" name="UID" value="<%= info.User_ID %>">
-                                                    <td><button type="submit" class="btn btn-info">Edit</button></td>
+                                                    <td><button type="submit" class="btn btn-dark">Edit</button></td>
                                                 </form>
                                                 <% }else { %>
                                                 <td></td>
@@ -114,7 +114,7 @@
                         <div class="page-title">
                             <div class="title_left">
 
-                                <h3>View Users Unassigned To Groups</h3>
+                                <h3 style="color: #dddddd;">View Users Unassigned To Groups</h3>
 
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
+                            <div class="x_panel" style="background-color: #eeeeee;">
                                 <div class="x_content">
                                     <br />
 
@@ -155,12 +155,12 @@
                                                     <td><%= info2.ContactNo %></td>
                                                     
                                                     <% if (info2.Role != "1") {%>
-                                                    <td><button type="submit" class="btn btn-info">Edit</button></td>
+                                                    <td><button type="submit" class="btn btn-dark">Edit</button></td>
                                                     <%}%>
                                                 </form>
                                                 <form method="get" action="ViewGroups">
                                                     
-                                                    <td><button type="submit" class="btn btn-primary">Add to group</button></td>
+                                                    <td><button type="submit" class="btn btn-dark">Add to group</button></td>
                                                 </form>
                                                 
                                             </tr>
