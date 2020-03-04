@@ -159,7 +159,7 @@ module.exports = {
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "2", //range of notification, refer to the JSONcontroller
+                        "range": "1", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
                         "triggerdate": trigdate, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
@@ -175,7 +175,7 @@ module.exports = {
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "2", //range of notification, refer to the JSONcontroller
+                        "range": "1", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
                         "triggerdate": beforetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
@@ -191,7 +191,7 @@ module.exports = {
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "2", //range of notification, refer to the JSONcontroller
+                        "range": "1", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
                         "triggerdate": threetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
@@ -207,7 +207,7 @@ module.exports = {
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": result.insertId, //ID of receiver, in this case the user that was created
                         "group": sess.user[0].Group, //Group ID taken from req session
-                        "range": "2", //range of notification, refer to the JSONcontroller
+                        "range": "1", //range of notification, refer to the JSONcontroller
                         "admin": "1", // 0 if admin does not need to be notified, else 1
                         "sysadmin": "1", // same as above
                         "triggerdate": seventrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
