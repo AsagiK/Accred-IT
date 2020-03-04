@@ -312,9 +312,9 @@
                                         <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             
-                                            <input  id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
-                                            <input  id="GID" name="GID" required="required" class="form-control col-md-7 col-xs-12">
-                                            <input  id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="hidden" id="GID" name="GID" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="hidden" id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -366,7 +366,7 @@
                                                             <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                 
                                                                 <form method="get" action="editmetric">
-                                                                    <input name="GID" id="GID" value="<%= goals.metric_ID %>">
+                                                                    <input hidden name="GID" id="GID" value="<%= goals.metric_ID %>">
                                                                     <button type=submit class="btn btn-primary">Edit Goal</button>
                                                                 </form>
                                                             <%}else{ }%>
