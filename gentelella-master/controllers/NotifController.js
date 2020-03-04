@@ -201,9 +201,7 @@ module.exports = {
 
                 }
             }
-        }
-
-
+        
 
         function admin(Admin, insertid) {
             if (Admin == 1) {
