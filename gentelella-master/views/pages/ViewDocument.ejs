@@ -170,9 +170,9 @@
 
                                                   <div class="mask no-caption">
                                                       <div class="tools tools-bottom">
-                                                        <form id="foldview" action="ViewFolder" method="GET">
+                                                        <form id="foldview<%= doc.Document_ID %>" action="ViewFolder" method="GET">
                                                           <input hidden id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
-                                                          <a href="#" onclick="document.getElementById('foldview').submit()"><i class="fa fa-folder-open"></i></a>
+                                                          <a href="#" onclick="document.getElementById('foldview<%= doc.Document_ID %>').submit()"><i class="fa fa-folder-open"></i></a>
                                                         </form>
                                                           
                                                           
