@@ -107,17 +107,17 @@
 <%}%>
     <%}%>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>View Groups</h3>
+                            <h3 style="color: #dddddd;">View Groups</h3>
 
                         </div>
                     </div>
@@ -125,24 +125,22 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
                                 <br />
 
 
                                 <div class="col-md-12 col-sm-6 col-xs-12">
-                                    <div class="x_panel">
-                                        <div class="x_title">
-                                            <h2><i class="fa fa-align-left"></i>Areas</h2>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                    <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
+                                        
+                                            <h2 style="color: #dddddd;"><i class="fa fa-align-left"></i>Areas</h2>
+                                            
+                                        
                                         <div class="x_content">
 
                                             <!-- start accordion    -->
                                             <% for(var area of dataA) { %>
-                                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                                                <div class="panel">
-                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= area.Area_ID%>" aria-expanded="true" aria-controls="collapse<%= area.Area_ID%>">
+                                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" style="background-color: #696969; border-color: #696969; border-radius: 8px;">
+                                                <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px;">
+                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= area.Area_ID%>" aria-expanded="true" aria-controls="collapse<%= area.Area_ID%>" >
                                                         <h4 class="panel-title"><%= area.Area_Name %> -
                                                             <%if (area.GroupCount != 1){ %>
                                                             <%= area.GroupCount %> Groups -
@@ -166,7 +164,7 @@
                                                             <div class="panel-body">
                                                                 <!--Group 1 table-->
 
-                                                                <div class="panel">
+                                                                <div class="panel" style="border-radius: 8px;">
                                                                     <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#Collapse<%= group.Group_ID %>" aria-expanded="true" aria-controls="Collapse<%= group.Group_ID %>">
                                                                         <h3 class="panel-title"><%= group.Group_Name %>
                                                                             <%if (group.UserCount != 1){ %>
@@ -237,20 +235,28 @@
                                                                                 </tbody>
                                                                                 <% } %>
                                                                                 <% } %>
+                                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                                    <form method="GET" action="AssignMemberToGroup">
+                                                                                    <input type="hidden" name="GID" value="<%= group.Group_ID %>">
+                                                                                    <button style="display:inline-block ;" class="btn btn-primary" type="submit">Add Member </button>
+                                                                                </form>
+                                                                                </div>
+                                                                                 
+                                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                                    <form method="GET" action="EditMemberToGroup">
+                                                                                    <input type="hidden" name="GID" value="<%= group.Group_ID %>">
+                                                                                    <button style="display:inline-block ;" class="btn btn-primary" type="submit">Edit Group </button>
+                                                                                </form> 
+                                                                                </div>  
                                                                             </table>
 
 
-                                                                            <div class="form-group">
-                                                                                <form method="GET" action="AssignMemberToGroup">
-                                                                                    <input type="hidden" name="GID" value="<%= group.Group_ID %>">
-                                                                                    <button class="btn btn-primary" type="submit">Add Member </button>
-                                                                                </form>
-                                                                                <br>
-                                                                                <form method="GET" action="EditMemberToGroup">
-                                                                                    <input type="hidden" name="GID" value="<%= group.Group_ID %>">
-                                                                                    <button class="btn btn-primary" type="submit">Edit Group </button>
-                                                                                </form>
-                                                                            </div>
+                                                                            
+                                                                               
+                                                                                
+                                                                                
+                                                                                
+                                                                        
                                                                 </div>
 
                                                             </div>
@@ -275,8 +281,7 @@
                     </div>
 
 
-                </div>
-            </div>
+               
         </div>
     </div>
 
@@ -300,9 +305,9 @@
     <!-- /page content -->
 
     <!-- footer content -->
-    <footer>
+    <footer style="background-color: #232931; color:white;">
         <div class="pull-right">
-            Test Footer
+            Footer
         </div>
         <div class="clearfix"></div>
     </footer>
