@@ -122,21 +122,21 @@
 
 </style>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
-                    <div class="clearfix"></div>
+                    
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <div class="x_content">
 
                                 <div class="title_left">
-                                    <h1 align="left">View Measurement Details Title: <%= data[0].measurement_Name %> <br>
+                                    <h1  style="color: #dddddd;">View Measurement Details Title: <%= data[0].measurement_Name %> <br>
                                        
                                         <% var date = new Date(dataK[0].start_Date) %> 
                                         <% var year = date.getFullYear(); %>
@@ -146,20 +146,20 @@
 
                                     </h1>
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
-                                    <h4 align="left"><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
+                                    <h4><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
                                 </div>
-                                <br />
+                                <br>
 
                                 <div class="col-md-12 col-sm-6 col-xs-12">
-                                    <div class="x_panel">
+                                    <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                                         <div class="x_title">
                                             <div class="page-title">
                                                 <div class="title_right">
-                                                    <h2>Description:<br> <%= data[0].measurement_Description %></h2>
+                                                    <h2 style="color: #dddddd;">Description:<br> <%= data[0].measurement_Description %></h2>
                                                 </div>
                                                 <% if (current_user[0].Role == 1) { %>
                                                     <div class="title_left">
-                                                        <h2>
+                                                        <h2 style="color: #dddddd;">
                                                             Quality Target/s :<br>
                                                             <% for(var targets of dataI) { %>
                                                                 <% if (data[0].measurement_ID == targets.measurementID) { %> 
@@ -178,13 +178,14 @@
                                                 <% } %>
                                             </div>
                                             <!--Edited-->
-                                            <div class="clearfix"></div>
+                                            
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="x_content">
-
+                                <div class="x_content" style="background-color: #eeeeee; border-radius: 8px;">
+                                    <h2 >Activities Table</h2>
+                                    <br>
                                     <!BUTTONS FOR CREATE OF ACTIVITIES>
                                     <% if ((current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) && (dataK[0].status == 0  || dataK[0].status == 3)) { %>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
@@ -200,12 +201,10 @@
                                         <div class="panel-body">
                                             <div class="panel">
 
-                                                <h2>Activities Table</h2>
+                                                
 
-                                                <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
-                                                </a>
-
-                                                <br>
+                                                <!--a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingTwo" href="#FacilitiesGroupOne" aria-expanded="true" aria-controls="FacilitiesGroupOne">
+                                                </a-->
                                                 <div>
 
                                                     <table class="table table-bordered">
