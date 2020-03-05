@@ -54,12 +54,12 @@ width: 100%;
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <!-- top tiles 
                 <div class="row tile_count">
                     <div class="col-md-4  tile_stats_count">
@@ -80,7 +80,7 @@ width: 100%;
                 </div>
                 -- /top tiles -->
 
-                <div class="col-md-4  tile_stats_count">
+                <div class="col-md-4  tile_stats_count" style="color: #dddddd;">
                         
                         <span class="count_top" style="font-size: 30px; color: white;"><i class="fa fa-tasks"></i>
                                 <%= new Date().toString().substr(0,15)%> 
@@ -91,15 +91,15 @@ width: 100%;
                 </div> 
                 
              <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
-                <div class="row" style="background-color:lightslategrey;">
+                <div class="row" >
                     <!MEASUREMENT>
                         <div class="col-md-12 col-sm-15 col-xs-15" >
-                            <div class="x_panel" style="background-color:black;">
-                                <div class="x_title" style="background-color::rgb(47,92,140);color: white; font-family:Georgia, Garamond, Serif; font-style: initial;">
+                            <div class="x_panel" >
+                                <div class="x_title" style=" font-family:Georgia, Garamond, Serif; font-style: initial;">
                                     <h2>GOALS</h2>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="dash col-md-12" style="background-color:black; font-family:Georgia, Garamond, Serif;">
+                                <div class="dash col-md-12" style="  font-family:Georgia, Garamond, Serif;">
                                     <!--METRIC TABLE-->  
                                     <% if (data.length == 0) { %>
                                     <h2>No Goals Created Yet</h2>
@@ -107,7 +107,7 @@ width: 100%;
                                     <% } else { %>
                                 <% for (var mes of data) { %> 
 
-                                    <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">
+                                    <table class="table table-bordered" style="table-layout: fixed;  font-family:Georgia, Garamond, Serif;">
                                         <thead>
                                             <tr>
                                                 <th>Goal Name</th>
