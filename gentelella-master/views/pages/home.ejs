@@ -51,7 +51,16 @@ width: 100%;
     <link href="assets/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
 
     <!-- Custom Theme Style -->
-    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    <link href="assets/build/css/custom.min.css" rel="stylesheet"> 
+
+    <!-- DataTable--> 
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet"> 
+
+
 </head>
 
 <body class="nav-md" style="background-color: #232931;">
@@ -60,28 +69,7 @@ width: 100%;
             <%- include ./nav.ejs %>
             <!-- page content -->
             <div class="right_col" role="main" style="background-color: #232931;">
-                <!-- top tiles 
-                <div class="row tile_count">
-                    <div class="col-md-4  tile_stats_count">
-                        -- tasks completed --
-                        <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
-
-                        </span>
-                        <div class="count">2500 </div>
-                    </div>
-                    -- end of tasks completed --
-                    -- Active tasks --
-                    <div class="col-md-4 tile_stats_count">
-                        <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i> Active Activities</span>
-                        <div class="count">(NUMBER OF ACTIVITIES HERE)</div>
-                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> </span>
-                    </div>
-                    -- end of active tasks --
-                </div>
-                -- /top tiles -->
-
-                <div class="col-md-4  tile_stats_count" style="color: #dddddd;">
-                        
+                <div class="col-md-4  tile_stats_count" style="color: #dddddd;">                       
                         <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
                                 <%= new Date().getFullYear();%>
                         </span>
@@ -92,41 +80,32 @@ width: 100%;
                 <div class="row">
                     <!MEASUREMENT>
                         <div class="col-md-12 col-sm-15 col-xs-15">
-                            <div class="x_panel">
-                                <div class="x_title">
+                            <div class="x_panel" style=" border-radius: 8px;">
+                                <div class="x_title" style="font-style: italic;">
                                     <h2>METRICS</h2>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="dash col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <!--METRIC TABLE-->  
                                 <% for (var mes of data) { %> 
-
-                                    <table class="table table-bordered" style="table-layout: fixed;">
+                                    <table id="datatable-fixed-header" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Metric Name</th>
                                                 <th>Description</th>
-                                                <th></th>
+                                                <th></th> 
                                             </tr>
                                         </thead>
                                         <tbody>
-
-
-                                            <tr> 
-                                                
+                                            <tr>                                             
                                                 <td> <%= mes.metric_Name %> </td>
                                                 <td><%= mes.metric_Desc %> </td>
                                                 <td><form method="get" action="QualityMetrics">
                                                         <button type="submit" class="btn btn-primary">View Details</button>
                                                     </form></td> 
-
                                             </tr>
-
-
                                         </tbody>
                                     </table> 
-
-                                   
 
                                 <% } %>
                                     
@@ -138,18 +117,18 @@ width: 100%;
                
 
                         <!MEASUREMENTS>
-                        <div class="col-md-6">
-                            <div class="x_panel">
-                                <div class="x_title">
+                        <div class="col-md-12 col-sm-15 col-xs-15">
+                            <div class="x_panel" style=" border-radius: 8px;">
+                                <div class="x_title" style="font-style: italic;">
                                     <h2>MEASUREMENTS</h2>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="dash3">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <!--MEASRUEMENTS-->  
                                 <% for (var meas of dataB) { %> 
                                     <% for (var targets of dataG) { %>
                                     
-                                        <table class="table table-bordered" style="table-layout: fixed;">
+                                        <table id="datatable" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Measurement Name</th>
@@ -200,18 +179,18 @@ width: 100%;
                         </div> 
 
                         <!ACTIVITIES>
-                        <div class="col-md-6">
-                            <div class="x_panel">
-                                <div class="x_title">
+                        <div class="col-md-12 col-sm-15 col-xs-15">
+                            <div class="x_panel" style=" border-radius: 8px;">
+                                <div class="x_title" style="font-style: italic;">
                                     <h2>ACTIVITIES</h2>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="dash3">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                         <!--ACTIVITIES-->   
                                          
                                             <% for (var acti of dataH) { %> 
                                                 
-                                        <table class="table table-bordered" style="table-layout: fixed;">
+                                        <table id="datatable-responsive" class="table table-bordered" >
                                                 <thead>
                                                     <tr>
                                                         <th>Activity Name</th>
@@ -250,7 +229,7 @@ width: 100%;
                 <% }  else if (current_user[0].Role == 4) { %>
                     <div class="row"> 
                             <div class="col-md-12 col-sm-15 col-xs-15">
-                                    <div class="x_panel">
+                                <div class="x_panel" style=" border-radius: 8px;">
                                         <div class="x_title">
                                             <h2>ACTIVITIES</h2>
                                             <div class="clearfix"></div>
@@ -375,18 +354,18 @@ width: 100%;
                 
                 <% } else { %> 
                     <div class="row">
-                            <!MEASUREMENT>
+                            <!METRIC>
                                 <div class="col-md-12 col-sm-15 col-xs-15">
-                                    <div class="x_panel">
+                                    <div class="x_panel" style=" border-radius: 8px;">
                                         <div class="x_title">
                                             <h2>METRICS</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash col-md-12">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                             <!--METRIC TABLE-->  
                                         <% for (var mes of data) { %> 
         
-                                            <table class="table table-bordered" style="table-layout: fixed;">
+                                            <table id="datatable-fixed-header" class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Metric Name</th>
@@ -423,18 +402,18 @@ width: 100%;
                        
         
                                 <!MEASUREMENTS>
-                                <div class="col-md-6">
-                                    <div class="x_panel">
+                                <div class="col-md-12 col-sm-15 col-xs-15">
+                                    <div class="x_panel" style=" border-radius: 8px;">
                                         <div class="x_title">
                                             <h2>MEASUREMENTS</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash2">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                             <!--MEASRUEMENTS-->  
                                         <% for (var meas of dataB) { %> 
                                             <% for (var targets of dataG) { %>
                                             
-                                                <table class="table table-bordered" style="table-layout: fixed;">
+                                                <table id="datatable" class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Measurement Name</th>
@@ -487,13 +466,13 @@ width: 100%;
                                 </div> 
         
                                 <!ACTIVITIES>
-                                <div class="col-md-6">
-                                    <div class="x_panel">
+                                <div class="col-md-12 col-sm-15 col-xs-15">
+                                    <div class="x_panel" style=" border-radius: 8px;">
                                         <div class="x_title">
                                             <h2>ACTIVITIES</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash2">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <!--ACTIVITIES-->   
                                                  
                                                 <% for (var act of dataC) { %> 
@@ -542,7 +521,7 @@ width: 100%;
                                                                                     <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
     
                                                                                         <div class="panel-body">
-                                                                                                <table class="table table-bordered" style="table-layout: fixed;"> 
+                                                                                            <table id="datatable-responsive" class="table table-bordered" > 
                                                     
                                                                                                         <thead>
                                                                                                             <tr>
@@ -611,7 +590,7 @@ width: 100%;
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="border-radius: 8px; background-color: #232931;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
@@ -663,7 +642,24 @@ width: 100%;
         <script src="assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
 
         <!-- Custom Theme Scripts -->
-        <script src="assets/build/js/custom.min.js"></script>
+        <script src="assets/build/js/custom.min.js"></script> 
+
+         <!-- Datatables -->
+         <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+         <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+         <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+         <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+         <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+         <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+         <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+         <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+         <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+         <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+         <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+         <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+         <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+         <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+         <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 
