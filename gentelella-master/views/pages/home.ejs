@@ -98,9 +98,10 @@ width: 100%;
                                         </thead>
                                         <tbody>
                                             <tr>                                             
-                                                <td> <%= mes.metric_Name %> </td>
-                                                <td><%= mes.metric_Desc %> </td>
-                                                <td><form method="get" action="QualityMetrics">
+                                                <th width="30%" scope="row"> <%= mes.metric_Name %> </th>
+                                                
+                                                <td width="30%"><%= mes.metric_Desc %> </td>
+                                                <td width="30%"><form method="get" action="QualityMetrics">
                                                         <button type="submit" class="btn btn-primary">View Details</button>
                                                     </form></td> 
                                             </tr>
@@ -141,10 +142,10 @@ width: 100%;
 
 
                                             <tr>
-                                                <td> <%= meas.measurement_Name %> </td>
-                                                <td><%= meas.measurement_Description %> </td> 
+                                                <td width="30%"> <%= meas.measurement_Name %> </td>
+                                                <td width="30%"><%= meas.measurement_Description %> </td> 
 
-                                                <td>
+                                                <td width="30%">
                                                     <% if (meas.measurement_ID == targets.measurementID) { %> 
                                                         <% if (targets.target_Type == 0) { %>
                                                             <%= targets.target%> % <%= targets.target_Desc %>
@@ -155,7 +156,7 @@ width: 100%;
                                                         <!-- NONE WILL DISPLAY-->
                                                     <% } %>
                                                 </td>
-                                                <td> <form method="get" action="ViewMeasurementDetails">
+                                                <td width="30%"> <form method="get" action="ViewMeasurementDetails">
                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
                                                         <button type="submit" class="btn btn-primary">View
@@ -203,10 +204,10 @@ width: 100%;
                                             <tbody>
     
                                                 <tr>
-                                                    <td> <%= acti.activity_name %> </td>
-                                                    <td><%= acti.description %> </td>
-                                                    <td><%= acti.deadline.toString().substr(0, 15) %></td> 
-                                                    <td><form method="get" action="QualityMetrics">
+                                                    <td width="30%"> <%= acti.activity_name %> </td>
+                                                    <td width="30%"><%= acti.description %> </td>
+                                                    <td width="30%"><%= acti.deadline.toString().substr(0, 15) %></td> 
+                                                    <td width="30%"><form method="get" action="QualityMetrics">
                                                             <button type="submit" class="btn btn-primary">View Details</button>
                                                         </form></td>
                                                 </tr>
@@ -378,9 +379,9 @@ width: 100%;
         
                                                     <tr> 
                                                         
-                                                        <td> <%= mes.metric_Name %> </td>
-                                                        <td><%= mes.metric_Desc %> </td>
-                                                        <td><form method="get" action="QualityMetrics">
+                                                        <td width="30%"> <%= mes.metric_Name %> </td>
+                                                        <td width="30%"><%= mes.metric_Desc %> </td>
+                                                        <td width="30%"><form method="get" action="QualityMetrics">
                                                                 <button type="submit" class="btn btn-primary">View Details</button>
                                                             </form></td> 
         
@@ -426,10 +427,10 @@ width: 100%;
         
         
                                                     <tr>
-                                                        <td> <%= meas.measurement_Name %> </td>
-                                                        <td><%= meas.measurement_Description %> </td> 
+                                                        <td width="30%"> <%= meas.measurement_Name %> </td>
+                                                        <td width="30%"><%= meas.measurement_Description %> </td> 
         
-                                                        <td>
+                                                        <td width="30%">
                                                             <% if (meas.measurement_ID == targets.measurementID) { %> 
                                                                 <% if (targets.target_Type == 0) { %>
                                                                     <%= targets.target%> % <%= targets.target_Desc %>
@@ -440,7 +441,7 @@ width: 100%;
                                                                 <!-- NONE WILL DISPLAY-->
                                                             <% } %>
                                                         </td>
-                                                        <td>
+                                                        <td width="30%">
                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
