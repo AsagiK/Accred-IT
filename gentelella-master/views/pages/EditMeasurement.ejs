@@ -33,17 +33,17 @@
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit Metric Page</h3>
+                            <h3 style="color: #dddddd;">Edit Metric Page</h3>
 
                         </div>
                     </div>
@@ -51,17 +51,16 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
                             <% if (CASE == 0) { %>
                             <!--CASE 0-->
                             <div class="x_content">
-                                <h1>TESTING CASE FOR UPDATE ONLY</h1>
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
                                     action="UpdateMeasurement" method="POST">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Measurement Name<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -72,7 +71,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Quality Target"
+                                        <label style="color: #dddddd;" for="Quality Target"
                                             class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -83,7 +82,7 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Priority Level:<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -112,13 +111,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <a type="button" class="btn btn-default" href="/QualityMetric">
+                                    <div class="form-group" >
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <a type="button" class="btn btn-danger" href="/QualityMetric">
                                             cancel
                                         </a>
                                         <button type="submit" class="btn btn-primary">
                                             Submit
                                         </button>
+                                        </div>
                                     </div>
 
                                 </form>
@@ -126,13 +127,12 @@
                             <% } else { %>
                             <!--CASE 1-->
                             <div class="x_content">
-                                <h1>UPDATE AND AUDIT INSERT</h1>
                                     <br />
                                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
                                         action="AuditMeasurement" method="POST">
     
                                         <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                            <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12"
                                                 for="first-name">Measurement Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="Quality Target"
+                                            <label style="color: #dddddd;" for="Quality Target"
                                                 class="control-label col-md-3 col-sm-3 col-xs-12">Description<span
                                                     class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -154,7 +154,7 @@
                                         </div>
                                         
                                          <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12"
                                             for="first-name">Priority Level:<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -226,7 +226,7 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="background-color: #232931; border-color: #232931;  border-radius: 8px;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
