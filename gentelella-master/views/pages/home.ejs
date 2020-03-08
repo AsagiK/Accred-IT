@@ -127,10 +127,9 @@ width: 100%;
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <!--MEASRUEMENTS-->  
-                                <% for (var meas of dataB) { %> 
-                                    <% for (var targets of dataG) { %>
+                                
                                     
-                                        <table id="datatable" class="table table-bordered">
+                                    <table id="datatable" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Measurement Name</th>
@@ -140,10 +139,11 @@ width: 100%;
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <% for (var meas of dataB) { %> 
+                                                <% for (var targets of dataG) { %>
 
                                             <tr>
-                                                <td width="30%"> <%= meas.measurement_Name %> </td>
+                                                <td width="30%" scope="row"> <%= meas.measurement_Name %> </td>
                                                 <td width="30%"><%= meas.measurement_Description %> </td> 
 
                                                 <td width="30%">
@@ -164,7 +164,8 @@ width: 100%;
                                                             Details</button>
                                                     </form></td>
                                             </tr>
-
+                                            <% } %>  
+                                            <% } %> 
 
                                         </tbody>
                                     </table>
@@ -172,8 +173,7 @@ width: 100%;
                                    
                                 
                                     
-                                <% } %>  
-                            <% } %>      
+                                    
                                     
 
                                 </div>
@@ -190,7 +190,7 @@ width: 100%;
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                         <!--ACTIVITIES-->   
                                          
-                                            <% for (var acti of dataH) { %> 
+                                           
                                                 
                                         <table id="datatable-responsive" class="table table-bordered" >
                                                 <thead>
@@ -203,16 +203,16 @@ width: 100%;
                                                 </thead> 
                                    
                                             <tbody>
-    
+                                                <% for (var acti of dataH) { %> 
                                                 <tr>
-                                                    <td width="30%"> <%= acti.activity_name %> </td>
+                                                    <td width="30%" scope="row" > <%= acti.activity_name %> </td>
                                                     <td width="30%"><%= acti.description %> </td>
                                                     <td width="30%"><%= acti.deadline.toString().substr(0, 15) %></td> 
                                                     <td width="30%"><form method="get" action="QualityMetrics">
                                                             <button type="submit" class="btn btn-primary">View Details</button>
                                                         </form></td>
                                                 </tr>
-
+                                                <% } %>
     
                                             </tbody>
                                   
@@ -220,7 +220,7 @@ width: 100%;
 
                                         
 
-                                 <% } %>
+                                 
                                  
                                     
                                 </div>
@@ -365,7 +365,7 @@ width: 100%;
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <!--METRIC TABLE-->  
-                                        <% for (var mes of data) { %> 
+                                       
         
                                             <table id="datatable-fixed-header" class="table table-bordered">
                                                 <thead>
@@ -377,26 +377,20 @@ width: 100%;
                                                 </thead>
                                                 <tbody>
         
-        
+                                                    <% for (var mes of data) { %> 
                                                     <tr> 
                                                         
-                                                        <td width="30%"> <%= mes.metric_Name %> </td>
+                                                        <td width="30%" scope="row"> <%= mes.metric_Name %> </td>
                                                         <td width="30%"><%= mes.metric_Desc %> </td>
                                                         <td width="30%"><form method="get" action="QualityMetrics">
                                                                 <button type="submit" class="btn btn-primary">View Details</button>
                                                             </form></td> 
         
                                                     </tr>
-        
+                                                    <% } %>
         
                                                 </tbody>
                                             </table> 
-        
-                                           
-        
-                                        <% } %>
-                                            
-        
                                         </div> 
                                     </div>
                                 </div> 
@@ -412,8 +406,7 @@ width: 100%;
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <!--MEASRUEMENTS-->  
-                                        <% for (var meas of dataB) { %> 
-                                            <% for (var targets of dataG) { %>
+                                        
                                             
                                                 <table id="datatable" class="table table-bordered">
                                                 <thead>
@@ -425,7 +418,8 @@ width: 100%;
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-        
+                                                    <% for (var meas of dataB) { %> 
+                                                        <% for (var targets of dataG) { %>
         
                                                     <tr>
                                                         <td width="30%"> <%= meas.measurement_Name %> </td>
@@ -451,18 +445,12 @@ width: 100%;
                                                                     </form>
                                                         </td>
                                                     </tr>
-        
+                                                    <% } %>  
+                                                    <% } %>     
         
                                                 </tbody>
                                             </table>
-        
-                                           
-                                        
-                                            
-                                        <% } %>  
-                                    <% } %>      
-                                            
-        
+
                                         </div>
                                     </div>
                                 </div> 
