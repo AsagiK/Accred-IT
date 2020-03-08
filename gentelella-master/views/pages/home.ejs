@@ -87,7 +87,7 @@ width: 100%;
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <!--METRIC TABLE-->  
-                                <% for (var mes of data) { %> 
+                                
                                     <table id="datatable-fixed-header" class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -97,18 +97,19 @@ width: 100%;
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% for (var mes of data) { %> 
                                             <tr>                                             
-                                                <th width="30%" scope="row"> <%= mes.metric_Name %> </th>
-                                                
+                                                <td width="30%" scope="row"> <%= mes.metric_Name %> </td>
                                                 <td width="30%"><%= mes.metric_Desc %> </td>
                                                 <td width="30%"><form method="get" action="QualityMetrics">
                                                         <button type="submit" class="btn btn-primary">View Details</button>
                                                     </form></td> 
                                             </tr>
+                                            <% } %>
                                         </tbody>
                                     </table> 
 
-                                <% } %>
+                               
                                     
 
                                 </div> 
