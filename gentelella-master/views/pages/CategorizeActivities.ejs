@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>View User Page</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    
+</head>
+
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body">
+        <div class="main_container" style="background-color: #232931;">
+            <% include ./nav %>
+            <!-- page content -->
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+
+                                <h3 style="color: #dddddd; font-size:xx-large;">Term Report</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
+                                <div class="x_content">
+                                    <br />
+                                    <% for (var cycles of data) { %>
+                                    <!--view table for users-->
+                                    <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Measurement Name</th>
+                                                <th>Measurement Description</th>
+                                                <th>Priority Level</th>
+                                                <th>Quality Target</th>
+                                                <% if (cycles.status == 4 || cycles.status == 3) { %>
+                                                    <th>Progress</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                <% } else { %>
+                                                <th># of Activities</th>
+                                                <th></th>                                                
+                                                <% } %>
+                                            </tr>
+                                        </thead>                                                                       
+                                        <tbody> 
+                                            
+                                            <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
+                                                <% for (var measure_audit of dataB) { %>
+                                                    <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                        <tr>
+                                                        <td><%= measure_audit.measurement_ID %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Name %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Description %>
+                                                        </td>
+                                                        
+                                                                <%if(measure_audit.priority_Level==1){%>
+                                                                    <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
+                                                                <%}else if(measure_audit.priority_Level==2){%>
+                                                                    <td style="color: yellow; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                <%}else if(measure_audit.priority_Level==3){%>
+                                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
+                                                                <%}%>
+                                                        
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %>
+                                                            <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                            <%= targets_audit.target %>
+                                                            <% if (targets_audit.target_Type == 0) { %> 
+                                                                %
+                                                            <% } %> - <%= targets_audit.target_Desc %><br>
+                                                            <% } %>
+
+                                                            <% } %>
+                                                        </td>
+                                                        
+                                                                <% for (var targets_audit of dataC) { %>
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+
+                                                                        <% if (targets_audit.progress >= 75) { %>
+                                                                            <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 60) { %> 
+                                                                            <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 30) { %>
+                                                                            <td style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 0) { %>
+                                                                            <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } %> %>
+                                                                    <% } %>
+
+                                                                <% } %>
+                                                         
+                                                        <td>
+                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                        <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                            <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                        </form> 
+
+                                                        <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                            <input type="hidden" name="CID" value="<%= cycles.cycle %>">
+                                                            <button type="submit" class="btn btn-primary" form="categorizeactivities"> Categorize Activities</button>
+                                                        </form>
+                                                        </td>
+                                                            <td></td>
+                                                    </tr>
+                                                    <% } %>
+                                                <% } %> 
+                                                <!--ANNUAL REPORT-->
+                                            <% } %> 
+                                        
+                                    </table> 
+                                    <% } %>
+                                    <div class="ln_solid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /page content -->
+
+                    <!-- footer content -->
+                    <footer style="border-radius: 8px; background-color: #232931;">
+                        <div class="pull-right">
+                            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+                </div>
+            </div>
+
+            
+
+            <!-- jQuery -->
+            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            <!-- Bootstrap -->
+            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- FastClick -->
+            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+            <!-- NProgress -->
+            <script src="assets/vendors/nprogress/nprogress.js"></script>
+            <!-- bootstrap-progressbar -->
+            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+            <!-- iCheck -->
+            <script src="assets/vendors/iCheck/icheck.min.js"></script>
+            <!-- bootstrap-daterangepicker -->
+            <script src="assets/vendors/moment/min/moment.min.js"></script>
+            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- bootstrap-wysiwyg -->
+            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+            <!-- jQuery Tags Input -->
+            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+            <!-- Switchery -->
+            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+            <!-- Select2 -->
+            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+            <!-- Parsley -->
+            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+            <!-- Autosize -->
+            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+            <!-- jQuery autocomplete -->
+            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+            <!-- starrr -->
+            <script src="assets/vendors/starrr/dist/starrr.js"></script>
+            <!-- Custom Theme Scripts -->
+            <script src="assets/build/js/custom.min.js"></script>
+            <!-- Datatables -->
+            <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+            <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+            <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+            <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+</body>
+
+</html>

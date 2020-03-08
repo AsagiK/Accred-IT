@@ -1749,6 +1749,31 @@ module.exports = {
             });
             console.log("View Your Documents Page");
         }
+    }, 
+
+    CategorizeActivities: function (req, resp) { 
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var CID = req.query.CID;
+            var sql = "SELECT * FROM capstone.cycle WHERE cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit;";
+            var values = [CID]
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                if (results) {
+                    resp.render('./pages/CategorizeActivities.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    });
+                    console.log(CID);
+                }
+            });
+        }
+       
     },
 
 }
