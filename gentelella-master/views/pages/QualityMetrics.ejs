@@ -145,26 +145,27 @@
        background-color: #F1F5F8;
    }
 
+
 </style>
 
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
 <!-- page content -->
-<div class="right_col" role="main">
+<div class="right_col" role="main" style="background-color: #232931;">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Quality Management</h3>
+                <h3 style="color: #dddddd;">Quality Management</h3>
             </div>
         </div>
     </div>
-    <div class="clearfix"></div>
+    
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
+            <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                 <div class="x_content">
 
                     <!--MODAL FOR CYCLE CREATION-->
@@ -331,11 +332,8 @@
                     </div>
                     <!----------------------------------END OF CREATE MEASUREMENT MODAL------------------------------------------------------>
 
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <br />
-                                <div class="col-md-12 col-sm-6 col-xs-12">
+                    
+                                <div class="col-md-12 col-sm-6 col-xs-12" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
 
                                     <div class="x_content">
                                         <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
@@ -347,8 +345,8 @@
                                             <!-- start accordion -->
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                 <!-- FIRST PANEL FOR GOALS -->
-                                                <div class="panel">
-                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
+                                                <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px; color: black">
+                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>" >
                                                         <h4 class="panel-title"> <span class="fa fa-chevron-down"></span> <%= goals.metric_ID %> - <%= goals.metric_Name %>
                                                         </h4>
                                                     </li>
@@ -394,7 +392,7 @@
                                                             <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
                                                             
                                                             <ul>
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span>
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span>
                                                                     
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
@@ -421,7 +419,7 @@
                                                                     
                                                                     </li>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                                    <div class="panel-body">
+                                                                    <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
                                                                         <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
@@ -558,7 +556,7 @@
                                                                                                 <button type="submit" class="btn btn-primary" form="categorizeactivities"> Categorize Activities</button>
                                                                                             </form>
                                                                                             </td>
-                                                                                                <td></td>
+                                                                                                <td style="display: none;"></td>
                                                                                         </tr>
                                                                                         <% } %>
                                                                                     <% } %> 
@@ -727,15 +725,24 @@
                                     </div>
 
                                 </div>
-
-                            </div>
+                                </div>
+                                </div>
                         </div>
-
-                    </div>
                 </div>
 
 
                 <!-- /page content -->
+
+                <!-- footer content -->
+                <footer style="background-color: #232931;">
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by
+                        <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    
+                </footer>
+                <!-- /footer content -->
+
 
 
 
@@ -824,16 +831,7 @@
 
 
 
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by
-                        <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
-
+                
 
 
                 <form method="get" action="/QualityMetrics">
@@ -1213,7 +1211,9 @@
                     <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+                    
 
                     </body>
+                    
 
 </html>

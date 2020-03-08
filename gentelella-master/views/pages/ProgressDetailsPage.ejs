@@ -100,7 +100,7 @@
                                                     <% for( var targs of dataB) { %>
         
                                     
-                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>"><%= targs.target %> - <%= targs.target_Desc %></option>
+                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>-<%= targs.target_Desc %>"><%= targs.target %> - <%= targs.target_Desc %></option>
                                                         
                                                         <% } %>
                                                       </select> 
@@ -116,6 +116,7 @@
                                                     <thead>
                                                         <th>TargetID</th>
                                                         <th>Target</th>
+                                                        <th>Target Description</th>
                                                         <th>Progress</th>
                                                         <th></th>
                                                         
@@ -170,13 +171,16 @@
                     var ttar = tar.options[tar.selectedIndex].value;
 
                     var tarID = ttar.substr(0, ttar.indexOf('~'));
-                    var tarName = ttar.substr(ttar.lastIndexOf('~') + 1);
+                    var tarName = ttar.substr(ttar.lastIndexOf('~') + 1 ,ttar.indexOf('-')-2);
+                    var tarDesc = ttar.substr(ttar.lastIndexOf('-') + 1);
                     console.log(tarID);
                     console.log(tarName);
                     //console.log(activityName);
-                    var markup = "<tr><td '>" + tarID + "</td><td>" + tarName + "</td><td>" + prog +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    var markup = "<tr><td id='id'>" + tarID + "</td><td>" + tarName + "</td><td>" + tarDesc + "</td><td>" + prog +
+                        "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableTarProg")
+                    $("#target option:selected").remove();
+                    document.getElementById("progress").value = "";
                     $(table).append(markup);
                     }
                 });
@@ -239,8 +243,21 @@
             function deleteRow(r) {
                     //console.log("testing delete click");
                 r.closest("tr").remove();
+                
                 var table = document.getElementById("tableTarProg");
-                var val = r.closest("tr").cells[2].innerHTML;
+                var valID = r.closest("tr").cells[0].innerHTML;
+                var valName = r.closest("tr").cells[1].innerHTML;
+                var valDesc = r.closest("tr").cells[2].innerHTML;
+
+                
+                console.log(valID);
+                console.log(valName);
+                console.log(valDesc);
+                var dropdown = document.getElementById("target");
+                var option = document.createElement("option");
+                option.innerHTML = valName + " - " + valDesc;
+                option.value = valID + "~" + valName + "-" + valDesc; 
+                dropdown.options.add(option);
                 //console.log("cell weight: " + val);
 
                 //total = +total - +val;
