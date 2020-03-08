@@ -36,16 +36,16 @@
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>View Submissions Details</h3>
+                            <h3 style="color: #dddddd;">View Submissions Details</h3>
                          
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                             <div class="x_content">
                                
                                 
@@ -94,9 +94,9 @@
                                         <tr>
                                             <td><input type=hidden id="PID" name="PID" value="<%= data[0].pending_ID %>"></td>
                                             <td>
-                                                    <button type="submit" name="subtype" value="1">Approve
+                                                    <button class="btn btn-primary btn-sm" type="submit" name="subtype" value="1">Approve
                                                             Evidence</button>
-                                                        <button type="submit" name="subtype" value="2">Disapprove
+                                                        <button class="btn btn-danger btn-sm" type="submit" name="subtype" value="2">Disapprove
                                                             Evidence</button>
                                             </td>
                                         </tr>
@@ -115,7 +115,7 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="border-radius: 8px; background-color: #232931;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
