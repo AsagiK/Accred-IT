@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>System Maintenance page</title>
+    <title>View user account page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +63,7 @@ table, th, td {
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3 style="color: #dddddd;">System Maintenance</h3>
+                            <h3 style="color: #dddddd;">View Submissions</h3>
 
                         </div>
                     </div>
@@ -74,18 +74,58 @@ table, th, td {
                         <div class="x_panel" style="background-color: #eeeeee; border-color: #eeeeee;  border-radius: 8px;">
                             <div class="x_content">
                                 <br />
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".MaintenanceModal">Set Maintenance Duration</button>
 
-                                <!--view table for all submissions-->
-                                <table id="datatable-fixed-header" class="table table-bordered" style="background-color: whitesmoke; height: 100%; width: 100%;">
+                                <!--MODAL FOR MAINTENANCE -->
+                                <div class="modal fade MaintenanceModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel2">
+                                                    Set Maintenance Duration
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date:  <span class="required">*</span>
+                                                        </label>
+                                                        <input type="datetime-local" id="UpDate" name="UpDate">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary" onclick="test1()" form="startMaintenance">
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--END OF MAINTANANCE MODAL-->
+
+                                <table id="" class="display" style="background-color: whitesmoke; height: 100%; width: 100%;">
                                     <thead>
-                                        <th>Submission Description</th>
-                                        <th>Expected outputs chosen</th>
                                         <th>Status</th>
-                                        <th>View Details Button</th>
+                                        <th>Up time Date</th>
                                     </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td>Server (Status)</td>
+                                            <td>Uptime Date</td>
+                                        </tr>
+                                        
+                                    </tbody>
                                     
-                                
-                                </table>
+                                    
+                                    </table>
 
                                 
                                 
@@ -102,7 +142,7 @@ table, th, td {
                         <div class="page-title">
                             <div class="title_left">
 
-                                <h3 style="color: #dddddd;">Approved Submissions</h3>
+                                <h3 style="color: #dddddd;">Set Roles Access Status</h3>
 
                             </div>
                         </div>
@@ -114,14 +154,97 @@ table, th, td {
                                 <div class="x_content">
                                     <br />
 
-                                    <!--view table for Approved submissions-->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".RoleAccess">Set Role Access</button>
 
-                                    <table id="" class="display" style="background-color: whitesmoke; height: 100%; width: 100%;">
+                                    <!--MODAL FOR MAINTENANCE -->
+                                    <div class="modal fade RoleAccess" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel2">
+                                                        Set Role Access
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Role  <span class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select class="form-control" name="role" id="role">
+                                                                    
+                                                                        <option value="2~QA Officer">QA Officer</option>
+                                                                        <option value="3~Department Chair">Department Chair</option>
+                                                                        <option value="4~User">User</option>
+                                                                    
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Status  <span class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select class="form-control" name="status" id="status">
+                                                                    
+                                                                    
+                                                                    <option value="1~Enable">Enable</option>
+                                                                    <option value="0~Disable">Disable</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <button type="button" class="btn btn-default add-row-Role">Add</button>
+                                                        <br>
+                                                        <div class="form-group">
+                                                            <table class="table table-bordered" id="tableRole">
+                                                                <thead>
+                                                                    <th>Role ID</th>
+                                                                    <th>Role</th>
+                                                                    <th>Status</th>
+                                                                    <th>Status ID</th>
+                                                                    <th></th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary" onclick="test1()" form="startMaintenance">
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--END OF MAINTANANCE MODAL-->
+
+                                    <!--View For Roles-->
+
+                                    <table id="RoleTable" class="display" style="background-color: whitesmoke; height: 100%; width: 100%;">
                                         <thead>
-                                            <th>Submission Name</th>
-                                            <th>Expected outputs chosen</th>
-                                            <th>View Details Button</th>
+                                            <th>Roles</th>
+                                            <th>Status</th>
                                         </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>(Roles)</td>
+                                                <td>(Status)</td>
+                                            </tr>
+                                        </tbody>
                                         
                                         
                                         </table>
@@ -193,9 +316,53 @@ table, th, td {
                                 $('.display').DataTable({
                                     rowReorder: true
                                 } );
+
+
+                                $(".add-row-Role").click(function test() {
+                    
+                    //alert("testing adding activities");
+                   
+                    var role = document.getElementById("role");
+                    var rrole = role.options[role.selectedIndex].value;
+                    var status = document.getElementById("status");
+                    var sstatus = status.options[status.selectedIndex].value;
+
+                    var roleID = rrole.substr(0, rrole.indexOf('~'));
+                    var roleName = rrole.substr(rrole.lastIndexOf('~') + 1);
+                    var statusID = sstatus.substr(0, sstatus.indexOf('~'));
+                    var statusName = sstatus.substr(sstatus.lastIndexOf('~') + 1);
+                    
+                    //console.log(activityName);
+                    var markup = "<tr><td>" + roleID + "</td><td>" + roleName + "</td><td>" + statusName + "</td><td>" + statusID +
+                        "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    var table = document.getElementById("tableRole")
+                    $("#role option:selected").remove();
+                    
+                    $(table).append(markup);
+                    
+                });
+
+
                             } );
 
-                            
+                function deleteRow(r) {
+                    //console.log("testing delete click");
+                r.closest("tr").remove();
+                
+                var table = document.getElementById("tableRole");
+                var roleID = r.closest("tr").cells[0].innerHTML;
+                var roleName = r.closest("tr").cells[1].innerHTML;
+            
+                var dropdown = document.getElementById("role");
+                var option = document.createElement("option");
+                option.innerHTML = roleName;
+                option.value = roleID + "~" + roleName; 
+                dropdown.options.add(option);
+                //console.log("cell weight: " + val);
+
+                //total = +total - +val;
+                //console.log("Minused total: " + total);
+            }
 
             </script>
 
