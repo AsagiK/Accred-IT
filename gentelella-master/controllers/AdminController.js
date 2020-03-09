@@ -14,8 +14,11 @@ try {
 } catch (e) {
 
 }
+
+
 const disk = require('check-disk-space')
 const mysqldump = require('mysqldump')
+const dbconfig = JSON.parse(fs.readFileSync('./config/dbconfig.json', 'utf8'));
 
 
 // ---- URL PARSER
@@ -43,6 +46,26 @@ var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
 
+mysqldump({
+    connection: {
+        host: dbconfig.host,
+        user: dbconfig.user,
+        password: dbconfig.password,
+        database: dbconfig.schema,
+    },
+    dump: {
+        schema: {
+            table: {
+                dropIfExist: true
+            }
+        },
+        data:{
+            maxRowsPerInsertStatement: 1000,
+        }
+    },
+    dumpToFile: './public/SQLDump/AccredITdump.sql',
+});
+
 
 module.exports = {
 
@@ -52,18 +75,18 @@ module.exports = {
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else { 
+        } else {
             var sql = "SELECT * FROM capstone.roles; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
             connection.query(sql, function (err, results, fields) {
-                if (err) throw err; 
-                    resp.render('./pages/MaintenancePage.ejs' , {
-                        data: results[0],
-                        current_user:sess.user
-                    }); 
-                    
-                    console.log ("SYSTEM MAINTENANCE PAGE");
-                    
-            
+                if (err) throw err;
+                resp.render('./pages/MaintenancePage.ejs', {
+                    data: results[0],
+                    current_user: sess.user
+                });
+
+                console.log("SYSTEM MAINTENANCE PAGE");
+
+
 
             });
         }
