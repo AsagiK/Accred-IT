@@ -4,8 +4,10 @@ var JSONCtrl = require('./controllers/JSONController');
 var DocCtrl = require('./controllers/DocumentController');
 var SessCtrl = require('./controllers/SessionController');
 var CheckCtrl = require('./controllers/CheckingController');
-var NotifCtrl = require('./controllers/NotifController')
+var NotifCtrl = require('./controllers/NotifController');
+var AdminCtrl = require('./controllers/AdminController')
 var router = express.Router();
+
 //--PlanCtrl--
 //USERS ROUTES
 router.route('/Viewusers').get(planCtrl.Viewusers);
@@ -151,5 +153,6 @@ router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 
+router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
 
 module.exports = router;

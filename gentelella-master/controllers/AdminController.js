@@ -14,8 +14,7 @@ try {
 } catch (e) {
 
 }
-const disk = require('diskusage');
-const os = require('os');
+const disk = require('check-disk-space')
 const mysqldump = require('mysqldump')
 
 
@@ -47,5 +46,26 @@ var sess
 
 module.exports = {
 
+    SystemMaintenance: function (req, resp) {
+
+        sess = req.session;
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else { 
+            var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
+            connection.query(sql, function (err, results, fields) {
+                if (err) throw err; 
+                    resp.render('./pages/MaintenancePage.ejs' , {
+                        current_user:sess.user
+                    }); 
+                    
+                    console.log ("SYSTEM MAINTENANCE PAGE");
+                    
+            
+
+            });
+        }
+    },
 
 }
