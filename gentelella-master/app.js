@@ -65,7 +65,7 @@ server.get('/debug1', function (req, resp) {
 });
 
 server.get('/debug2', function (req, resp) {
-    resp.render('./pages/NotAuthorizedPage.ejs');
+    resp.render('./pages/MaintenancePage.ejs');
     console.log("Testing testing");
 });
 
