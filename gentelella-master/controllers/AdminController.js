@@ -46,26 +46,27 @@ var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
 
-mysqldump({
-    connection: {
-        host: dbconfig.host,
-        user: dbconfig.user,
-        password: dbconfig.password,
-        database: dbconfig.schema,
-    },
-    dump: {
-        schema: {
-            table: {
-                dropIfExist: true
+async function getBackup() {
+    const result = await mysqldump({
+        connection: {
+            host: dbconfig.host,
+            user: dbconfig.user,
+            password: dbconfig.password,
+            database: dbconfig.schema,
+        },
+        dump: {
+            schema: {
+                table: {
+                    dropIfExist: true
+                }
+            },
+            data: {
+                maxRowsPerInsertStatement: 1000,
             }
         },
-        data:{
-            maxRowsPerInsertStatement: 1000,
-        }
-    },
-    dumpToFile: './public/SQLDump/AccredITdump.sql',
-});
-
+        dumpToFile: './public/SQLDump/AccredITdump.sql',
+    });
+}
 
 module.exports = {
 
@@ -90,6 +91,35 @@ module.exports = {
 
             });
         }
+    },
+
+    GenerateBackup: function (req, resp) {
+        async function getBackup() {
+            const result = await mysqldump({
+                connection: {
+                    host: dbconfig.host,
+                    user: dbconfig.user,
+                    password: dbconfig.password,
+                    database: dbconfig.schema,
+                },
+                dump: {
+                    schema: {
+                        table: {
+                            dropIfExist: true
+                        }
+                    },
+                    data: {
+                        maxRowsPerInsertStatement: 1000,
+                    }
+                },
+                dumpToFile: './public/SQLDump/AccredITdump.sql',
+            });
+        }
+
+        getBackup().then((result) => {
+            console.log("Backup Generated") // 5
+        })
+
     },
 
 }
