@@ -34,8 +34,8 @@ module.exports = {
         const Sysadmin = notif.sysadmin;
         const Triggerdate = notif.triggerdate;
 
-        if (notif.isactivity.length > 0) {
-            if (Triggerdate.length > 0) {
+        if (notif.isactivity) {
+                console.log("ACTIVITY NOTIF");
                 var sql = "INSERT INTO `capstone`.`notifications` (`message`, `sender`, `receiver`, `group_id`, `range`, `admin`, `sysadmin`, `triggerdate`, `isactivity`) VALUES (?,?,?,?,?,?,?,?,?);"
                 var values = [Message, Sender, Receiver, Group, Range, Admin, Sysadmin, Triggerdate, notif.isactivity]
                 connection.query(sql, values, function (err, result) {
@@ -51,24 +51,6 @@ module.exports = {
                     }
                 });
                 console.log(notif)
-            } else {
-                var sql = "INSERT INTO `capstone`.`notifications` (`message`, `sender`, `receiver`, `group_id`, `range`, `admin`, `sysadmin`, `isactivity`) VALUES (?,?,?,?,?,?,?, ?);"
-                var values = [Message, Sender, Receiver, Group, Range, Admin, Sysadmin, notif.isactivity]
-                connection.query(sql, values, function (err, result) {
-                    if (err) console.log(err);
-                    if (result && Range != 5) {
-                        checkrange(Sender, Range, result.insertId, 1);
-                        admin(Admin, result.insertId);
-                        sysadmin(Sysadmin, result.insertId);
-                        console.log("notif added")
-                    } else {
-                        checkrange(Sender, Range, result.insertId, 1);
-                        console.log("notif added")
-                    }
-                });
-                console.log(notif)
-            }
-
         } else {
             if (Triggerdate.length > 0) {
                 var sql = "INSERT INTO `capstone`.`notifications` (`message`, `sender`, `receiver`, `group_id`, `range`, `admin`, `sysadmin`, `triggerdate`) VALUES (?,?,?,?,?,?,?,?);"
