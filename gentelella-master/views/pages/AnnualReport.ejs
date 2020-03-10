@@ -30,18 +30,25 @@
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    <link href="assets/build/css/custom.min.css" rel="stylesheet"> 
+
+     <!-- DataTable--> 
+     <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+     <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+     <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+     <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+     <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet"> 
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container"  style="background-color: #232931;">
             <% include ./nav %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
-                        <div class="title_left">
+                        <div class="title_left" style="color: #dddddd;"> 
 
                             <h3>Annual Report</h3>
 
@@ -56,7 +63,7 @@
                                 <br />
 
                                 <!--view table for users-->
-                                <table class="table table-bordered">
+                                <table  id= "datatable-buttons" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -66,18 +73,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                       
-                                            <% for (var report of data) { %> 
-                                             
+                                            <% for (var report of data) { %>                                              
                                             <tr>
-                                                <td><%= report.measurementID %></td>
-                                                <td><%= report.measurement_Name %></td>
-                                                <td>
+                                                <td width="30%" scope="row"><%= report.measurementID %></td>
+                                                <td width="30%"><%= report.measurement_Name %></td>
+                                                <td width="30%">
                                                     <%=report.target %> <%= report.target_Desc %>
 
                                                 </td>
-                                                <td><%= report.progress %></td>
+                                                <td width="30%"><%= report.progress %></td>
                                                 
                                             </tr> 
                     
@@ -129,6 +133,23 @@
             <script src="assets/vendors/starrr/dist/starrr.js"></script>
             <!-- Custom Theme Scripts -->
             <script src="assets/build/js/custom.min.js"></script>
+
+            <!-- Datatables -->
+            <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+            <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+            <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+            <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 
