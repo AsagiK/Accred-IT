@@ -46,13 +46,21 @@ server.get('/', function (req, resp) {
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
-        resp.redirect('/login');
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                resp.redirect('/login');
+            } else {
+                resp.redirect('/Maintenance')
+            }
+        })
+
     } else {
         var sql = "SELECT * FROM capstone.sysvalues;"
-        connection.query(sql, function(err, result){
-            if(result[0].inmaintenance == 0){
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
                 resp.redirect('/home')
-            }else{
+            } else {
                 resp.redirect('/Maintenance')
             }
         })
