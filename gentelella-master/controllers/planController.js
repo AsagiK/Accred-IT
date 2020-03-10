@@ -11,7 +11,8 @@ var connection = require('../config/db');
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');
-var Notif = require('../controllers/NotifController')
+var Notif = require('../controllers/NotifController');
+var Ses = require('../controllers/SessionController');
 // ---- DEFINE SESSION
 server.use(session({
     secret: 'ssshhhhh',
@@ -23,11 +24,20 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 // ----
 var sess;
+
 module.exports = {
 
     Viewusers: function (req, resp) {
-
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -47,6 +57,15 @@ module.exports = {
 
     Createusers: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -69,6 +88,15 @@ module.exports = {
 
     ViewGroups: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -111,6 +139,15 @@ module.exports = {
 
     CreateGroup: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -153,6 +190,15 @@ module.exports = {
 
     adduser: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         console.log(req.body);
         var fn = (req.body.firstname);
         var ln = (req.body.lastname);
@@ -173,7 +219,7 @@ module.exports = {
                 var today = new Date();
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
-                    "body": "User " + fn + " " + ln + " has been created" , //message body, cannot be null
+                    "body": "User " + fn + " " + ln + " has been created", //message body, cannot be null
                     "sender": sess.user[0].User_ID, //ID of sender taken from req session
                     "receiver": result.insertId, //ID of receiver, in this case the user that was created
                     "group": sess.user[0].Group, //Group ID taken from req session
@@ -183,7 +229,7 @@ module.exports = {
                     "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
                 }
                 Notif.CreateNotif(notifobject);
-                
+
                 console.log("Record Inserted");
             });
             resp.redirect('/Createusers');
@@ -192,6 +238,15 @@ module.exports = {
 
     edituser: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -237,6 +292,15 @@ module.exports = {
 
     TestPage: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -277,6 +341,15 @@ module.exports = {
 
     Measurement: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -317,6 +390,15 @@ module.exports = {
 
     QualityMetric: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -422,6 +504,15 @@ module.exports = {
 
     Viewcycle: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -525,6 +616,15 @@ module.exports = {
 
     editmetric: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -571,6 +671,15 @@ module.exports = {
 
     assignplantomembers: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -618,6 +727,15 @@ module.exports = {
 
     assignmembertogroup: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -640,6 +758,15 @@ module.exports = {
 
     editmembertogroup: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -663,6 +790,15 @@ module.exports = {
     ViewMeasurementDetails: function (req, resp) {
 
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -717,6 +853,15 @@ module.exports = {
 
     AssignRecommendationToGroup: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -780,6 +925,15 @@ module.exports = {
 
     CreateSources: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -825,6 +979,15 @@ module.exports = {
 
     ViewSources: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -859,6 +1022,15 @@ module.exports = {
 
     ViewMetricofSource: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -919,6 +1091,15 @@ module.exports = {
 
     EditSource: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -957,6 +1138,15 @@ module.exports = {
 
     CreateGrades: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1068,6 +1258,15 @@ module.exports = {
 
     UploadDocument: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login');
@@ -1081,6 +1280,15 @@ module.exports = {
 
     ViewDocument: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login');
@@ -1102,6 +1310,15 @@ module.exports = {
 
     ActivityDetails: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1129,6 +1346,15 @@ module.exports = {
 
     ActivityPendingDetails: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1152,6 +1378,15 @@ module.exports = {
 
     EditUserAccount: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1198,6 +1433,15 @@ module.exports = {
 
     ActionPlan: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1221,6 +1465,24 @@ module.exports = {
 
     Dashboards: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1254,6 +1516,15 @@ module.exports = {
 
     Assignactivitytomember: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1285,6 +1556,15 @@ module.exports = {
 
     ViewUsersSubmission: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1308,6 +1588,15 @@ module.exports = {
 
     ViewUsersSubmissionDetails: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1334,6 +1623,15 @@ module.exports = {
 
     EditMeasurement: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1362,6 +1660,15 @@ module.exports = {
 
     UpdateMeasurement: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1386,6 +1693,15 @@ module.exports = {
 
     AuditMeasurement: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1589,6 +1905,15 @@ module.exports = {
 
     ViewActivitiesUnderMeasurement: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1622,8 +1947,16 @@ module.exports = {
     },
 
     AnnualReport: function (req, resp) {
-
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -1653,24 +1986,33 @@ module.exports = {
     ViewUserAccount: function (req, resp) {
 
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else { 
+        } else {
             var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
             connection.query(sql, function (err, results, fields) {
-                if (err) throw err; 
-                    resp.render('./pages/ViewUserAccount.ejs' , {
-                        data: results[0],
-                        dataB: results[1],
-                        dataC: results[2],
-                        dataD: results[3],
-                        current_user:sess.user
-                    }); 
-                    
-                    console.log ("VIEW USER ACCOUNT PAGE");
-                    
-            
+                if (err) throw err;
+                resp.render('./pages/ViewUserAccount.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    current_user: sess.user
+                });
+
+                console.log("VIEW USER ACCOUNT PAGE");
+
+
 
             });
         }
@@ -1679,25 +2021,34 @@ module.exports = {
     ViewSubmissionDetails: function (req, resp) {
 
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else { 
+        } else {
             var SID = req.query.subID;
             console.log(SID);
             var sql = "SELECT * FROM capstone.pending_activities WHERE pending_activities.pending_ID = ?; SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences WHERE pendingID = (?);";
             var values = [SID, SID]
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                
-                    console.log(results);
-                    resp.render('./pages/ViewUserSubmissionAccountDetails.ejs' , {
-                        data: results[0],
-                        dataB: results[1],
-                        dataC: results[2],
-                        current_user:sess.user
-                    });
-                
+
+                console.log(results);
+                resp.render('./pages/ViewUserSubmissionAccountDetails.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+
                 console.log("KEK")
             });
         }
@@ -1705,6 +2056,15 @@ module.exports = {
 
     ViewFolder: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login');
@@ -1730,6 +2090,15 @@ module.exports = {
 
     ViewPersonalFolder: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login');
@@ -1749,14 +2118,23 @@ module.exports = {
             });
             console.log("View Your Documents Page");
         }
-    }, 
+    },
 
-    CategorizeActivities: function (req, resp) { 
+    CategorizeActivities: function (req, resp) {
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else { 
+        } else {
             var CID = req.query.CID;
             var sql = "SELECT * FROM capstone.cycle WHERE cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit;";
             var values = [CID]
@@ -1773,7 +2151,7 @@ module.exports = {
                 }
             });
         }
-       
+
     },
 
 }

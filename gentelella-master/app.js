@@ -77,10 +77,13 @@ server.get('/debug1', function (req, resp) {
     console.log("Testing testing");
 });
 
+
+/*
 server.get('/debug2', function (req, resp) {
     resp.render('./pages/SystemMaintenancePage.ejs');
     console.log("Testing testing");
 });
+*/
 
 server.get('/RegisterAdminPage', function (req, resp) {
     resp.render('./pages/RegisterAdminPage.ejs');
@@ -102,43 +105,54 @@ server.get('/RegisterAdminPage', function (req, resp) {
 
 server.get('/login', function (req, resp) {
     sess = req.session;
-    if (req.session.user) {
-        resp.redirect('/home');
+    if (!req.session.user) {
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                var status = req.query.status
+                switch (status) {
+                    case "0":
+                        passData = {
+                            goodStatus: 0,
+                            msg: "You are not logged in"
+                        }
+                        resp.render('./pages/login.ejs', {
+                            notif: passData
+                        });
+                        break;
+                    case "1":
+                        passData = {
+                            goodStatus: 1,
+                            msg: "Incorrect Username or Password"
+                        }
+                        resp.render('./pages/login.ejs', {
+                            notif: passData
+                        });
+                        break;
+                    default:
+                        resp.render('./pages/login.ejs');
+                }
+            } else {
+                resp.redirect('/Maintenance')
+            }
+        })
+
     } else {
-        var status = req.query.status
-        switch (status) {
-            case "0":
-                passData = {
-                    goodStatus: 0,
-                    msg: "You are not logged in"
-                }
-                resp.render('./pages/login.ejs', {
-                    notif: passData
-                });
-                break;
-            case "1":
-                passData = {
-                    goodStatus: 1,
-                    msg: "Incorrect Username or Password"
-                }
-                resp.render('./pages/login.ejs', {
-                    notif: passData
-                });
-                break;
-            default:
-                resp.render('./pages/login.ejs');
-        }
-
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                resp.redirect('/home')
+            } else {
+                resp.redirect('/Maintenance')
+            }
+        })
     }
-
-
 });
 
 server.use('/', routes);
 
 server.get('/*', function (req, resp) {
     resp.render('./pages/ErrorPage.ejs');
-    console.log("Testing testing");
 });
 
 const port = process.env.PORT | 9090;

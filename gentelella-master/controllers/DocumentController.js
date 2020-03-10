@@ -47,6 +47,15 @@ module.exports = {
 
     SendDocument: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -297,6 +306,15 @@ module.exports = {
 
     SubmitReport: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -404,6 +422,15 @@ module.exports = {
 
     FinalReport: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -427,6 +454,15 @@ module.exports = {
 
     SendDocuments: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');

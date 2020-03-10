@@ -23,6 +23,15 @@ module.exports = {
 
     CheckingPage: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -50,6 +59,15 @@ module.exports = {
 
     CheckDetails: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -79,6 +97,15 @@ module.exports = {
 
     PreChecking: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -102,6 +129,15 @@ module.exports = {
 
     PreCheckingDetails: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -132,6 +168,15 @@ module.exports = {
     PreCheckingDetailsInsert: function (req, resp) {
 
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -155,6 +200,15 @@ module.exports = {
 
     CheckingDetailsInsert: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -194,6 +248,15 @@ module.exports = {
 
     CheckingAccordionPage: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -223,6 +286,15 @@ module.exports = {
 
     ViewActivityEvidences: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -247,6 +319,15 @@ module.exports = {
 
     ProgressPage: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
@@ -272,6 +353,15 @@ module.exports = {
 
     ProgressDetailsPage: function (req, resp) {
         sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');

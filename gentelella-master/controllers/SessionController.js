@@ -141,7 +141,8 @@ module.exports = {
     },
 
     Maintenance: function (req, resp) {
-        resp.render('./pages/MaintenancePage.ejs')
-    }
+        resp.render('./pages/SystemMaintenancePage.ejs');
+    },
+
 
 }
