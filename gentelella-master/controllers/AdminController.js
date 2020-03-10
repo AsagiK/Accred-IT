@@ -46,27 +46,6 @@ var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
 
-async function getBackup() {
-    const result = await mysqldump({
-        connection: {
-            host: dbconfig.host,
-            user: dbconfig.user,
-            password: dbconfig.password,
-            database: dbconfig.schema,
-        },
-        dump: {
-            schema: {
-                table: {
-                    dropIfExist: true
-                }
-            },
-            data: {
-                maxRowsPerInsertStatement: 1000,
-            }
-        },
-        dumpToFile: './public/SQLDump/AccredITdump.sql',
-    });
-}
 
 module.exports = {
 

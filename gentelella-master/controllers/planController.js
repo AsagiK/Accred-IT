@@ -1240,8 +1240,8 @@ module.exports = {
                         current_user: sess.user
                     });
                     //console.log(results);
-                    console.log(results[3]);
-                    console.log(results[2]);
+                    //console.log(results[3]);
+                    //console.log(results[2]);
                     //console.log(results[6]);
 
                     console.log("Dashboards Loaded");

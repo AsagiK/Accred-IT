@@ -43,14 +43,19 @@ server.set('view engine', 'ejs');
 
 
 server.get('/', function (req, resp) {
-
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
         resp.redirect('/login');
     } else {
-
-        resp.redirect('/home')
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function(err, result){
+            if(result[0].inmaintenance == 0){
+                resp.redirect('/home')
+            }else{
+                resp.redirect('/Maintenance')
+            }
+        })
     }
 });
 
@@ -88,30 +93,37 @@ server.get('/RegisterAdminPage', function (req, resp) {
 });*/
 
 server.get('/login', function (req, resp) {
-    var status = req.query.status
-    switch (status) {
-        case "0":
-            passData = {
-                goodStatus: 0,
-                msg: "You are not logged in"
-            }
-            resp.render('./pages/login.ejs', {
-                notif: passData
-            });
-            break;
-        case "1":
-            passData = {
-                goodStatus: 1,
-                msg: "Incorrect Username or Password"
-            }
-            resp.render('./pages/login.ejs', {
-                notif: passData
-            });
-            break;
-        default:
-            resp.render('./pages/login.ejs');
+    sess = req.session;
+    if (req.session.user) {
+        resp.redirect('/home');
+    } else {
+        var status = req.query.status
+        switch (status) {
+            case "0":
+                passData = {
+                    goodStatus: 0,
+                    msg: "You are not logged in"
+                }
+                resp.render('./pages/login.ejs', {
+                    notif: passData
+                });
+                break;
+            case "1":
+                passData = {
+                    goodStatus: 1,
+                    msg: "Incorrect Username or Password"
+                }
+                resp.render('./pages/login.ejs', {
+                    notif: passData
+                });
+                break;
+            default:
+                resp.render('./pages/login.ejs');
+        }
+
     }
-    console.log("Testing testing");
+
+
 });
 
 server.use('/', routes);

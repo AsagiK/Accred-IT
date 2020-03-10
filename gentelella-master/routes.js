@@ -121,6 +121,7 @@ router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);
 router.route('/Logout').get(SessCtrl.Logout);
+router.route('/Maintenance').get(SessCtrl.Maintenance);
 
 
 //--CheckCtrl
@@ -154,5 +155,7 @@ router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 
 router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
+
+
 
 module.exports = router;
