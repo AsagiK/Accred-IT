@@ -55,7 +55,7 @@ module.exports = {
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else {
+        } else if(req.session.user[0].Role == 1){
             var sql = "SELECT * FROM capstone.roles; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
             connection.query(sql, function (err, results, fields) {
                 if (err) throw err;
@@ -69,6 +69,8 @@ module.exports = {
 
 
             });
+        }else{
+            resp.redirect('/home')
         }
     },
 
