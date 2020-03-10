@@ -230,7 +230,7 @@
                     <!------------------------------------------END OF CREATE CYCLE MODAL------------------------------------------------------------->
 
                     <!--CREATE MEASUREMENTS MODAL-->
-                    <div class="modal fade createMeasurement" id="my_modalCreateMeasures">
+                    <div class="modal fade-in createMeasurement" id="my_modalCreateMeasures">
                         <div class="modal-dialog modal-lg2">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -277,6 +277,20 @@
                                         <option value="2">Medium Priority</option>
                                          <option value="3">Low Priority</option>
                                     </select>
+                                    <br>
+                                     <!--Assign Cycle To End>
+                                    <label for="MeasurementDesc">Cycle to End:
+                                        <!--Edited>
+                                        <span class="required">*</span></label>
+
+                                    <select class="form-control" name="cycleID" id="cycleID" required="required">
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </select-->
                                     <br>
                                     <!--Quality Target Input field-->
 
@@ -345,6 +359,7 @@
                                         <% } %>
                                             <% for (var goals of data) { %>
 
+
                                             <!-- start accordion -->
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                 <!-- FIRST PANEL FOR GOALS -->
@@ -387,12 +402,17 @@
                                                             </table>
 
                                                             
+                                                            
+
+
 
                                                             <!-- SECOND PANEL FOR CYCLES-->
                                                             
                                                             <% for (var cycles of dataD) { %>
                                                             <% for (var measurementcount of dataK) { %> 
                                                             <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
+
+                                                                
                                                             
                                                             <ul>
                                                                 <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span>
@@ -433,7 +453,7 @@
                                                                         
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>">Create
                                                                             Measurement</button>
 
                                                                         <% } else if (cycles.status  == 1) { %>
@@ -474,12 +494,14 @@
                                                                         </form>
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>">Create
                                                                             Measurement</button>
                                                                         <% } %>
                                                                         <% } %>
 
 
+
+                                                                        
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
@@ -827,10 +849,13 @@
 
 
 
-                    $('#my_modalCreateMeasures').on('show.bs.modal.fade.createMeasurement', function(e) {
+                    $('#my_modalCreateMeasures').on('show.bs.modal.fade-in.createMeasurement', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
+                        var goalid = $(e.relatedTarget).data('book-id2');
+                        console.log(goalid);
                         console.log("Create Measurement Modal");
                         $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+                        
                     });
 
                     $('#my_modal').on('show.bs.modal.fade.createMeasurement', function(e) {
