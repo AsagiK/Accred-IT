@@ -92,9 +92,10 @@ table, th, td {
                                             <div class="modal-body">
                                                 <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date:  <span class="required">*</span>
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date & Time:  <span class="required">*</span>
                                                         </label>
-                                                        <input type="datetime-local" id="UpDate" name="UpDate">
+                                                        <input type="date" id="UpDate" name="UpDate">
+                                                        <input type="time" id="UpTime" name="UpTime">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">
