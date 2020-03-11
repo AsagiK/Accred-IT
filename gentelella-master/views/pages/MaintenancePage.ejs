@@ -91,12 +91,12 @@
                                                 </h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="ShutSystem" method="POST">
+                                                <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date & Time: <span class="required">*</span>
                                                         </label>
-                                                        <input type="date" id="UpDate" name="UpDate">
-                                                        <input type="time" id="UpTime" name="UpTime">
+                                                        <input type="date" id="UpDate" name="UpDate" required>
+                                                        <input type="time" id="UpTime" name="UpTime" required>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -147,7 +147,8 @@
 
                                 <h3 style="color: #dddddd;">Set Roles Access Status</h3>
                                 <td><button type="submit" class="btn btn-success" id="Backup">Button that generates backup</button></td>
-                                <td><a download href="public/SQLDump/AccredITdump.sql" type="submit" class="btn btn-success" id="GetBackup" disabled="disabled">Button that downloads file when backup is made</a></td>
+                                <td><a href="SQLDump/AccredITdump.sql" class="btn btn-success" id="GetBackup" disabled="disabled" download>Button that downloads file when backup is made</a></td>
+                                
 
                             </div>
                         </div>
@@ -387,7 +388,10 @@
                             }
                         }
                     };
+
+
                     xhr.send();
+
                 });
 
             </script>
