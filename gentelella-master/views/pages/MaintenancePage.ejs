@@ -42,15 +42,16 @@
 
     <!-- jQuery -->
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-    
+
 </head>
 
 <style>
+    table,
+    th,
+    td {
+        border: .25px solid #232950;
 
-table, th, td {
-  border: .25px solid #232950;
-
-}
+    }
 
 </style>
 
@@ -92,7 +93,7 @@ table, th, td {
                                             <div class="modal-body">
                                                 <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date & Time:  <span class="required">*</span>
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Uptime Date & Time: <span class="required">*</span>
                                                         </label>
                                                         <input type="date" id="UpDate" name="UpDate">
                                                         <input type="time" id="UpTime" name="UpTime">
@@ -123,14 +124,14 @@ table, th, td {
                                             <td>Server (Status)</td>
                                             <td>Uptime Date</td>
                                         </tr>
-                                        
-                                    </tbody>
-                                    
-                                    
-                                    </table>
 
-                                
-                                
+                                    </tbody>
+
+
+                                </table>
+
+
+
                                 <div class="ln_solid"></div>
                             </div>
                         </div>
@@ -138,13 +139,15 @@ table, th, td {
                 </div>
 
                 <!--APPROVED SUBMISSIONS-->
-                
+
                 <div role="main">
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
 
                                 <h3 style="color: #dddddd;">Set Roles Access Status</h3>
+                                <td><button type="submit" class="btn btn-success" id="Backup">Button that generates backup</button></td>
+                                <td><button type="submit" class="btn btn-success" id="GetBackup" disabled="disabled">Button that downloads file when backup is made</button></td>
 
                             </div>
                         </div>
@@ -173,29 +176,29 @@ table, th, td {
                                                 <div class="modal-body">
                                                     <form id="startMaintenance" data-parsley-validate class="form-horizontal form-label-left" action="addmetric" method="POST">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Role  <span class="required">*</span>
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Role <span class="required">*</span>
                                                             </label>
                                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                                 <select class="form-control" name="role" id="role">
-                                                                    
-                                                                        <option value="2~QA Officer">QA Officer</option>
-                                                                        <option value="3~Department Chair">Department Chair</option>
-                                                                        <option value="4~User">User</option>
-                                                                    
-                                                                    
+
+                                                                    <option value="2~QA Officer">QA Officer</option>
+                                                                    <option value="3~Department Chair">Department Chair</option>
+                                                                    <option value="4~User">User</option>
+
+
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Status  <span class="required">*</span>
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Status <span class="required">*</span>
                                                             </label>
                                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                                 <select class="form-control" name="status" id="status">
-                                                                    
-                                                                    
+
+
                                                                     <option value="1~Enable">Enable</option>
                                                                     <option value="0~Disable">Disable</option>
-                                                                    
+
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -213,7 +216,7 @@ table, th, td {
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        
+
                                                                     </tr>
                                                                 </tbody>
 
@@ -247,11 +250,11 @@ table, th, td {
                                                 <td>(Status)</td>
                                             </tr>
                                         </tbody>
-                                        
-                                        
-                                        </table>
 
-                                    
+
+                                    </table>
+
+
                                     <div class="ln_solid">
                                     </div>
                                 </div>
@@ -287,10 +290,10 @@ table, th, td {
                                             <th>Expected outputs chosen</th>
                                             <th>View Details Button</th>
                                         </thead>
-                                        
-                                        
-                                        </table>
-                                    
+
+
+                                    </table>
+
                                     <div class="ln_solid">
                                     </div>
                                 </div>
@@ -313,64 +316,88 @@ table, th, td {
             </div>
 
             <script>
-            
-            $(document).ready(function() {
-                                $('.display').DataTable({
-                                    rowReorder: true
-                                } );
+                $(document).ready(function() {
+                    $('.display').DataTable({
+                        rowReorder: true
+                    });
 
 
-                                $(".add-row-Role").click(function test() {
-                    
-                    //alert("testing adding activities");
-                   
-                    var role = document.getElementById("role");
-                    var rrole = role.options[role.selectedIndex].value;
-                    var status = document.getElementById("status");
-                    var sstatus = status.options[status.selectedIndex].value;
+                    $(".add-row-Role").click(function test() {
 
-                    var roleID = rrole.substr(0, rrole.indexOf('~'));
-                    var roleName = rrole.substr(rrole.lastIndexOf('~') + 1);
-                    var statusID = sstatus.substr(0, sstatus.indexOf('~'));
-                    var statusName = sstatus.substr(sstatus.lastIndexOf('~') + 1);
-                    
-                    //console.log(activityName);
-                    var markup = "<tr><td>" + roleID + "</td><td>" + roleName + "</td><td>" + statusName + "</td><td>" + statusID +
-                        "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
-                    var table = document.getElementById("tableRole")
-                    $("#role option:selected").remove();
-                    
-                    $(table).append(markup);
-                    
+                        //alert("testing adding activities");
+
+                        var role = document.getElementById("role");
+                        var rrole = role.options[role.selectedIndex].value;
+                        var status = document.getElementById("status");
+                        var sstatus = status.options[status.selectedIndex].value;
+
+                        var roleID = rrole.substr(0, rrole.indexOf('~'));
+                        var roleName = rrole.substr(rrole.lastIndexOf('~') + 1);
+                        var statusID = sstatus.substr(0, sstatus.indexOf('~'));
+                        var statusName = sstatus.substr(sstatus.lastIndexOf('~') + 1);
+
+                        //console.log(activityName);
+                        var markup = "<tr><td>" + roleID + "</td><td>" + roleName + "</td><td>" + statusName + "</td><td>" + statusID +
+                            "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                        var table = document.getElementById("tableRole")
+                        $("#role option:selected").remove();
+
+                        $(table).append(markup);
+
+                    });
+
+
                 });
-
-
-                            } );
 
                 function deleteRow(r) {
                     //console.log("testing delete click");
-                r.closest("tr").remove();
-                
-                var table = document.getElementById("tableRole");
-                var roleID = r.closest("tr").cells[0].innerHTML;
-                var roleName = r.closest("tr").cells[1].innerHTML;
-            
-                var dropdown = document.getElementById("role");
-                var option = document.createElement("option");
-                option.innerHTML = roleName;
-                option.value = roleID + "~" + roleName; 
-                dropdown.options.add(option);
-                //console.log("cell weight: " + val);
+                    r.closest("tr").remove();
 
-                //total = +total - +val;
-                //console.log("Minused total: " + total);
-            }
+                    var table = document.getElementById("tableRole");
+                    var roleID = r.closest("tr").cells[0].innerHTML;
+                    var roleName = r.closest("tr").cells[1].innerHTML;
+
+                    var dropdown = document.getElementById("role");
+                    var option = document.createElement("option");
+                    option.innerHTML = roleName;
+                    option.value = roleID + "~" + roleName;
+                    dropdown.options.add(option);
+                    //console.log("cell weight: " + val);
+
+                    //total = +total - +val;
+                    //console.log("Minused total: " + total);
+                }
+
+                $("#Backup").click(function() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/GenerateBackup', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function() {
+                        console.log(xhr.responseText);
+                    };
+
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            var respData = xhr.responseText;
+                            if (respData == "Not OK") {
+                                console.log("Not Good, Respdata =" + respData);
+                            } else {
+                                console.log("Good");
+                                document.getElementById('GetBackup').removeAttribute('disabled');
+                            }
+                        }
+                    };
+
+
+                    xhr.send();
+
+                });
 
             </script>
 
-            
 
-            
+
+
             <!-- Bootstrap -->
             <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
             <!-- FastClick -->

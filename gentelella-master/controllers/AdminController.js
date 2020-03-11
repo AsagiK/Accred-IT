@@ -20,6 +20,7 @@ const disk = require('check-disk-space')
 const mysqldump = require('mysqldump')
 const dbconfig = JSON.parse(fs.readFileSync('./config/dbconfig.json', 'utf8'));
 
+var schedule = require('node-schedule');
 
 // ---- URL PARSER
 var url = require('url');
@@ -98,9 +99,14 @@ module.exports = {
         }
 
         getBackup().then((result) => {
-            console.log("Backup Generated") // 5
+            console.log("Backup Generated")
+            resp.send("OK")// 5
         })
 
     },
+    
+    ShutSystem: function(req,resp){
+        
+    }
 
 }

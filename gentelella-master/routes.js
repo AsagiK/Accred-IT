@@ -132,6 +132,9 @@ router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
 router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
 router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
+//--AdminCtrl
+router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
+router.route('/GenerateBackup').post(AdminCtrl.GenerateBackup);
 
 //OTHERS
 router.route('/TestPage').get(planCtrl.TestPage);
@@ -154,7 +157,6 @@ router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 
-router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
 
 
 
