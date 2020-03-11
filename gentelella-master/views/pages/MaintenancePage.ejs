@@ -102,7 +102,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Uptime Date & Time</td>
-                                                                    <td><input type="date" id="UpDate" name="UpDate" required></td>
+                                                                    <td><input type="date" id="UpDate" name="UpDate" required onchange="checkStartDate(event)"></td>
                                                                     <td><input type="time" id="UpTime" name="UpTime" required></td>
                                                                 </tr>
                                                             </tbody>
@@ -404,6 +404,40 @@
                     xhr.send();
 
                 });
+
+                var n =  new Date();
+                        var y = n.getFullYear();
+                        var m = n.getMonth() + 1;
+                        var d = n.getDate();
+                        var date = y + "-" + m + "-" + d;
+                        var dateToday = new Date();
+                        var y = dateToday.getFullYear();
+                        var m = dateToday.getMonth() + 1;
+                        var d = dateToday.getDate();
+                        var dateTodayFinal = y + "-" + m + "-" + d;
+                        
+                        function checkStartDate(e){
+                           
+                            //alert(date);
+                            if(date == dateTodayFinal){
+                                
+                                //alert("checking start date");
+                                if(new Date(e.target.value).getTime() >= new Date(date).getTime()){
+                                    //alert("kek");
+                                    console.log("FIRST DATE INPUT IS OK");
+                                    //alert("Date set is Good");
+                                }else{
+                                    alert("Start cannot be a date before today!")
+                                    document.getElementById("UpDate").value = "";
+                                    //console.log(date);
+                                    //console.log("date now = " + new Date(date).getTime());
+                                    //console.log("date selected = "+new Date(e.target.value).getTime());
+                                    //console.log(e.target.value);
+                                }
+                            }
+                           //alert(edate);
+                            //console.log(id);
+                        }
 
             </script>
 
