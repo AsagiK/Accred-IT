@@ -51,12 +51,20 @@ var sess
 module.exports = {
 
     SystemMaintenance: function (req, resp) {
-
         sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
-        } else if(req.session.user[0].Role == 1){
+        } else if (req.session.user[0].Role == 1) {
             var sql = "SELECT * FROM capstone.roles; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
             connection.query(sql, function (err, results, fields) {
                 if (err) throw err;
@@ -70,7 +78,7 @@ module.exports = {
 
 
             });
-        }else{
+        } else {
             resp.redirect('/home')
         }
     },
@@ -100,13 +108,49 @@ module.exports = {
 
         getBackup().then((result) => {
             console.log("Backup Generated")
-            resp.send("OK")// 5
+            resp.send("OK") // 5
         })
 
     },
-    
-    ShutSystem: function(req,resp){
-        
-    }
+
+    ShutSystem: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        console.log(req.body)
+        var UpDate = req.body.UpDate;
+        var UpTime = req.body.UpTime;
+        var UpDateTime = UpDate + "T" + UpTime + ":00"
+        var UpDateSchedule = new Date(UpDateTime);
+        console.log(UpDateSchedule)
+
+        var bringsystemback = schedule.scheduleJob(UpDateSchedule, function () {
+            var rebootsql = "UPDATE `capstone`.`sysvalues` SET `inmaintenance` = '0' WHERE (`idsysvalues` = '1');"
+            connection.query(rebootsql, function (err, result) {
+                if (result) {
+                    console.log("System is back")
+                }
+            })
+        });
+
+        var sql = "UPDATE `capstone`.`sysvalues` SET `inmaintenance` = '1' WHERE (`idsysvalues` = '1');"
+        connection.query(sql, function (err, result) {
+            if (result) {
+                console.log("System is down")
+                setTimeout(function () {
+                    resp.redirect("/Maintenance")
+                }, 3000)
+            }
+        })
+
+
+    },
 
 }

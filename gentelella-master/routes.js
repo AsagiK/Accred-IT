@@ -135,6 +135,7 @@ router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 //--AdminCtrl
 router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
 router.route('/GenerateBackup').post(AdminCtrl.GenerateBackup);
+router.route('/ShutSystem').post(AdminCtrl.ShutSystem);
 
 //OTHERS
 router.route('/TestPage').get(planCtrl.TestPage);
