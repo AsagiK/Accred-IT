@@ -17,6 +17,13 @@ try {
 
 
 
+var dir = 'public/uploads';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
+
 // ---- URL PARSER
 var url = require('url');
 var session = require('express-session');

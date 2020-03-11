@@ -15,6 +15,11 @@ try {
 
 }
 
+var dir = 'public/SQLDump';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
 
 const disk = require('check-disk-space')
 const mysqldump = require('mysqldump')
@@ -146,7 +151,7 @@ module.exports = {
                 console.log("System is down")
                 setTimeout(function () {
                     resp.redirect("/Maintenance")
-                }, 3000)
+                }, 8000)
             }
         })
 
