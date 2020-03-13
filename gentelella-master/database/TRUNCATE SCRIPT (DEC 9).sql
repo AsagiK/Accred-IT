@@ -17,4 +17,6 @@ TRUNCATE TABLE  metric;
 TRUNCATE TABLE  pending_activities;
 TRUNCATE TABLE  pending_activities_audit;
 TRUNCATE TABLE  pending_outputs;
+TRUNCATE TABLE  notifications;
+TRUNCATE TABLE  notifications_read
 
