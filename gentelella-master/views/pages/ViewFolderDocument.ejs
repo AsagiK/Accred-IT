@@ -32,7 +32,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3 style="color: #dddddd;">Your Documents </h3>
+                            <h3 style="color: #dddddd;"><%= dataC[0].Document_Name %> Folder </h3>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                           
                             <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
-                              <h2 style="color: #dddddd;"><%= dataC[0].Document_Name %> Folder</h2>
+                              
                                 <div class="x_content">
 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
@@ -66,12 +66,9 @@
                                         <div class="modal-body">
                                           
                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                for="first-name">Folder ID <span class="required">*</span>
-                                            </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <!--First name Input field-->
-                                                <input type="text" id="FoldID" name="FoldID" required="required"
+                                                <input style="display:none;" type="text" id="FoldID" name="FoldID" required="required"
                                                     class="form-control col-md-7 col-xs-12" value="<%= dataC[0].Document_ID %>">
                                             </div>
                                         </div>
