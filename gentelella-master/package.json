@@ -13,7 +13,7 @@
         "add-subtract-date": "^1.0.14",
         "async": "^2.6.3",
         "autosize": "^4.0.2",
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^3.0.8",
         "body-parser": "^1.19.0",
         "ejs": "^2.6.1",
         "express": "^4.17.0",
