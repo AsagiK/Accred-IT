@@ -68,18 +68,16 @@ width: 100%;
         <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-
             <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="col-md-4  tile_stats_count" style="color: #dddddd;">                       
                         <span class="count_top" style="font-size: 30px;"><i class="fa fa-tasks"></i>
                                 <%= new Date().getFullYear();%>
-
                         </span>
                         
                 </div> 
                 
              <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
-                <div class="row" style="background-color: black;">
+                <div class="row">
                     <!MEASUREMENT>
                         <div class="col-md-12 col-sm-15 col-xs-15">
                             <div class="x_panel" style=" border-radius: 8px;">
@@ -91,16 +89,14 @@ width: 100%;
                                     <!--METRIC TABLE-->  
                                 
                                     <table id="datatable-fixed-header" class="table table-bordered">
-
                                         <thead>
                                             <tr>
-                                                <th>Goal Name</th>
+                                                <th>Metric Name</th>
                                                 <th>Description</th>
                                                 <th></th> 
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             <% for (var mes of data) { %> 
                                             <tr>                                             
                                                 <td width="30%" scope="row"> <%= mes.metric_Name %> </td>
@@ -115,7 +111,7 @@ width: 100%;
 
                                
                                     
-                                    <% } %>
+
                                 </div> 
                             </div>
                         </div> 
@@ -126,7 +122,6 @@ width: 100%;
                         <div class="col-md-12 col-sm-15 col-xs-15">
                             <div class="x_panel" style=" border-radius: 8px;">
                                 <div class="x_title" style="font-style: italic;">
-
                                     <h2>MEASUREMENTS</h2>
                                     <div class="clearfix"></div>
                                 </div>
@@ -135,10 +130,9 @@ width: 100%;
                                 
                                     
                                     <table id="datatable" class="table table-bordered">
-
                                         <thead>
                                             <tr>
-                                                <th>Measurement Name <%= meas.length %></th>
+                                                <th>Measurement Name</th>
                                                 <th>Description</th> 
                                                 <th>Quality Target/s</th>
                                                 <th></th>
@@ -166,7 +160,7 @@ width: 100%;
                                                 <td width="30%"> <form method="get" action="ViewMeasurementDetails">
                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
-                                                        <button type="submit" class="btn btn-primary" style="background-color: gray;">View
+                                                        <button type="submit" class="btn btn-primary">View
                                                             Details</button>
                                                     </form></td>
                                             </tr>
@@ -175,7 +169,7 @@ width: 100%;
 
                                         </tbody>
                                     </table>
-                                    
+
                                    
                                 
                                     
@@ -187,7 +181,6 @@ width: 100%;
                         </div> 
 
                         <!ACTIVITIES>
-
                         <div class="col-md-12 col-sm-15 col-xs-15">
                             <div class="x_panel" style=" border-radius: 8px;">
                                 <div class="x_title" style="font-style: italic;">
@@ -236,14 +229,14 @@ width: 100%;
                 </div> 
 
                 <% }  else if (current_user[0].Role == 4) { %>
-                    <div class="row" style="background-color: black;"> 
+                    <div class="row"> 
                             <div class="col-md-12 col-sm-15 col-xs-15">
                                 <div class="x_panel" style=" border-radius: 8px;">
                                         <div class="x_title">
                                             <h2>ACTIVITIES</h2>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="dash col-md-12" style="background-color:black; font-family:Georgia, Garamond, Serif;">
+                                        <div class="dash col-md-12">
                                            <!--ACTIVITIES-->   
                                         
                                             <% for (var act of dataC) { %> 
@@ -269,7 +262,7 @@ width: 100%;
                                                                                 <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                 <br> 
                                                                                 <form method="get" action="QualityMetrics">
-                                                                                        <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
+                                                                                        <button type="submit" class="btn btn-primary">View Details</button>
                                                                                     </form>
                                                                                 <br>
                                                                                 <br>
@@ -292,7 +285,7 @@ width: 100%;
                                                                                 <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
 
                                                                                     <div class="panel-body">
-                                                                                            <table class="table table-bordered" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;"> 
+                                                                                            <table class="table table-bordered" style="table-layout: fixed;"> 
                                                 
                                                                                                     <thead>
                                                                                                         <tr>
@@ -324,7 +317,7 @@ width: 100%;
                                                                                                         <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                          
                                                                                                         <td><form method="get" action="QualityMetrics">
-                                                                                                                <button type="submit" class="btn btn-primary" style="background-color: gray;">View Details</button>
+                                                                                                                <button type="submit" class="btn btn-primary">View Details</button>
                                                                                                             </form></td>
                                                                                                     </tr>
                                                 
@@ -362,7 +355,6 @@ width: 100%;
 
                 
                 <% } else { %> 
-
                     <div class="row">
                             <!METRIC>
                                 <div class="col-md-12 col-sm-15 col-xs-15">
@@ -372,12 +364,10 @@ width: 100%;
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-
                                             <!--METRIC TABLE-->  
                                        
         
                                             <table id="datatable-fixed-header" class="table table-bordered">
-
                                                 <thead>
                                                     <tr>
                                                         <th>Metric Name</th>
@@ -389,11 +379,11 @@ width: 100%;
         
                                                     <% for (var mes of data) { %> 
                                                     <tr> 
+                                                        
                                                         <td width="30%" scope="row"> <%= mes.metric_Name %> </td>
                                                         <td width="30%"><%= mes.metric_Desc %> </td>
                                                         <td width="30%"><form method="get" action="QualityMetrics">
                                                                 <button type="submit" class="btn btn-primary">View Details</button>
-
                                                             </form></td> 
         
                                                     </tr>
@@ -418,7 +408,6 @@ width: 100%;
                                             <!--MEASRUEMENTS-->  
                                         
                                             
-
                                                 <table id="datatable" class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -451,7 +440,7 @@ width: 100%;
                                                                 <form method="get" action="ViewMeasurementDetails">
                                                                         <input type="hidden" name="MID" value="<%= meas.measurement_ID %>">
                                                                         <input type="hidden" name="CID" value="<%= meas.cycle_ID %>">
-                                                                        <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View
+                                                                        <button type="submit" class="btn btn-primary">View
                                                                             Details</button>
                                                                     </form>
                                                         </td>
@@ -499,7 +488,7 @@ width: 100%;
                                                                                     <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                     <br> 
                                                                                     <form method="get" action="QualityMetrics">
-                                                                                            <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View Details</button>
+                                                                                            <button type="submit" class="btn btn-primary">View Details</button>
                                                                                         </form>
                                                                                     <br>
                                                                                     <br>
@@ -523,7 +512,6 @@ width: 100%;
     
                                                                                         <div class="panel-body">
                                                                                             <table id="datatable-responsive" class="table table-bordered" > 
-
                                                     
                                                                                                         <thead>
                                                                                                             <tr>
@@ -555,7 +543,7 @@ width: 100%;
                                                                                                             <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                              
                                                                                                             <td><form method="get" action="QualityMetrics">
-                                                                                                                    <button type="submit" class="btn btn-primary" style="table-layout: fixed; color: white; font-family:Georgia, Garamond, Serif;">View Details</button>
+                                                                                                                    <button type="submit" class="btn btn-primary">View Details</button>
                                                                                                                 </form></td>
                                                                                                         </tr>
                                                     
@@ -645,6 +633,7 @@ width: 100%;
 
         <!-- Custom Theme Scripts -->
         <script src="assets/build/js/custom.min.js"></script> 
+
          <!-- Datatables -->
          <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
          <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

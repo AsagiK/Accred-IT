@@ -428,7 +428,7 @@ module.exports = {
                     }
                 }
             }
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle ORDER BY cycle.Index ASC; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.source; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle ORDER BY termnum ASC; SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.sourcetype; SELECT * FROM capstone.source; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID; SELECT measurement.measurement_ID, measurement.measurement_Name, count(measurements_activities.activity_ID) as ActivityCount FROM capstone.`measurement` left join capstone.`measurements_activities` on measurement.measurement_ID = measurements_activities.measurement_ID group by measurement.measurement_ID;", function (err, results, fields) {
                 if (err) throw err;
                 if (results) {
                     resp.render('./pages/QualityMetrics.ejs', {
@@ -527,7 +527,6 @@ module.exports = {
             });
         }
     },
-
     addcycle: function (req, resp) {
         var cyclename = (req.body.cycleName);
         var date = (req.body.date);
@@ -553,6 +552,67 @@ module.exports = {
             resp.redirect('/QualityMetric');
         });
     },
+    //addduration: function (req, resp) {
+    //      var durationname = (req.body.durationName);
+    //   var date = (req.body.txtDate);
+    //   console.log(durationname);
+    // console.log(date);
+    //var sql = "INSERT INTO `capstone`.`duration` (`duration_Name`, `duration_End`) VALUES (? , ?)";
+    //var values = [durationname, date];
+    //connection.query(sql, values, function (err, result) {
+    //    if (err) throw err;
+    //  console.log("Record Inserted");
+    //    resp.redirect('/QualityMetric');
+    //});
+    //},
+
+    //10/08/2019 12:00 AM - 11/28/2019 12:00 AM
+    //addcycle: function (req, resp) {
+    //  var cyclename = (req.body.cycleName);
+    //var date = (req.body.date);
+    //var startDate = '';
+    //    var startTimeHour= date.substr(11,2);
+    //  console.log(req.body);
+    //var startTimeMin= date.substr(14,2);
+    //var startTimeAPM= date.substr(17,2);
+    //var startYear = date.substr(6, 4);
+    //var startMonth = date.substr(0, 2);
+    //var startDay = date.substr(3, 2);
+    //var endDate = '';
+    //var endTimeHour= date.substr(33,2);
+    //var endTimeMin= date.substr(36,2);
+    //var endTimeAPM= date.substr(39,2);
+    //var endYear = date.substr(28, 4);
+    //var endMonth = date.substr(22, 2);
+    //var endDay = date.substr(25, 2);
+    //console.log(cyclename);
+    //console.log(date);
+    //if(startTimeAPM=="PM"){
+    //    var startTimeHourFin=parseInt(startTimeHour)+12;
+    //  console.log("Nag plus na!");
+    // }else if(endTimeAPM=="PM"){
+    //   var endTimeHourFin=parseInt(endTimeHour)+12;
+    // console.log("Nag plus na!!");
+    //} 
+    //if(startTimeAPM=="AM"){
+    //  var startTimeHourFin=parseInt(startTimeHour);
+    //    console.log("Walang ng yari");
+    //}else if(endTimeAPM=="PM"){
+    //  var endTimeHourFin=parseInt(endTimeHour);
+    //    console.log("Walang ng yari!!");
+    //}
+    //startDate = startYear + "-" + startMonth + "-" + startDay +" "+ startTimeHourFin +":"+ startTimeMin;
+    //endDate = endYear + "-" + endMonth + "-" + endDay +" "+ endTimeHourFin+":"+ endTimeMin;
+    //console.log("Start Date: " + startDate);
+    //console.log("End Date: " + endDate);
+    //var sql = "INSERT INTO `capstone`.`cycle` (`cycle_Name`, `start_Date`, `end_Date`) VALUES (? , ?, ?)";
+    //var values = [cyclename, startDate, endDate];
+    //connection.query(sql, values, function (err, result) {
+    //  if (err) throw err;
+    //console.log("Record Inserted");
+    //resp.redirect('/QualityMetric');
+    //});
+    // },
 
     editmetric: function (req, resp) {
         sess = req.session;
@@ -1141,7 +1201,6 @@ module.exports = {
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
-        var dateStarted = (req.body.dateStarted);
         var status = "1"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1150,7 +1209,6 @@ module.exports = {
             console.log(result);
             if (result) {
                 resp.redirect('/QualityMetric');
-                dateStarted: dateStarted;
             }
         });
     },
@@ -1182,6 +1240,7 @@ module.exports = {
             }
         });
     },
+
 
     endPhase: function (req, resp) {
         var CID = (req.body.CID);
@@ -1920,6 +1979,7 @@ module.exports = {
 
 
             });
+
         }
     },
 
@@ -1959,6 +2019,7 @@ module.exports = {
     },
 
     ViewSubmissionDetails: function (req, resp) {
+
         sess = req.session;
         var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
@@ -2072,29 +2133,9 @@ module.exports = {
         })
         if (!req.session.user) {
             console.log("No session")
-            resp.redirect('/login');
-        } else {
-            var AID = req.query.AID;
-            var sql = "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); ";
-            var value = [AID];
-            console.log(AID);
-            connection.query(sql, value, function (err, result, fields) {
-                if (err) throw err;
-                resp.render('./pages/AlterActivities.ejs', {
-                    data: result,
-                    current_user: sess.user
-                });
-                console.log(result)
-            });
-        }
-    },
-
-    AlterActivities: function (req, resp) {
-        sess = req.session;
-        if (!req.session.user) {
-            console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+<<<<<<< HEAD
             var id = req.body.AID;
             var an = req.body.activityname;
             var ds = req.body.description;
@@ -2132,6 +2173,8 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
+=======
+>>>>>>> parent of 2fd6f63d... Merge branch 'Categorize-Activities' into More-Backending
             var CID = req.query.CID;
             var sql = "SELECT * FROM capstone.cycle WHERE cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit;";
             var values = [CID]
@@ -2149,6 +2192,7 @@ module.exports = {
             });
         }
 
+<<<<<<< HEAD
 
 
         connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.Index ASC; SELECT * FROM capstone.measurement_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID;", function (err, results, fields) {
@@ -2162,5 +2206,8 @@ module.exports = {
             console.log(results)
         });
     }
+=======
+    },
+>>>>>>> parent of 2fd6f63d... Merge branch 'Categorize-Activities' into More-Backending
 
 }
