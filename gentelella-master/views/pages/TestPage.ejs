@@ -197,7 +197,7 @@
 
             <script>
                 $(document).ready(function() {
-
+                    console.log("hello");
 
 
                     $("#btnsubmit").click(function(event) {
@@ -215,7 +215,7 @@
                         })
                     });
 
-                    $("#btnsubmit2").click(function(event) {
+                    $( document ).ready(function() {
                         event.preventDefault();
 
                         $.ajax({
@@ -227,8 +227,12 @@
                             },
 
                             success: function(data) {
-                                console.log(data[0]);
-                                console.log(data[1]);
+                                var wew = data[0];
+                                for(var i = 0; i <= wew.length; i++)
+                                {
+                                    console.log(wew[i].message);
+                                }
+                                
                             },
 
                             error: function() {

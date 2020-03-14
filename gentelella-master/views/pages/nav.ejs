@@ -1,3 +1,42 @@
+<!-- jQuery -->
+<script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(window).on("load",function() {
+        console.log("hello");
+          event.preventDefault();
+
+          $.ajax({
+              url: "/GetNotif",
+              type: "GET",
+              dataType: "json",
+              complete: function() {
+                  console.log('process complete');
+              },
+
+              success: function(data) {
+                  var wew = data[0];
+                  for(var i = 0; i <= wew.length; i++)
+                  {
+
+                      $('#try').append("<li>");
+                      $('#try').append("<a>");
+                      $('#try').append("<span class='message'>");
+                      $('#try').append(wew[i].message);
+                      $('#try').append("</span>");
+                      $('#try').append("</a>");
+                      $('#try').append("</li>");
+                      
+                  }
+              },
+
+              error: function() {
+                  console.log('process error');
+              },
+          });
+      });
+</script>
+  
   <div class="col-md-3 left_col">
       <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
@@ -186,11 +225,10 @@
                               <a>
                                   <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                                   <span>
-                                      <span>John Smith</span>
                                       <span class="time">3 mins ago</span>
                                   </span>
                                   <span class="message">
-                                      Film festivals used to be do-or-die moments for movie makers. They were where...
+                                      <div id="try"></div>
                                   </span>
                               </a>
                           </li>
@@ -200,4 +238,6 @@
           </nav>
       </div>
   </div>
+
+  
   <!-- /top navigation -->
