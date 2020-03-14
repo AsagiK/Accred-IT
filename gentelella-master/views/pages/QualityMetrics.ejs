@@ -203,7 +203,7 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th >Term</th>
+                                            <th>Term</th>
                                             <th style="display: none;">TotalTerm</th>
                                             <th style="display: none;">GoalID</th>
                                             <th style="display: none;">StartDate</th>
@@ -291,7 +291,7 @@
                                             <textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea>
                                             <br>
                                         <input type="checkbox" id="Percent" value="%"> Percent<br>
-                                        <button type="button" id="addRow" onclick="addQT()">+</button>
+                                        <button type="button" class="btn btn-default add-row-target">+</button>
                                     </div>
 
 
@@ -304,7 +304,7 @@
                                                     <th>Type</th>
                                                     <th>Target Description</th>
                                                     <th></th>
-                                                    <th hidden>targettype</th>
+                                                    <th style="display:none;">targettype</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tBody">
@@ -862,7 +862,7 @@
                             o.style.height = (25 + o.scrollHeight) + "px";
                         }
 
-                        function addQT(tBody) {
+                        /*function addQT(tBody) {
                             var qt = document.getElementById("QualityTarget").value;
                             var td = document.getElementById("targetDesc").value;
                             var percent= document.getElementById("Percent").value;
@@ -880,15 +880,15 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4).hidden;
+                                var newCell3 = newRow.insertCell(4).style.display="none";
+                                
                                 
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode(percent);
                                 var newText2 = document.createTextNode(td);
                                 var newText3 = document.createTextNode("0");
-                                cancel.innerHTML =
-                                    "<input type='button' value='X' onclick='deleteRow(this)'>";
+                                cancel.innerHTML = "<input type='button' value='X' onclick='deleteRow(this)'>";
                                 newCell.appendChild(newText);
                                 newCell1.appendChild(newText1);
                                 newCell2.appendChild(newText2);
@@ -904,7 +904,7 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4).hidden;
+                                var newCell3 = newRow.insertCell(4);
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode("count");
@@ -939,7 +939,43 @@
                                     div.style.display = "none";
                                 }, 600);
                             }
-                        }
+                        }*/
+
+                        $(document).ready(function () {
+                        $(".add-row-target").click(function test() {
+                            
+                            //alert("testing adding activities");
+                            var qt = document.getElementById("QualityTarget").value;
+                            var td = document.getElementById("targetDesc").value;
+                            var percent= document.getElementById("Percent").value;
+                            var check=document.getElementById("Percent");
+                            document.getElementById("QualityTarget").value=' ';
+                            document.getElementById("targetDesc").value=' ';
+                            
+                            if (qt != "" && check.checked==true) {
+                            //console.log(activityName);
+                            var percount = "0";
+                            var markup = "<tr><td>" + qt + "</td><td>" + '%' +"</td><td>" + td + "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + percount + "</td></tr>";
+                            var table = document.getElementById("TargetT")
+                            $(table).append(markup);
+                            } else if (qt != "" && check.checked==false) {
+                                var percount = "1";
+                                var markup = "<tr><td>" + qt + "</td><td>" + '#' +"</td><td>" + td + "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + percount + "</td></tr>";
+                                var table = document.getElementById("TargetT")
+                            $(table).append(markup);
+                            }else {
+                                alert("please give an input");
+                            }
+
+                            
+                        });
+
+                    });
+
+                    function deleteRow(r) {
+                    //console.log("testing delete click");
+                r.closest("tr").remove();
+            }
 
                         $(document).ready(function() {
                             $(".add-row-cycles").click(function test() {
@@ -1081,8 +1117,7 @@
                             $("#toJSON").click(function() {
                                 console.log("Hello");
                                 
-                                var table = JSON.stringify($('#TargetT')
-                                    .tableToJSON());
+                                var table = JSON.stringify($('#TargetT').tableToJSON());
                                 var mname = document.getElementById(
                                     "MeasurementName").value;
                                 var desc = document.getElementById(
