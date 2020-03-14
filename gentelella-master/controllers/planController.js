@@ -2120,22 +2120,37 @@ module.exports = {
         }
     },
 
-    CategorizeActivities: function (req, resp) {
+
+    EditActivities: function (req, resp) {
         sess = req.session;
-        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
-        connection.query(sessionchecksql, function (err, result) {
-            if (result[0].inmaintenance == 1) {
-                sess.destroy();
-                console.log("session destroyed");
-            } else {
-                //console.log("session not destroyed");
-            }
-        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-<<<<<<< HEAD
+            
+            var AID = req.query.AID;
+            var sql= "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); ";
+            var value = [AID];
+            console.log(AID);
+            connection.query(sql, value, function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/AlterActivities.ejs', {
+                    data: result,
+                    current_user: sess.user
+                });
+                console.log(result)
+            });
+        }
+
+
+    }, 
+
+    AlterActivities: function (req, resp) { 
+        sess=req.session;
+        if(!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
             var id = req.body.AID;
             var an = req.body.activityname;
             var ds = req.body.description;
@@ -2152,62 +2167,33 @@ module.exports = {
                 if (result) {
                     resp.redirect('./pages/QualityMetrics.ejs');
                 }
-            });
+            }); 
             console.log("ACTIVITY UPDATED");
         }
+        
+    }, 
 
-    },
-
-    CategorizeActivities: function (req, resp) {
+    CategorizeActivities: function (req, resp) { 
         sess = req.session;
-        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
-        connection.query(sessionchecksql, function (err, result) {
-            if (result[0].inmaintenance == 1) {
-                sess.destroy();
-                console.log("session destroyed");
-            } else {
-                //console.log("session not destroyed");
-            }
-        })
         if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-=======
->>>>>>> parent of 2fd6f63d... Merge branch 'Categorize-Activities' into More-Backending
-            var CID = req.query.CID;
-            var sql = "SELECT * FROM capstone.cycle WHERE cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit;";
-            var values = [CID]
-            connection.query(sql, values, function (err, results, fields) {
+
+            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.Index ASC; SELECT * FROM capstone.measurement_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID;", function (err, results, fields) {
                 if (err) throw err;
-                if (results) {
-                    resp.render('./pages/CategorizeActivities.ejs', {
-                        data: results[0],
-                        dataB: results[1],
-                        dataC: results[2],
-                        current_user: sess.user
-                    });
-                    console.log(CID);
-                }
+                resp.render('./pages/CategorizeActivities.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    current_user: sess.user
+                });
+                console.log(results)
             });
         }
 
-<<<<<<< HEAD
 
-
-        connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.Index ASC; SELECT * FROM capstone.measurement_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID;", function (err, results, fields) {
-            if (err) throw err;
-            resp.render('./pages/CategorizeActivities.ejs', {
-                data: results[0],
-                dataB: results[1],
-                dataC: results[2],
-                current_user: sess.user
-            });
-            console.log(results)
-        });
-    }
-=======
     },
->>>>>>> parent of 2fd6f63d... Merge branch 'Categorize-Activities' into More-Backending
+
 
 }

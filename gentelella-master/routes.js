@@ -63,12 +63,9 @@ router.route('/AnnualReport').post(planCtrl.AnnualReport);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
-<<<<<<< HEAD
+router.route('/AlterActivities').get(planCtrl.EditActivities);
 router.route('/AlterActivities').post(planCtrl.AlterActivities);
 router.route('/CategorizeActivities').post(planCtrl.CategorizeActivities);
-=======
-router.route('/CategorizeActivities').get(planCtrl.CategorizeActivities);
->>>>>>> parent of 2fd6f63d... Merge branch 'Categorize-Activities' into More-Backending
 
 
 //CYCLE ROUTES
