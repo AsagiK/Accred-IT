@@ -164,10 +164,10 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
         console.log("---------------------------------------------------------------------------------")
         console.log("AccredIT Server could not initiate a connection to the database")
         console.log("Check dbconfig.json for connection configurations or check if the MySQL Server is online")
+        console.log("Exit and Restart the Server after configurations have been made")
         console.log("AccredIT Server is now offline")
         console.log("---------------------------------------------------------------------------------")
         console.log("\x1b[0m", "")
-        serverclose.close();
     } else {
         console.log("\x1b[32m%s\x1b[0m", "AccredIT Server has successfully connected to the database")
         console.log("\x1b[32m%s\x1b[0m", "Server active at port", port);
