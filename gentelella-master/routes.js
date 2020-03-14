@@ -63,7 +63,8 @@ router.route('/AnnualReport').post(planCtrl.AnnualReport);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
-router.route('/CategorizeActivities').get(planCtrl.CategorizeActivities);
+router.route('/AlterActivities').post(planCtrl.AlterActivities);
+router.route('/CategorizeActivities').post(planCtrl.CategorizeActivities);
 
 
 //CYCLE ROUTES
