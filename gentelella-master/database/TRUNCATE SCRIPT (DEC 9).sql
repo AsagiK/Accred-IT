@@ -5,6 +5,7 @@ TRUNCATE TABLE approved_activities;
 TRUNCATE TABLE approved_activities_audit;
 TRUNCATE TABLE cycle;
 TRUNCATE TABLE documents;
+TRUNCATE TABLE folder_documents;
 TRUNCATE TABLE capstone.group;
 TRUNCATE TABLE groupdetails;
 TRUNCATE TABLE  measurement;
