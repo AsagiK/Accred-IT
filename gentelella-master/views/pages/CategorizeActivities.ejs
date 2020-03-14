@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View User Page</title>
+    <title>Term Report</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,10 +63,11 @@
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
                                     <br />
-                                    <% for (var cycles of data) { %>
+                                    
                                     <!--view table for users-->
                                     <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
-                                        <thead>
+                                        <thead> 
+                                            <% for (var cycles of data) { %>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Measurement Name</th>
@@ -150,9 +151,9 @@
                                                 <% } %> 
                                                 <!--ANNUAL REPORT-->
                                             <% } %> 
-                                        
+                                        <% } %>
                                     </table> 
-                                    <% } %>
+                                    
                                     <div class="ln_solid">
                                     </div>
                                 </div>
