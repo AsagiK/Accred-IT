@@ -64,19 +64,17 @@
                                     <tbody>
                                         
                                         <td>
-                                        <% for (var evidences of dataD) { %>
-                                            <% for (var PenActs of dataF) { %>
-                                                <% for (var ActEvidences of dataE) { %>
+                                            
+                                                <% for (var evidences of dataD) { %>
                                                     
-                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1 && PenActs.isActive == 1) { %>
+                                                    
                                                     
                                                         <a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
-                                                    <% } %>
+                                                    
                                                 <% } %>
-                                            <% } %>
-                                        <% } %>
-                                                    </td>
+                                            
+                                        </td>
                                     </tbody>
                                 </table>
                                 

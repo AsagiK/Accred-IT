@@ -191,14 +191,9 @@
                                                     <!--CYCLE INPUT-->
                                                     <select class="form-control" name="cycle" id ="cycle">
                                                         <% for (var currentCycle of dataC) { %>
-                                                            <% if (data[0].cycle_ID == currentCycle.cycle_ID) { %>
+                                                                
                                                                 <option value="<%= currentCycle.cycle_ID %>"><%= currentCycle.cycle_Name %></option>
-                                                            <% } %>
-                                                        <% } %>
-                                                        <% for (var currentCycle of dataC) { %>
-                                                                <% if (currentCycle.goal_ID == GID) { %>
-                                                                <option value="<%= currentCycle.cycle_ID %>"><%= currentCycle.cycle_Name %></option>
-                                                                <% } %>
+                                                                
                                                         <% } %>
                                                     </select>
                                                 </div>

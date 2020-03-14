@@ -1639,8 +1639,8 @@ module.exports = {
             var CASE = req.query.CASE;
             var MID = req.query.MID;
             var GID = req.query.GID;
-            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric"
-            var values = [MID]
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = (?); SELECT * FROM capstone.group; SELECT * FROM capstone.cycle where goal_ID = ? ORDER BY termnum ASC; SELECT * FROM capstone.metric"
+            var values = [MID, GID]
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/EditMeasurement.ejs', {
@@ -1855,7 +1855,7 @@ module.exports = {
                             var ui = resdata[key]["user_ID"];
                             var com = resdata[key]["comment"];
                             var ci = resdata[key]["cycle_ID"];
-                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?); UPDATE `capstone`.`pending_activities` SET `isActive` = 0 WHERE (`pending_ID` = ?);"
+                            var sql = "INSERT INTO `capstone`.`pending_activities_audit` (`measurement_activities_auditID`, `measurement_auditID`, `pending_ID`, `activity_ID`, `activity_name`, `target`, `code`, `description`, `measurement_ID`, `current_Score`, `status`, `suggested_Score`, `dateupdated`, `active`, `user_ID`, `comment`, `cycle_ID`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?); UPDATE `capstone`.`pending_activities` SET `active` = 0 WHERE (`pending_ID` = ?);"
 
                             var values = [MAAID, MAID, pi, ai, an, ta, co, de, mi, cs, st, ss, du, ac, ui, com, ci, pi];
                             connection.query(sql, values, function (err, result) {
@@ -1863,7 +1863,7 @@ module.exports = {
                                 if (result) {
                                     var CID = resdata.cycle_ID;
                                     var MAAID = result.insertId;
-                                    auditpendingactivities(MAID, MAAID, CID, ai);
+                                    //auditpendingactivities(MAID, MAAID, CID, ai);
                                     callback2();
                                 }
                             });
