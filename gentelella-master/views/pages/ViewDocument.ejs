@@ -153,7 +153,7 @@
                     break;
                   } 
                   %>
-                  <% if (doc.Document_Ext == "Folder") { %>
+                  <% if (doc.isfolder == 1) { %>
                   
                                       <div class="col-md-55">
                                           
@@ -161,11 +161,9 @@
 
 
                                                   <div class="image view view-first">
-                                                  <% if (filext == "0"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } else { %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } %>
+                                                  
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="images/folder.png" />
+                                                  
                                                   
 
                                                   <div class="mask no-caption">
