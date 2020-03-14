@@ -319,9 +319,9 @@
 
 
 
-
+                                    <% if (doc.isfolder == 0) { %>
                                         <div class="col-md-55">
-                                          <% if (doc.isfolder != 1) { %>
+                                          
                                             <% if (doc.InDrive != 1){ %>
                                             <div class="thumbnail">
 
@@ -355,7 +355,7 @@
                                                         <hr style="color: #f00;">
                                                     </div>
                                                     </div>
-                                                    </div>
+                                                    
                                            <%} else {%>
                                                 <div class="thumbnail">
 
@@ -388,11 +388,12 @@
                                                         <hr style="color: #f00;">
                                                     </div>
                                                     </div>
-                                                    </div>
-                                            <%}%>
+                                                    
+                                            <% } %>
+                                          </div>
                                             <% } %>
                                         <% } %>
-
+                                      </div>
                                     </div>
                                 </div>
                             </div>
