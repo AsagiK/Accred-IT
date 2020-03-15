@@ -68,18 +68,31 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Measurment Name</th>
+                                            <th>Cycle Name</th>
                                             <th>Target</th>
                                             <th>Progress</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for (var report of data) { %>                                              
+                                        <% for (var report of data) { %> 
+                                                                                       
                                             <tr>
                                                 <td width="10%" scope="row"><%= report.measurementID %></td>
                                                 <td width="30%"><%= report.measurement_Name %></td>
+                                                <td>
+                                                <% for (var cycle of dataB) { %>
+                                                <% if ((report.cycle_ID -1 ) == cycle.cycle_ID) {%>
+                                                  <%= cycle.cycle_Name %>  
+                                                <% } %>
+                                                <% } %> 
+                                                
+                                                </td>
                                                 <td width="10%">
-                                                    <%=report.target %> <%= report.target_Desc %>
-
+                                                    <%=report.target %> 
+                                                    <% if (report.target_Type == 0) { %> 
+                                                        %
+                                                    <% } %> 
+                                                    - <%= report.target_Desc %><br>
                                                 </td> 
                                                 <% if (report.progress >= 75) { %>
                                                     <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
@@ -93,14 +106,14 @@
                                                 
                                                 
                                             </tr> 
-                    
+                                            
                                         <% } %>
                                         
                                 
                                     </tbody>
                                 </table> 
-                                <button class ="btn btn-primary" onclick="window.history.back()">Back</button>
                                 <div class="ln_solid"></div>
+                                <button class ="btn btn-primary" onclick="window.history.back()">Back</button>
                             </div>
                         </div>
                     </div>
