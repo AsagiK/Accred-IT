@@ -261,8 +261,10 @@ width: 100%;
                                                                                 <h2> Deadline </h2>
                                                                                 <h4><%= act.deadline.toString().substr(0, 15) %></h4>
                                                                                 <br> 
-                                                                                <form method="get" action="QualityMetrics">
-                                                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                                                <form method="get" action="ViewMeasurementDetails">
+                                                                                    <input hidden id="MID" name="MID" value="<%= act.measurement_ID %>">
+                                                                                    <input hidden id="CID" name="CID" value="<%= act.cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary">View Measurement</button>
                                                                                 </form>
                                                                                 <br>
                                                                                 <br>
@@ -284,6 +286,7 @@ width: 100%;
                                                                                 <div id="collapseTwo<%= pending.pending_ID %>" class="panel-collapse collpase" role="tabpanel" aria-labelledby="headingTwo">
 
                                                                                     <div class="panel-body">
+                                                                                        
                                                                                             <table class="table table-bordered" style="table-layout: fixed;"> 
                                                 
                                                                                                     <thead>
@@ -315,7 +318,9 @@ width: 100%;
                                                                                                         <td><%= pending.comment %></td> 
                                                                                                         <td style="word-wrap: break-word;"><%= pending.Document_Name %></td>
                                                                                                          
-                                                                                                        <td><form method="get" action="QualityMetrics">
+                                                                                                        <td><form method="get" action="ViewMeasurementDetails">
+                                                                                                            <input hidden id="MID" name="MID" value="<%= pending.measurement_ID %>">
+                                                                                                            <input hidden id="CID" name="CID" value="<%= pending.cycle_ID %>">
                                                                                                                 <button type="submit" class="btn btn-primary">View Details</button>
                                                                                                             </form>
                                                                                                         </td>
