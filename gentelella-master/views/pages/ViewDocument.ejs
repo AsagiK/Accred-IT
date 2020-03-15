@@ -21,18 +21,18 @@
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
 
             <% include ./nav %>
 
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3> Documents </h3>
+                            <h3 style="color: #dddddd;"> Documents </h3>
                         </div>
                     </div>
 
@@ -41,8 +41,8 @@
                     <div class="row">
                       <div class="col-md-12">
                         
-                          <div class="x_panel">
-                            
+                          <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
+                            <h2 style="color: #dddddd;">Folders</h2>
                               <div class="x_content">
 
                                 <div>
@@ -153,7 +153,7 @@
                     break;
                   } 
                   %>
-                  <% if (doc.Document_Ext == "Folder") { %>
+                  <% if (doc.isfolder == 1) { %>
                   
                                       <div class="col-md-55">
                                           
@@ -161,18 +161,16 @@
 
 
                                                   <div class="image view view-first">
-                                                  <% if (filext == "0"){ %>
-                                                  <img style='height: 100%; width: 100%; filter: blur(10px); object-fit: contain ' src="<%= doc.Document_Route %>" />
-                                                  <% } else { %>
-                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="<%= imgtype %>" />
-                                                  <% } %>
+                                                  
+                                                  <img style='height: 100%; width: 100%; object-fit: contain' src="images/folder.png" />
+                                                  
                                                   
 
                                                   <div class="mask no-caption">
                                                       <div class="tools tools-bottom">
-                                                        <form id="foldview" action="ViewFolder" method="GET">
+                                                        <form id="foldview<%= doc.Document_ID %>" action="ViewFolder" method="GET">
                                                           <input hidden id=FolderID name="FolderID" value="<%= doc.Document_ID %>">
-                                                          <a href="#" onclick="document.getElementById('foldview').submit()"><i class="fa fa-folder-open"></i></a>
+                                                          <a href="#" onclick="document.getElementById('foldview<%= doc.Document_ID %>').submit()"><i class="fa fa-folder-open"></i></a>
                                                         </form>
                                                           
                                                           
@@ -203,8 +201,8 @@
                     <div class="row">
                         <div class="col-md-12">
                           
-                            <div class="x_panel">
-                              <h2>All Evidences</h2>
+                            <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
+                              <h2 style="color: #dddddd;">All Evidences</h2>
                                 <div class="x_content">
 
                                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
@@ -321,8 +319,9 @@
 
 
 
-
+                                    <% if (doc.isfolder == 0) { %>
                                         <div class="col-md-55">
+                                          
                                             <% if (doc.InDrive != 1){ %>
                                             <div class="thumbnail">
 
@@ -345,8 +344,8 @@
                                                     <div class="mask no-caption">
                                                         <div class="tools tools-bottom">
                                                             <a href="<%= doc.Document_Route %>" download><i class="fa fa-download"></i></a>
-                                                            <a href="#"><i class="fa fa-pencil"></i></a>
-                                                            <a href="#"><i class="fa fa-times"></i></a>
+                                                            <!--a href="#"><i class="fa fa-pencil"></i></a>
+                                                            <a href="#"><i class="fa fa-times"></i></a-->
                                                         </div>
                                                     </div>
                                                     </div>
@@ -356,7 +355,7 @@
                                                         <hr style="color: #f00;">
                                                     </div>
                                                     </div>
-                                                    </div>
+                                                    
                                            <%} else {%>
                                                 <div class="thumbnail">
 
@@ -389,10 +388,12 @@
                                                         <hr style="color: #f00;">
                                                     </div>
                                                     </div>
-                                                    </div>
-                                            <%}%>
+                                                    
+                                            <% } %>
+                                          </div>
+                                            <% } %>
                                         <% } %>
-
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +404,7 @@
             <!-- /page content -->
 
             <!-- footer content -->
-            <footer>
+            <footer style="background-color: #232931; border-radius: 8px;">
                 <div class="pull-right">
                     Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                 </div>

@@ -33,16 +33,16 @@
   <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
   <div class="container body">
-    <div class="main_container">
+    <div class="main_container" style="background-color: #232931;">
       <%- include ./nav.ejs %>
       <!-- page content -->
-      <div class="right_col" role="main">
+      <div class="right_col" role="main" style="background-color: #232931;">
         <div class="">
           <div class="page-title">
             <div class="title_left">
-              <h3>Create Group</h3>
+              <h3 style="color: #dddddd;">Create Group</h3>
             </div>
           </div>
         </div>
@@ -51,14 +51,14 @@
         <div class="clearfix"></div>
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
+            <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
               <div class="x_content">
                 <br />
                 <form id="demo-form2" action="add-group" data-parsley-validate class="form-horizontal form-label-left"
                   method="post">
                   <!-- UI Part--->
                   <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Group Name:<span
+                    <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Group Name:<span
                         class="required"></span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -68,7 +68,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Assign Area<span class="required">*</span>
+                    <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12">Assign Area<span class="required">*</span>
                     </label>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -86,7 +86,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Group Description<span
+                    <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12">Group Description<span
                         class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -95,12 +95,11 @@
                         style="overflow:hidden"></textarea>
                     </div>
                   </div>
-                  <div class="ln_solid"></div>
+                  
                   <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                      <a href="/ViewGroups" class="btn btn-primary" type="button">Cancel</a>
-                      <button class="btn btn-primary" type="reset">Reset</button>
-                      <button type="submit" class="btn btn-success">Submit</button>
+                      <a href="/ViewGroups" class="btn btn-danger" type="button">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                   </div>
 
@@ -114,7 +113,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
+        <footer style="background-color: #232931; border-radius: 8px;">
           <div class="pull-right">
             Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
           </div>

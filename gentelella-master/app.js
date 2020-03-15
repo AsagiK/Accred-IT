@@ -43,14 +43,27 @@ server.set('view engine', 'ejs');
 
 
 server.get('/', function (req, resp) {
-
     sess = req.session;
     if (!req.session.user) {
         console.log("No session")
-        resp.redirect('/login');
-    } else {
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                resp.redirect('/login');
+            } else {
+                resp.redirect('/Maintenance')
+            }
+        })
 
-        resp.redirect('/home')
+    } else {
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                resp.redirect('/home')
+            } else {
+                resp.redirect('/Maintenance')
+            }
+        })
     }
 });
 
@@ -64,10 +77,13 @@ server.get('/debug1', function (req, resp) {
     console.log("Testing testing");
 });
 
+
+/*
 server.get('/debug2', function (req, resp) {
-    resp.render('./pages/NotAuthorizedPage.ejs');
+    resp.render('./pages/SystemMaintenancePage.ejs');
     console.log("Testing testing");
 });
+*/
 
 server.get('/RegisterAdminPage', function (req, resp) {
     resp.render('./pages/RegisterAdminPage.ejs');
@@ -88,37 +104,55 @@ server.get('/RegisterAdminPage', function (req, resp) {
 });*/
 
 server.get('/login', function (req, resp) {
-    var status = req.query.status
-    switch (status) {
-        case "0":
-            passData = {
-                goodStatus: 0,
-                msg: "You are not logged in"
+    sess = req.session;
+    if (!req.session.user) {
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                var status = req.query.status
+                switch (status) {
+                    case "0":
+                        passData = {
+                            goodStatus: 0,
+                            msg: "You are not logged in"
+                        }
+                        resp.render('./pages/login.ejs', {
+                            notif: passData
+                        });
+                        break;
+                    case "1":
+                        passData = {
+                            goodStatus: 1,
+                            msg: "Incorrect Username or Password"
+                        }
+                        resp.render('./pages/login.ejs', {
+                            notif: passData
+                        });
+                        break;
+                    default:
+                        resp.render('./pages/login.ejs');
+                }
+            } else {
+                resp.redirect('/Maintenance')
             }
-            resp.render('./pages/login.ejs', {
-                notif: passData
-            });
-            break;
-        case "1":
-            passData = {
-                goodStatus: 1,
-                msg: "Incorrect Username or Password"
+        })
+
+    } else {
+        var sql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sql, function (err, result) {
+            if (result[0].inmaintenance == 0) {
+                resp.redirect('/home')
+            } else {
+                resp.redirect('/Maintenance')
             }
-            resp.render('./pages/login.ejs', {
-                notif: passData
-            });
-            break;
-        default:
-            resp.render('./pages/login.ejs');
+        })
     }
-    console.log("Testing testing");
 });
 
 server.use('/', routes);
 
 server.get('/*', function (req, resp) {
     resp.render('./pages/ErrorPage.ejs');
-    console.log("Testing testing");
 });
 
 const port = process.env.PORT | 9090;
@@ -130,10 +164,10 @@ connection.query("SHOW DATABASES LIKE 'capstone';", function (err, result, field
         console.log("---------------------------------------------------------------------------------")
         console.log("AccredIT Server could not initiate a connection to the database")
         console.log("Check dbconfig.json for connection configurations or check if the MySQL Server is online")
+        console.log("Exit and Restart the Server after configurations have been made")
         console.log("AccredIT Server is now offline")
         console.log("---------------------------------------------------------------------------------")
         console.log("\x1b[0m", "")
-        serverclose.close();
     } else {
         console.log("\x1b[32m%s\x1b[0m", "AccredIT Server has successfully connected to the database")
         console.log("\x1b[32m%s\x1b[0m", "Server active at port", port);

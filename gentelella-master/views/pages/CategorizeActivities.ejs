@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View User Page</title>
+    <title>Term Report</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,75 +47,11 @@
             <% include ./nav %>
             <!-- page content -->
             <div class="right_col" role="main" style="background-color: #232931;">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-
-                            <h3 style="color: #dddddd;">View Users Assigned To Groups</h3>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
-                            <div class="x_content">
-                                <br />
-
-                                <!--view table for users-->
-                                <table id="datatable-fixed-header" class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email</th>
-                                            <th>Area and Group Assigned</th>
-                                            <th>Role</th>
-                                            <th>Contact Number</th>
-                                            <th></th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <% for (var info of data) { %>
-                                        
-                                            <tr>
-                                                <th scope="row"><%= info.User_ID %></th>
-                                                
-                                                <td><%= info.User_First %></td>
-                                                <td><%= info.User_Last %></td>
-                                                <td><%= info.email_address %></td>
-                                                <td><%= info.Area_Name %> - <%= info.Group_Name %></td>
-                                                <td><%= info.Role_Name %></td>
-                                                <td><%= info.ContactNo %></td>
-                                                <% if (info.Role != "1") {%>
-                                                <form method="get" action="edituser">
-                                                    <input type="hidden" name="UID" value="<%= info.User_ID %>">
-                                                    <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                                </form>
-                                                <% }else { %>
-                                                <td></td>
-                                                <% } %>
-                                            </tr>
-                                        
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                                <div class="ln_solid"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div role="main">
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
-
-                                <h3 style="color: #dddddd;">View Users Unassigned To Groups</h3>
-
+                                <h3 style="color: #dddddd; font-size:xx-large;">Term Report</h3>
                             </div>
                         </div>
                     </div>
@@ -124,49 +60,93 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
-                                    <br />
-
+                                    
+                                    
                                     <!--view table for users-->
-                                    <table id="datatable" class="table table-bordered">
-                                        <thead>
+                                    <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                        <thead> 
+                                            <% for (var cycles of data) { %>
                                             <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Email</th>
-                                                <th>Contact Number</th>
-                                                <th></th>
-                                                <th></th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <% for (var info2 of dataB) { %>
-                                            
-                                            <tr>
-                                                <form method="get" action="edituser">
-
-                                                    <th scope="row"><%= info2.User_ID %></th>
-                                                    <input type="hidden" name="UID" value="<%= info2.User_ID %>">
-                                                    <td><%= info2.User_First %></td>
-                                                    <td><%= info2.User_Last %></td>
-                                                    <td><%= info2.email_address %></td>
-                                                    <td><%= info2.ContactNo %></td>
-                                                    
-                                                    <% if (info2.Role != "1") {%>
-                                                    <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                                    <%}%>
-                                                </form>
-                                                <form method="get" action="ViewGroups">
-                                                    
-                                                    <td><button type="submit" class="btn btn-dark">Add to group</button></td>
-                                                </form>
+                                                <th>ID</th>
+                                                <th>Measurement Name</th>
+                                                <th>Measurement Description</th>
+                                                <th>Priority Level</th>
+                                                <th>Quality Target</th>
+                                                <% if (cycles.status == 4 || cycles.status == 3) { %>
+                                                    <th>Progress</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                <% } else { %>
+                                                <th># of Activities</th>
+                                                    <th></th>
+                                                <% } %>
                                                 
                                             </tr>
-                                            <% } %>
-                                        </tbody>
-                                    </table>
+                                        </thead>                                                                       
+                                        <tbody> 
+                                            
+                                            <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
+                                                <% for (var measure_audit of dataB) { %>
+                                                    <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                        <tr>
+                                                        <td><%= measure_audit.measurement_ID %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Name %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Description %>
+                                                        </td>
+                                                        
+                                                                <%if(measure_audit.priority_Level==1){%>
+                                                                    <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
+                                                                <%}else if(measure_audit.priority_Level==2){%>
+                                                                    <td style="color: yellow; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                <%}else if(measure_audit.priority_Level==3){%>
+                                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
+                                                                <%}%>
+                                                        
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %>
+                                                            <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                            <%= targets_audit.target %>
+                                                            <% if (targets_audit.target_Type == 0) { %> 
+                                                                %
+                                                            <% } %> - <%= targets_audit.target_Desc %><br>
+                                                            <% } %>
+
+                                                            <% } %>
+                                                        </td>
+                                                        
+                                                                <% for (var targets_audit of dataC) { %>
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && targets_audit.target_Type == 0) { %> 
+
+                                                                        <% if (targets_audit.progress >= 75) { %>
+                                                                            <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 60) { %> 
+                                                                            <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 30) { %>
+                                                                            <td style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } else if (targets_audit.progress >= 0) { %>
+                                                                            <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
+                                                                        <% } %>
+                                                                   
+                                                                    <% }%>
+
+                                                                <% } %>
+                                                         
+                                                        <td>
+                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                        <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                            <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                        </form> 
+                                                    </tr>
+                                                    <% } %>
+                                                <% } %> 
+                                                <!--ANNUAL REPORT-->
+                                            <% } %> 
+                                        <% } %>
+                                    </table> 
+                                    
                                     <div class="ln_solid">
                                     </div>
                                 </div>

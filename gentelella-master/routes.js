@@ -4,8 +4,10 @@ var JSONCtrl = require('./controllers/JSONController');
 var DocCtrl = require('./controllers/DocumentController');
 var SessCtrl = require('./controllers/SessionController');
 var CheckCtrl = require('./controllers/CheckingController');
-var NotifCtrl = require('./controllers/NotifController')
+var NotifCtrl = require('./controllers/NotifController');
+var AdminCtrl = require('./controllers/AdminController')
 var router = express.Router();
+
 //--PlanCtrl--
 //USERS ROUTES
 router.route('/Viewusers').get(planCtrl.Viewusers);
@@ -61,6 +63,9 @@ router.route('/AnnualReport').post(planCtrl.AnnualReport);
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
+router.route('/AlterActivities').get(planCtrl.EditActivities);
+router.route('/AlterActivities').post(planCtrl.AlterActivities);
+router.route('/CategorizeActivities').get(planCtrl.CategorizeActivities);
 
 
 //CYCLE ROUTES
@@ -118,6 +123,7 @@ router.route('/DebugCreate').post(SessCtrl.Register);
 router.route('/DebugCreate2').post(SessCtrl.Register2);
 router.route('/SessLogin').post(SessCtrl.Login);
 router.route('/Logout').get(SessCtrl.Logout);
+router.route('/Maintenance').get(SessCtrl.Maintenance);
 
 
 //--CheckCtrl
@@ -128,6 +134,10 @@ router.route('/PreCheckingDetails').get(CheckCtrl.PreCheckingDetails);
 router.route('/PreCheckingDetailsInsert').post(CheckCtrl.PreCheckingDetailsInsert);
 router.route('/CheckingDetailsInsert').post(CheckCtrl.CheckingDetailsInsert);
 
+//--AdminCtrl
+router.route('/SystemMaintenance').get(AdminCtrl.SystemMaintenance);
+router.route('/GenerateBackup').post(AdminCtrl.GenerateBackup);
+router.route('/ShutSystem').post(AdminCtrl.ShutSystem);
 
 //OTHERS
 router.route('/TestPage').get(planCtrl.TestPage);
@@ -149,6 +159,8 @@ router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
+
+
 
 
 module.exports = router;

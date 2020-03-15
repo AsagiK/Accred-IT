@@ -33,17 +33,17 @@
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body" style="background-color: #232931;">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>Edit User <%= data[0].User_First %> <%= data[0].User_Last %></h3>
+                            <h3 style="color: #dddddd;">Edit User <%= data[0].User_First %> <%= data[0].User_Last %></h3>
 
                         </div>
                     </div>
@@ -51,13 +51,13 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
                             <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="alteruser" method="POST">
                                     <% if (data[0].Role != "1") {%>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--First name Input field-->
@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Last name input field-->
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12">Email Addess</label>
+                                        <label style="color: #dddddd;" for="email" class="control-label col-md-3 col-sm-3 col-xs-12">Email Addess</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Email Input field-->
                                             <input id="email" class="form-control col-md-7 col-xs-12" type="email" name="email" value="<%= data[0].email_address %>">
@@ -82,7 +82,7 @@
                                     </div>
                                     <!--options list of position-->
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Edit Role</label>
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12">Edit Role</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="role">
                                                 <% for (var role of dataB) { %>
@@ -92,19 +92,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Contact Number <span class="required">*</span>
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Contact Number <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <!--Last name input field-->
                                             <input type="text" id="contact" name="contact" class="form-control col-md-7 col-xs-12" value="<%= data[0].ContactNo %>">
                                         </div>
                                     </div>
-                                    <div class="ln_solid"></div>
+                                    
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <a class="btn btn-primary" href="/Viewusers">Cancel</a>
+                                            <a class="btn btn-danger" href="/Viewusers">Cancel</a>
                                             
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                         
                                         <% } if (data[0].Role == "1") { %>
@@ -122,15 +122,14 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="background-color: #232931; border-color: #232931;  border-radius: 8px;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
                     <div class="clearfix"></div>
                 </footer>
                 <!-- /footer content -->
-            </div>
-        </div>
+            
 
         <!-- jQuery -->
         <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -167,7 +166,9 @@
         <script src="assets/vendors/starrr/dist/starrr.js"></script>
         <!-- Custom Theme Scripts -->
         <script src="assets/build/js/custom.min.js"></script>
-
+    </div>
+</div>
+</div>
 </body>
 
 </html>

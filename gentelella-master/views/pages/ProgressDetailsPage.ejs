@@ -13,7 +13,7 @@
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="assests/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -36,23 +36,23 @@
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Progress Details Page</h3>
+                            <h3 style="color: #dddddd;">Progress Details Page</h3>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                             <div class="x_content">
                                
                                 
@@ -64,19 +64,17 @@
                                     <tbody>
                                         
                                         <td>
-                                        <% for (var evidences of dataD) { %>
-                                            <% for (var PenActs of dataF) { %>
-                                                <% for (var ActEvidences of dataE) { %>
+                                            
+                                                <% for (var evidences of dataD) { %>
                                                     
-                                                    <% if (evidences.Document_ID == ActEvidences.documentID && PenActs.pending_ID == ActEvidences.pendingID && PenActs.status == 1 && PenActs.isActive == 1) { %>
+                                                    
                                                     
                                                         <a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
-                                                    <% } %>
+                                                    
                                                 <% } %>
-                                            <% } %>
-                                        <% } %>
-                                                    </td>
+                                            
+                                        </td>
                                     </tbody>
                                 </table>
                                 
@@ -86,7 +84,7 @@
 
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
+                            <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
                                         <div>
 
@@ -100,7 +98,7 @@
                                                     <% for( var targs of dataB) { %>
         
                                     
-                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>"><%= targs.target %> - <%= targs.target_Desc %></option>
+                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>-<%= targs.target_Desc %>"><%= targs.target %> - <%= targs.target_Desc %></option>
                                                         
                                                         <% } %>
                                                       </select> 
@@ -116,6 +114,7 @@
                                                     <thead>
                                                         <th>TargetID</th>
                                                         <th>Target</th>
+                                                        <th>Target Description</th>
                                                         <th>Progress</th>
                                                         <th></th>
                                                         
@@ -126,7 +125,7 @@
                                                     </tbody>
                                                 </table>
 
-                                                <button type="button" class="btn btn-success" id="toJSONAssignProgress">SUBMIT</button>
+                                                <button  type="button" class="btn btn-primary" id="toJSONAssignProgress">Declare Progress</button>
         
                                         </div>
                                         <form method="get" action="/ProgressPage">
@@ -150,7 +149,7 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="border-radius: 8px; background-color: #232931;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
@@ -170,13 +169,16 @@
                     var ttar = tar.options[tar.selectedIndex].value;
 
                     var tarID = ttar.substr(0, ttar.indexOf('~'));
-                    var tarName = ttar.substr(ttar.lastIndexOf('~') + 1);
+                    var tarName = ttar.substr(ttar.lastIndexOf('~') + 1 ,ttar.indexOf('-')-2);
+                    var tarDesc = ttar.substr(ttar.lastIndexOf('-') + 1);
                     console.log(tarID);
                     console.log(tarName);
                     //console.log(activityName);
-                    var markup = "<tr><td '>" + tarID + "</td><td>" + tarName + "</td><td>" + prog +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    var markup = "<tr><td id='id'>" + tarID + "</td><td>" + tarName + "</td><td>" + tarDesc + "</td><td>" + prog +
+                        "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableTarProg")
+                    $("#target option:selected").remove();
+                    document.getElementById("progress").value = "";
                     $(table).append(markup);
                     }
                 });
@@ -239,8 +241,21 @@
             function deleteRow(r) {
                     //console.log("testing delete click");
                 r.closest("tr").remove();
+                
                 var table = document.getElementById("tableTarProg");
-                var val = r.closest("tr").cells[2].innerHTML;
+                var valID = r.closest("tr").cells[0].innerHTML;
+                var valName = r.closest("tr").cells[1].innerHTML;
+                var valDesc = r.closest("tr").cells[2].innerHTML;
+
+                
+                console.log(valID);
+                console.log(valName);
+                console.log(valDesc);
+                var dropdown = document.getElementById("target");
+                var option = document.createElement("option");
+                option.innerHTML = valName + " - " + valDesc;
+                option.value = valID + "~" + valName + "-" + valDesc; 
+                dropdown.options.add(option);
                 //console.log("cell weight: " + val);
 
                 //total = +total - +val;

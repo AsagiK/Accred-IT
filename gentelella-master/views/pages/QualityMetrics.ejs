@@ -145,26 +145,30 @@
        background-color: #F1F5F8;
    }
 
+    th, td {
+        border-bottom: 1px solid #ddd;
+    }
+
 </style>
 
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
 <!-- page content -->
-<div class="right_col" role="main">
+<div class="right_col" role="main" style="background-color: #232931;">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Quality Management</h3>
+                <h3 style="color: #dddddd;">Quality Management</h3>
             </div>
         </div>
     </div>
-    <div class="clearfix"></div>
+    
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
+            <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                 <div class="x_content">
 
                     <!--MODAL FOR CYCLE CREATION-->
@@ -199,7 +203,7 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th >Term</th>
+                                            <th>Term</th>
                                             <th style="display: none;">TotalTerm</th>
                                             <th style="display: none;">GoalID</th>
                                             <th style="display: none;">StartDate</th>
@@ -226,7 +230,7 @@
                     <!------------------------------------------END OF CREATE CYCLE MODAL------------------------------------------------------------->
 
                     <!--CREATE MEASUREMENTS MODAL-->
-                    <div class="modal fade createMeasurement" id="my_modalCreateMeasures">
+                    <div class="modal fade-in createMeasurement" id="my_modalCreateMeasures">
                         <div class="modal-dialog modal-lg2">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -274,6 +278,20 @@
                                          <option value="3">Low Priority</option>
                                     </select>
                                     <br>
+                                     <!--Assign Cycle To End>
+                                    <label for="MeasurementDesc">Cycle to End:
+                                        <!--Edited>
+                                        <span class="required">*</span></label>
+
+                                    <select class="form-control" name="cycleID" id="cycleID" required="required">
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </select-->
+                                    <br>
                                     <!--Quality Target Input field-->
 
                                     
@@ -287,7 +305,7 @@
                                             <textarea type="text" id="targetDesc" name="targetDesc" maxlength="70" required="required"></textarea>
                                             <br>
                                         <input type="checkbox" id="Percent" value="%"> Percent<br>
-                                        <button type="button" id="addRow" onclick="addQT()">+</button>
+                                        <button type="button" class="btn btn-default add-row-target">+</button>
                                     </div>
 
 
@@ -300,7 +318,7 @@
                                                     <th>Type</th>
                                                     <th>Target Description</th>
                                                     <th></th>
-                                                    <th hidden>targettype</th>
+                                                    <th style="display:none;">targettype</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tBody">
@@ -331,11 +349,8 @@
                     </div>
                     <!----------------------------------END OF CREATE MEASUREMENT MODAL------------------------------------------------------>
 
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <br />
-                                <div class="col-md-12 col-sm-6 col-xs-12">
+                    
+                                <div class="col-md-12 col-sm-6 col-xs-12" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
 
                                     <div class="x_content">
                                         <!BUTTONS FOR CREATE OF GOALS AND CYCLE TIME>
@@ -344,11 +359,12 @@
                                         <% } %>
                                             <% for (var goals of data) { %>
 
+
                                             <!-- start accordion -->
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                 <!-- FIRST PANEL FOR GOALS -->
-                                                <div class="panel">
-                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
+                                                <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px; color: black">
+                                                    <li class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>" >
                                                         <h4 class="panel-title"> <span class="fa fa-chevron-down"></span> <%= goals.metric_ID %> - <%= goals.metric_Name %>
                                                         </h4>
                                                     </li>
@@ -386,15 +402,20 @@
                                                             </table>
 
                                                             
+                                                            
+
+
 
                                                             <!-- SECOND PANEL FOR CYCLES-->
                                                             
                                                             <% for (var cycles of dataD) { %>
                                                             <% for (var measurementcount of dataK) { %> 
                                                             <% if (cycles.goal_ID == goals.metric_ID && cycles.cycle_ID == measurementcount.cycle_ID) { %>
+
+                                                                
                                                             
                                                             <ul>
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>"> <span class="fa fa-chevron-down"></span>
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= cycles.cycle_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= cycles.cycle_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span>
                                                                     
                                                                         Cycle Name - <%= cycles.cycle_Name %> - Status:
                                                                         <% if ( cycles.status == 0) { %> Planning Phase
@@ -421,7 +442,7 @@
                                                                     
                                                                     </li>
                                                                 <div id="collapseTwo<%= cycles.cycle_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                                    <div class="panel-body">
+                                                                    <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
                                                                         <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
@@ -432,7 +453,7 @@
                                                                         
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>">Create
                                                                             Measurement</button>
 
                                                                         <% } else if (cycles.status  == 1) { %>
@@ -473,12 +494,14 @@
                                                                         </form>
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>">Create
                                                                             Measurement</button>
                                                                         <% } %>
                                                                         <% } %>
 
 
+
+                                                                        
 
 
                                                                         <!-- MEASUREMENTS LOOP PART-->
@@ -516,44 +539,14 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
-                                                                                            <td><%= measure_audit.measurement_Description %>
-                                                                                            </td>
-                                                                                            
-                                                                                                    <%if(measure_audit.priority_Level==1){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - High</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==2){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Medium</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==3){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Low</td>
-                                                                                                    <%}%>
-                                                                                            
                                                                                             <td>
-                                                                                                <% for (var targets_audit of dataJ) { %>
-                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                <%= targets_audit.target %>
-                                                                                                <% if (targets_audit.target_Type == 0) { %> 
-                                                                                                    %
-                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
-                                                                                                <% } %>
-        
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                    <% for (var targets_audit of dataJ) { %>
-                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                            <%= targets_audit.progress %><br>
-                                                                                                        <% } %>
-                
-                                                                                                    <% } %>
-                                                                                            </td> 
-                                                                                            <td>
-                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
-                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
-                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                                                                 <!-- VIEW TERM REPORT BUTTON-->
+                                                                                            <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                                                                <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
                                                                                             </form>
                                                                                             </td>
-                                                                                                <td></td>
+                                                                                                <td style="display: none;"></td>
                                                                                         </tr>
                                                                                         <% } %>
                                                                                     <% } %> 
@@ -566,44 +559,13 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
-                                                                                            <td><%= measure_audit.measurement_Description %>
-                                                                                            </td>
-                                                                                           
-                                                                                                    <%if(measure_audit.priority_Level==1){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - High</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==2){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Medium</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==3){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Low</td>
-                                                                                                    <%}%>
-                                                                                            
                                                                                             <td>
-                                                                                                <% for (var targets_audit of dataJ) { %>
-                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                <%= targets_audit.target %>
-                                                                                                <% if (targets_audit.target_Type == 0) { %> 
-                                                                                                    %
-                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
-                                                                                                <% } %>
-        
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                    <% for (var targets_audit of dataJ) { %>
-                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                        <%= targets_audit.progress %><br>
-                                                                                                        <% } %>
-                
-                                                                                                        <% } %>
-                                                                                            </td> 
-                                                                                            <td></td>
-                                                                                            <td>
-                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
-                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
-                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
-                                                                                            </form> 
-
+                                                                                                <!-- VIEW TERM REPORT BUTTON-->
+                                                                                            <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                                                                <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
+                                                                                            </form>
+                                                                                                <!--VIEW ANNUAL REPORT BUTTON-->
                                                                                             <form id="annualreport" method="post" action="AnnualReport">
                                                                                                     <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                                                                     <button type="submit" class="btn btn-primary" form="annualreport">View Annual Report</button> 
@@ -722,15 +684,24 @@
                                     </div>
 
                                 </div>
-
-                            </div>
+                                </div>
+                                </div>
                         </div>
-
-                    </div>
                 </div>
 
 
                 <!-- /page content -->
+
+                <!-- footer content -->
+                <footer style="background-color: #232931;">
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by
+                        <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    
+                </footer>
+                <!-- /footer content -->
+
 
 
 
@@ -803,10 +774,13 @@
 
 
 
-                    $('#my_modalCreateMeasures').on('show.bs.modal.fade.createMeasurement', function(e) {
+                    $('#my_modalCreateMeasures').on('show.bs.modal.fade-in.createMeasurement', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
+                        var goalid = $(e.relatedTarget).data('book-id2');
+                        console.log(goalid);
                         console.log("Create Measurement Modal");
                         $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
+                        
                     });
 
                     $('#my_modal').on('show.bs.modal.fade.createMeasurement', function(e) {
@@ -819,16 +793,7 @@
 
 
 
-                <!-- footer content -->
-                <footer>
-                    <div class="pull-right">
-                        Gentelella - Bootstrap Admin Template by
-                        <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
-
+                
 
 
                 <form method="get" action="/QualityMetrics">
@@ -847,7 +812,7 @@
                             o.style.height = (25 + o.scrollHeight) + "px";
                         }
 
-                        function addQT(tBody) {
+                        /*function addQT(tBody) {
                             var qt = document.getElementById("QualityTarget").value;
                             var td = document.getElementById("targetDesc").value;
                             var percent= document.getElementById("Percent").value;
@@ -865,15 +830,15 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4).hidden;
+                                var newCell3 = newRow.insertCell(4).style.display="none";
+                                
                                 
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode(percent);
                                 var newText2 = document.createTextNode(td);
                                 var newText3 = document.createTextNode("0");
-                                cancel.innerHTML =
-                                    "<input type='button' value='X' onclick='deleteRow(this)'>";
+                                cancel.innerHTML = "<input type='button' value='X' onclick='deleteRow(this)'>";
                                 newCell.appendChild(newText);
                                 newCell1.appendChild(newText1);
                                 newCell2.appendChild(newText2);
@@ -889,7 +854,7 @@
                                 var newCell1= newRow.insertCell(1);
                                 var newCell2= newRow.insertCell(2); 
                                 var cancel = newRow.insertCell(3);
-                                var newCell3 = newRow.insertCell(4).hidden;
+                                var newCell3 = newRow.insertCell(4);
                                 // Append a text node to the cell
                                 var newText = document.createTextNode(qt);
                                 var newText1 = document.createTextNode("count");
@@ -924,7 +889,43 @@
                                     div.style.display = "none";
                                 }, 600);
                             }
-                        }
+                        }*/
+
+                        $(document).ready(function () {
+                        $(".add-row-target").click(function test() {
+                            
+                            //alert("testing adding activities");
+                            var qt = document.getElementById("QualityTarget").value;
+                            var td = document.getElementById("targetDesc").value;
+                            var percent= document.getElementById("Percent").value;
+                            var check=document.getElementById("Percent");
+                            document.getElementById("QualityTarget").value=' ';
+                            document.getElementById("targetDesc").value=' ';
+                            
+                            if (qt != "" && check.checked==true) {
+                            //console.log(activityName);
+                            var percount = "0";
+                            var markup = "<tr><td>" + qt + "</td><td>" + '%' +"</td><td>" + td + "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + percount + "</td></tr>";
+                            var table = document.getElementById("TargetT")
+                            $(table).append(markup);
+                            } else if (qt != "" && check.checked==false) {
+                                var percount = "1";
+                                var markup = "<tr><td>" + qt + "</td><td>" + '#' +"</td><td>" + td + "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + percount + "</td></tr>";
+                                var table = document.getElementById("TargetT")
+                            $(table).append(markup);
+                            }else {
+                                alert("please give an input");
+                            }
+
+                            
+                        });
+
+                    });
+
+                    function deleteRow(r) {
+                    //console.log("testing delete click");
+                r.closest("tr").remove();
+            }
 
                         $(document).ready(function() {
                             $(".add-row-cycles").click(function test() {
@@ -1066,8 +1067,7 @@
                             $("#toJSON").click(function() {
                                 console.log("Hello");
                                 
-                                var table = JSON.stringify($('#TargetT')
-                                    .tableToJSON());
+                                var table = JSON.stringify($('#TargetT').tableToJSON());
                                 var mname = document.getElementById(
                                     "MeasurementName").value;
                                 var desc = document.getElementById(
@@ -1208,7 +1208,9 @@
                     <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
                     <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+                    
 
                     </body>
+                    
 
 </html>

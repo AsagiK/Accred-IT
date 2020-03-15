@@ -13,7 +13,7 @@
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="assests/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -41,18 +41,19 @@
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
         <div class="main_container">
-            <%- include ./nav.ejs %>
+            <% include ./nav %>
+            
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>View Submissions Details</h3>
-                            <h2>Testing User - <%= current_user[0].User_First %> - <%= current_user[0].User_ID %></h2>
-                            <h2>Current Submission - <%= data[0].pending_ID %> - <%= data[0].activity_name %></h2>
+                            <h3 style="color: #dddddd;">View Submissions Details</h3>
+                            <!--h2>Testing User - <%= current_user[0].User_First %> - <%= current_user[0].User_ID %></h2-->
+                            <h2 style="color: #dddddd;">Current Submission - <%= data[0].pending_ID %> - <%= data[0].activity_name %></h2>
 
                         </div>
                     </div>
@@ -60,7 +61,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
                             <div class="x_content">
                                 <input type="hidden" name="PID" id="PID" value="<%= data[0].pending_ID %>">
 
@@ -83,7 +84,7 @@
 
                                 <br>
                                 <!--TABLE TO HOLD THE CHOSEN EVIDENCE TO UPDATE-->
-                                <table class="table table-bordered" id="updateTable">
+                                <table class="table table-bordered" id="updateTable" style="background-color: whitesmoke;">
                                     <thead>
                                         <tr>
                                             <th>Submission ID</th>
@@ -133,7 +134,7 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="border-radius: 8px; background-color: #232931;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
@@ -260,8 +261,7 @@
 
             </script>
 
-            <!-- jQuery -->
-            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            
             <!-- Bootstrap -->
             <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
             <!-- FastClick -->

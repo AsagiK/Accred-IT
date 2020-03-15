@@ -5,6 +5,7 @@ TRUNCATE TABLE approved_activities;
 TRUNCATE TABLE approved_activities_audit;
 TRUNCATE TABLE cycle;
 TRUNCATE TABLE documents;
+TRUNCATE TABLE folder_documents;
 TRUNCATE TABLE capstone.group;
 TRUNCATE TABLE groupdetails;
 TRUNCATE TABLE  measurement;
@@ -17,4 +18,6 @@ TRUNCATE TABLE  metric;
 TRUNCATE TABLE  pending_activities;
 TRUNCATE TABLE  pending_activities_audit;
 TRUNCATE TABLE  pending_outputs;
+TRUNCATE TABLE  notifications;
+TRUNCATE TABLE  notifications_read
 

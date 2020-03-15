@@ -136,8 +136,13 @@ module.exports = {
     },
 
     RegisterAdminPage: function (req, resp) {
-       
+
         resp.redirect('/RegisterAdminPage.ejs');
-    }
+    },
+
+    Maintenance: function (req, resp) {
+        resp.render('./pages/SystemMaintenancePage.ejs');
+    },
+
 
 }

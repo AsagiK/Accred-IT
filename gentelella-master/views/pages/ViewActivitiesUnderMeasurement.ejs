@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View User Page</title>
+    <title>View ACtivities Under Measurement Page</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,32 +37,32 @@
     <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    <link href="assets/build/css/custom.min.css" rel="stylesheet"> 
     
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <% include ./nav %>
             <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div class="col-md-4  tile_stats_count" style="color: #dddddd;">   
                     <div class="page-title">
                         <div class="title_left">
 
-                            <h3>View Activities</h3>
+                            <h3 style="color: #dddddd; font-size:xx-large;">View Activities</h3>
 
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content"> 
+                    <div class="col-md-12 col-sm-15 col-xs-15">
+                        <div class="x_panel" style=" border-radius: 8px;">
+                            <div class="x_content" style="background-color: #eeeeee; font-style: italic;"> 
                                 
-                                    <table class="table table-bordered" style="table-layout: fixed;">
+                                    <table id="datatable-fixed-header"   class="table table-bordered" style="color: black; font-size: medium;">
                                             <thead>
                                                 <tr>
                                                     <th style="display: none;">#</th>
@@ -78,11 +78,11 @@
                                                     
                                                        
                                                     <tr> 
-                                                            <td style="display: none;"><%= act.activity_ID %></td>
-                                                            <td><%= act.activity_name %> </td>
-                                                            <td><%= act.description %> </td>  
-                                                            <td><%= act.deadline %></td>
-                                                            <td> 
+                                                            <td style="display: none;" width="20%"><%= act.activity_ID %></td>
+                                                            <td width="20%"><%= act.activity_name %> </td>
+                                                            <td width="20%"><%= act.description %> </td>  
+                                                            <td width="20%"><%= act.deadline %></td>
+                                                            <td width="20%"> 
                                                             <% for (var evi of dataB) { %> 
                                                                 <% for (var doc of dataC) { %>
                                                                  <% if (act.activity_ID == evi.activityID &&evi.documentID == doc.Document_ID) { %>       

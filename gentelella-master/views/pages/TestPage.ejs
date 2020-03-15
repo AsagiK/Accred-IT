@@ -43,7 +43,7 @@
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 
 </head>
-<!--script type="text/javascript">
+<script type="text/javascript">
     // The Browser API key obtained from the Google Developers Console.
     var developerKey = 'AIzaSyD_3PSEOfecxq-voC5VjvN0leYlP-jKjPI';
 
@@ -113,7 +113,7 @@
 
             var datastring = "url=" + data.docs[0].url + "&name=" + data.docs[0].name;
             datastring = JSON.stringify(data.docs);
-            var senddata = "data=" + datastring + "&userauth=" + oauthToken;
+            var senddata = "data=" + datastring;
 
             $.ajax({
                 type: 'POST',
@@ -136,7 +136,7 @@
         console.log(data[google.picker.Response.DOCUMENTS].length)
     }
 
-</script-->
+</script>
 
 
 <style>
@@ -197,7 +197,7 @@
 
             <script>
                 $(document).ready(function() {
-
+                    console.log("hello");
 
 
                     $("#btnsubmit").click(function(event) {
@@ -215,7 +215,7 @@
                         })
                     });
 
-                    $("#btnsubmit2").click(function(event) {
+                    $( document ).ready(function() {
                         event.preventDefault();
 
                         $.ajax({
@@ -227,7 +227,12 @@
                             },
 
                             success: function(data) {
-                                console.log(data);
+                                var wew = data[0];
+                                for(var i = 0; i <= wew.length; i++)
+                                {
+                                    console.log(wew[i].message);
+                                }
+                                
                             },
 
                             error: function() {
