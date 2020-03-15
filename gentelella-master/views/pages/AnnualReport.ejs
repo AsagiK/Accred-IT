@@ -50,7 +50,7 @@
                     <div class="page-title">
                         <div class="title_left" style="color: #dddddd;"> 
 
-                            <h3>Annual Report</h3>
+                            <h3 style="color: #dddddd; font-size:xx-large;">Annual Report</h3>
 
                         </div>
                     </div>
@@ -58,12 +58,12 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                             <div class="x_content">
                                 <br />
 
                                 <!--view table for users-->
-                                <table  id= "datatable-buttons" class="table table-bordered">
+                                <table  id= "datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -75,13 +75,13 @@
                                     <tbody>
                                             <% for (var report of data) { %>                                              
                                             <tr>
-                                                <td width="30%" scope="row"><%= report.measurementID %></td>
+                                                <td width="10%" scope="row"><%= report.measurementID %></td>
                                                 <td width="30%"><%= report.measurement_Name %></td>
-                                                <td width="30%">
+                                                <td width="10%">
                                                     <%=report.target %> <%= report.target_Desc %>
 
                                                 </td>
-                                                <td width="30%"><%= report.progress %></td>
+                                                <td width="10%"><%= report.progress %></td>
                                                 
                                             </tr> 
                     

@@ -239,7 +239,7 @@ width: 100%;
                                         <div class="dash col-md-12">
                                            <!--ACTIVITIES-->   
                                         
-                                            <% for (var act of dataC) { %> 
+                                                <% for (var act of dataC) { %> 
                                                 <% if (current_user[0].Group == act.activity_Member) { %> 
 
                                                     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> 
@@ -263,16 +263,15 @@ width: 100%;
                                                                                 <br> 
                                                                                 <form method="get" action="QualityMetrics">
                                                                                         <button type="submit" class="btn btn-primary">View Details</button>
-                                                                                    </form>
+                                                                                </form>
                                                                                 <br>
                                                                                 <br>
-
                                                                         </div>
 
                                                                             <!--SUBMISSIONS PANEL-->
 
                                                                             <% for (var pending of dataF) { %> 
-                                                                            <% if (current_user[0].User_ID == pending.user_ID) { %>
+                                                                            <% if (current_user[0].User_ID == pending.user_ID && pending.active == 1) { %>
                                                                             <div class="panel">
                                                                                 <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= pending.pending_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= pending.pending_ID %>">
 
@@ -294,7 +293,7 @@ width: 100%;
                                                                                                             <th>Suggested Score</th>
                                                                                                             <th>Date Updated</th>
                                                                                                             <th>Comments</th>
-                                                                                                            <th>Document Name</th>>
+                                                                                                            <th>Document Name</th>
                                                                                                             <th></th>
                                                                                                         </tr>
                                                                                                     </thead> 
@@ -318,36 +317,25 @@ width: 100%;
                                                                                                          
                                                                                                         <td><form method="get" action="QualityMetrics">
                                                                                                                 <button type="submit" class="btn btn-primary">View Details</button>
-                                                                                                            </form></td>
+                                                                                                            </form>
+                                                                                                        </td>
                                                                                                     </tr>
-                                                
-                                                        
                                                                                                 </tbody>
                                                                                       
                                                                                             </table>
                                                                                     </div>
-
                                                                                 </div>
-
-                                                                            </div>    
-
-
+                                                                            </div> 
                                                                             <% } %>
                                                                             <% } %>
-                                                                        
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-                
                                                     </div>
-
+                                             <% } %>
                                         <% } %>
-
-                                 <% } %>
                                     </div>
                                 </div>
-
                         </div> 
                     </div> 
 
