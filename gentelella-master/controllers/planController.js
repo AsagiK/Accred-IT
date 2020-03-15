@@ -2201,8 +2201,11 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-
-            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.termnum ASC; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
+            var CID = req.body.CID;
+            var sql = "SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement on measurement.measurement_ID = measurements_targets_audit.measurementID AND measurement.cycle_ID = (?); SELECT * FROM capstone.measurements_targets;"
+            var values = [CID, CID]
+            console.log (CID);
+            connection.query( sql,values,function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CategorizeActivities.ejs', {
                     data: results[0],
