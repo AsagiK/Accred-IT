@@ -36,16 +36,16 @@
     <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="background-color: #232931;">
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="background-color: #232931;">
             <%- include ./nav.ejs %>
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="background-color: #232931;">
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>View Submissions Details</h3>
+                            <h3 style="color: #dddddd;">View Submissions Details</h3>
                          
                         </div>
                         
@@ -57,7 +57,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;color: white">
                             <div class="x_content">
                                
                                 
@@ -77,7 +77,7 @@
                                                 <% for (var evidences of dataC) { %>
                                                     <% for (var docs of dataB) { %>
                                                         <% if (evidences.documentID == docs.Document_ID) { %>
-                                                            <a href="<%= docs.Document_Route %>" download><%= docs.Document_Name %></a> <br>
+                                                            <a href="<%= docs.Document_Route %>" download style="color: white;"><%= docs.Document_Name %></a> <br>
                                                         <% } %>
                                                     <% } %>
                                                 <% } %>    
@@ -109,7 +109,7 @@
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <footer>
+                <footer style="background-color: #232931; border-radius: 8px;">
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
