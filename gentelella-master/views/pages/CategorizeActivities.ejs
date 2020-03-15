@@ -51,9 +51,7 @@
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
-
                                 <h3 style="color: #dddddd; font-size:xx-large;">Term Report</h3>
-
                             </div>
                         </div>
                     </div>
@@ -62,7 +60,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
-                                    <br />
+                                    
                                     
                                     <!--view table for users-->
                                     <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
@@ -76,12 +74,13 @@
                                                 <th>Quality Target</th>
                                                 <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                     <th>Progress</th>
-                                                    
+                                                    <th></th>
+                                                    <th></th>
                                                 <% } else { %>
                                                 <th># of Activities</th>
-
+                                                    <th></th>
                                                 <% } %>
-                                                <th></th>
+                                                
                                             </tr>
                                         </thead>                                                                       
                                         <tbody> 
@@ -118,7 +117,7 @@
                                                         </td>
                                                         
                                                                 <% for (var targets_audit of dataC) { %>
-                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && targets_audit.target_Type == 0) { %> 
 
                                                                         <% if (targets_audit.progress >= 75) { %>
                                                                             <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
@@ -129,7 +128,8 @@
                                                                         <% } else if (targets_audit.progress >= 0) { %>
                                                                             <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
                                                                         <% } %>
-                                                                    <% } %>
+                                                                   
+                                                                    <% }%>
 
                                                                 <% } %>
                                                          

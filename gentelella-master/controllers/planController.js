@@ -2180,15 +2180,16 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
 
-            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.termnum ASC; SELECT * FROM capstone.measurement_audit; SELECT cycle.cycle_ID, count(measurement.measurement_ID) as MeasurementCount FROM capstone.`cycle` left join capstone.`measurement` on cycle.cycle_ID = measurement.cycle_ID group by cycle.cycle_ID;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.termnum ASC; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CategorizeActivities.ejs', {
                     data: results[0],
                     dataB: results[1],
                     dataC: results[2],
+                    dataD: results[3],
                     current_user: sess.user
                 });
-                console.log(results)
+                console.log(results[2])
             });
         }
 
