@@ -203,11 +203,11 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th>Term</th>
-                                            <th style="display: none;">TotalTerm</th>
-                                            <th style="display: none;">GoalID</th>
-                                            <th style="display: none;">StartDate</th>
-                                            <th style="display: none;">EndDate</th>
+                                            <th style='display:none;'>Term</th>
+                                            <th style='display:none;'>TotalTerm</th>
+                                            <th style='display:none;'>GoalID</th>
+                                            <th style='display:none;'>StartDate</th>
+                                            <th style='display:none;'>EndDate</th>
                                             
                                         </thead>
                                     </table>
@@ -988,15 +988,17 @@
                                     var CNT = 1;
                                     var CNY = 1;
                                     var rowID = 1;
+                                    var order = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td >"+ CNT +"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td style='display:none;'>"+ order +"</td><td style='display:none;'>"+ termNum+"</td><td style='display:none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display:none;'></td><td id='cellEDate~" +rowID+"' style='display:none;'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
                                             rowID++;
+                                            order++;
                                         }
-                                        
+                                        CNT = 1
                                         CNY++;
                                     }
                                  
