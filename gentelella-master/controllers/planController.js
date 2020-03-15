@@ -12,7 +12,6 @@ var connection = require('../config/db');
 var url = require('url');
 var session = require('express-session');
 var Notif = require('../controllers/NotifController');
-var Ses = require('../controllers/SessionController');
 // ---- DEFINE SESSION
 server.use(session({
     secret: 'ssshhhhh',
