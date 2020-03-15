@@ -1734,11 +1734,7 @@ module.exports = {
                 });
                 console.log();
                 console.log("activities are loaded");
-
-
-
             });
-
         }
     },
 
