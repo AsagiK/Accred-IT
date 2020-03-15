@@ -80,8 +80,17 @@
                                                 <td width="10%">
                                                     <%=report.target %> <%= report.target_Desc %>
 
-                                                </td>
-                                                <td width="10%"><%= report.progress %></td>
+                                                </td> 
+                                                <% if (report.progress >= 75) { %>
+                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
+                                                <% } else if (report.progress >= 60) { %> 
+                                                    <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
+                                                <% } else if (report.progress >= 30) { %>
+                                                    <td style="color:tomato; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
+                                                <% } else if (report.progress >= 0) { %>
+                                                    <td style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
+                                                <% } %>
+                                                
                                                 
                                             </tr> 
                     

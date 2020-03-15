@@ -203,11 +203,11 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th style='display:none;'>Term</th>
-                                            <th style='display:none;'>TotalTerm</th>
-                                            <th style='display:none;'>GoalID</th>
-                                            <th style='display:none;'>StartDate</th>
-                                            <th style='display:none;'>EndDate</th>
+                                            <th>Term</th>
+                                            <th style="display: none;">TotalTerm</th>
+                                            <th style="display: none;">GoalID</th>
+                                            <th style="display: none;">StartDate</th>
+                                            <th style="display: none;">EndDate</th>
                                             
                                         </thead>
                                     </table>
@@ -517,51 +517,11 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
-                                                                                            <td><%= measure_audit.measurement_Description %>
-                                                                                            </td>
-                                                                                            
-                                                                                                    <%if(measure_audit.priority_Level==1){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - High</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==2){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Medium</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==3){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Low</td>
-                                                                                                    <%}%>
-                                                                                            
                                                                                             <td>
-                                                                                                <% for (var targets_audit of dataJ) { %>
-                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                <%= targets_audit.target %>
-                                                                                                <% if (targets_audit.target_Type == 0) { %> 
-                                                                                                    %
-                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
-                                                                                                <% } %>
-        
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                    <% for (var targets_audit of dataJ) { %>
-                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                            <% if (targets_audit.target_Type == 0){ %>
-                                                                                                                <%= targets_audit.progress %>% / <%= targets_audit.target %>%<br>
-                                                                                                            <% } else { %> 
-                                                                                                                <%= targets_audit.progress %> / <%= targets_audit.target %><br>
-                                                                                                            <% } %>
-                                                                                                            
-                                                                                                        <% } %>
-                
-                                                                                                    <% } %>
-                                                                                            </td> 
-                                                                                            <td>
-                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
-                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
-                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
-                                                                                            </form> 
-
+                                                                                                 <!-- VIEW TERM REPORT BUTTON-->
                                                                                             <form id="categorizeactivities" method="get" action="CategorizeActivities">
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> Categorize Activities</button>
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
                                                                                             </form>
                                                                                             </td>
                                                                                                 <td style="display: none;"></td>
@@ -577,48 +537,13 @@
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
-                                                                                            <td><%= measure_audit.measurement_Description %>
-                                                                                            </td>
-                                                                                           
-                                                                                                    <%if(measure_audit.priority_Level==1){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - High</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==2){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Medium</td>
-                                                                                                    <%}else if(measure_audit.priority_Level==3){%>
-                                                                                                        <td><%= measure_audit.priority_Level %> - Low</td>
-                                                                                                    <%}%>
-                                                                                            
                                                                                             <td>
-                                                                                                <% for (var targets_audit of dataJ) { %>
-                                                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                <%= targets_audit.target %>
-                                                                                                <% if (targets_audit.target_Type == 0) { %> 
-                                                                                                    %
-                                                                                                <% } %> - <%= targets_audit.target_Desc %><br>
-                                                                                                <% } %>
-        
-                                                                                                <% } %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                    <% for (var targets_audit of dataJ) { %>
-                                                                                                        <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
-                                                                                                            <% if (targets_audit.target_Type == 0){ %>
-                                                                                                                <%= targets_audit.progress %>% / <%= targets_audit.target %>%<br>
-                                                                                                            <% } else { %> 
-                                                                                                                <%= targets_audit.progress %> / <%= targets_audit.target %><br>
-                                                                                                            <% } %>
-                                                                                                        <% } %>
-                
-                                                                                                        <% } %>
-                                                                                            </td> 
-                                                                                            <td></td>
-                                                                                            <td>
-                                                                                                 <!-- VIEW ACTIVITIES BUTTON-->
-                                                                                            <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
-                                                                                                <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
-                                                                                            </form> 
-
+                                                                                                <!-- VIEW TERM REPORT BUTTON-->
+                                                                                            <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                                                                <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
+                                                                                            </form>
+                                                                                                <!--VIEW ANNUAL REPORT BUTTON-->
                                                                                             <form id="annualreport" method="post" action="AnnualReport">
                                                                                                     <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                                                                     <button type="submit" class="btn btn-primary" form="annualreport">View Annual Report</button> 
@@ -988,17 +913,15 @@
                                     var CNT = 1;
                                     var CNY = 1;
                                     var rowID = 1;
-                                    var order = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td style='display:none;'>"+ order +"</td><td style='display:none;'>"+ termNum+"</td><td style='display:none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display:none;'></td><td id='cellEDate~" +rowID+"' style='display:none;'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td >"+ CNT +"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
                                             rowID++;
-                                            order++;
                                         }
-                                        CNT = 1
+                                        
                                         CNY++;
                                     }
                                  

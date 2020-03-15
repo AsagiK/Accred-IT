@@ -76,12 +76,12 @@
                                                 <th>Quality Target</th>
                                                 <% if (cycles.status == 4 || cycles.status == 3) { %>
                                                     <th>Progress</th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    
                                                 <% } else { %>
                                                 <th># of Activities</th>
-                                                <th></th>                                                
+
                                                 <% } %>
+                                                <th></th>
                                             </tr>
                                         </thead>                                                                       
                                         <tbody> 
@@ -128,7 +128,7 @@
                                                                             <td style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
                                                                         <% } else if (targets_audit.progress >= 0) { %>
                                                                             <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } %> %>
+                                                                        <% } %>
                                                                     <% } %>
 
                                                                 <% } %>
@@ -139,13 +139,6 @@
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                             <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
                                                         </form> 
-
-                                                        <form id="categorizeactivities" method="get" action="CategorizeActivities">
-                                                            <input type="hidden" name="CID" value="<%= cycles.cycle %>">
-                                                            <button type="submit" class="btn btn-primary" form="categorizeactivities"> Categorize Activities</button>
-                                                        </form>
-                                                        </td>
-                                                            <td></td>
                                                     </tr>
                                                     <% } %>
                                                 <% } %> 
