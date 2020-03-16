@@ -60,12 +60,11 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
-                                    
-                                    
+                                    <% for (var cycles of data) { %>
                                     <!--view table for users-->
                                     <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
-                                            <% for (var cycles of data) { %>
+                                            
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Measurement Name</th>
@@ -73,13 +72,13 @@
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
                                                 <% if (cycles.status == 4 || cycles.status == 3) { %>
-                                                    <th>Progress</th>
-                                                    <th></th>
+                                                    <th>Progress</th>    
                                                     <th></th>
                                                 <% } else { %>
                                                 <th># of Activities</th>
-                                                    <th></th>
+                                                    
                                                 <% } %>
+                                                
                                                 
                                             </tr>
                                         </thead>                                                                       
@@ -116,8 +115,9 @@
                                                             <% } %>
                                                         </td>
                                                         
-                                                                <% for (var targets_audit of dataC) { %>
-                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && targets_audit.target_Type == 0) { %> 
+                                                                <% for (var targets_audit of dataC) { %> 
+                                                                    
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
 
                                                                         <% if (targets_audit.progress >= 75) { %>
                                                                             <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
@@ -138,17 +138,20 @@
                                                         <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                             <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
-                                                        </form> 
-                                                    </tr>
-                                                    <% } %>
+                                                        </form>        
+                                                        </td>                                            
+                                                     </tr>
+                                                        <% } %>
+                                                    <% } %> 
                                                 <% } %> 
-                                                <!--ANNUAL REPORT-->
-                                            <% } %> 
-                                        <% } %>
-                                    </table> 
-                                    
+                                           
+                                    </table>
+                                    <% } %> 
+                                     
                                     <div class="ln_solid">
+                                        
                                     </div>
+                                    <button class ="btn btn-primary" onclick="window.history.back()">Back</button>
                                 </div>
                             </div>
                         </div>

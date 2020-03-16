@@ -41,7 +41,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone.users", function (err, results, fields) {
+            connection.query("SELECT users.User_ID, users.User_First, users.Role, users.User_Last, users.username, users.email_address, group.Group_Name, area.Area_Name, roles.Role_Name, users.ContactNo FROM capstone.users join capstone.group on users.Group=group.Group_ID join capstone.roles on users.Role = roles.Role_ID join capstone.area on group.Area_ID = area.Area_ID; SELECT users.Role, users.User_ID, users.User_First, users.User_Last, users.username, users.email_address, users.ContactNo FROM capstone.users where users.Group IS NULL; Select users.User_ID from capstone.users", function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Viewusers.ejs', {
                     data: results[0],
@@ -1958,14 +1958,15 @@ module.exports = {
         } else {
             var MID = req.body.MID;
 
-            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); "
+            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); SELECT * FROM capstone.cycle;"
             console.log("ANNUAL REPORT TEST CUH " + MID);
             var values = [MID]
 
-            connection.query(sql, values, function (err, result, fields) {
+            connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/AnnualReport.ejs', {
-                    data: result,
+                    data: results[0],
+                    dataB: results[1],
                     current_user: sess.user
                 });
 
@@ -2201,8 +2202,11 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-
-            connection.query("SELECT * FROM capstone.cycle ORDER BY cycle.termnum ASC; SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurements_targets_audit; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
+            var CID = req.body.CID;
+            var sql = "SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets;"
+            var values = [CID, CID]
+            console.log (CID);
+            connection.query( sql,values,function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CategorizeActivities.ejs', {
                     data: results[0],

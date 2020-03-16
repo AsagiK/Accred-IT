@@ -38,46 +38,46 @@
 </script>
   
   <div class="col-md-3 left_col">
-      <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0;">
-              <a href="/home" class="site_title"><i class="fa fa-github"></i> <span>AccredIT</span></a>
+      <div class="left_col scroll-view" style="background-color: #232931;">
+          <div class="navbar nav_title" style="border: 0; background-color:#393e46;">
+            <a href="/home" class="site_title"><img src="images/CCS-logo.jpg" height="50" width="50"> <span style="color: white;">AccredIT</span></a>
           </div>
 
           <div class="clearfix"></div>
 
           <!-- menu profile quick info -->
-          <div class="profile clearfix">
+          <div class="profile clearfix" style="background-color: #232931;">
               <!--div class="profile_pic">
                   <img src="images/img.jpg" alt="..." class="img-circle profile_img">
               </div-->
               <div class="profile_info">
-                  <span>
-                    Welcome,
-                    <% if(locals.current_user){ %>
-                      <%= current_user[0].User_First %> <%= current_user[0].User_Last %> 
-                  </span>
-                  <h2>
-                    <% if (current_user[0].Role == 1) { %>
-                    Role: Admin
-                    <% } else if (current_user[0].Role == 2) { %>
-                    Role: QA Officer
-                    <% } else if (current_user[0].Role == 3) { %>
-                    Role: Department Chair
-                    <% } else { %>
-                    Role: User
-                    <% } %>
-                  </h2>
-                  <%}else{%>
-                  <h2>John Doe</h2>
-                  <%}%>
-              </div>
+                <span>
+                  Welcome,
+                  <% if(locals.current_user){ %>
+                    <%= current_user[0].User_First %> <%= current_user[0].User_Last %> 
+                </span>
+                <h2>
+                  <% if (current_user[0].Role == 1) { %>
+                  Role: Admin
+                  <% } else if (current_user[0].Role == 2) { %>
+                  Role: QA Officer
+                  <% } else if (current_user[0].Role == 3) { %>
+                  Role: Department Chair
+                  <% } else { %>
+                  Role: User
+                  <% } %>
+                </h2>
+                <%}else{%>
+                <h2>John Doe</h2>
+                <%}%>
+            </div>
           </div>
           <!-- /menu profile quick info -->
 
           <br />
 
           <!-- sidebar menu -->
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" style="background: #232931;">
               <div class="menu_section">
                   <h3>General</h3>
                   <ul class="nav side-menu">
@@ -85,12 +85,14 @@
                           <ul class="nav child_menu">
                               <li><a><i class="fa fa-user"></i> Users <span class="fa fa-chevron-down"></span></a>
                                   <ul class="nav child_menu">
-                                    <% if (current_user[0].Role == 4 || current_user[0].Role == 3 || current_user[0].Role == 1) { %>
+                                    <% if (current_user[0].Role == 3 || current_user[0].Role == 2 || current_user[0].Role == 1) { %>
                                       <li><a href="/Viewusers">View Users</a></li>
 
                                       <li><a href="/Createusers">Create Users</a></li>
 
-                                      <li><a>View Account (NO PAGE YET)</a></li>
+                                      <li><a href="/ViewUserAccount">View User Submissions</a></li>
+                                    <% }else { %>
+                                        <li><a href="/ViewUserAccount">View User Submissions</a></li>
                                     <% } %>
                                   </ul>
                               </li>
@@ -158,6 +160,7 @@
                           <ul class="nav child_menu">
                               <li><a href="/ViewUsersSubmission">Update Submissions</a></li>
                               <li><a href="/TestPage">Test Page</a></li>
+                              <li><a href="/SystemMaintenance">System Maintenance</a></li>
                               <!--<li><a href="FinalReport">Final Report For Group Leader</a></li>
                               <li><a href="ActionPlan">Final Report For Group Leader</a></li>
                               <li><a href="Comparativeanalysis">Comparative Analysis</a></li>
@@ -177,29 +180,12 @@
               </div>
           </div>
           <!-- /sidebar menu -->
-
-          <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="Logout">
-                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-          </div>
-          <!-- /menu footer buttons -->
       </div>
   </div>
 
   <!-- top navigation -->
   <div class="top_nav">
-      <div class="nav_menu">
+      <div class="nav_menu" style="border: 0; background-color:#393e46;">
           <nav>
               <div class="nav toggle">
                   <a id="menu_toggle"><i class="fa fa-bars"></i></a>
@@ -231,15 +217,11 @@
                   <li role="presentation" class="dropdown">
                       <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                           <i class="fa fa-envelope-o"></i>
-                          <span class="badge bg-green">6</span>
+                          <!--span class="badge bg-green">6</span-->
                       </a>
                       <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                           <li>
                               <a>
-                                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                  <span>
-                                      <span class="time">3 mins ago</span>
-                                  </span>
                                   <span class="message">
                                       <div id="try"></div>
                                   </span>

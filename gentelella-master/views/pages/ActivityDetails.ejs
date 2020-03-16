@@ -58,7 +58,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" style="border-radius: 8px;">
                             <div class="x_content">
 
                                 <div class="x_content">
@@ -147,7 +147,7 @@
                                                                 <% } %>  
                                                             </select>
                                                             <br>
-                                                            <a class="btn btn-primary" id="addoutput">Add output</a>
+                                                            <a class="btn btn-primary btn-xs" id="addoutput">Add output</a>
                                                             <br>
                                                             <table id="tableoutputs" class="table table-striped table-bordered" style="width=100%; height=100%;">
                                                                     <thead>
@@ -204,7 +204,7 @@
 
 
                                                         </table>
-                                                        <button type="button" id="delete-row" class="btn btn-dark">Delete Row</button>
+                                                        <button type="button" id="delete-row" class="btn btn-danger btn-xs">Delete Row</button>
                                                     </td>
                                                 </tr>
                                                 <tr style="display: none;">
@@ -375,7 +375,8 @@
                     var outputName = output.substr(output.lastIndexOf('~') + 1);
                     console.log("OUTPUT ID = " + outputID);
                     console.log("OUTPUT NAME = " + outputName);
-                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-primary' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-danger btn-xs' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    $("#outputs option:selected").remove();
                     $("#tableoutputs tbody").append(markup);
                 });
 
@@ -442,6 +443,15 @@
 
             function deleteRow(r) {
                     r.closest("tr").remove();
+                    var valID = r.closest("tr").cells[0].innerHTML;
+                    var valName = r.closest("tr").cells[1].innerHTML;
+                    console.log(valID);
+                    console.log(valName);
+                    var dropdown = document.getElementById("outputs");
+                    var option = document.createElement("option");
+                    option.innerHTML = valName;
+                    option.value = valID + "~" + valName;
+                    dropdown.options.add(option);
                 }
 
             function test() {

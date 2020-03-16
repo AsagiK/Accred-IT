@@ -203,11 +203,12 @@
                                             <th>Cycle Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th>Term</th>
+                                            <th style='display: none;'>Term</th>
                                             <th style="display: none;">TotalTerm</th>
                                             <th style="display: none;">GoalID</th>
                                             <th style="display: none;">StartDate</th>
                                             <th style="display: none;">EndDate</th>
+                                            <th style="display: none;">Index</th>
                                             
                                         </thead>
                                     </table>
@@ -437,7 +438,7 @@
                                                                         <!--<br><span class="fa fa-angle-right"></span>Cycle ended on: <br>-->
                                                                     <% } %>
                                                                     <% if (measurementcount.cycle_ID == cycles.cycle_ID) { %>
-                                                                        <br><span class="fa fa-angle-right"></span># of Measurements: <%= measurementcount.MeasurementCount %> 
+                                                                        <br><span class="fa fa-angle-right"></span># of Active Measurements: <%= measurementcount.MeasurementCount %> 
                                                                     <% } %>
                                                                     
                                                                     </li>
@@ -531,7 +532,7 @@
                                                                             </thead>
                                                                             <tbody> 
                                                                                 <!--TERMLY REPORT VIEW-->
-                                                                                <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
+                                                                                <% if (cycles.status == 4 && cycles.termindex != cycles.totalterm) { %>
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
@@ -541,7 +542,7 @@
                                                                                             </td>
                                                                                             <td>
                                                                                                  <!-- VIEW TERM REPORT BUTTON-->
-                                                                                            <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                                                            <form id="categorizeactivities" method="post" action="CategorizeActivities">
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
                                                                                                 <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
                                                                                             </form>
@@ -551,7 +552,7 @@
                                                                                         <% } %>
                                                                                     <% } %> 
                                                                                     <!--ANNUAL REPORT-->
-                                                                                <% } else if (cycles.status == 4 && cycles.termnum == cycles.totalterm) { %> 
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm) { %> 
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
@@ -937,16 +938,18 @@
                                     var gid = $("#gid").val();
                                     var CNT = 1;
                                     var CNY = 1;
+                                    var order = 1;
                                     var rowID = 1;
                                     for(var i=0;i<yearNum;i++){
                                         for(var j=0;j<termNum;j++){
-                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ CNT + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td >"+ CNT +"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td></tr>";
+                                                var markup = "<tr><td>" + "Year "+ CNY +" - Term "+ order + "</td><td>" + "<input type='date' id='sDate~"+ rowID +"' name='sDate~"+ rowID +"' onchange='checkStartDate(event);'>" + "</td><td>" + "<input type='date' id='eDate~"+ rowID +"' name='eDate~"+ rowID +"' onchange='checkEndDate(event);'>" + "<td style='display: none;'>"+ CNT +"</td><td style='display: none;'>"+ termNum+"</td><td style='display: none;'>" + gid + "</td><td id='cellSDate~" +rowID+"' style='display: none;'></td><td id='cellEDate~" +rowID+"' style='display: none;'></td><td style='display: none;'>" + order + "</td></tr>";
                                             var table = document.getElementById("tableCycles")
                                             $(table).append(markup);
                                             CNT++;
                                             rowID++;
+                                            order++;
                                         }
-                                        
+                                        order = 1;
                                         CNY++;
                                     }
                                  
