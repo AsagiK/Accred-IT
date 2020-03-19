@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Assign Group to Activity </title>
+    <title>Assign Group Member to Activity </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -133,40 +133,34 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group Area</th>
-                                                    <th>Group Name</th>
-                                                    <th style="display: none;">Group ID</th>
-                                                    <th style="display: none;">Activity ID</th>
-                                                    <th style="display: none;">Measurement ID</th>
+                                                    <th>User First</th>
+                                                    <th>User Last</th>
+                                                    <th >User ID</th>
+                                                    <th >Activity ID</th>
+                                                    <th >Measurement ID</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <% for (var group of data) { %>
+                                                <% for (var user of data) { %>
                                                     
                                                 <tr>
                                                     <td>
                                                         <label style="border-color: black;" class="containercheckbox">
                                                                 <input type='checkbox' name='record'
-                                                                id='<%= group.Group_ID %>' style="border-color: black;">
+                                                                id='<%= user.User_ID %>' style="border-color: black;">
                                                                 <span style="border-color: black;" class="checkmark"></span>
                                                               </label>
                                                     </td> 
-                                                    
-                                                        <% for (var area of dataE) { %>
-                                                            <% if (area.Area_ID == group.Area_ID) { %>
-                                                                <td id="Area<%= group.Group_ID %>" value="<%= area.Area_Name %>">
-                                                                    <%= area.Area_Name %></td>
-                                                            <% } %>
-                                                        <% } %> 
-                                                    
-                                                    <td id="GroupName<%= group.Group_ID %>" value="<%= group.Group_Name %>">
-                                                        <%= group.Group_Name %></td>
-                                                    <td style="display: none;" id="GID<%= group.Group_ID %>" value="<%= group.Group_ID %>">
-                                                        <%= group.Group_ID %></td>
-                                                    <td style="display: none;" id='hidden<%= group.Group_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                    <td id="first<%= user.User_ID %>" value="<%= user.User_First %>">
+                                                        <%= user.User_First %></td>
+                                                    <td id="last<%= user.User_ID %>" value="<%= user.User_Last %>">
+                                                        <%= user.User_Last %></td>
+                                                    <td  id="UID<%= user.User_ID %>" value="<%= user.User_ID %>">
+                                                        <%= user.User_ID %></td>
+                                                    <td  id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td style="display: none;" id='measure<%= group.Group_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                    <td  id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
@@ -185,11 +179,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th>Group Area</th>
-                                                    <th>Group Name</th>
-                                                    <th style="display: none;">Group ID</th>
-                                                    <th style="display: none;">Activity ID</th>
-                                                    <th style="display: none;">Measurement ID</th>
+                                                    <th>User First</th>
+                                                    <th>User Last</th>
+                                                    <th >User ID</th>
+                                                    <th >Activity ID</th>
+                                                    <th >Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -259,19 +253,18 @@
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var GID = $('#GID' + index).attr("value");
-                        var GroupName = $('#GroupName' + index).attr("value");
-                        var Area = $('#Area' + index).attr("value");
+                        var UID = $('#UID' + index).attr("value");
+                        var User_Last = $('#last' + index).attr("value");
+                        var User_First = $('#first' + index).attr("value");
                         // console.log(first);
                         //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= Area" + index + " value=" + Area + ">" + Area +
-                            "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName + "<td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
-                            "</td><td style='display: none;' id= hidden" + index + " value=" + hidden +
-                            ">" + hidden + "</td><td style='display: none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
+                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td  id = UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td  id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td  id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -283,18 +276,18 @@
                 $("#table2 tbody tr").find('input[name="record"]').each(function () {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var GID = $('#GID' + index).attr("value");
-                        var GroupName = $('#GroupName' + index).attr("value");
+                        var UID = $('#UID' + index).attr("value");
+                        var User_Last = $('#last' + index).attr("value");
+                        var User_First = $('#first' + index).attr("value");
                         // console.log(first);
                         //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td style='display: none;' id= GID" + index + " value=" + GID + ">" + GID +
-                                "</td><td id= GroupName" + index + " value=" + GroupName + ">" + GroupName +
-                            "</td><td id= hidden" + index + " value=" + hidden +
-                            " >" + hidden + "</td><td id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
+                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td  id = UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td  id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td  id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 

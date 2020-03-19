@@ -822,7 +822,7 @@ module.exports = {
             console.log(MID);
             var values = [MID, MID, CID];
 
-            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.users; SELECT * FROM capstone.cycle WHERE cycle_ID = ?;"
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement_ID = ?; SELECT approved_activities.activity_ID, approved_activities.activity_name, approved_activities.target, approved_activities.code, approved_activities.description, approved_activities.measurement_ID, approved_activities.deadline FROM capstone.approved_activities; SELECT pending_activities.activity_ID,pending_activities.activity_name, pending_activities.target, pending_activities.description FROM capstone.pending_activities WHERE measurement_ID = ?;SELECT * FROM capstone.activity_outputs; SELECT * from capstone.measurement; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.users; SELECT * FROM capstone.cycle WHERE cycle_ID = ?; SELECT * FROM capstone.group;"
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -839,6 +839,7 @@ module.exports = {
                         dataI: results[8],
                         dataJ: results[9],
                         dataK: results[10],
+                        dataL: results[11],
                         current_user: sess.user,
                         notif: passData
                     })
@@ -885,18 +886,15 @@ module.exports = {
     makeLeader: function (req, resp) {
         var UID = req.body.UID;
         var GID = req.body.GID;
-        var position = "Leader";
-        console.log(position);
-        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
-        var values = [position, UID, GID];
+        var sql = "Update capstone.groupdetails join capstone.users on  groupdetails.Groupdetails_UserID = users.User_ID set Groupdetails_Position = 'Leader', users.isleader = '1' where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log(result);
             console.log("updating");
         });
-        var position = "Member";
-        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID != ? && Groupdetails_ID = ?;";
-        var values = [position, UID, GID];
+        var sql = "Update capstone.groupdetails join capstone.users on  groupdetails.Groupdetails_UserID = users.User_ID set Groupdetails_Position = 'Member', users.isleader = '0' where Groupdetails_UserID != ? && Groupdetails_ID = ?;";
+        var values = [UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             if (result) {
@@ -909,9 +907,8 @@ module.exports = {
     makeMember: function (req, resp) {
         var UID = req.body.UID;
         var GID = req.body.GID;
-        var position = "Member";
-        var sql = "Update capstone.groupdetails set Groupdetails_Position = ? where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
-        var values = [position, UID, GID];
+        var sql = "Update capstone.groupdetails join capstone.users on  groupdetails.Groupdetails_UserID = users.User_ID set Groupdetails_Position = 'Member', users.isleader = '0' where Groupdetails_UserID = ? && Groupdetails_ID = ?;";
+        var values = [UID, GID];
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             if (result) {
@@ -1537,7 +1534,7 @@ module.exports = {
             var values = [AID, AID, CID];
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
-                console.log(results[1])
+                //console.log(results[1])
                 if (results) {
                     resp.render('./pages/AssignActivityToMember.ejs', {
                         data: results[0],
@@ -2220,6 +2217,46 @@ module.exports = {
         }
 
 
+    },
+
+    AssignActivityToGroupMember: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var AID = req.query.AID;
+            var MID = req.query.MID;
+            var GID = req.query.GID;
+            var CID = req.query.CID;
+            //console.log("GROUP ID-------------------" + GID)
+            console.log("ACTIVITY ID-------------------" + AID)
+            var sql = "SELECT * FROM capstone.users JOIN capstone.group ON users.Group = group.Group_ID WHERE group.Group_ID = ?; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = ?; SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?; SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?;"
+            var values = [GID, AID, MID, CID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                //console.log(results[1])
+                if (results) {
+                    resp.render('./pages/AssignActivityToGroupMember.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        current_user: sess.user
+                    });
+                    console.log("Assign Activity to Group Member Page");
+                }
+            });
+        }
     },
 
 

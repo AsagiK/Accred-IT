@@ -154,11 +154,11 @@
                                     <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                                         <div class="x_title">
                                             <div class="page-title">
-                                                <div class="title_right">
-                                                    <h2 style="color: #dddddd;">Description:<br> <%= data[0].measurement_Description %></h2>
+                                                <div class="title_right" style="display:inline-block;">
+                                                    <h2 style="color: #dddddd;text-overflow: none;">Description:<br> <%= data[0].measurement_Description %></h2>
                                                 </div>
                                                 <% if (current_user[0].Role == 1) { %>
-                                                    <div class="title_left">
+                                                    <div class="title_left" style="display:inline-block;">
                                                         <h2 style="color: #dddddd;">
                                                             Quality Target/s :<br>
                                                             <% for(var targets of dataI) { %>
@@ -216,7 +216,7 @@
                                                                 <th>Description</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
-                                                                <th>Assigned Members</th>
+                                                                <th>Assigned Group and Members</th>
                                                                 <th></th>
                                                                 
                                                                 <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3 ) { %>
@@ -251,10 +251,16 @@
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
-                                                                                            <% for (users of dataJ) { %>
+                                                                                            <% for (groups of dataL) { %>
+                                                                                                <% if (actMembers.activity_Member == groups.Group_ID) { %>
+                                                                                                <%= groups.Group_Name %>: <br>
+                                                                                                <% for (users of dataJ) { %>
+                                                                                                
                                                                                                 <% if(users.Group == actMembers.activity_Member) { %>
-                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                    -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                 <% } %>
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                     <% } %>
@@ -322,10 +328,16 @@
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
-                                                                                            <% for (users of dataJ) { %>
+                                                                                            <% for (groups of dataL) { %>
+                                                                                                <% if (actMembers.activity_Member == groups.Group_ID) { %>
+                                                                                                <%= groups.Group_Name %>:
+                                                                                                <% for (users of dataJ) { %>
+                                                                                                
                                                                                                 <% if(users.Group == actMembers.activity_Member) { %>
-                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                    -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                 <% } %>
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                     <% } %>
@@ -339,7 +351,16 @@
                                                                                             Evidence
                                                                                         </button>
                                                                                     </form>
-                                                                                   <% } %>
+                                                                                   <% } else if (dataK[0].status == 0 && current_user[0].isleader == 1) { %>
+                                                                                    <form method="get" action="AssignActivityToGroupMember">
+                                                                                        <input type="" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                        <input type="" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="" name="GID" value="<%= current_user[0].Group %>">
+                                                                                        <input type="" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary">Assign Member
+                                                                                        </button>
+                                                                                    </form>
+                                                                                    <% } %>
                                                                                     
                                                                                 </td>
                                                                                 
