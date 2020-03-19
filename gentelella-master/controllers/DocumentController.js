@@ -104,8 +104,8 @@ module.exports = {
                                 body: fs.createReadStream('public/uploads/' + files[key].name)
                             };
                             uploadfile();
-                            sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`) VALUES (?, ?); "
-                            values = [req.body.FoldID, result.insertId];
+                            sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`, `folder_name`) VALUES (?, ?, ?); "
+                            values = [req.body.FoldID, result.insertId, req.body.FoldName];
                             addFolder(sql, values, req.body.FoldID);
                             callback();
                         }
@@ -227,8 +227,8 @@ module.exports = {
                             body: fs.createReadStream('public/uploads/' + files.name)
                         };
                         uploadfile();
-                        sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`) VALUES (?, ?); "
-                        values = [req.body.FoldID, result.insertId];
+                        sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`, `folder_name`) VALUES (?, ?, ?); "
+                        values = [req.body.FoldID, result.insertId, req.body.FoldName];
                         addFolder(sql, values, req.body.FoldID);
                         resp.redirect('/ViewDocument')
                     }

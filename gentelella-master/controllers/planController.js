@@ -1324,7 +1324,7 @@ module.exports = {
             var cid = req.query.CID;
             console.log(id);
             var values = [id, id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents left join capstone.folder_documents on folder_documents.document_id = documents.Document_ID where documents.isfolder = 0; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?", values, function (err, results) {
                 if (err) throw err;
                 if (results) {
                     console.log(results);

@@ -274,6 +274,7 @@
                                     <th>Document ID</th>
                                     <th>File Name</th>
                                     <th>Routes</th>
+                                    <th>Folder</th>
                                     <th style="display: none">Group ID</th>
                                 </tr>
                             </thead>
@@ -293,6 +294,9 @@
                                         <%= doc.Document_Name %></td>
                                     <td id="Route" value="<%= doc.Document_Route %>">
                                         <%= doc.Document_Route %></td>
+                                        
+                                            <td id="Folder" value="<%= doc.folder_name %>"><%= doc.folder_name %></td>
+                                        
                                     <td id='hidden' value="" style="display: none;">test</td>
                                 </tr>
                                 <% } %>
