@@ -254,11 +254,16 @@
                                                                                             <% for (groups of dataL) { %>
                                                                                                 <% if (actMembers.activity_Member == groups.Group_ID) { %>
                                                                                                 <%= groups.Group_Name %>: <br>
-                                                                                                <% for (users of dataJ) { %>
                                                                                                 
-                                                                                                <% if(users.Group == actMembers.activity_Member) { %>
-                                                                                                    -<%= users.User_First %> <%= users.User_Last %> <br>
-                                                                                                <% } %>
+                                                                                                <% for (users of dataJ) { %>
+
+                                                                                                    <% for(assignedmembers of dataM) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                            -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+
                                                                                             <% } %>
                                                                                             <% } %>
                                                                                             <% } %>
