@@ -368,14 +368,16 @@ module.exports = {
         async.forEachOf(UID, function (value, key, callback) {
             var ai = UID[key]["Activity ID"];
             var eo = UID[key]["Output"];
+            var an = UID[key]["Activity Name"];
             console.log(ai);
             console.log(eo);
 
-            var sql = "INSERT INTO `capstone`.`activity_outputs` (`activity_ID`, `output`) VALUES (?, ?);";
+            var sql = "INSERT INTO capstone.`activity_outputs` (activity_ID, output) VALUES (?, ?);";
             var values = [ai, eo];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
+                    createfolder(an ,result.insertId, eo)
                     callback();
                 }
             });
@@ -388,6 +390,29 @@ module.exports = {
                 resp.send("OK");
             }
         })
+
+        function createfolder(activityname, id, outputname) {
+            var FolderName = (activityname);
+            if (FolderName.length > 50){
+                FolderName = FolderName.substr(0, 49) + "...";
+            }
+            var OutputName = outputname;
+            var IsFolder = 1;
+            var route = "not a document";
+            var md5 = 0;
+            var uploadID = 0;
+            var AO = id;
+            console.log("Folder Name: " + FolderName);
+            console.log("Is folder: " + IsFolder);
+            console.log("md5: " + md5);
+            console.log("route: " + route);
+            var sql = "INSERT INTO capstone.`documents` (Document_Name, Document_Route, md5 , upload_id, isfolder, ao_id) VALUES (?, ?, ?, ?, ?, ?)";
+            var values = [FolderName + " " + OutputName, route, md5, uploadID, IsFolder, AO];
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                console.log("Folder Created");
+            });
+        }
 
     },
 
@@ -670,6 +695,38 @@ module.exports = {
 
 
 
+    },
+
+
+    AddfilestofoldersJSON: function (req, resp) {
+        sess = req.session;
+        var DID = req.body.table;
+        DID = JSON.parse(DID);
+        async.forEachOf(DID, function (value, key, callback) {
+            var did = DID[key]["Document ID"];
+            var fid = DID[key]["Folder ID"];
+            var fn = DID[key]["Folder Name"];
+            
+            var sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`, `folder_name`) VALUES (? , ?, ?); ";
+            var values = [fid, did, fn];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+
+
+            }
+        })
     },
 
 

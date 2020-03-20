@@ -98,6 +98,7 @@ router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
 router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
 router.route('/CreateSourcesJSON').post(JSONCtrl.CreateSourcesJSON);
 router.route('/TestNotif').post(JSONCtrl.TestNotif);
+router.route('/AddfilestofoldersJSON').post(JSONCtrl.AddfilestofoldersJSON);
 
 //==NotifCtrl==
 router.route('/CreateNotif').post(NotifCtrl.CreateNotif);

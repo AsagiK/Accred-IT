@@ -2281,7 +2281,7 @@ module.exports = {
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 //console.log(results[1])
-                resp.render('./pages/AssignMemberToGroup.ejs', {
+                resp.render('./pages/AddFilesToFolder.ejs', {
                     data: results[0],
                     dataB: results[1],
                     current_user: sess.user

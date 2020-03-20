@@ -118,9 +118,9 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3 style="color: #dddddd;">Area: </h3>
-                            <h3 style="color: #dddddd;">Group: </h3>
-                            <input type="hidden" id="GID" value="<%= dataB[0].Group_ID %>">
+                            <h3 style="color: #dddddd;">Add Files to Folder: </h3>
+                            <h3 style="color: #dddddd;"><%= dataB[0].Document_Name %> Folder </h3>
+                            
                         </div>
                     </div>
                 </div>
@@ -135,31 +135,34 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th style="display:none;">User ID</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th style="display:none;">Group ID</th>
+                                                    <th style="display:none;">Document ID</th>
+                                                    <th>Document Name</th>
+                                                    <th>Document Route</th>
+                                                    <th style="display:none;">Folder ID</th>
+                                                    <th style="display:none;">Folder Name</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <% for (var user of data) { %>
+                                                <% for (var docs of data) { %>
                                                 <tr>
                                                     <td>
                                                         <label class="containercheckbox">
                                                                 <input type='checkbox' name='record'
-                                                                id='<%= user.User_ID %>'>
+                                                                id='<%= docs.Document_ID %>'>
                                                                 <span class="checkmark"></span>
                                                               </label>
                                                     </td>
-                                                    <td id="UID<%= user.User_ID %>" value="<%= user.User_ID %>" style="display:none;">
-                                                        <%= user.User_ID %></td>
-                                                    <td id="first<%= user.User_ID %>" value="<%= user.User_First %>">
-                                                        <%= user.User_First %></td>
-                                                    <td id='last<%= user.User_ID %>' value="<%= user.User_Last %>">
-                                                        <%= user.User_Last %></td>
-                                                    <td id='hidden<%= user.User_ID %>' value="<%= dataB[0].Group_ID %>"
-                                                        style="display: none;"><%= dataB[0].Group_ID %></td>
+                                                    <td id="DID<%= docs.Document_ID %>" value="<%= docs.Document_ID %>" style="display:none;">
+                                                        <%= docs.Document_ID %></td>
+                                                    <td id="Name<%= docs.Document_ID %>" value="<%= docs.Document_Name %>">
+                                                        <%= docs.Document_Name %></td>
+                                                    <td id='Route<%= docs.Document_ID %>' value="<%= docs.Document_Route %>">
+                                                        <%= docs.Document_Route %></td>
+                                                    <td id='FoldID<%= docs.Document_ID %>' value="<%= dataB[0].Document_ID %>"
+                                                        style="display: none;"><%= dataB[0].Document_ID %></td>
+                                                    <td id='hidden<%= docs.Document_ID %>' value="<%= dataB[0].Document_Name %>"
+                                                        style="display: none;"><%= dataB[0].Document_Name %></td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -177,10 +180,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>Check</th>
-                                                    <th style="display:none;">User ID</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th style="display:none;">Group ID</th>
+                                                    <th style="display:none;">Document ID</th>
+                                                    <th>Document Name</th>
+                                                    <th>Document Route</th>
+                                                    <th style="display:none;">Folder ID</th>
+                                                    <th style="display:none;">Folder Name</th>
                                                 </tr>
                                             </thead>
 
@@ -196,16 +200,19 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <a href="/ViewGroups" class="btn btn-danger" type="button">Cancel</a>
+                                        <form method="get" action="/ViewFolder">
+                                            <input type="hidden" name="FolderID" value="<%= dataB[0].Document_ID %>">
+                                            <button type="submit" class="btn btn-danger">Cancel</button>
+                                        </form>
                                         <button type="submit" class="btn btn-primary" id="toJSON">Submit</button>
-                                        <form method="get" action="/ViewGroups">
-                                            <input type="hidden" name="passdata" value="1">
+                                        <form method="get" action="/ViewFolder">
+                                            <input type="hidden" name="FolderID" value="<%= dataB[0].Document_ID %>">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backsuccess">Hi</button>
                                         </form>
 
-                                        <form method="get" action="/ViewGroups">
-                                            <input type="hidden" name="passdata" value="0">
+                                        <form method="get" action="/ViewFolder">
+                                            <input type="hidden" name="FolderID" value="<%= dataB[0].Document_ID %>">
                                             <button type="submit" class="btn btn-success" style="display: none;"
                                                 id="backfail">Hi</button>
                                         </form>
@@ -241,17 +248,19 @@
                     //console.log('test');
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var UID = $('#UID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
+                        var DID = $('#DID' + index).attr("value");
+                        var documentName = $('#Name' + index).attr("value");
                         // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        var documentRoute = $("#Route" + index).attr("value");
                         //console.log(last);
+                        var foldID = $('#FoldID' + index).attr("value");
                         var hidden = $('#hidden' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + " style='display:none;'>" + UID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
-                            "</td><td id= hidden" + index + " value=" + hidden +
+                            index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + " style='display:none;'>" + DID +
+                            "</td><td id= Name" + index + " value=" + documentName + ">" + documentName +
+                            "</td><td id= Route" + index + " value=" + documentRoute + ">" + documentRoute +
+                            "</td><td id= FoldID" + index + " value=" + foldID +
+                            " style='display:none;'>" + foldID + "</td><td id= hidden" + index + " value=" + hidden +
                             " style='display:none;'>" + hidden + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
@@ -264,17 +273,19 @@
                 $("#table2 tbody tr").find('input[name="record"]').each(function () {
                     if ($(this).is(":checked")) {
                         var index = $(this).attr("id");
-                        var UID = $('#UID' + index).attr("value");
-                        var first = $('#first' + index).attr("value");
+                        var DID = $('#DID' + index).attr("value");
+                        var documentName = $('#Name' + index).attr("value");
                         // console.log(first);
-                        var last = $("#last" + index).attr("value");
+                        var documentRoute = $("#Route" + index).attr("value");
                         //console.log(last);
+                        var foldID = $('#FoldID' + index).attr("value");
                         var hidden = $('#hidden' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
-                            index + "><span class='checkmark'></span></label></td><td id= UID" + index + " value=" + UID + " style='display:none;'>" + UID +
-                            "</td><td id= first" + index + " value=" + first + ">" + first +
-                            "</td><td id= last" + index + " value=" + last + ">" + last +
-                            "</td><td id= hidden" + index + " value=" + hidden +
+                            index + "><span class='checkmark'></span></label></td><td id= DID" + index + " value=" + DID + " style='display:none;'>" + DID +
+                            "</td><td id= Name" + index + " value=" + documentName + ">" + documentName +
+                            "</td><td id= Route" + index + " value=" + documentRoute + ">" + documentRoute +
+                            "</td><td id= FoldID" + index + " value=" + foldID +
+                            " style='display:none;'>" + foldID + "</td><td id= hidden" + index + " value=" + hidden +
                             " style='display:none;'>" + hidden + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
@@ -294,7 +305,7 @@
                 })); // 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AssignGroupJSON', true);
+                xhr.open('POST', '/AddfilestofoldersJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     console.log(xhr.responseText);
