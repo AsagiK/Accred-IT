@@ -1189,8 +1189,9 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Folder Created");
+            resp.redirect('/ViewDocument');
         });
-        resp.redirect('/ViewDocument');
+        
 
     },
 

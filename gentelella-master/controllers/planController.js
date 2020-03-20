@@ -2260,5 +2260,36 @@ module.exports = {
         }
     },
 
+    AddFileToFolder: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var FID = req.query.FID;
+            var sql = "SELECT * FROM capstone.documents where documents.Document_ID != ? && documents.isfolder = 0; SELECT * FROM capstone.documents where documents.Document_ID = ?;"
+            var values = [FID, FID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                //console.log(results[1])
+                resp.render('./pages/AssignMemberToGroup.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    current_user: sess.user
+                });
+                console.log("ADD FILES TO FOLDER");
+            });
+        }
+    },
+
 
 }

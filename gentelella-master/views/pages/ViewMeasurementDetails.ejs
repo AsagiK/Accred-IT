@@ -285,7 +285,7 @@
                                                                                     <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
                                                                                     <button class="btn btn-primary" href="#my_modaloutputs"
                                                                                         data-toggle="modal"
-                                                                                        data-book-id="<%= activities.activity_ID %>">Add
+                                                                                        data-book-id="<%= activities.activity_ID %>" data-book-id2="<%= activities.activity_name %>">Add
                                                                                         expected output/s</button>
                                                                                     <% } %>
                                                                                 </td>
@@ -577,6 +577,7 @@
                             </a>
                             <br>
                             <input type="hidden" name="activityID" id="activityID" required="required" class="form-control col-md-7 col-xs-12" hidden>
+                            <input type="hidden" name="activityID" id="activityName" required="required" class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
@@ -590,7 +591,7 @@
                             <table id="tableoutputs">
                                 <thead>
                                     <tr>
-
+                                        <th style="display: none;">Activity Name</th>
                                         <th style="display: none;">Activity ID</th>
                                         <th>Output</th>
                                         <th></th>
@@ -896,10 +897,12 @@
                 //console.log("testing test");
                 if (!checkEmptyInput()) {
                     //console.log("testing add button");
+                    var activityname = $("#activityName").val();
                     var activity = $("#activityID").val();
                     var output = $("#activityoutput").val();
 
-                    var markup = "<tr><td style='display: none'>" + activity +
+                    var markup = "<tr><td style='display: none'>" + activityname +
+                        "</td><td style='display: none'>" + activity +
                         "</td><td>" + output + "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableoutputs")
                     $(table).append(markup);
@@ -984,8 +987,10 @@
 
         $('#my_modaloutputs').on('show.bs.modal.fade', function (e) {
             var bookId = $(e.relatedTarget).data('book-id');
+            var bookId2 = $(e.relatedTarget).data('book-id2');
             //alert(bookId);
             $(e.currentTarget).find('input[name="activityID"]').val(bookId);
+            $(e.currentTarget).find('input[name="activityName"]').val(bookId2);
         });
 
     </script>

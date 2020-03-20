@@ -80,8 +80,7 @@ router.route('/actPhase').post(planCtrl.actPhase);
 router.route('/endPhase').post(planCtrl.endPhase);
 
 
-router.route('/ViewDocument').get(planCtrl.ViewDocument);
-router.route('/UploadDocument').get(planCtrl.UploadDocument);
+
 router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
 router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
@@ -117,6 +116,9 @@ router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
 router.route('/CreateFolder').post(DocCtrl.CreateFolder);
 router.route('/PickerUploadJSON').post(DocCtrl.PickerUploadJSON);
+router.route('/ViewDocument').get(planCtrl.ViewDocument);
+router.route('/UploadDocument').get(planCtrl.UploadDocument);
+router.route('/AddFilesToFolder').get(planCtrl.AddFileToFolder);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
