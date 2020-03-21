@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Checking Page for Admins/Department Chairs Level</title>
+    <title>Checking Page For Group Leaders</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,7 @@
                         <div class="page-title">
                             <div class="title_left">
 
-                                <h3 style="color: #dddddd;">Checking Submissions Page for Admins/Department Chairs Level</h3> 
+                                <h3 style="color: #dddddd;">Checking Submissions Page for Group Leaders</h3> 
                                 <a class="btn btn-primary" href="/QualityMetrics">Go Back Goals</a>
 
                             </div>
@@ -117,7 +117,7 @@
                                                                                 <table style="background-color: white;" class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
-                                                                                                
+                                                                                                <th>Submitted By</th>
                                                                                                 <th>Submission Description</th> 
                                                                                                 <th>Selected Outputs</th>  
                                                                                                 <th></th>
@@ -125,12 +125,16 @@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
+
                                                                                             <% for (var subs of dataE) { %>
+                                                                                                <% for (var group of dataGroups) { %>
+                                                                                                    <% for (var groupdetails of dataGroupDetails) { %>
                                                                                                 
-                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
+                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0 && current_user[0].Group == group.Group_ID && (groupdetails.Groupdetails_ID == current_user[0].Group && subs.user_ID == groupdetails.Groupdetails_UserID)) { %>    
                                                                                             
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
+                                                                                                <td> <%= subs.User_First %> <%= subs.User_Last %> </td>
                                                                                                 <td> <%= subs.description %> </td>
                                                                                                 <td>
                                                                                                     <% for (pendingoutputs of dataH) { %>
@@ -154,6 +158,8 @@
                                                                                                
                                                                                             <% } %>
                                                                                                
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                             <% } %>
                         
                                                                                         </tbody>

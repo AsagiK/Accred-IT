@@ -284,6 +284,46 @@ module.exports = {
         }
     }, 
 
+    CheckingAccordionGroupLeaderPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails;", function (err, results, fields) {
+            if (err) throw err;
+            if(results){
+
+                resp.render('./pages/CheckingAccordionGroupLeaderPage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    dataF: results[5],
+                    dataG: results[6],
+                    dataH: results[7],
+                    dataGroups: results[8],
+                    dataGroupDetails: results[9],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("Checking Accordion Group Leader Page loaded");
+
+            }
+            });
+        }
+    }, 
+
     ViewActivityEvidences: function (req, resp) {
         sess = req.session;
                 var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
