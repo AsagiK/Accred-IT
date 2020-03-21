@@ -76,7 +76,7 @@
                                                     <th></th>
                                                 <% } else { %>
                                                 <th># of Activities</th>
-                                                    
+                                                    <th></th>
                                                 <% } %>
                                                 
                                                 
@@ -98,7 +98,7 @@
                                                                 <%if(measure_audit.priority_Level==1){%>
                                                                     <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
                                                                 <%}else if(measure_audit.priority_Level==2){%>
-                                                                    <td style="color: yellow; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
                                                                 <%}else if(measure_audit.priority_Level==3){%>
                                                                     <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
                                                                 <%}%>
@@ -109,7 +109,7 @@
                                                             <%= targets_audit.target %>
                                                             <% if (targets_audit.target_Type == 0) { %> 
                                                                 %
-                                                            <% } %> - <%= targets_audit.target_Desc %><br>
+                                                            <% } %> - <%= targets_audit.target_Desc %><br><br>
                                                             <% } %>
 
                                                             <% } %>
@@ -118,16 +118,20 @@
                                                                 <% for (var targets_audit of dataC) { %> 
                                                                     
                                                                     <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
-
-                                                                        <% if (targets_audit.progress >= 75) { %>
-                                                                            <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 60) { %> 
-                                                                            <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 30) { %>
-                                                                            <td style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 0) { %>
-                                                                            <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } %>
+                                                                        <td> 
+                                                                        
+                                                                        <% if (targets_audit.progress >= 75 && targets_audit.target_Type == 0) { %>
+                                                                            <span tyle="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> 
+                                                                        <% } else if (targets_audit.progress >= 60 && targets_audit.target_Type == 0) { %> 
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> 
+                                                                        <% } else if (targets_audit.progress >= 30 && targets_audit.target_Type == 0) { %>
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> 
+                                                                        <% } else if (targets_audit.progress >= 0 && targets_audit.target_Type == 0) { %>
+                                                                            <span style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%> </span>
+                                                                        <% } else { %> 
+                                                                            <span style="color: black; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> 
+                                                                        <% } %> 
+                                                                        </td>
                                                                    
                                                                     <% }%>
 
