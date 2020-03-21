@@ -91,6 +91,7 @@ router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
+router.route('/AssignActivityToMemberJSON').post(JSONCtrl.AssignActivityToMemberJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);

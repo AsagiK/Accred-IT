@@ -253,7 +253,7 @@
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
                                                                                             <% for (groups of dataL) { %>
                                                                                                 <% if (actMembers.activity_Member == groups.Group_ID) { %>
-                                                                                                <%= groups.Group_Name %>: <br>
+                                                                                                <b><h5> <%= groups.Group_Name %>: <br></h5></b>
                                                                                                 
                                                                                                 <% for (users of dataJ) { %>
 
@@ -336,7 +336,7 @@
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
                                                                                             <% for (groups of dataL) { %>
                                                                                                 <% if (actMembers.activity_Member == groups.Group_ID) { %>
-                                                                                                <%= groups.Group_Name %>: <br>
+                                                                                                    <b><h5> <%= groups.Group_Name %>: <br></h5></b>
                                                                                                 
                                                                                                 <% for (users of dataJ) { %>
 
@@ -354,6 +354,17 @@
                                                                                     <% } %>
                                                                                 </td>
                                                                                 <td>
+                                                                                    <% if (dataK[0].status == 0 && current_user[0].isleader == 1 ) { %>
+                                                                                    <form method="get" action="AssignActivityToGroupMember">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= current_user[0].Group %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary btn-sm">Assign Member</button>
+                                                                                    </form>
+                                                                                    <% } %>
+
+                                                                                    
                                                                                     <% for(assignedmembers of dataM) { %>
                                                                                     <% if (dataK[0].status == 1 && assignedmembers.activity_member_member == current_user[0].User_ID) { %>
                                                                                     <form method="get" action="ActivityDetails">
@@ -363,16 +374,10 @@
                                                                                             Evidence
                                                                                         </button>
                                                                                     </form>
-                                                                                   <% } else if (dataK[0].status == 0 && current_user[0].isleader == 1) { %>
-                                                                                    <form method="get" action="AssignActivityToGroupMember">
-                                                                                        <input type="" name="MID" value="<%= data[0].measurement_ID %>">
-                                                                                        <input type="" name="AID" value="<%= activities.activity_ID %>">
-                                                                                        <input type="" name="GID" value="<%= current_user[0].Group %>">
-                                                                                        <input type="" name="CID" value="<%= dataK[0].cycle_ID %>">
-                                                                                        <button type="submit" class="btn btn-primary">Assign Member
-                                                                                        </button>
-                                                                                    </form>
-                                                                                    <% } %>
+                                                                                   <% } %>
+                                                                                    
+                                                                                    
+                                                                                    
                                                                                     <% } %>
                                                                                 </td>
                                                                                 

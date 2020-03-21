@@ -329,7 +329,7 @@ module.exports = {
         })
     },
 
-    AssignActivityJSON: function (req, resp) {
+    AssignActivityToMemberJSON: function (req, resp) {
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
