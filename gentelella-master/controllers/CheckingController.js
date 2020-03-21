@@ -261,7 +261,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; ", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members;", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -274,6 +274,10 @@ module.exports = {
                     dataF: results[5],
                     dataG: results[6],
                     dataH: results[7],
+                    dataGroup: results[8],
+                    dataAssignedgroup: results[9],
+                    dataUsers: results[10],
+                    dataAssignedusers: results[11],
                     current_user: sess.user
                 });
                 console.log(results);
@@ -347,6 +351,39 @@ module.exports = {
                 if (results){
                 console.log(results);
                     resp.render('./pages/ViewActivityEvidences.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    }, 
+
+    ViewActivityEvidencesGroupLeaderPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.PID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results);
+                    resp.render('./pages/ViewActivityEvidencesGroupLeaderPage.ejs', {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],

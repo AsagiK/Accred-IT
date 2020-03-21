@@ -110,6 +110,30 @@
                                                                                     <% } %>
                                                                                 </td>
                                                                             </tr>
+                                                                            <tr>
+                                                                                <td>Assigned Groups</td>
+                                                                                <td>
+                                                                                    <% for (var groups of dataGroup) { %>
+                                                                                        <% for (var assignedgroup of dataAssignedgroup) { %>
+                                                                                            <% if (assignedgroup.activity_ID == activity.activity_ID && assignedgroup.activity_Member == groups.Group_ID) { %>
+                                                                                                <h5><b><%= groups.Group_Name %>:<br></b></h5>
+
+                                                                                                <% for (users of dataUsers) { %>
+
+                                                                                                    <% for(assignedmembers of dataAssignedusers) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                            -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+
+                                                                                                <% } %>
+
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                            </tr>
                                                                         </tbody>
                                                                     </table>
                                                                     <br>
@@ -117,7 +141,7 @@
                                                                                 <table style="background-color: white;" class="table table-bordered">
                                                                                         <thead>
                                                                                             <tr>
-                                                                                                
+                                                                                                <th>Submitted By</th>
                                                                                                 <th>Submission Description</th> 
                                                                                                 <th>Selected Outputs</th>  
                                                                                                 <th></th>
@@ -127,10 +151,11 @@
                                                                                         <tbody>
                                                                                             <% for (var subs of dataE) { %>
                                                                                                 
-                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
+                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 3) { %>    
                                                                                             
                                                                                             <tr>
                                                                                                 <!-- MEASUREMENT TABLE :  -->
+                                                                                                <td> <%= subs.User_First %> <%= subs.User_Last %></td>
                                                                                                 <td> <%= subs.description %> </td>
                                                                                                 <td>
                                                                                                     <% for (pendingoutputs of dataH) { %>

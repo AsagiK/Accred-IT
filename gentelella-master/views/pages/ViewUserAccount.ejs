@@ -102,6 +102,8 @@ table, th, td {
                                                     <td>Pending</td>
                                                 <% } else if(submission.status == 1) { %> 
                                                     <td>Approved</td>
+                                                <% } else if(submission.status == 3) { %> 
+                                                    <td>Waiting for Department Chair Approval</td>
                                                 <% } else { %>
                                                     <td>Disapproved</td>
                                                 <% } %>

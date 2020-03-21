@@ -164,6 +164,8 @@ router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
 router.route('/CheckingAccordionGroupLeaderPage').get(CheckCtrl.CheckingAccordionGroupLeaderPage);
 
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
+router.route('/ViewActivityEvidencesGroupLeaderPage').get(CheckCtrl.ViewActivityEvidencesGroupLeaderPage);
+
 router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 
