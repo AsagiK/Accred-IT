@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Edit Activity</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body" style="background-color: #232931;">
+        <div class="main_container" style="background-color: #232931;">
+            <%- include ./nav.ejs %>
+            <!-- page content -->
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+
+                            <h3 style="color: #dddddd;">Edit Activity </h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
+                            <div class="x_content">
+                                <br />
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="AlterActivities" method="POST">
+                                    
+                                    <div class="form-group">
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Activity Name
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--First name Input field-->
+                                            <input type="hidden" name="AID" value="<%= data[0].activity_ID %>">
+                                            <input type="hidden" name="CID" value="<%= dataB[0].cycle_ID %>">
+                                            <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
+                                            <input type="text" id="activityName" name="activityName" class="form-control col-md-7 col-xs-12" value="<%= data[0].activity_name %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #dddddd;" class="control-label col-md-3 col-sm-3 col-xs-12" for="activityDesc">Activity Description <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--Last name input field-->
+                                            <textarea class="form-control" rows="3" id="activityDesc" value="<%= data[0].description %>"
+                                            required="required" name="activityDesc" onkeyup="textAreaAdjust(this)"
+                                            style="overflow:hidden"><%= data[0].description %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #dddddd;" for="deadline" class="control-label col-md-3 col-sm-3 col-xs-12">Deadline</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--Email Input field-->
+                                            <% var date = data[0].deadline %>
+                                            <% year = date.getFullYear(); %>
+                                            <% if(date.getMonth() >= 9) { %>
+                                                <% month = date.getMonth() + 1; %>
+                                            <% } else { %>
+                                                <% month = "0" + (date.getMonth() + 1); %>
+                                            <% } %>
+                                            <% day = date.getDate(); %>
+                                            <input id="deadline" class="form-control col-md-7 col-xs-12" type="date" name="deadline" value="<%= year %>-<%= month %>-<%= day %>">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <a class="btn btn-danger" href="/">Cancel</a>
+                                            
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer style="background-color: #232931; border-color: #232931;  border-radius: 8px;">
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+
+                <!script for dynamic text area>
+      <script>
+        function textAreaAdjust(o) {
+          o.style.height = "1px";
+          o.style.height = (25 + o.scrollHeight) + "px";
+        }
+      </script>
+            
+
+        <!-- jQuery -->
+        <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="assets/vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="assets/vendors/iCheck/icheck.min.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="assets/vendors/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+        <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+        <!-- jQuery Tags Input -->
+        <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+        <!-- Switchery -->
+        <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Select2 -->
+        <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+        <!-- Parsley -->
+        <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+        <!-- Autosize -->
+        <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+        <!-- jQuery autocomplete -->
+        <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+        <!-- starrr -->
+        <script src="assets/vendors/starrr/dist/starrr.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="assets/build/js/custom.min.js"></script>
+    </div>
+</div>
+</div>
+</body>
+
+</html>

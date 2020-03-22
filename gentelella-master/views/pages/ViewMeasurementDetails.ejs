@@ -288,18 +288,26 @@
                                                                                         data-book-id="<%= activities.activity_ID %>" data-book-id2="<%= activities.activity_name %>">Add
                                                                                         expected output/s</button>
                                                                                     <% } %>
+                                                                                    <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
+                                                                                        <form method="get" action="AssignActivityToMember">
+                                                                                            <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                            <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
+                                                                                            <button type="submit" class="btn btn-primary">Assign Group
+                                                                                            </button>
+                                                                                        </form>
+                                                                                        <% } %>
                                                                                 </td>
                                                                                 
                                                                                 <td>
-                                                                                    <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
-                                                                                    <form method="get" action="AssignActivityToMember">
+                                                                                    <form method="get" action="EditActivity">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
-                                                                                        <button type="submit" class="btn btn-primary">Assign Group
+                                                                                        <button type="submit" class="btn btn-primary">Edit Activity
                                                                                         </button>
                                                                                     </form>
-                                                                                    <% } %>
                                                                                 </td>
                                                                                 
                                                                             </tr>
@@ -489,9 +497,28 @@
                                     <% } %>
                                 </select>
                                 <br>
-                                <label> Deadline
+                                <label> Deadline </label>
+
+                                <% var startDate = dataK[0].start_Date %>
+                                <% var endDate = dataK[0].end_Date %>
+                                <% syear = startDate.getFullYear(); %>
+                                <% if(startDate.getMonth() >= 9) { %>
+                                    <% smonth = startDate.getMonth() + 1; %>
+                                <% } else { %>
+                                    <% smonth = "0" + (startDate.getMonth() + 1); %>
+                                <% } %>
+                                <% sday = startDate.getDate(); %>
+
+                                <% eyear = endDate.getFullYear(); %>
+                                <% if(endDate.getMonth() >= 9) { %>
+                                    <% emonth = endDate.getMonth() + 1; %>
+                                <% } else { %>
+                                    <% emonth = "0" + (endDate.getMonth() + 1); %>
+                                <% } %>
+                                <% eday = endDate.getDate(); %>
+                                    
                                     <br>
-                                    <input type="date" name="deadline" id="deadline" value="" min="<%= newDate %>">
+                                    <input type="date" name="deadline" id="deadline" value="" min="<%= syear %>-<%= smonth %>-<%= sday %>" max="<%= eyear %>-<%= emonth %>-<%= eday %>">
                                     <br><br>
 
                                     <button type="button" class="btn btn-default add-row2">Add</button>

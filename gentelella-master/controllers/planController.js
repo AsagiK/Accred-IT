@@ -2131,18 +2131,21 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            
             var AID = req.query.AID;
-            var sql= "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); ";
-            var value = [AID];
-            console.log(AID);
+            var CID = req.query.CID;
+            var MID = req.query.MID;
+            var sql= "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?;";
+            var value = [AID, CID, MID];
+            //console.log(AID);
             connection.query(sql, value, function (err, result, fields) {
                 if (err) throw err;
-                resp.render('./pages/AlterActivities.ejs', {
-                    data: result,
+                resp.render('./pages/EditActivity.ejs', {
+                    data: result[0],
+                    dataB: result[1],
+                    dataC: result[2],
                     current_user: sess.user
                 });
-                console.log(result)
+                //console.log(result)
             });
         }
 
@@ -2165,9 +2168,11 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var id = req.body.AID;
-            var an = req.body.activityname;
-            var ds = req.body.description;
+            var an = req.body.activityName;
+            var ds = req.body.activityDesc;
             var dl = req.body.deadline;
+            var MID = req.body.MID;
+            var CID = req.body.CID;
             console.log(id);
             console.log(an);
             console.log(ds);
@@ -2178,7 +2183,7 @@ module.exports = {
                 if (err) throw err;
                 console.log(err);
                 if (result) {
-                    resp.redirect('./pages/QualityMetrics.ejs');
+                    resp.redirect('/ViewMeasurementDetails?MID=' + MID + '&CID=' + CID);
                 }
             }); 
             console.log("ACTIVITY UPDATED");
