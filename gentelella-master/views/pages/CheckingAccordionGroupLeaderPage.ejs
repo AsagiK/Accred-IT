@@ -66,7 +66,7 @@
                                                     <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapse<%= measure.measurement_ID %>">
                                                         <h4 class="panel-title"> 
                                                             <!--MEAASUREMENT NAME-->
-                                                            MEASUREMENT NAME:  <%= measure.measurement_Name %> <%= measure.measurement_ID %>
+                                                            MEASUREMENT NAME:  <%= measure.measurement_Name %>
                                                         </h4>
         
                                                     </a>      
@@ -79,7 +79,9 @@
                                                         <br>
                                                         <% for (var activity of dataC) { %>
                                                             <% for (var measure_Activity of dataF) { %>
-                                                            <% if (activity.activity_ID == measure_Activity.activity_ID && measure_Activity.measurement_ID == measure.measurement_ID) { %>
+                                                                 <% for (var activityGroup of dataAssignedgroup) { %>
+                                                            <% if (activity.activity_ID == measure_Activity.activity_ID && measure_Activity.measurement_ID == measure.measurement_ID && (current_user[0].Group == activityGroup.activity_Member && activity.activity_ID == activityGroup.activity_ID)) { %>
+                                                           
                                                          
                                                         <div class="panel-body">
                                                             <!--Group 1 table-->
@@ -176,6 +178,7 @@
                                                         <!--End of Group 1 Table -->
                                                         <% } %>
                                                         <% } %> 
+                                                        <% } %>
                                                         <% } %>
                                                         
                                                     </div>
