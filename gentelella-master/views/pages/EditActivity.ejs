@@ -96,7 +96,7 @@
                                     
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <a class="btn btn-danger" href="/">Cancel</a>
+                                            <a class="btn btn-danger" onclick="goBack()">Cancel</a>
                                             
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
@@ -127,6 +127,9 @@
         function textAreaAdjust(o) {
           o.style.height = "1px";
           o.style.height = (25 + o.scrollHeight) + "px";
+        }
+        function goBack() {
+            window.history.back();
         }
       </script>
             
