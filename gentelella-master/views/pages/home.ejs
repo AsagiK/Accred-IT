@@ -140,21 +140,23 @@ width: 100%;
                                         </thead>
                                         <tbody>
                                             <% for (var meas of dataB) { %> 
-                                                <% for (var targets of dataG) { %>
+                                                
 
                                             <tr>
                                                 <td width="30%" scope="row"> <%= meas.measurement_Name %> </td>
                                                 <td width="30%"><%= meas.measurement_Description %> </td> 
 
                                                 <td width="30%">
+                                                <% for (var targets of dataG) { %>
                                                     <% if (meas.measurement_ID == targets.measurementID) { %> 
                                                         <% if (targets.target_Type == 0) { %>
-                                                            <%= targets.target%> % <%= targets.target_Desc %>
+                                                            <%= targets.target%> % :<%= targets.target_Desc %> <br>
                                                         <% } else if (targets.target_Type == 1) { %>
-                                                            <%= targets.target%> # <%= targets.target_Desc %>
+                                                            <%= targets.target%> # :<%= targets.target_Desc %> <br>
                                                         <% } %>
                                                     <%  }  else { %> 
                                                         <!-- NONE WILL DISPLAY-->
+                                                    <% } %>
                                                     <% } %>
                                                 </td>
                                                 <td width="30%"> <form method="get" action="ViewMeasurementDetails">
@@ -164,7 +166,7 @@ width: 100%;
                                                             Details</button>
                                                     </form></td>
                                             </tr>
-                                            <% } %>  
+                                              
                                             <% } %> 
 
                                         </tbody>
