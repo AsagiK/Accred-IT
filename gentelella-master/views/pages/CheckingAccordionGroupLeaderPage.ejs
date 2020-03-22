@@ -112,6 +112,30 @@
                                                                                     <% } %>
                                                                                 </td>
                                                                             </tr>
+                                                                            <tr>
+                                                                                <td>Assigned Groups</td>
+                                                                                <td>
+                                                                                    <% for (var groups of dataGroups) { %>
+                                                                                        <% for (var assignedgroup of dataAssignedgroup) { %>
+                                                                                            <% if (assignedgroup.activity_ID == activity.activity_ID && assignedgroup.activity_Member == groups.Group_ID) { %>
+                                                                                                <h5><b><%= groups.Group_Name %>:<br></b></h5>
+
+                                                                                                <% for (users of dataUsers) { %>
+
+                                                                                                    <% for(assignedmembers of dataAssignedusers) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                            -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+
+                                                                                                <% } %>
+
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                            </tr>
                                                                         </tbody>
                                                                     </table>
                                                                     <br>
