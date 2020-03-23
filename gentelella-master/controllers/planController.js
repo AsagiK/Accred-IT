@@ -1994,7 +1994,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; "
+            var sql = "SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.users JOIN capstone.groupdetails ON groupdetails.Groupdetails_UserID = users.User_ID; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.approved_activities; SELECT * FROM capstone.activity_members_members;"
             connection.query(sql, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/ViewUserAccount.ejs', {
@@ -2002,6 +2002,11 @@ module.exports = {
                     dataB: results[1],
                     dataC: results[2],
                     dataD: results[3],
+                    dataUsers: results[4],
+                    dataGroup: results[5],
+                    dataGroupdetails: results[6],
+                    dataActivity: results[7],
+                    dataAssigneduser: results[8],
                     current_user: sess.user
                 });
 
