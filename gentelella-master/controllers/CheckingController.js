@@ -448,8 +448,8 @@ module.exports = {
         } else {
             var id = (req.query.MID);
             console.log(id+ "------------------------------------------------------------------------");
-            var values = [id, id, id];
-            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents join activity_evidences on documents.Document_ID = activity_evidences.documentID join pending_activities on activity_evidences.pendingID = pending_activities.pending_ID join approved_activities on pending_activities.activity_ID = approved_activities.activity_ID join measurements_activities on approved_activities.activity_ID = measurements_activities.activity_ID join measurement  on measurement.measurement_ID = measurements_activities.measurement_ID where pending_activities.status = 1 && pending_activities.active = 1 && measurement.measurement_ID = ?;", values, function (err, results) {
+            var values = [id, id, id, id];
+            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents join activity_evidences on documents.Document_ID = activity_evidences.documentID join pending_activities on activity_evidences.pendingID = pending_activities.pending_ID join approved_activities on pending_activities.activity_ID = approved_activities.activity_ID join measurements_activities on approved_activities.activity_ID = measurements_activities.activity_ID join measurement  on measurement.measurement_ID = measurements_activities.measurement_ID where pending_activities.status = 1 && pending_activities.active = 1 && measurement.measurement_ID = ?; SELECT * FROM capstone.approved_activities JOIN capstone.measurements_activities ON approved_activities.activity_ID = measurements_activities.activity_ID WHERE measurements_activities.measurement_ID = ?;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results[1]);
@@ -458,7 +458,7 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
-                        
+                        dataActivity: results[4],
                         current_user: sess.user
                     })
                 }

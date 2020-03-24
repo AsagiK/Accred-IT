@@ -64,16 +64,17 @@
                                     <tbody>
                                         
                                         <td>
-                                            
+                                            <% for(var activity of dataActivity) { %>
+                                                <h5><b><%= activity.activity_name %>:</b></h5>
                                                 <% for (var evidences of dataD) { %>
                                                     
                                                     
                                                     
-                                                        <a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
+                                                        -<a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
                                                     
                                                 <% } %>
-                                            
+                                            <% } %>
                                         </td>
                                     </tbody>
                                 </table>
