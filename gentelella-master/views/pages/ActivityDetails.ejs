@@ -40,6 +40,20 @@
     <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 </head>
 
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    </style>
+
 <body class="nav-md" style="background-color: #232931;">
     <div class="container body">
         <div class="main_container" style="background-color: #232931;">
@@ -76,10 +90,10 @@
 
                                         <tbody>
                                             <form action="SendDocuments" method="post" encType="multipart/form-data">
-                                                <tr>
+                                                <tr style="display:none;">
                                                     <form action="SendDocuments" method="post"
                                                         encType="multipart/form-data">
-                                                        <td style="width:200px;"><label
+                                                        <td style="width:100px;"><label
                                                                 class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                                 ID: </label></td>
                                                         <td><%= data[0].activity_ID %></td>
@@ -91,7 +105,7 @@
                                                             class="form-control col-md-7 col-xs-12">
                                                 </tr>
                                                 <tr>
-                                                    <td><label
+                                                    <td style="width:100px;"><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Activity
                                                             Name: </label></td>
                                                     <td><%= data[0].activity_name %></td>
@@ -162,7 +176,7 @@
                                                     </td>
                                                     
                                                 </tr>
-                                                <tr style="display: none;">
+                                                <tr>
                                                     <td><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
                                                             Progress: </label></td>
@@ -179,14 +193,11 @@
                                                 <tr>
                                                     <td><label class="control-label col-md-3 col-sm-3 col-xs-12">Choose
                                                             Evidences from system: </label></td>
-                                                    <td><button type="button" class="btn btn-primary"
+                                                    <td><button type="button" class="btn btn-primary btn-sm"
                                                             data-toggle="modal" data-target=".chooseEvidence">Choose
-                                                            Evidence</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td style="width: 100%; height: 100%;">
-                                                        <table id="table2" class="table table-striped table-bordered"
+                                                            Evidence</button>
+                                                        
+                                                            <table id="table2" class="table table-striped table-bordered"
                                                             style="width=100%; height=100%;">
                                                             <thead>
                                                                 <tr>
@@ -205,8 +216,10 @@
 
                                                         </table>
                                                         <button type="button" id="delete-row" class="btn btn-danger btn-xs">Delete Row</button>
-                                                    </td>
+                                                        
+                                                        </td>
                                                 </tr>
+                                                
                                                 <tr style="display: none;">
                                                     <td>
                                                         <input type="hidden" id="MID" name="MID"
