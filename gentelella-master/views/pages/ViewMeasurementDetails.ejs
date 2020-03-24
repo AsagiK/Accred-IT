@@ -153,14 +153,17 @@
                                 <div class="col-md-12 col-sm-6 col-xs-12">
                                     <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                                         <div class="x_title">
-                                            <div class="page-title">
-                                                <div class="title_right" style="display:inline-block;">
-                                                    <h2 style="color: #dddddd;text-overflow: none;">Description:<br> <%= data[0].measurement_Description %></h2>
-                                                </div>
-                                                <% if (current_user[0].Role == 1) { %>
-                                                    <div class="title_left" style="display:inline-block;">
-                                                        <h2 style="color: #dddddd;">
-                                                            Quality Target/s :<br>
+                                            <table class="table-bordered" style="background-color: whitesmoke; color: black;">
+                                                <thead>
+                                                    <th>Description</th>
+                                                    <th>Quality Target/s</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font-size: 18px; width: 180px">
+                                                            <%= data[0].measurement_Description %>
+                                                        </td>
+                                                        <td style="font-size: 18px; width: 60px">
                                                             <% for(var targets of dataI) { %>
                                                                 <% if (data[0].measurement_ID == targets.measurementID) { %> 
                                                                     <%= targets.target %> 
@@ -173,10 +176,11 @@
                                                                     <br>
                                                                 <% } %>
                                                             <% } %>
-                                                        </h2>
-                                                    </div>
-                                                <% } %>
-                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            
                                             <!--Edited-->
                                             
                                         </div>
