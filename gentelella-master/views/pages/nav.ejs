@@ -15,17 +15,12 @@
               },
 
               success: function(data) {
-                  var wew = data[0];
+                  var wew = data[1];
                   for(var i = 0; i <= wew.length; i++)
                   {
 
-                      $('#try').append("<li>");
-                      $('#try').append("<a>");
-                      $('#try').append("<span class='message'>");
-                      $('#try').append(wew[i].message);
-                      $('#try').append("</span>");
-                      $('#try').append("</a>");
-                      $('#try').append("</li>");
+                      $('#try').append("<li><a><span class='message'>" + wew[i].message + "</span></a></li>");
+                      
                       
                   }
               },
@@ -192,8 +187,8 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-                  <li class="">
-                      <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <li class="" style="background-color: lightgray;">
+                      <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
                           <% if(locals.current_user){ %>
                              <%= current_user[0].User_First %> <%= current_user[0].User_Last %>
                             <%}else{%>
@@ -214,19 +209,13 @@
                       </ul>
                   </li>
 
-                  <li role="presentation" class="dropdown">
+                  <li role="presentation" class="dropdown" style="background-color: lightgrey;">
                       <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                           <i class="fa fa-envelope-o"></i>
                           <!--span class="badge bg-green">6</span-->
                       </a>
-                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                          <li>
-                              <a>
-                                  <span class="message">
-                                      <div id="try"></div>
-                                  </span>
-                              </a>
-                          </li>
+                      <ul id="try" class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" style="height : 500px; overflow : hidden; overflow-y : scroll;">
+                          
                       </ul>
                   </li>
               </ul>

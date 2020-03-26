@@ -351,7 +351,7 @@ module.exports = {
     //called when the notification bar is clicked
     SetRead: function (req, resp) {
         console.log(req.session.user[0].User_ID);
-        var sql = "Update notifications_read join notifications on notifications_read.Notifications_ID = notifications.Notifications_ID set notif_read = 1 where Recipient_ID = 46 && DATE(triggerdate) <= DATE(NOW())"
+        var sql = "Update notifications_read join notifications on notifications_read.Notifications_ID = notifications.Notifications_ID set notif_read = 1 where Recipient_ID = ? && DATE(triggerdate) <= DATE(NOW())"
         var values = [req.session.user[0].User_ID]
         connection.query(sql, values, function (err, results, fields) {
             console.log("notifications read")
