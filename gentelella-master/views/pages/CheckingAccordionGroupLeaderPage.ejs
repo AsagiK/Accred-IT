@@ -117,13 +117,13 @@
                                                                                 <td>
                                                                                     <% for (var groups of dataGroups) { %>
                                                                                         <% for (var assignedgroup of dataAssignedgroup) { %>
-                                                                                            <% if (assignedgroup.activity_ID == activity.activity_ID && assignedgroup.activity_Member == groups.Group_ID) { %>
+                                                                                            <% if (assignedgroup.activity_ID == activity.activity_ID && assignedgroup.activity_Member == groups.Group_ID ) { %>
                                                                                                 <h5><b><%= groups.Group_Name %>:<br></b></h5>
 
                                                                                                 <% for (users of dataUsers) { %>
 
                                                                                                     <% for(assignedmembers of dataAssignedusers) { %>
-                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activity.activity_ID) { %>
                                                                                                             -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                             
                                                                                                         <% } %>
@@ -145,7 +145,8 @@
                                                                                             <tr>
                                                                                                 <th>Submitted By</th>
                                                                                                 <th>Submission Description</th> 
-                                                                                                <th>Selected Outputs</th>  
+                                                                                                <th>Selected Outputs</th>
+                                                                                                <th>Suggested Progress</th>  
                                                                                                 <th></th>
                                                                                                 
                                                                                             </tr>
@@ -171,6 +172,7 @@
                                                                                                         <% } %>
                                                                                                     <% } %>
                                                                                                 </td>
+                                                                                                <td> <%= subs.suggested_Score %></td>
                                                                                                 <td>  
                                                                                                     <form method="get" action="ViewActivityEvidencesGroupLeaderPage">
                                                                                                         <input type="text" name="PID"

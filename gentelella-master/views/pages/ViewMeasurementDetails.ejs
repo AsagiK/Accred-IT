@@ -262,7 +262,7 @@
                                                                                                 <% for (users of dataJ) { %>
 
                                                                                                     <% for(assignedmembers of dataM) { %>
-                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
                                                                                                             -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                             
                                                                                                         <% } %>
@@ -353,7 +353,7 @@
                                                                                                 <% for (users of dataJ) { %>
 
                                                                                                     <% for(assignedmembers of dataM) { %>
-                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
                                                                                                             -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                             
                                                                                                         <% } %>
@@ -378,7 +378,7 @@
 
                                                                                     
                                                                                     <% for(assignedmembers of dataM) { %>
-                                                                                    <% if (dataK[0].status == 1 && assignedmembers.activity_member_member == current_user[0].User_ID) { %>
+                                                                                    <% if (dataK[0].status == 1 && assignedmembers.activity_member_member == current_user[0].User_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
@@ -613,7 +613,7 @@
                             </a>
                             <br>
                             <input type="hidden" name="activityID" id="activityID" required="required" class="form-control col-md-7 col-xs-12" hidden>
-                            <input name="activityName" id="activityName" required="required" class="form-control col-md-7 col-xs-12" hidden>
+                            <input type="hidden" name="activityName" id="activityName" required="required" class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
