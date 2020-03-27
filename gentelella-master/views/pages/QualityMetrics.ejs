@@ -331,7 +331,7 @@
                                                 Goal ID: <span class="required">*</span></label>-->
                                         <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="" id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="hidden" id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
                                             <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
@@ -1138,7 +1138,7 @@
                             };
 
 
-                            xhr.send("table=" + table + "Gname=" + Gname);
+                            xhr.send("table=" + table + "&Gname=" + Gname);
 
                         });
 

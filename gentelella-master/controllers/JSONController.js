@@ -299,6 +299,7 @@ module.exports = {
     },
 
     AssignActivityJSON: function (req, resp) {
+        sess = req.session;
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
@@ -310,11 +311,24 @@ module.exports = {
             console.log(aid);
             console.log(uid);
             console.log(mid);
-            var sql = "INSERT INTO `capstone`.`activity_members` (`activity_ID`, `activity_Member`, `measurement_ID`) VALUES (? , ?, ?); ";
+            var sql = "INSERT INTO capstone.`activity_members` (activity_ID, activity_Member, measurement_ID) VALUES (? , ?, ?); ";
             var values = [aid, uid, mid];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
+                    var today = new Date();
+                    var current = today.toISOString().split('T')[0];
+                    var notifobject = {
+                        "body": "Group has been assigned to an activity", //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": "0", //ID of receiver, in this case the user that was created
+                        "group": uid, //Group ID taken from req session
+                        "range": "3", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject);
                     callback();
                 }
             });
@@ -330,22 +344,38 @@ module.exports = {
     },
 
     AssignActivityToMemberJSON: function (req, resp) {
+        sess = req.session;
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
-
+        var an = req.body.AN;
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
             var uid = UID[key]["User ID"];
             var mid = UID[key]["Measurement ID"];
+            var uf = UID[key]["User First"];
+            var ul = UID[key]["User Last"];
             console.log(aid);
             console.log(uid);
             console.log(mid);
-            var sql = "INSERT INTO `capstone`.`activity_members_members` (`activity_ID`, `activity_member_member`, `measurement_ID`) VALUES (? , ?, ?); ";
+            var sql = "INSERT INTO capstone.`activity_members_members` (activity_ID, activity_member_member, measurement_ID) VALUES (? , ?, ?); ";
             var values = [aid, uid, mid];
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
+                    var today = new Date();
+                    var current = today.toISOString().split('T')[0];
+                    var notifobject = {
+                        "body": uf + " " + ul +" has been assigned to activity: " + an, //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": "0", //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject);
                     callback();
                 }
             });
@@ -494,7 +524,7 @@ module.exports = {
                         var today = new Date();
                         var current = today.toISOString().split('T')[0];
                         var notifobject = {
-                            "body": "Measurements have been created for Goal: " + GNAME, //message body, cannot be null
+                            "body": "Measurement: " + mname + " ,has been created for Goal: " + GNAME, //message body, cannot be null
                             "sender": sess.user[0].User_ID, //ID of sender taken from req session
                             "receiver": "0", //ID of receiver, in this case the user that was created
                             "group": sess.user[0].Group, //Group ID taken from req session
@@ -559,9 +589,10 @@ module.exports = {
         sess = req.session;
         var UID = req.body.table;
         var MID = req.body.mid;
-        var gname = req.body.GName;
-        UID = JSON.parse(UID);
+        var gname = req.body.Gname;
         console.log(UID);
+        UID = JSON.parse(UID);
+        //
         async.forEachOf(UID, function (value, key, callback) {
             var cn = UID[key]["Cycle Name"];
             var sd = UID[key]["StartDate"];

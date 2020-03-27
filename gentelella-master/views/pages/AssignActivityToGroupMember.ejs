@@ -135,9 +135,9 @@
                                                     <th>Check</th>
                                                     <th>User First</th>
                                                     <th>User Last</th>
-                                                    <th >User ID</th>
-                                                    <th >Activity ID</th>
-                                                    <th >Measurement ID</th>
+                                                    <th style="display:none;">User ID</th>
+                                                    <th style="display:none;">Activity ID</th>
+                                                    <th style="display:none;">Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -156,11 +156,11 @@
                                                         <%= user.User_First %></td>
                                                     <td id="last<%= user.User_ID %>" value="<%= user.User_Last %>">
                                                         <%= user.User_Last %></td>
-                                                    <td  id="UID<%= user.User_ID %>" value="<%= user.User_ID %>">
+                                                    <td style='display:none;' id="UID<%= user.User_ID %>" value="<%= user.User_ID %>">
                                                         <%= user.User_ID %></td>
-                                                    <td  id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
+                                                    <td style='display:none;' id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
-                                                    <td  id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
+                                                    <td style='display:none;' id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
                                                 </tr>
                                                 <% } %>
@@ -181,9 +181,9 @@
                                                     <th>Check</th>
                                                     <th>User First</th>
                                                     <th>User Last</th>
-                                                    <th >User ID</th>
-                                                    <th >Activity ID</th>
-                                                    <th >Measurement ID</th>
+                                                    <th style="display:none;">User ID</th>
+                                                    <th style="display:none;">Activity ID</th>
+                                                    <th style='display:none;'>Measurement ID</th>
                                                 </tr>
                                             </thead>
 
@@ -204,7 +204,7 @@
                                             <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
                                         </form>
                                         <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
-                                        <button class="btn btn-primary" type="reset">Reset</button>
+                                        <input type="hidden" id="AN" name="AN" value="<%= dataB[0].activity_name %>">
                                         <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
@@ -263,8 +263,8 @@
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
-                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td  id = UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td  id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td  id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td style='display:none;' id = UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -286,8 +286,8 @@
                         var measure = $('#measure' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
-                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td  id = UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td  id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td  id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td style='display:none;' id = UID" + index + " value=" + UID + ">" + UID +
+                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
@@ -299,12 +299,12 @@
             $("#toJSON").click(function () {
 
                 var table = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2]
+                    
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2 ]
+                    
                 })); // 
-
+                var AN = document.getElementById("AN").value;
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/AssignActivityToMemberJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -326,7 +326,7 @@
                 };
 
 
-                xhr.send("table=" + table + "&table2=" + table2);
+                xhr.send("table=" + table + "&table2=" + table2 + "&AN=" + AN);
 
             });
 
