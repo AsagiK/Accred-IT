@@ -262,7 +262,7 @@
                                                                                                 <% for (users of dataJ) { %>
 
                                                                                                     <% for(assignedmembers of dataM) { %>
-                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
                                                                                                             -<%= users.User_First %> <%= users.User_Last %> <br>
                                                                                                             
                                                                                                         <% } %>

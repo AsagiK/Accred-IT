@@ -303,11 +303,12 @@ module.exports = {
         var UID = req.body.table;
         console.log(UID);
         UID = JSON.parse(UID);
-
+        var an = req.body.AN;
         async.forEachOf(UID, function (value, key, callback) {
             var aid = UID[key]["Activity ID"];
             var uid = UID[key]["Group ID"];
             var mid = UID[key]["Measurement ID"];
+            var gn = UID[key]["Group Name"];
             console.log(aid);
             console.log(uid);
             console.log(mid);
@@ -319,7 +320,7 @@ module.exports = {
                     var today = new Date();
                     var current = today.toISOString().split('T')[0];
                     var notifobject = {
-                        "body": "Group has been assigned to an activity", //message body, cannot be null
+                        "body": gn + " has been assigned to activity: " + an, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": uid, //Group ID taken from req session
