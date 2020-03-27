@@ -2224,7 +2224,7 @@ module.exports = {
                     dataD: results[3],
                     current_user: sess.user
                 });
-                console.log(results[2])
+                console.log(CID)
             });
         }
 

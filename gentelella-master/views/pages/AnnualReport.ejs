@@ -93,16 +93,19 @@
                                                         %
                                                     <% } %> 
                                                     - <%= report.target_Desc %><br>
-                                                </td> 
-                                                <% if (report.progress >= 75) { %>
-                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 60) { %> 
-                                                    <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 30) { %>
-                                                    <td style="color:tomato; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 0) { %>
-                                                    <td style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } %>
+                                                </td>  
+                                                
+                                                <% if (report.progress >= 75 && report.target_Type == 0) { %>
+                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
+                                                <% } else if (report.progress >= 60 && report.target_Type == 0) { %> 
+                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
+                                                <% } else if (report.progress >= 30 && report.target_Type == 0) { %>
+                                                    <td style="color:tomato; font-weight: bold; font-size: large;"><%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
+                                                <% } else if (report.progress >= 0 && report.target_Type == 0) { %>
+                                                    <td style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%> </td>
+                                                <% } else { %> 
+                                                    <td style="color: black; font-weight: bold; font-size: large;"> <%= report.progress %> / <%= report.target %> <br><%= report.target_Desc%> </td> 
+                                                <% } %> 
                                                 
                                                 
                                             </tr> 
