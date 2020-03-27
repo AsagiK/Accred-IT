@@ -2255,7 +2255,8 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var CID = req.body.CID;
+            var CID = req.query.CID;
+            console.log(CID +"----------------------------------------------------------------------------------------------------------------CID");
             var sql = "SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets;"
             var values = [CID, CID]
             console.log (CID);
