@@ -182,6 +182,20 @@ module.exports = {
             if (err) throw err;
             console.log("Record Inserted");
 
+            var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Group: " + gn + " ,has been made", //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "3", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
+
 
         });
         resp.redirect('/CreateGroup');
@@ -471,6 +485,21 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+            var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Metric: " + metricName + " ,has been made", //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "3", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
+
             resp.redirect('/QualityMetric');
         });
     },
@@ -497,6 +526,21 @@ module.exports = {
         connection.query(sql, values, function (err, result) {
             if (err) throw err;
             console.log("Record Inserted");
+
+            var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Metric: " + metricName + " ,has been made added to Source", //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "3", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
+
             resp.redirect('/ViewMetricofSource?SID=' + source);
         });
     },
