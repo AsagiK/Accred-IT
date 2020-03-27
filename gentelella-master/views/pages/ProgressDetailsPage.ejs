@@ -190,6 +190,7 @@
             console.log("to Json");
             var table = JSON.stringify($('#tableTarProg').tableToJSON());
             var mid = document.getElementById("mid").value;
+            var mname = document.getElementById("mname").value;
             console.log(mid);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/AssignProgressJSON', true);
@@ -211,7 +212,7 @@
             };
 
 
-            xhr.send("table=" + table + "&mid=" + mid);
+            xhr.send("table=" + table + "&mid=" + mid + "&mname=" + mname);
 
         });
 

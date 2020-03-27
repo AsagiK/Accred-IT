@@ -15,7 +15,7 @@
               },
 
               success: function(data) {
-                  var wew = data[1];
+                  var wew = data[0];
                   for(var i = 0; i <= wew.length; i++)
                   {
 
@@ -187,7 +187,7 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-                  <li class="" style="background-color: lightgray;">
+                  <li class="" style="background-color: #A9A9A9	;">
                       <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
                           <% if(locals.current_user){ %>
                              <%= current_user[0].User_First %> <%= current_user[0].User_Last %>
@@ -209,7 +209,7 @@
                       </ul>
                   </li>
 
-                  <li role="presentation" class="dropdown" style="background-color: lightgrey;">
+                  <li role="presentation" class="dropdown" style="background-color: #A9A9A9;">
                       <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                           <i class="fa fa-envelope-o"></i>
                           <!--span class="badge bg-green">6</span-->
