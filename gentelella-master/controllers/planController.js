@@ -1999,17 +1999,18 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            var MID = req.body.MID;
-
-            var sql = "SELECT * FROM capstone.measurements_targets_audit JOIN capstone.measurement where capstone.measurements_targets_audit.measurementID = capstone.measurement.measurement_ID AND capstone.measurement.measurement_ID = (?); SELECT * FROM capstone.cycle;"
-            console.log("ANNUAL REPORT TEST CUH " + MID);
-            var values = [MID]
+            var GID = req.query.GID;
+            var Year = req.query.Year;
+            var sql = "SELECT *,  SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) as extractedyear FROM capstone.measurement_audit JOIN capstone.measurements_targets_audit JOIN capstone.cycle WHERE measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = cycle.cycle_ID AND cycle.termindex <= cycle.totalterm AND cycle.goal_ID = (?) AND SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) = (?); SELECT * FROM capstone.cycle; SELECT *,  SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) as extractedyear FROM capstone.measurement_audit LEFT JOIN capstone.cycle on measurement_audit.cycle_ID = cycle.cycle_ID WHERE goal_ID = (?) AND SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) = (?);"
+            console.log("ANNUAL REPORT TEST ---------------------------------------------------------------------" + GID);
+            var values = [GID,Year,GID,Year]
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/AnnualReport.ejs', {
                     data: results[0],
                     dataB: results[1],
+                    dataC: results[2],
                     current_user: sess.user
                 });
 

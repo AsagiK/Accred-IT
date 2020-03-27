@@ -59,7 +59,7 @@ router.route('/UpdateMeasurement').post(planCtrl.UpdateMeasurement);
 router.route('/AuditMeasurement').post(planCtrl.AuditMeasurement); 
 router.route('/ViewActivitiesUnderMeasurement').post(planCtrl.ViewActivitiesUnderMeasurement);
 router.route('/BackToMeasurement').get(planCtrl.BackToMeasurement); 
-router.route('/AnnualReport').post(planCtrl.AnnualReport); 
+router.route('/AnnualReport').get(planCtrl.AnnualReport); 
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);

@@ -567,9 +567,11 @@
                                                                                                 <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
                                                                                             </form>
                                                                                                 <!--VIEW ANNUAL REPORT BUTTON-->
-                                                                                            <form id="annualreport" method="post" action="AnnualReport">
-                                                                                                    <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                    <button type="submit" class="btn btn-primary" form="annualreport">View Annual Report</button> 
+                                                                                            <form id="annualreport~<%= measure_audit.measurement_auditID %>" method="get" action="AnnualReport">
+                                                                                                    <input type="hidden" name="GID" value="<%= cycles.goal_ID %>"> 
+                                                                                                    <% var Year=cycles.cycle_Name.substr(5, 1) %>
+                                                                                                    <input type="hidden" name="Year" value="<%= Year %>"> 
+                                                                                                    <button type="submit" class="btn btn-primary" form="annualreport~<%= measure_audit.measurement_auditID %>">View Annual Report</button> 
                                                                                                 </form>
                                                                                             </td>
                                                                                         </tr>

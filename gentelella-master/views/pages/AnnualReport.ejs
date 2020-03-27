@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Cycle Page</title>
+    <title>Annual Report</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -73,44 +73,55 @@
                                             <th>Progress</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <% for (var report of data) { %> 
-                                                                                       
+                                    <tbody> 
+                            
+                                        
+                                          <% for (var measurements of dataC) { %>      
+                                                                                
                                             <tr>
-                                                <td width="10%" scope="row"><%= report.measurementID %></td>
-                                                <td width="30%"><%= report.measurement_Name %></td>
-                                                <td>
-                                                <% for (var cycle of dataB) { %>
-                                                <% if ((report.cycle_ID -1 ) == cycle.cycle_ID) {%>
-                                                  <%= cycle.cycle_Name %>  
-                                                <% } %>
-                                                <% } %> 
-                                                
+                                                <td width="10%" scope="row"><%= measurements.measurementID %></td>
+                                                <td width="30%"><%= measurements.measurement_Name %></td>
+                                                <td width="10%"> <%= measurements.cycle_Name%>
                                                 </td>
-                                                <td width="10%">
+                                                <td width="10%"> 
+                                                    <% for (var report of data) { %> 
+                                                    <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
+
                                                     <%=report.target %> 
                                                     <% if (report.target_Type == 0) { %> 
                                                         %
                                                     <% } %> 
-                                                    - <%= report.target_Desc %><br>
+                                                    - <%= report.target_Desc %><br> 
+
+                                                    <% } %>
+                                                    <% } %>
                                                 </td>  
+                                                <td> 
+                                                    <% for (var report of data) { %> 
+                                                    <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
+
+                                                    <% if (report.progress >= 75 && report.target_Type == 0) { %>
+                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br> 
+                                                    <% } else if (report.progress >= 60 && report.target_Type == 0) { %> 
+                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
+                                                    <% } else if (report.progress >= 30 && report.target_Type == 0) { %>
+                                                        <span style="color:tomato; font-weight: bold; font-size: large;"><%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
+                                                    <% } else if (report.progress >= 0 && report.target_Type == 0) { %>
+                                                        <span style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%> </span> <br>
+                                                    <% } else { %> 
+                                                        <span style="color: black; font-weight: bold; font-size: large;"> <%= report.progress %> / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } %> 
+                                                    
+                                                    <% } %>
+                                                    <% } %>
+                                                </td>
                                                 
-                                                <% if (report.progress >= 75 && report.target_Type == 0) { %>
-                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
-                                                <% } else if (report.progress >= 60 && report.target_Type == 0) { %> 
-                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
-                                                <% } else if (report.progress >= 30 && report.target_Type == 0) { %>
-                                                    <td style="color:tomato; font-weight: bold; font-size: large;"><%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></td> 
-                                                <% } else if (report.progress >= 0 && report.target_Type == 0) { %>
-                                                    <td style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%> </td>
-                                                <% } else { %> 
-                                                    <td style="color: black; font-weight: bold; font-size: large;"> <%= report.progress %> / <%= report.target %> <br><%= report.target_Desc%> </td> 
-                                                <% } %> 
                                                 
                                                 
                                             </tr> 
-                                            
-                                        <% } %>
+                                                
+                                            <% } %>
+                                        
                                         
                                 
                                     </tbody>
