@@ -304,6 +304,7 @@
                                                                                 </td>
                                                                                 
                                                                                 <td>
+                                                                                    <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
                                                                                     <form method="get" action="EditActivity">
                                                                                         <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
@@ -312,6 +313,7 @@
                                                                                         <button type="submit" class="btn btn-primary">Edit Activity
                                                                                         </button>
                                                                                     </form>
+                                                                                    <% } %>
                                                                                 </td>
                                                                                 
                                                                             </tr>

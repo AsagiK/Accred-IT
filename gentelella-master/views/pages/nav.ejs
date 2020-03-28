@@ -42,9 +42,11 @@
                   var wew2 = data[1];
                   for(var i = 0; i <= wew2.length; i++)
                   {
-
-                      $('#try2').append("<li><a><span class='message'>" + wew2[i].message + "</span></a></li>");
-                      
+                    if(wew2.length == 0){
+                        $('#try2').append("<li><a><span class='message'>No Deadline Notifications</span></a></li>");
+                    }else{
+                        $('#try2').append("<li><a><span class='message'>" + wew2[i].message + "</span></a></li>");
+                    }
                       
                   }
               },
@@ -235,7 +237,7 @@
                   </li>
                   <li role="presentation" class="dropdown" style="background-color: #A9A9A9;">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-clock-o"></i>
                         <!--span class="badge bg-green">6</span-->
                     </a>
                     <ul id="try2" class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" style="height : 500px; overflow : hidden; overflow-y : scroll;">
@@ -245,7 +247,7 @@
 
                   <li role="presentation" class="dropdown" style="background-color: #A9A9A9;">
                       <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                          <i class="fa fa-user"></i>
+                          <i class="fa fa-bell"></i>
                           <!--span class="badge bg-green">6</span-->
                       </a>
                       <ul id="try" class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" style="height : 500px; overflow : hidden; overflow-y : scroll;">
