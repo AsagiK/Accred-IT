@@ -142,9 +142,9 @@
                                                          
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON-->
-                                                        <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                        <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
                                                         </form>        
                                                         </td>                                            
                                                      </tr>
