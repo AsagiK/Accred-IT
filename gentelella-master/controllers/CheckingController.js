@@ -415,7 +415,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -423,7 +423,8 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
-                        dataD: results[3],
+                        dataCycle: results[3],
+                        dataGoal: results[4],
                         current_user: sess.user
                     })
                 }
