@@ -100,17 +100,19 @@
                                                     <% for (var report of data) { %> 
                                                     <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
 
-                                                    <% if (report.progress >= 75 && report.target_Type == 0) { %>
+                                                    <% if (report.progress >= report.target && report.target_Type == 0) { %>
                                                         <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br> 
-                                                    <% } else if (report.progress >= 60 && report.target_Type == 0) { %> 
+                                                    <% } else if ((report.progress >= (report.target/2)) && report.target_Type == 0) { %> 
                                                         <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
-                                                    <% } else if (report.progress >= 30 && report.target_Type == 0) { %>
+                                                    <% } else if ((report.progress >= (report.target/4)) && report.target_Type == 0) { %>
                                                         <span style="color:tomato; font-weight: bold; font-size: large;"><%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
-                                                    <% } else if (report.progress >= 0 && report.target_Type == 0) { %>
-                                                        <span style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%> </span> <br>
-                                                    <% } else { %> 
-                                                        <span style="color: black; font-weight: bold; font-size: large;"> <%= report.progress %> / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
-                                                    <% } %> 
+                                                    <% } else if (report.progress >= report.target && report.target_Type == 1) { %>
+                                                        <span style="color:forestgreen  ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } else if ((report.progress >= (report.target/2)) && report.target_Type == 1) { %>
+                                                        <span style="color:darkorange  ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } else if ((report.progress >= (report.target/4)) && report.target_Type == 1) { %>
+                                                        <span style="color:tomato ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } %>
                                                     
                                                     <% } %>
                                                     <% } %>

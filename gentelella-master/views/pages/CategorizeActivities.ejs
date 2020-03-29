@@ -120,18 +120,22 @@
                                                                     
                                                                     <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
                                                                          
+                                                                        <% var target = targets_audit.target %> 
                                                                         
-                                                                        <% if (targets_audit.progress >= 75 && targets_audit.target_Type == 0) { %>
+                                                                        <% if ((targets_audit.progress >= target) && targets_audit.target_Type == 0) { %>
                                                                             <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span><br>
-                                                                        <% } else if (targets_audit.progress >= 60 && targets_audit.target_Type == 0) { %> 
+                                                                        <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 0) { %> 
                                                                             <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
-                                                                        <% } else if (targets_audit.progress >= 30 && targets_audit.target_Type == 0) { %>
+                                                                        <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 0) { %>
                                                                             <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
-                                                                        <% } else if (targets_audit.progress >= 0 && targets_audit.target_Type == 0) { %>
-                                                                            <span style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%> </span><br>
-                                                                        <% } else { %> 
-                                                                            <span style="color: black; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
-                                                                        <% } %> 
+                                                                        <% } else if ((targets_audit.progress >= target) && targets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                        <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                        <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                        <% } %>  
+
                                                                     <% }%>
 
                                                                 <% } %>
