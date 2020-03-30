@@ -218,6 +218,7 @@
                                                                 <th style="display: none;">ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
+                                                                <th>Linked to Target</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
                                                                 <th>Assigned Group and Members</th>
@@ -241,6 +242,19 @@
                                                                                 </td>
                                                                                 <td><%= activities.activity_name %></td>
                                                                                 <td><%= activities.description %></td>
+                                                                                <td>
+                                                                                    <% for (var target of dataI) { %>
+                                                                                        <% if (target.target_ID == activities.target) { %>
+                                                                                            <%= target.target %> 
+                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= target.target_Desc %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                 
                                                                                     <% for (outputs of dataD){ %>
@@ -323,10 +337,11 @@
                                                                             <!--END OF ADMIN, QAO, AND DEPCHAIR VIEW-->
                                                                             <!--VIEW OF A USER-->
                                                             <% } else { %>
-                                                                <% for (var actMembers of dataH) { %>
-                                                                    <% for (actMeasures of dataG) { %> 
+                                                                
+                                                                <% for (actMeasures of dataG) { %>
+                                                                    <% for (var actMembers of dataH) { %> 
                                                                       <% for (activities of dataB) { %>
-                                                                        <% if ((actMembers.activity_Member == current_user[0].Group && data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMembers.activity_ID && actMeasures.activity_ID == activities.activity_ID)) { %>
+                                                                        <% if (actMembers.activity_Member == current_user[0].Group && data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMembers.activity_ID && actMeasures.activity_ID == activities.activity_ID) { %>
                                                                 
                                                                         
                                                                             <tr>
@@ -334,6 +349,19 @@
                                                                                 </td>
                                                                                 <td><%= activities.activity_name %></td>
                                                                                 <td><%= activities.description %></td>
+                                                                                <td>
+                                                                                    <% for (var target of dataI) { %>
+                                                                                        <% if (target.target_ID == activities.target) { %>
+                                                                                            <%= target.target %> 
+                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= target.target_Desc %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                 
                                                                                     <% for (outputs of dataD){ %>
@@ -503,6 +531,23 @@
                                     <% } %>
                                 </select>
                                 <br>
+                                <label for="target">Target</label>
+                                <br>
+                                <select class="form-control" name="target" id="target">
+                                    <% for(var targets of dataI) { %>
+                                        <% if (data[0].measurement_ID == targets.measurementID) { %> 
+                                            <%= targets.target %> 
+                                            <% if (targets.target_Type == 0) { %>
+                                                <option value="<%= targets.target_ID %>~<%= targets.target %>%-<%= targets.target_Desc %>"><%= targets.target %>% - <%= targets.target_Desc %></option>
+                                            <% } else { %>
+                                                <option value="<%= targets.target_ID %>~<%= targets.target %>#-<%= targets.target_Desc %>"><%= targets.target %># - <%= targets.target_Desc %></option>
+                                            <% } %> 
+                                            
+                                            <br>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                                <br>
                                 <label> Deadline </label>
 
                                 <% var startDate = dataK[0].start_Date %>
@@ -540,9 +585,11 @@
                                                 <th>Activity Name</th>
                                                 <th>Description</th>
                                                 <th>Measurement to assign</th>
+                                                <th>Target</th>
                                                 <th>Deadline</th>
                                                 <th></th>
                                                 <th style='display: none;'>MeasurementID</th>
+                                                <th style='display: none;'>TargetID</th>
 
                                             </tr>
                                         </thead>
@@ -801,6 +848,14 @@
                 console.log("Final: " +measureID);
                 console.log("Final: " +measureName);
                 
+                var target = $("#target").val();
+                var targetID = target.substr(0, target.lastIndexOf('~'));
+                var targetTarget = target.substr(target.lastIndexOf('~') + 1, target.lastIndexOf('-') - 2);
+                var targetDesc = target.substr(target.lastIndexOf('-') + 1);
+                console.log(targetID);
+                console.log(targetTarget);
+                console.log(targetDesc);
+                
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
@@ -817,8 +872,8 @@
                     //console.log(total + " 1st");
                     //if (total <= 100) {
                     var markup = "<tr><td>" + activity +
-                        "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + dead +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td></tr>";
+                        "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + targetTarget +"-" + targetDesc + "</td><td>" + dead +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td><td style='display: none;'>" + targetID + "</td></tr>";
                     var table = document.getElementById("tableactivities")
                     $(table).append(markup);
                     //console.log(total + " 2nd");
