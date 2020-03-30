@@ -51,40 +51,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
-                            <div class="x_content">
-                               
-                                
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <th>Evidences</th>
-                                        
-                                    </thead>
-                                    <tbody>
-                                        
-                                        <td>
-                                            <% for(var activity of dataActivity) { %>
-                                                <h5><b><%= activity.activity_name %>:</b></h5>
-                                                <% for (var evidences of dataD) { %>
-                                                    <% if (evidences.activityID == activity.activity_ID) { %>
-                                                    
-                                                    
-                                                        -<a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
-                                                    
-                                                    <% } %>
-                                                <% } %>
-                                            <% } %>
-                                        </td>
-                                    </tbody>
-                                </table>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    
+                    <div class="col-md-6 col-sm-6 ">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
                                         <div>
@@ -146,6 +114,108 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6 col-sm-6 ">
+                            <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
+                                <div class="x_content">
+                                   <h2>Evidences</h2>
+
+                                   <% for(var activity of dataActivity) { %>
+                                   <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel">
+                                      <a class="panel-heading" role="tab" id="heading<%= activity.activity_ID %>" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= activity.activity_ID %>" aria-expanded="true" aria-controls="collapse<%= activity.activity_ID %>">
+                                        <h4 class="panel-title">
+                                            <%= activity.activity_name %> - 
+                                            <% for (var targets of dataTargets) { %>
+                                                <% if (targets.target_ID == activity.target) { %>
+                                                    <% if (targets.target_Type == 0) { %>
+                                                        <%= targets.target %>%
+                                                    <% } else { %> 
+                                                        <%= targets.target %>#
+                                                    <% } %>
+                                                     - <%= targets.target_Desc %>
+                                                <% } %>
+                                            <% } %>
+                                        </h4>
+                                      </a>
+                                      <div id="collapse<%= activity.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= activity.activity_ID %>">
+                                        <div class="panel-body">
+                                          <table class="table table-bordered">
+                                            <thead>
+                                              <tr>
+                                                <th>Submitted by</th>
+                                                <th>Suggested Progress</th>
+                                                <th>Evidence/s</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                            <% for (var subs of dataPending) { %>
+                                                <% if (subs.activity_ID == activity.activity_ID) { %>
+                                              <tr>
+                                                <td><%= subs.User_First %> <%= subs.User_Last %></td>
+                                                <td>
+                                                    <% for (var targets of dataTargets) { %>
+                                                        <% if (subs.target == targets.target_ID) { %>
+                                                            <% if (targets.target_Type == 0) { %>
+                                                                <%= subs.suggested_Score %>%
+                                                            <% } else { %>
+                                                                <%= subs.suggested_Score %>#
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% for (var evidences of dataD) { %>
+                                                        <% if (evidences.pendingID == subs.pending_ID) { %>
+                                                        
+                                                        
+                                                            -<a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
+                                                        
+                                                        <% } %>
+                                                    <% } %>
+                                                </td>
+                                              </tr>
+                                                <% } %>
+                                            <% } %>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    
+                                  </div>
+                                  <% } %>
+                                  <!-- end of accordion -->
+              
+                                    
+                                  <!-- <table class="table table-bordered">
+                                        <thead>
+                                            <th>Evidences</th>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <td>
+                                                <% for(var activity of dataActivity) { %>
+                                                    <h5><b><%= activity.activity_name %>:</b></h5>
+                                                    <% for (var evidences of dataD) { %>
+                                                        <% if (evidences.activityID == activity.activity_ID) { %>
+                                                        
+                                                        
+                                                            -<a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
+                                                        
+                                                        <% } %>
+                                                    <% } %>
+                                                <% } %>
+                                            </td>
+                                        </tbody>
+                                    </table-->
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                 </div>
 
 
