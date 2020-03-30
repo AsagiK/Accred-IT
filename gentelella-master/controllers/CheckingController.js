@@ -261,7 +261,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -278,6 +278,7 @@ module.exports = {
                     dataAssignedgroup: results[9],
                     dataUsers: results[10],
                     dataAssignedusers: results[11],
+                    dataTargets: results[12],
                     current_user: sess.user
                 });
                 console.log(results);
@@ -303,7 +304,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members;", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets;", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -321,6 +322,7 @@ module.exports = {
                     dataAssignedgroup: results[10],
                     dataUsers: results[11],
                     dataAssignedusers: results[12],
+                    dataTargets: results[13],
                     current_user: sess.user
                 });
                 console.log(results);
@@ -349,7 +351,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;  SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -357,6 +359,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataTargets: results[3],
                         current_user: sess.user
                     })
                 }
@@ -382,7 +385,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -390,6 +393,7 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataTargets: results[3],
                         current_user: sess.user
                     })
                 }

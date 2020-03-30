@@ -885,7 +885,7 @@ module.exports = {
             connection.query(sql, values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
-                resp.redirect('/CheckingAccordionPage')
+                resp.redirect('/CheckingAccordionCheckingAccordionGroupLeaderPagePage')
             });
         }
     },
@@ -903,8 +903,9 @@ module.exports = {
         var today = new Date();
         var current = today.toISOString().split('T')[0];
         var CID = req.body.CID;
-        var values2 = [AID, name, code, description, score, current, UID, CID]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`, `cycle_ID`) VALUES (? , ?, ?, ?, ?, ?, ?, ?);"
+        var TID = req.body.TID;
+        var values2 = [AID, name, TID, code, description, score, current, UID, CID]
+        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`, `cycle_ID`) VALUES (? , ?, ?, ?, ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
             if (results) {

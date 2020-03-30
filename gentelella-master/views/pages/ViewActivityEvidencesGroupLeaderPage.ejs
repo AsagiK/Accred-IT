@@ -62,12 +62,42 @@
                                     <tbody>
                                         
                                         <tr>
-                                            <td>Submission Report: </td>
+                                            <td width="75">Submission Report: </td>
                                             <td><%= data[0].description %></td>
                                         </tr>
                                         <tr>
+                                            <td>Target linked to Activity: </td>
+                                            <td>
+                                                <% for (var target of dataTargets) { %>
+                                                    <% if (target.target_ID == data[0].target) { %>
+                                                        
+                                                        <%= target.target %> 
+                                                        <% if (target.target_Type == 0) { %>
+                                                        %
+                                                        <% } else { %>
+                                                        #
+                                                        <% } %> 
+                                                        - <%= target.target_Desc %>
+                                                    <% } %>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Suggested Progress: </td>
-                                            <td><%= data[0].suggested_Score %></td>
+                                            <td>
+                                                <% for (var target of dataTargets) { %>
+                                                    <% if (target.target_ID == data[0].target) { %>
+                                                        <%= data[0].suggested_Score %>
+                                                        <% if (target.target_Type == 0) { %>
+                                                        %
+                                                        <% } else { %>
+                                                        #
+                                                        <% } %> 
+                                                        
+                                                    <% } %>
+                                                <% } %>
+                                                
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Evidences: </td>
@@ -77,7 +107,7 @@
                                                     <% for (var actEvidences of dataC) { %>
                                                         <% for (var documents of dataB) { %>
                                                         <% if (data[0].pending_ID == actEvidences.pendingID && actEvidences.documentID == documents.Document_ID) { %>
-                                                            <a href="<%= documents.Document_Route %>" download><%= documents.Document_Name %> - <%= documents.Document_Route %></a> </a><br>
+                                                            <a href="<%= documents.Document_Route %>" download><%= documents.Document_Name %></a> </a><br>
                                                         <% } %>
                                                         <% } %>
                                                         <% } %>

@@ -103,6 +103,23 @@
                                                                                 <td><%= activity.description %></td>
                                                                             </tr>
                                                                             <tr>
+                                                                                <td>Target linked to Activity: </td>
+                                                                                <td>
+                                                                                    <% for (var target of dataTargets) { %>
+                                                                                        <% if (target.target_ID == activity.target) { %>
+                                                                                            
+                                                                                            <%= target.target %> 
+                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= target.target_Desc %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
                                                                                 <td>Expected Outputs</td>
                                                                                 <td>
                                                                                     <% for (outputs of dataG) { %>
@@ -172,7 +189,22 @@
                                                                                                         <% } %>
                                                                                                     <% } %>
                                                                                                 </td>
-                                                                                                <td> <%= subs.suggested_Score %></td>
+                                                                                                <td>
+                                                                                                    <% for (var target of dataTargets) { %>
+                                                                                                        <% if (target.target_ID == subs.target) { %>
+                                                                                                            
+                                                                                                            <%= subs.suggested_Score %> 
+                                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                                            %
+                                                                                                            <% } else { %>
+                                                                                                            #
+                                                                                                            <% } %> 
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+                                                                                                     
+                                                                                                    
+                                                                                                </td>
                                                                                                 <td>  
                                                                                                     <form method="get" action="ViewActivityEvidencesGroupLeaderPage">
                                                                                                         <input type="text" name="PID"

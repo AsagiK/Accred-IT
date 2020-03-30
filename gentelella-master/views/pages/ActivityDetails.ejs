@@ -124,6 +124,27 @@
                                                 </tr>
                                                 <tr>
                                                     <td><label
+                                                            class="control-label col-md-3 col-sm-3 col-xs-12">Target linked to Activity: </label></td>
+                                                    <td>
+                                                        <% for (var target of dataTargets) { %>
+                                                            <% if (target.target_ID == data[0].target) { %>
+                                                                <input type="hidden" name="TID" id="TID" value="<%= target.target_ID %>">
+                                                                <%= target.target %> 
+                                                                <% if (target.target_Type == 0) { %>
+                                                                %
+                                                                <% } else { %>
+                                                                #
+                                                                <% } %> 
+                                                                - <%= target.target_Desc %>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </td>
+                                                    <input type="hidden" id="activityDesc"
+                                                        value="<%= data[0].description %>"
+                                                        class="form-control col-md-7 col-xs-12">
+                                                </tr>
+                                                <tr>
+                                                    <td><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Expected
                                                             Output: </label></td>
                                                     <td>
@@ -404,16 +425,16 @@
                     console.log("Hello");
                     var table = JSON.stringify($('#table2').tableToJSON());
                     var table2 = JSON.stringify($('#tableoutputs').tableToJSON());
-                    var AID = document.getElementById("activityID").value
-                    var name = document.getElementById("activityName").value
-                    var code = document.getElementById("code").value
-                    var description = document.getElementById("subdesc").value
-                    var MID = document.getElementById("MID").value
-                    var UID = document.getElementById("UID").value
-                    var target = document.getElementById("target").value
-                    var score = document.getElementById("score").value
-                    var CID = document.getElementById("CID").value
-
+                    var AID = document.getElementById("activityID").value;
+                    var name = document.getElementById("activityName").value;
+                    var code = document.getElementById("code").value;
+                    var description = document.getElementById("subdesc").value;
+                    var MID = document.getElementById("MID").value;
+                    var UID = document.getElementById("UID").value;
+                    var target = document.getElementById("target").value;
+                    var score = document.getElementById("score").value;
+                    var CID = document.getElementById("CID").value;
+                    var TID = document.getElementById("TID").value;
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -435,7 +456,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID);
 
                 });
 
