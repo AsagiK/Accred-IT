@@ -207,11 +207,12 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
+                                            <button type="submit" class="btn btn-danger" id="backcancel">Cancel</button>
                                         </form>
-                                        <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
+                                        
                                         <input type="hidden" id="AN" name="AN" value="<%= dataB[0].activity_name %>">
-                                        <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
                                             <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
