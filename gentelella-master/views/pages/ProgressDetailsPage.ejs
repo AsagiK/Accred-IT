@@ -67,12 +67,12 @@
                                             <% for(var activity of dataActivity) { %>
                                                 <h5><b><%= activity.activity_name %>:</b></h5>
                                                 <% for (var evidences of dataD) { %>
-                                                    
+                                                    <% if (evidences.activityID == activity.activity_ID) { %>
                                                     
                                                     
                                                         -<a href="<%= evidences.Document_Route %>"><%= evidences.Document_Name %></a><br>
                                                     
-                                                    
+                                                    <% } %>
                                                 <% } %>
                                             <% } %>
                                         </td>
@@ -98,9 +98,11 @@
                                                 <select class="form-control" id="target" name="target" onchange="remSelect()">
                                                     <% for( var targs of dataB) { %>
         
-                                    
-                                                        <option value="<%= targs.target_ID %>~<%= targs.target %>-<%= targs.target_Desc %>"><%= targs.target %> - <%= targs.target_Desc %></option>
-                                                        
+                                                        <% if (targs.target_Type == 0) { %>
+                                                            <option value="<%= targs.target_ID %>~<%= targs.target %>%-<%= targs.target_Desc %>"><%= targs.target %>% - <%= targs.target_Desc %></option>
+                                                        <% } else { %>
+                                                            <option value="<%= targs.target_ID %>~<%= targs.target %>#-<%= targs.target_Desc %>"><%= targs.target %># - <%= targs.target_Desc %></option>
+                                                        <% } %>
                                                         <% } %>
                                                       </select> 
                                                 <br>
