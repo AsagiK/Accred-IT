@@ -83,7 +83,7 @@
                                                 <br>
                                                 <table class="table table-bordered" id="tableTarProg">
                                                     <thead>
-                                                        <th>TargetID</th>
+                                                        <th style="display:none;">TargetID</th>
                                                         <th>Target</th>
                                                         <th>Target Description</th>
                                                         <th>Progress</th>
@@ -247,7 +247,7 @@
                     console.log(tarID);
                     console.log(tarName);
                     //console.log(activityName);
-                    var markup = "<tr><td id='id'>" + tarID + "</td><td>" + tarName + "</td><td>" + tarDesc + "</td><td>" + prog +
+                    var markup = "<tr><td id='id' style='display:none;'>" + tarID + "</td><td>" + tarName + "</td><td>" + tarDesc + "</td><td>" + prog +
                         "</td><td><button type='button' class='delete-row btn btn-danger btn-sm' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableTarProg")
                     $("#target option:selected").remove();
