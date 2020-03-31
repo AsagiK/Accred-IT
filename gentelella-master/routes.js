@@ -67,7 +67,7 @@ router.route('/EditActivity').get(planCtrl.EditActivities);
 router.route('/AlterActivities').post(planCtrl.AlterActivities);
 router.route('/CategorizeActivities').get(planCtrl.CategorizeActivities);
 router.route('/AssignActivityToGroupMember').get(planCtrl.AssignActivityToGroupMember);
-
+router.route('/GroupReport').get(planCtrl.GroupReport);
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);

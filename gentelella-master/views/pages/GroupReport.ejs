@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Group Report</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    </style>
+</head>
+
+
+<style>
+    .myAlert-top {
+        position: fixed;
+        top: 5px;
+        left: 15%;
+        width: 80%;
+    }
+
+</style>
+
+
+<% if(locals.notif){ %>
+<% if(notif.goodStatus == 1) {%>
+<div class="alert success">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}else{%>
+<div class="alert">
+    <span class="closebtn">&times;</span>
+    <%= notif.msg %>
+</div>
+<%}%>
+    <%}%>
+
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body">
+        <div class="main_container" style="background-color: #232931;">
+            <%- include ./nav.ejs %>
+            <!-- page content -->
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+
+                            <h3 style="color: #dddddd;">View Group Report</h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                <br />
+
+
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
+                                        
+                                            <h2 style="color: #dddddd;"><i class="fa fa-align-left"></i>Activities</h2>
+                                            
+                                        
+                                        <div class="x_content">
+
+                                            <!-- start accordion    -->
+                                            <% for(var activities of data) { %>
+                                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" style="background-color: #696969; border-color: #696969; border-radius: 8px;">
+                                                <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px;">
+                                                    <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= activities.activity_ID%>" aria-expanded="true" aria-controls="collapse<%= activities.activity_ID%>" >
+                                                        <h4 class="panel-title"><%= activities.activity_name%> 
+                                                        </h4>
+                                                    </a>
+                                                    <div id="collapse<%= activities.activity_ID %>"
+                                                            class="panel-collapse collapse" role="tabpanel"
+                                                            aria-labelledby="headingOne">
+
+                                                            <div class="panel-body">
+ 
+                                                                <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>#</th>
+                                                                                        <th>Assigned Person</th>
+                                                                                        <th>Description of Submission</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Comment</th>
+                                                                                        <th>Suggested Score</th>
+                                                                                        <th>Related Target</th>
+                                                                                        <th>Submitted Documents</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                               
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td><%=activities.activity_ID %></td>
+                                                                                        <td>
+                                                                                        <% for (var user of dataB) { %>
+                                                                                            <%if (activities.user_ID == user.User_ID) { %> 
+                                                                                                <%=user.User_First%><br><%=user.User_Last%>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                        </td>
+                                                                                        <td><%=activities.description%></td>
+                                                                                        <td><%=activities.status%></td>
+                                                                                        <td><%=activities.comment%></td>    
+                                                                                        <td><%=activities.suggested_Score%></td>
+                                                                                        <td></td>
+                                                                                        <td>
+                                                                                            <% for (var evi of dataD) { %> 
+                                                                                                <% for (var doc of dataC) { %>
+                                                                                                 <% if (activities.activity_ID == evi.activityID &&evi.documentID == doc.Document_ID) { %>       
+                                                                                                     <a href="<%= doc.Document_Route %>" download><%= doc.Document_Name %></a> 
+                                                                                                     <br>
+                                                                                                 <% } else { %>
+                                                                                                <% } %> 
+                                                                                                <% } %> 
+                                                                                            <% } %> 
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                                
+                                                                            </table>                                                                       
+                                                            </div>
+                                                    </div>
+                                                
+                                                <!--End of Group 1 Table -->
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+
+                                <!-- end of accordion -->
+
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function() {
+                    div.style.display = "none";
+                }, 600);
+            }
+        }
+
+    </script>
+
+    <!-- /page content -->
+
+    <!-- footer content -->
+    <footer style="background-color: #232931; color:white;">
+        <div class="pull-right">
+            Footer
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+    </div>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="assets/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="assets/vendors/pnotify/dist/PNotifyButtons.js"></script>
+
+    <!-- NProgress -->
+    <script src="assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="assets/vendors/moment/min/moment.min.js"></script>
+    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="assets/vendors/starrr/dist/starrr.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/build/js/custom.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+
+
+
+    <script>
+        function myAlertTop() {
+            $(".myAlert-top").show();
+            setTimeout(function() {
+                $(".myAlert-top").hide();
+            }, 2000);
+        }
+
+    </script>
+
+</body>
+
+</html>

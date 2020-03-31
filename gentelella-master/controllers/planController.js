@@ -2349,5 +2349,36 @@ module.exports = {
         }
     },
 
-
+    GroupReport: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var MAID = req.query.MAID;
+            console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
+            var sql = "SELECT * FROM pending_activities_audit; SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences;"
+            var values = [MAID]
+            
+            connection.query( sql,values,function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/GroupReport.ejs', {
+                    data: results[0], 
+                    dataB: results[1],
+                    dataC: results[2],   
+                    dataD: results[3],              
+                    current_user: sess.user
+                });
+            });
+        }
+    },
 }

@@ -532,7 +532,7 @@
                                                                             </thead>
                                                                             <tbody> 
                                                                                 <!--TERMLY REPORT VIEW-->
-                                                                                <% if (cycles.status == 4 && cycles.termindex != cycles.totalterm) { %>
+                                                                                <% if (cycles.status == 4 && cycles.termindex != cycles.totalterm == 1 && current_user[0].isleader == 0) { %>
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
@@ -545,14 +545,15 @@
                                                                                             <form id="categorizeactivities~<%= cycles.cycle_ID %>" method="get" action="CategorizeActivities">
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
                                                                                                 <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
-                                                                                            </form>
+                                                                                            </form> 
+                                                        
                                                                                             </td>
                                                                                                 <td style="display: none;"></td>
                                                                                         </tr>
                                                                                         <% } %>
                                                                                     <% } %> 
-                                                                                    <!--ANNUAL REPORT-->
-                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm) { %> 
+                                                                                        <!--ANNUAL REPORT-->      
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm && current_user[0].isleader == 0) { %> 
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
@@ -576,7 +577,32 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>
-                                                                                    <% } %>
+                                                                                    <% } %> 
+                                                                                    <!--GROUP REPORT-->
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex != cycles.totalterm && current_user[0].isleader == 1) { %>
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                 <!-- VIEW TERM REPORT BUTTON-->
+                                                                                            <form id="categorizeactivities~<%= cycles.cycle_ID %>" method="get" action="CategorizeActivities">
+                                                                                                <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
+                                                                                            </form> 
+                                                                                                <!--VIEW GROUP REPORT -->
+                                                                                            <form id="groupreport~<%= measure_audit.measurment_auditID%>" method="get" action="GroupReport">
+                                                                                                <input type="hidden" name="MAID" value="<%= measure_audit.measurment_auditID%>">
+                                                                                                <button type="submit" class="btn btn-primary" form="groupreport~<%= measure_audit.measurment_auditID%>"> View Group Report</button>
+                                                                                            </form>
+                                                                                            </td>
+                                                                                                <td style="display: none;"></td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                    <% } %> 
                                                                                 <% } else { %>
                                                                                 <% for (var measurement of dataE) { %>
                                                                                     <% for (var activitycount of dataL) { %>
