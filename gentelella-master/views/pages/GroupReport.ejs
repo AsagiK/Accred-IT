@@ -131,7 +131,7 @@
                                 <div class="col-md-12 col-sm-6 col-xs-12">
                                     <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                                         
-                                            <h2 style="color: #dddddd;"><i class="fa fa-align-left"></i>Activities</h2>
+                                            <h2 style="color: #dddddd;"><i class="fa fa-align-left"></i>Activities Assigned to Group</h2>
                                             
                                         
                                         <div class="x_content">
@@ -178,7 +178,17 @@
                                                                                         <td><%=activities.status%></td>
                                                                                         <td><%=activities.comment%></td>    
                                                                                         <td><%=activities.suggested_Score%></td>
-                                                                                        <td></td>
+                                                                                        <td>
+                                                                                        <% for (var target_audit of dataE) { %>
+                                                                                           <%if (activities.measurement_auditID == target_audit.measurement_auditID) {%>     
+                                                                                                <%if (target_audit.target_Type == 1) { %>
+                                                                                                    <%= target_audit.target%> - <%=target_audit.target_Desc%><br>
+                                                                                                <% } else  { %> 
+                                                                                                    <%= target_audit.target%> % - <%=target_audit.target_Desc%><br>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                        </td>
                                                                                         <td>
                                                                                             <% for (var evi of dataD) { %> 
                                                                                                 <% for (var doc of dataC) { %>
