@@ -885,7 +885,7 @@ module.exports = {
             connection.query(sql, values, function (err, results) {
                 if (err) throw err;
                 console.log(results);
-                resp.redirect('/CheckingAccordionCheckingAccordionGroupLeaderPagePage')
+                resp.redirect('/CheckingAccordionGroupLeaderPage')
             });
         }
     },
