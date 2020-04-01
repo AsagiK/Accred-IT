@@ -762,5 +762,46 @@ module.exports = {
         })
     },
 
+    AssignTargetDeadlineJSON: function (req, resp) {
+        sess = req.session;
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        var MID = req.body.mid;
+        var mname = req.body.mname
+        console.log(MID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var CID = UID[key]["CycleID"];
+            var tid = UID[key]["TargetID"];
+            var sql = "Update capstone.measurements_targets set measurements_targets.cycle = ? where measurements_targets.target_ID = ?;";
+            var values = [CID, tid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+                //var today = new Date();
+                //var current = today.toISOString().split('T')[0];
+                //var notifobject = {
+                //    "body": "Progress has been declared for Measurement: " + mname, //message body, cannot be null
+                //    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                //    "receiver": "0", //ID of receiver, in this case the user that was created
+                //    "group": sess.user[0].Group, //Group ID taken from req session
+               //     "range": "1", //range of notification, refer to the JSONcontroller
+                //    "admin": "1", // 0 if admin does not need to be notified, else 1
+                //    "sysadmin": "1", // same as above
+                //    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                //}
+                //Notif.CreateNotif(notifobject);
+            }
+        })
+    },
 
 }

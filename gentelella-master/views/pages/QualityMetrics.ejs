@@ -624,16 +624,23 @@
                                                                                     <%}%>
                                                                                     <td>
                                                                                         <% for (var targets of dataF) { %>
+                                                                                            
                                                                                         <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                        <%= targets.target %>
-                                                                                        <% if (targets.target_Type == 0) { %>
-                                                                                        %
-                                                                                        <% } else { %>
-                                                                                        #
-                                                                                        <% } %> 
-                                                                                        - <%= targets.target_Desc %> <br>
+                                                                                            <%= targets.target %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= targets.target_Desc %><br> 
+                                                                                            <% for (var cycle of dataD) { %>
+                                                                                            <% if (cycle.cycle_ID == targets.cycle) { %>
+                                                                                                Due on : <%= cycle.cycle_Name %><br>
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                         <% } %>
 
+                                                                                        
                                                                                         <% } %>
                                                                                     </td>
                                                                                     <td>
@@ -671,6 +678,12 @@
                                                                                                     <button type="submit" class="btn btn-primary">Edit
                                                                                                         Measurement
                                                                                                         Details</button>
+                                                                                                </form>
+                                                                                                <!--SET TARGET DEADLINE BUTTON PLAN PHASE-->
+                                                                                                <form method="get" action="EditTargetDeadline">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="GID" value="<%= goals.metric_ID %>">
+                                                                                                    <button type="submit" class="btn btn-primary">Set Target Deadline</button>
                                                                                                 </form>
                                                                                                 <% } else if (cycles.status == 3) { %>
                                                                                                 <!--EDIT BUTTON ACTION PHASE-->
