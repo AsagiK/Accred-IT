@@ -161,9 +161,11 @@
                                                                     <tbody>
                                                                         <tr> 
                                                                             <td>
-                                                                                <% for (var group of dataG) { %> 
-                                                                                    <%if (current_user[0].Group == group.Group_ID) { %>
-                                                                                        <%=group.Group_Name%>
+                                                                                <% for (var group of dataG) { %>
+                                                                                    <%for (var asgrp of dataI) {%> 
+                                                                                        <%if (current_user[0].Group == group.Group_ID && asgrp.activity_ID == activities.activity_ID && current_user[0].Group == asgrp.activity_Member) { %>
+                                                                                            <%=group.Group_Name%>
+                                                                                        <% } %>
                                                                                     <% } %>
                                                                                 <% } %>
                                                                             </td>
@@ -172,7 +174,7 @@
                                                                                 
                                                                                     <%for (var user of dataB) { %>
                                                                                         <%for (var assigned of dataH) { %>
-                                                                                            <%if (activities.activity_ID == assigned.activity_ID && user.User_ID == assigned.activity_member_member) { %> 
+                                                                                            <%if (activities.activity_ID == assigned.activity_ID && user.User_ID == assigned.activity_member_member && current_user[0].Group == user.Group) { %> 
                                                                                                 <%=user.User_First%> <%=user.User_Last%><br>
                                                                                             <% } %>
                                                                                         <% } %>
