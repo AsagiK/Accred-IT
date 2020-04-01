@@ -2366,7 +2366,7 @@ module.exports = {
         } else {
             var MAID = req.query.MAID;
             console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
-            var sql = "SELECT * FROM pending_activities_audit; SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences;"
+            var sql = "SELECT * FROM pending_activities_audit; SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM pending_activities_audit JOIN measurements_targets_audit WHERE pending_activities_audit.measurement_auditID = measurements_targets_audit.measurements_auditID;"
             var values = [MAID]
             
             connection.query( sql,values,function (err, results, fields) {
@@ -2375,7 +2375,8 @@ module.exports = {
                     data: results[0], 
                     dataB: results[1],
                     dataC: results[2],   
-                    dataD: results[3],              
+                    dataD: results[3],   
+                    dataE: results[4],           
                     current_user: sess.user
                 });
             });
