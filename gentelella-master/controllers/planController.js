@@ -1875,7 +1875,7 @@ module.exports = {
             }
 
             function auditpendingactivities(MAID, MAAID, CID, ai) {
-                var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.status = 1 && pending_activities.cycle_ID = ?;"
+                var sql2 = "SELECT * FROM capstone.pending_activities where pending_activities.activity_ID = ? && pending_activities.cycle_ID = ?;"
                 var values2 = [ai, CID];
                 console.log(values2 + " pending values")
                 connection.query(sql2, values2, function (err, result, fields) {
