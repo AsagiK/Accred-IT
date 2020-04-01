@@ -2381,4 +2381,39 @@ module.exports = {
             });
         }
     },
+
+    EditTargetDeadline: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var GID = req.query.GID;
+            var MID = req.query.MID;
+            var sql= "SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?; SELECT * FROM capstone.measurements_targets WHERE measurements_targets.measurementID = ?; SELECT * FROM capstone.cycle WHERE cycle.goal_ID = ? ORDER BY termnum ASC;";
+            var value = [MID, MID, GID];
+            //console.log(AID);
+            connection.query(sql, value, function (err, result, fields) {
+                if (err) throw err;
+                resp.render('./pages/EditTargetDeadline.ejs', {
+                    dataMeasurement: result[0],
+                    dataTarget: result[1],
+                    dataCycle: result[2],
+                    current_user: sess.user
+                });
+                //console.log(result)
+            });
+        }
+
+
+    }, 
 }

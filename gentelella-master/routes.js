@@ -100,6 +100,7 @@ router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
 router.route('/CreateSourcesJSON').post(JSONCtrl.CreateSourcesJSON);
 router.route('/TestNotif').post(JSONCtrl.TestNotif);
 router.route('/AddfilestofoldersJSON').post(JSONCtrl.AddfilestofoldersJSON);
+router.route('/AssignTargetDeadlineJSON').post(JSONCtrl.AssignTargetDeadlineJSON);
 
 //==NotifCtrl==
 router.route('/CreateNotif').post(NotifCtrl.CreateNotif);
@@ -158,6 +159,7 @@ router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/ActionPlan').get(planCtrl.ActionPlan);
 router.route('/home').get(planCtrl.Dashboards);
+router.route('/EditTargetDeadline').get(planCtrl.EditTargetDeadline);
 
 
 router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
