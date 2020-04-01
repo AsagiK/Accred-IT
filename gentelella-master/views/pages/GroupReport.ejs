@@ -149,12 +149,48 @@
                                                             aria-labelledby="headingOne">
 
                                                             <div class="panel-body">
- 
+                                                                
+                                                                <table id="datatable-fixed-header" class="table table-bordered" style="color: black; font-size: medium;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Assigned Group</th>
+                                                                            <th>Assigned Members</th>
+                                                                        </tr>
+                                                                    </thead> 
+                                                                    
+                                                                    <tbody>
+                                                                        <tr> 
+                                                                            <td>
+                                                                                <% for (var group of dataG) { %> 
+                                                                                    <%if (current_user[0].Group == group.Group_ID) { %>
+                                                                                        <%=group.Group_Name%>
+                                                                                    <% } %>
+                                                                                <% } %>
+                                                                            </td>
+                                                                            <td> 
+                                                                                Assigned Members:<br>
+                                                                                
+                                                                                    <%for (var user of dataB) { %>
+                                                                                        <%for (var assigned of dataH) { %>
+                                                                                            <%if (activities.activity_ID == assigned.activity_ID && user.User_ID == assigned.activity_member_member) { %> 
+                                                                                                <%=user.User_First%> <%=user.User_Last%><br>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+
+                                                                                
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    
+                                                                </table>
+
+
                                                                 <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>#</th>
-                                                                                        <th>Assigned Person</th>
+                                                                                        <th>Submitted by</th>
                                                                                         <th>Description of Submission</th>
                                                                                         <th>Status</th>
                                                                                         <th>Comment</th>

@@ -2366,7 +2366,7 @@ module.exports = {
         } else {
             var MAID = req.query.MAID;
             console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
-            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit;"
+            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members;"
             var values = [MAID]
             console.log("TESTING ----------"+ MAID);
             connection.query( sql,values,function (err, results, fields) {
@@ -2377,7 +2377,10 @@ module.exports = {
                     dataC: results[2],   
                     dataD: results[3],   
                     dataE: results[4],  
-                    dataF: results[5],         
+                    dataF: results[5],  
+                    dataG: results[6],
+                    dataH: results[7],      
+                    dataI: results[8],
                     current_user: sess.user
                 });
             });
