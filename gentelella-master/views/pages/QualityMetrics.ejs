@@ -499,12 +499,6 @@
                                                                             Measurement</button>
                                                                         <% } %>
                                                                         <% } %>
-
-
-
-                                                                        
-
-
                                                                         <!-- MEASUREMENTS LOOP PART-->
 
                                                                         <table id="" class="display" style="background-color: white; height: 100%; width: 100%;">
@@ -546,7 +540,11 @@
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
                                                                                                 <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
                                                                                             </form> 
-                                                        
+                                                                                            
+                                                                                            <form id="comparativereport~<%=cycles.goal_ID%>" method="get" action="Comparativeanalysis">
+                                                                                                <input type="hidden" name="CUID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.goal_ID %>"> View Comparative Report</button>
+                                                                                            </form>
                                                                                             </td>
                                                                                                 <td style="display: none;"></td>
                                                                                         </tr>
@@ -573,7 +571,12 @@
                                                                                                     <% var Year=cycles.cycle_Name.substr(5, 1) %>
                                                                                                     <input type="hidden" name="Year" value="<%= Year %>"> 
                                                                                                     <button type="submit" class="btn btn-primary" form="annualreport~<%= measure_audit.measurement_auditID %>">View Annual Report</button> 
-                                                                                                </form>
+                                                                                            </form> 
+
+                                                                                            <form id="comparativereport~<%=cycles.goal_ID%>" method="get" action="Comparativeanalysis">
+                                                                                                <input type="hidden" name="CUID" value="<%= cycles.cycle_ID %>">
+                                                                                                <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.goal_ID %>"> View Comparative Report</button>
+                                                                                            </form>
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>

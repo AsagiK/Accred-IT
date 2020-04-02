@@ -163,8 +163,41 @@ module.exports = {
     },
 
     Comparativeanalysis: function (req, resp) {
-        resp.render('./pages/ComparativeAnalysisAreaSelection.ejs');
-        console.log("Comparativeanalysis");
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var CUID = req.query.CUID;
+            var PID = CUID - 1;
+            console.log(CUID +"----------------------------------------------------------------------------------------------------------------");
+            console.log ("-----------------------------------------------------------" + PID)
+            var sql = "SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?);"
+            var values = [CUID, CUID, PID]
+            console.log (CUID);
+            connection.query( sql,values,function (err, results, fields) {
+                if (err) throw err;
+                resp.render('./pages/Comparativeanalysis.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    current_user: sess.user
+                });
+                console.log(CUID)
+            });
+        }
+
     },
 
     Comparativeanalysis2: function (req, resp) {
