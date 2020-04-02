@@ -543,6 +543,8 @@
                                                                                             
                                                                                             <form id="comparativereport~<%=cycles.goal_ID%>" method="get" action="Comparativeanalysis">
                                                                                                 <input type="hidden" name="CUID" value="<%= cycles.cycle_ID %>">
+                                                                                                <input type="hidden" name="GUID" value="<%=cycles.goal_ID%>">
+                                                                                                <input type="hidden" name="TERN" value="<%=cycles.termnum%>">
                                                                                                 <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.goal_ID %>"> View Comparative Report</button>
                                                                                             </form>
                                                                                             </td>
