@@ -189,7 +189,7 @@ module.exports = {
             console.log("----------------------------------------------------------------------------------------------------------------PID" + PID);
             var sql = "SELECT * FROM capstone.cycle WHERE goal_ID = (?) and termnum = (?);  SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle WHERE goal_ID = (?) and termnum = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit, capstone.cycle WHERE measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = cycle.cycle_ID AND cycle.goal_ID = (?) AND cycle.termnum = (?);"
             var values = [GUID, TERN, CUID, GUID, PTERN, GUID, PTERN]
-            console.log (CUID);
+           
             connection.query( sql,values,function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Comparativeanalysis.ejs', {
@@ -201,7 +201,7 @@ module.exports = {
                     dataF: results[5],
                     current_user: sess.user
                 });
-                console.log(CUID)
+                
             });
         }
 

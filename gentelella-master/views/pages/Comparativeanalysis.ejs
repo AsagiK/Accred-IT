@@ -60,10 +60,11 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content"> 
-                                  <!--PREVIOUS-->
-                                  <% for (var prevcycles of dataE) { %>
+                                  <!--PREVIOUS--> 
+                                  <h4>PREVIOUS</h4>
+                                  
                                     <!--view table for users-->
-                                    <table  class="table table-bordered" style="color: black; font-size: medium;">
+                                    <table id="datatable-fixed-header"  class="table table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
                                             
                                             <tr>
@@ -72,20 +73,14 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
-                                                <% if (prevcycles.status == 4 || prevcycles.status == 3) { %>
-                                                    <th>Progress</th>    
-                                                    <th></th>
-                                                <% } else { %>
-                                                <th># of Activities</th>
-                                                    <th></th>
-                                                <% } %>
-                                                
-                                                
+                                                <th>Progress</th>    
+                                                <th></th>
+  
                                             </tr>
                                         </thead>                                                                       
                                         <tbody> 
+                                            <% for (var prevcycles of dataE) { %>
                                             
-                                            <% if (prevcycles.status == 4 ) { %>
                                                 <% for (var prevmeasure_audit of dataF) { %>
                                                     <% if (prevmeasure_audit.cycle_ID == prevcycles.cycle_ID) { %>
                                                         <tr>
@@ -152,15 +147,17 @@
                                                      </tr>
                                                         <% } %>
                                                     <% } %> 
-                                                <% } %> 
-                                           
+                                                
+                                            <% } %>
+                                        </tbody>
                                     </table> 
-                                    <% } %> 
-                                  
-                                  <!--CURRENT -->
-                                    <% for (var cycles of data) { %>
+                                    
+                            
+                                  <!--CURRENT --> 
+                                  <h4>NEWEST </h4>
+                                    
                                     <!--view table for users-->
-                                    <table  class="table table-bordered" style="color: black; font-size: medium;">
+                                    <table id="datatable-buttons" class="table table-bordered " style="color: black; font-size: medium;">
                                         <thead> 
                                             
                                             <tr>
@@ -169,20 +166,16 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
-                                                <% if (cycles.status == 4 || cycles.status == 3) { %>
-                                                    <th>Progress</th>    
-                                                    <th></th>
-                                                <% } else { %>
-                                                <th># of Activities</th>
-                                                    <th></th>
-                                                <% } %>
+                                                <th>Progress</th>    
+                                                <th></th>
+                                                
                                                 
                                                 
                                             </tr>
                                         </thead>                                                                       
                                         <tbody> 
+                                          <% for (var cycles of data) { %>
                                             
-                                            <% if (cycles.status == 4 ) { %>
                                                 <% for (var measure_audit of dataB) { %>
                                                     <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                         <tr>
@@ -252,10 +245,11 @@
                                                      </tr>
                                                         <% } %>
                                                     <% } %> 
-                                                <% } %> 
-                                           
+                                                
+                                            <% } %>
+                                        </tbody>
                                     </table> 
-                                    <% } %> 
+                                    
                                     <div class="ln_solid">
                                         
                                     </div>
