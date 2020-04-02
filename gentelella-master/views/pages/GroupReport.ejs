@@ -149,12 +149,50 @@
                                                             aria-labelledby="headingOne">
 
                                                             <div class="panel-body">
- 
+                                                                
+                                                                <table id="datatable-fixed-header" class="table table-bordered" style="color: black; font-size: medium;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Assigned Group</th>
+                                                                            <th>Assigned Members</th>
+                                                                        </tr>
+                                                                    </thead> 
+                                                                    
+                                                                    <tbody>
+                                                                        <tr> 
+                                                                            <td>
+                                                                                <% for (var group of dataG) { %>
+                                                                                    <%for (var asgrp of dataI) {%> 
+                                                                                        <%if (current_user[0].Group == group.Group_ID && asgrp.activity_ID == activities.activity_ID && current_user[0].Group == asgrp.activity_Member) { %>
+                                                                                            <%=group.Group_Name%>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                <% } %>
+                                                                            </td>
+                                                                            <td> 
+                                                                                Assigned Members:<br>
+                                                                                
+                                                                                    <%for (var user of dataB) { %>
+                                                                                        <%for (var assigned of dataH) { %>
+                                                                                            <%if (activities.activity_ID == assigned.activity_ID && user.User_ID == assigned.activity_member_member && current_user[0].Group == user.Group) { %> 
+                                                                                                <%=user.User_First%> <%=user.User_Last%><br>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+
+                                                                                
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    
+                                                                </table>
+
+
                                                                 <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>#</th>
-                                                                                        <th>Assigned Person</th>
+                                                                                        <th>Submitted by</th>
                                                                                         <th>Description of Submission</th>
                                                                                         <th>Status</th>
                                                                                         <th>Comment</th>
@@ -163,24 +201,31 @@
                                                                                         <th>Submitted Documents</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                               
+                                                                               <% for (var submission of dataF) { %> 
+                                                                                <% if (activities.activity_ID == submission.activity_ID) { %>
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td><%=activities.activity_ID %></td>
+                                                                                        <td><%=submission.activity_ID %></td>
                                                                                         <td>
                                                                                         <% for (var user of dataB) { %>
-                                                                                            <%if (activities.user_ID == user.User_ID) { %> 
+                                                                                            <%if (submission.user_ID == user.User_ID) { %> 
                                                                                                 <%=user.User_First%><br><%=user.User_Last%>
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                         </td>
-                                                                                        <td><%=activities.description%></td>
-                                                                                        <td><%=activities.status%></td>
-                                                                                        <td><%=activities.comment%></td>    
-                                                                                        <td><%=activities.suggested_Score%></td>
+                                                                                        <td><%=submission.description%></td>
+                                                                                        <td>
+                                                                                            <% if (submission.status == 1 ) { %>
+                                                                                                Approved
+                                                                                            <% } else if (submission.status == 2) { %>
+                                                                                                Disapproved
+                                                                                            <% } %>
+                                                                                        </td>
+                                                                                        <td><%=submission.comment%></td>    
+                                                                                        <td><%=submission.suggested_Score%></td>
                                                                                         <td>
                                                                                         <% for (var target_audit of dataE) { %>
-                                                                                           <%if (activities.measurement_auditID == target_audit.measurement_auditID) {%>     
+                                                                                           <%if (submission.target == target_audit.target_ID) {%>     
                                                                                                 <%if (target_audit.target_Type == 1) { %>
                                                                                                     <%= target_audit.target%> - <%=target_audit.target_Desc%><br>
                                                                                                 <% } else  { %> 
@@ -189,19 +234,23 @@
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                         </td>
-                                                                                        <td>
+                                                                                        <td> 
+                                                                                        
                                                                                             <% for (var evi of dataD) { %> 
                                                                                                 <% for (var doc of dataC) { %>
-                                                                                                 <% if (activities.activity_ID == evi.activityID &&evi.documentID == doc.Document_ID) { %>       
+                                                                                                <% if (submission.pending_ID == evi.pendingID) {%>
+                                                                                                 <% if (submission.activity_ID == evi.activityID && evi.documentID == doc.Document_ID) { %>       
                                                                                                      <a href="<%= doc.Document_Route %>" download><%= doc.Document_Name %></a> 
                                                                                                      <br>
-                                                                                                 <% } else { %>
-                                                                                                <% } %> 
+                                                                                                  <% } %>
                                                                                                 <% } %> 
                                                                                             <% } %> 
+                                                                                            <%}%>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
+                                                                                <% } %>
+                                                                            <% } %>
                                                                                 
                                                                             </table>                                                                       
                                                             </div>
