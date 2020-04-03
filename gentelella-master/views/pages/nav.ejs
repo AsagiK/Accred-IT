@@ -27,9 +27,11 @@
                         $('#try').append("<li><a><span class='message'>" + wew[i].message + " <i class='fa fa-eye'></i></span></a></li>");
                     }
                       
-                      
-                    console.log(count);
-                  $('#notifnum').append("<span class='badge bg-green'>" + count + "</span>");
+                    if(count != 0){
+                        console.log(count);
+                        $('#notifnum').append("<span class='badge bg-green'>" + count + "</span>");
+                    }
+                    
                   }
                   
               },
