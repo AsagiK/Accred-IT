@@ -619,7 +619,7 @@ module.exports = {
                     var trigger = new Date(ed);
                     var trigdate = trigger.toISOString().split('T')[0];
                     var notifobject = {
-                        "body": "Cycle " + cn + " is due today", //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname + " is due today", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -634,7 +634,7 @@ module.exports = {
                     var beforetrig = daybefore.toISOString().split('T')[0];
                     console.log(beforetrig);
                     var notifobject2 = {
-                        "body": "Cycle " + cn + " is due tomorrow", //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname +  " is due tomorrow", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -649,7 +649,7 @@ module.exports = {
                     var threetrig = threedays.toISOString().split('T')[0];
                     console.log(threetrig);
                     var notifobject3 = {
-                        "body": "Cycle " + cn + " is due in 3 days at:" + trigdate, //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname +  " is due in 3 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -664,7 +664,7 @@ module.exports = {
                     var seventrig = sevendays.toISOString().split('T')[0];
                     console.log(seventrig);
                     var notifobject4 = {
-                        "body": "Cycle " + cn + " is due in 7 days at:" + trigdate, //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname +  " is due in 7 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
