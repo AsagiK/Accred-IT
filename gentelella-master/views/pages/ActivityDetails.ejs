@@ -79,7 +79,7 @@
                                     <br />
 
                                     <!--view table for users-->
-                                    <table class="table table-bordered">
+                                    <table name="submissiontable" id="submissiontable" class="table table-bordered">
                                         <thead>
                                             <tr>
 
@@ -197,15 +197,32 @@
                                                                     </tbody>
                                                             </table>
                                                     </td>
-                                                    <td id="inputs" name="inputs" style='display:none;'></td>
+                                                    
                                                 </tr>
                                                 <tr>
                                                     <td><label
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
                                                             Progress: </label></td>
                                                     <td>
-                                                        <input type="number" name="score" id="score" value="0"
-                                                            placeholder="Suggested Progress">
+                                                        <input type="number" name="score" id="score" value=""
+                                                            placeholder="Suggested Progress"> 
+                                                            <% for (var target of dataTargets) { %>
+                                                                <% if (target.target_ID == data[0].target) { %>
+                                                                    <% if (target.target_Type == 0) { %>
+                                                                        %
+                                                                    <% } else { %>
+                                                                        #
+                                                                    <% } %> 
+                                                                 
+                                                                     - <%= target.target %> 
+                                                                    <% if (target.target_Type == 0) { %>
+                                                                    %
+                                                                    <% } else { %>
+                                                                    #
+                                                                    <% } %> 
+                                                                    - <%= target.target_Desc %>
+                                                                <% } %>
+                                                            <% } %>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -264,6 +281,12 @@
                                                     </td>
 
                                                 </tr>
+                                                <div id="inputs" name="inputs" style="display: none;">
+                                                    <input id='outputID' name='outputID' value="">
+                                                    <input id='outputName' name='outputName' value="">
+                                                    <input id='FoldID' name='FoldID' value="">
+                                                    <textarea id='FoldName' name='FoldName' value=""></textarea>
+                                                </div>
                                             </form>
                                             <td></td>
                                             <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
@@ -274,6 +297,7 @@
                                     </table>
 
                                     <div class="ln_solid"></div>
+                                    
                                 </div>
 
                             </div>
@@ -420,10 +444,14 @@
                     console.log("Folder ID = " + FoldName);
                     var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-danger btn-xs' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + FoldID + "</td><td style='display:none;'>" + FoldName + "</td></tr>";
                     $("#outputs option:selected").remove();
-                    var markup2 = "<input style='display:none;' id='outputID' name='outputID' value=" + outputID +"><input style='display:none;' id='outputName' name='outputName' value=" + outputName +"><input style='display:none;' id='FoldID' name='FoldID' value=" + FoldID +"><textarea style='display:none;' id='FoldName' name='FoldName'>" + FoldName + "</textarea>"
+                    //var markup2 = "<input style='display:none;' id='outputID' name='outputID' value=" + outputID +"><input style='display:none;' id='outputName' name='outputName' value=" + outputName +"><input style='display:none;' id='FoldID' name='FoldID' value=" + FoldID +"><textarea style='display:none;' id='FoldName' name='FoldName'>" + FoldName + "</textarea>"
                     document.getElementById("addoutput").style.display="none";
                     $("#tableoutputs tbody").append(markup);
-                    $("#inputs").append(markup2);
+                    //$("#inputs").append(markup2);
+                    $("#outputID").val(outputID);
+                    $("#outputName").val(outputName);
+                    $("#FoldID").val(FoldID);
+                    $("#FoldName").val(FoldName);
                 });
 
                 
@@ -445,6 +473,7 @@
                     var TID = document.getElementById("TID").value;
                     var FoldID = document.getElementById("FoldID").value;
                     var FoldName = document.getElementById("FoldName").value;
+                    
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -503,10 +532,10 @@
                     option.value = valID + "~" + valName + ":" + FoldID + " `" + FoldName;
                     dropdown.options.add(option);
                     document.getElementById("addoutput").style.display="block";
-                    $("#outputID").remove();
-                    $("#outputName").remove();
-                    $("#FoldID").remove();
-                    $("#FoldName").remove();
+                    $("#outputID").val("");
+                    $("#outputName").val("");
+                    $("#FoldID").val("");
+                    $("#FoldName").val("");
                 }
 
             function test() {
