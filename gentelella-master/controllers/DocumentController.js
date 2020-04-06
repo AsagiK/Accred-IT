@@ -543,7 +543,8 @@ module.exports = {
             var description = req.body.subdesc;
             var MID = req.body.MID;
             var PID = req.body.PID;
-
+            console.log("--------------------------------------------------------------------------------------------------"  + req.body.FoldID)
+            console.log("--------------------------------------------------------------------------------------------------"  + req.body.FoldName)
 
             var count = 0;
             console.log(files.length);
@@ -615,6 +616,9 @@ module.exports = {
                                     sql = "INSERT INTO capstone.`activity_evidences` (activityID, documentID, pendingID) VALUES (?, ?, ?); "
                                     values = [req.body.activityID, result.insertId, PID];
                                     addDoc(sql, values);
+                                    var sql2 = "INSERT INTO capstone.`folder_documents` (folder_id, document_id, folder_name) VALUES (?, ?, ?); "
+                                    var values2 = [req.body.FoldID, result.insertId, req.body.FoldName];
+                                    addFolder(sql2, values2, req.body.FoldID);
                                 }
                             });
                         }
@@ -680,6 +684,17 @@ module.exports = {
                                     console.log("ID inserted to DB");
                                 }
                             });
+                        }
+
+                        function addFolder(sql, values, folderid) {
+                            if (folderid) {
+                                connection.query(sql, values, function (err, result) {
+                                    if (err) throw err;
+                                    if (result) {
+                                        console.log("Document linked to Folder");
+                                    }
+                                });
+                            }
                         }
 
                         function addDoc(sql, values) {
@@ -768,6 +783,9 @@ module.exports = {
                             sql = "INSERT INTO capstone.`activity_evidences` (activityID, documentID, pendingID) VALUES (?, ?, ?); "
                             values = [req.body.activityID, result.insertId, PID];
                             addDoc(sql, values);
+                            var sql2 = "INSERT INTO capstone.`folder_documents` (folder_id, document_id, folder_name) VALUES (?, ?, ?); "
+                            var values2 = [req.body.FoldID, result.insertId, req.body.FoldName];
+                            addFolder(sql2, values2, req.body.FoldID);
                             resp.redirect('/ViewDocument')
                         }
                     });
@@ -837,6 +855,17 @@ module.exports = {
                     });
                 }
 
+                function addFolder(sql, values, folderid) {
+                    if (folderid) {
+                        connection.query(sql, values, function (err, result) {
+                            if (err) throw err;
+                            if (result) {
+                                console.log("Document linked to Folder");
+                            }
+                        });
+                    }
+                }
+
                 function addDoc(sql, values) {
                     connection.query(sql, values, function (err, result) {
                         if (err) throw err;
@@ -904,8 +933,10 @@ module.exports = {
         var current = today.toISOString().split('T')[0];
         var CID = req.body.CID;
         var TID = req.body.TID;
+        var FoldID = req.body.FoldID;
+        var FoldName = req.body.FoldName;
         var values2 = [AID, name, TID, code, description, score, current, UID, CID]
-        var sql2 = "INSERT INTO `capstone`.`pending_activities` (`activity_ID`, `activity_Name`, `target`,  `code`, `description`,  `suggested_Score`, `dateupdated`, `user_ID`, `cycle_ID`) VALUES (? , ?, ?, ?, ?, ?, ?, ?, ?);"
+        var sql2 = "INSERT INTO capstone.`pending_activities` (activity_ID, activity_Name, target,  code, description,  suggested_Score, dateupdated, user_ID, cycle_ID) VALUES (? , ?, ?, ?, ?, ?, ?, ?, ?);"
         connection.query(sql2, values2, function (err, results, fields) {
             if (err) throw err;
             if (results) {
@@ -927,7 +958,7 @@ module.exports = {
             } else {
                 async.forEachOf(Doc, function (value, key, callback) {
                     var did = Doc[key]["Document ID"];
-                    var sql = "INSERT INTO `capstone`.`activity_evidences` (`activityID`, `documentID`, `pendingID`) VALUES (?, ?, ?); ";
+                    var sql = "INSERT INTO capstone.`activity_evidences` (activityID, documentID, pendingID) VALUES (?, ?, ?); ";
                     var values = [AID, did, pendingID];
                     connection.query(sql, values, function (err, result) {
                         if (err) {
@@ -936,7 +967,7 @@ module.exports = {
                         }
                         if (result) {
                             console.log("Document linked to DB");
-                            //callback();
+                            inserttable3(did);
                         }
                     });
                 }, function (err) {
@@ -963,7 +994,7 @@ module.exports = {
             } else {
                 async.forEachOf(output, function (value, key, callback) {
                     var oid = output[key]["ID"];
-                    var sql = "INSERT INTO `capstone`.`pending_outputs` (`activityID`, `outputID`, `pendingID`) VALUES (?, ?, ?); ";
+                    var sql = "INSERT INTO capstone.`pending_outputs` (activityID, outputID, pendingID) VALUES (?, ?, ?); ";
                     var values = [AID, oid, pendingID];
                     connection.query(sql, values, function (err, result) {
                         if (err) {
@@ -985,6 +1016,17 @@ module.exports = {
                     }
                 })
             }
+        }
+
+        function inserttable3(did) {
+            sql = "INSERT INTO capstone.`folder_documents` (folder_id, document_id, folder_name) VALUES (?, ?, ?); "
+            values = [FoldID, did, FoldName];
+            connection.query(sql, values, function (err, result) {
+                if (err) throw err;
+                if (result) {
+                    console.log("Document linked to Folder");
+                }
+            });
         }
     },
 
