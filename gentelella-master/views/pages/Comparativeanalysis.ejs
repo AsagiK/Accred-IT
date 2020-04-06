@@ -61,8 +61,9 @@
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content"> 
                                   <!--PREVIOUS--> 
-                                  <h4>PREVIOUS</h4>
-                                  
+                                  <% for (var prevcycles of dataE) { %>
+                                    <h2 style="color: black; font-size:x-large;">Previous Term Report from: <%=prevcycles.cycle_Name%></h2>
+                                  <% } %>
                                     <!--view table for users-->
                                     <table id="datatable-fixed-header"  class="table table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
@@ -154,8 +155,9 @@
                                     
                             
                                   <!--CURRENT --> 
-                                  <h4>NEWEST </h4>
-                                    
+                                  <%for (var cycles of data) {%>
+                                  <h2 style="color: black; font-size:x-large;">Newest Term Report from: <%=cycles.cycle_Name%> </h2>
+                                  <% } %>  
                                     <!--view table for users-->
                                     <table id="datatable-buttons" class="table table-bordered " style="color: black; font-size: medium;">
                                         <thead> 
