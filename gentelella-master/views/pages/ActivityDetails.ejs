@@ -443,6 +443,8 @@
                     var score = document.getElementById("score").value;
                     var CID = document.getElementById("CID").value;
                     var TID = document.getElementById("TID").value;
+                    var FoldID = document.getElementById("FoldID").value;
+                    var FoldName = document.getElementById("FoldName").value;
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -464,7 +466,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID + "&FoldID=" + FoldID + "&FoldName=" + FoldName);
 
                 });
 
