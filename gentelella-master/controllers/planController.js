@@ -1410,7 +1410,7 @@ module.exports = {
             var cid = req.query.CID;
             console.log(id);
             var values = [id, id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents left join capstone.folder_documents on folder_documents.document_id = documents.Document_ID where documents.isfolder = 0; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents left join capstone.folder_documents on folder_documents.document_id = documents.Document_ID where documents.isfolder = 0; SELECT * FROM capstone.activity_outputs; SELECT *, CONCAT(approved_activities.activity_name, ' ', capstone.activity_outputs.output) FROM capstone.approved_activities join capstone.activity_outputs on approved_activities.activity_ID = activity_outputs.activity_ID join capstone.documents on documents.Document_Name = CONCAT(approved_activities.activity_name, ' ', capstone.activity_outputs.output) WHERE activity_outputs.activity_ID = ?; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
                 if (err) throw err;
                 if (results) {
                     console.log(results);
