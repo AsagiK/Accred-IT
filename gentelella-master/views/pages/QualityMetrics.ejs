@@ -542,9 +542,9 @@
                                                                                             </form> 
                                                                                             
                                                                                             <form id="comparativereport~<%=cycles.cycle_ID%>" method="get" action="Comparativeanalysis">
-                                                                                                <input type="" name="CYCL" value="<%= cycles.cycle_ID %>">
-                                                                                                <input type="" name="GUID" value="<%=cycles.goal_ID%>">
-                                                                                                <input type="" name="TERM" value="<%=cycles.termnum%>">
+                                                                                                <input type="hidden" name="CYCL" value="<%= cycles.cycle_ID %>">
+                                                                                                <input type="hidden" name="GUID" value="<%=cycles.goal_ID%>">
+                                                                                                <input type="hidden" name="TERM" value="<%=cycles.termnum%>">
                                                                                                 <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.cycle_ID %>"> View Comparative Report</button>
                                                                                             </form>
                                                                                             </td>

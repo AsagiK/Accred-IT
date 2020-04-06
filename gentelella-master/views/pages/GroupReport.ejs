@@ -222,7 +222,19 @@
                                                                                             <% } %>
                                                                                         </td>
                                                                                         <td><%=submission.comment%></td>    
-                                                                                        <td><%=submission.suggested_Score%></td>
+                                                                                        <td> 
+                                                                                        <% for (var target_audit of dataE) { %> 
+                                                                                            <%if (submission.target == target_audit.target_ID) {%>    
+                                                                                                <%if (target_audit.target_Type == 1) { %>  
+                                                                                                    <%=submission.suggested_Score%> 
+                                                                                                     - <%=target_audit.target_Desc%>
+                                                                                                <%} else { %>  
+                                                                                                    <%=submission.suggested_Score%> 
+                                                                                                    % - <%=target_audit.target_Desc%>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                        </td>
                                                                                         <td>
                                                                                         <% for (var target_audit of dataE) { %>
                                                                                            <%if (submission.target == target_audit.target_ID) {%>     
