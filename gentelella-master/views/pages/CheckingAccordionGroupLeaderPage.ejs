@@ -61,10 +61,10 @@
                                             <% for (var goals of data) { %>
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                                 <div class="panel">
-                                                  <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metic_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metic_ID %>">
+                                                  <a class="panel-heading" role="tab" id="headingOne<%= goals.metric_ID %>" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%= goals.metric_ID %>">
                                                     <h4 class="panel-title"><%= goals. metric_Name %></h4>
                                                   </a>
-                                                  <div id="collapseOne<%= goals.metic_ID %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                  <div id="collapseOne<%= goals.metric_ID %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<%= goals.metric_ID %>">
                                                     <div class="panel-body">
                                                       
                                                         <% for (var cycle of dataCycle) { %>
@@ -72,7 +72,7 @@
                                                                 <% if(cycle.goal_ID == goals.metric_ID && measure.cycle_ID == cycle.cycle_ID) { %>
                                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> 
                                                                 <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px;"> <!--PANEL FOR GOAL-->
-                                                                    <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapseTwo<%= measure.measurement_ID %>">
+                                                                    <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne<%= goals.metic_ID %>" href="#collapseTwo<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapseTwo<%= measure.measurement_ID %>">
                                                                         <h4 class="panel-title"> 
                                                                             <!--MEAASUREMENT NAME-->
                                                                             MEASUREMENT NAME:  <%= measure.measurement_Name %>
