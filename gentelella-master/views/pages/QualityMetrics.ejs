@@ -512,8 +512,8 @@
                                                                                     <th>Priority Level</th>
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
+                                                                                        <th># of Activities</th>
                                                                                         <th>Progress</th>
-                                                                                        <th></th>
                                                                                         <th></th>
                                                                                     <% } else { %>
                                                                                     <th># of Activities</th>
@@ -678,7 +678,18 @@
                                                                                         <% for (var targets of dataF) { %>
                                                                                             <% if (targets.measurementID == measurement.measurement_ID) { %>
                                                                                             <%= targets.progress %>
-                                                                                            
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                                %
+                                                                                                <% } else { %>
+                                                                                                #
+                                                                                                <% } %> 
+                                                                                            /<%= targets.target %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= targets.target_Desc %><br>
                                                                                             <br>
                                                                                             <% } %>
     
