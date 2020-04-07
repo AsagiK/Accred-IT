@@ -506,7 +506,7 @@
                                                                             <thead>
 
                                                                                 <tr>
-                                                                                    <th>ID</th>
+                                                                                    <th style="display:none;">ID</th>
                                                                                     <th>Measurement Name</th>
                                                                                     <th>Measurement Description</th>
                                                                                     <th>Priority Level</th>
@@ -530,7 +530,7 @@
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
@@ -557,7 +557,7 @@
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
@@ -588,7 +588,7 @@
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;" ><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
@@ -608,7 +608,7 @@
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
@@ -630,7 +630,7 @@
                                                                                 <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID) { %>
                                                                                 <tr>
 
-                                                                                    <td><%= measurement.measurement_ID %>
+                                                                                    <td style="display:none;"><%= measurement.measurement_ID %>
                                                                                     </td>
                                                                                     <td><%= measurement.measurement_Name %>
                                                                                     </td>
