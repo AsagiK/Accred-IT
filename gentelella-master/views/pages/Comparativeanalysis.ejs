@@ -57,14 +57,16 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-20 col-sm-20 col-xs-20">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content"> 
+                                <div class="col-md-6 col-sm-6 col-xs-6">
                                   <!--PREVIOUS--> 
-                                  <h4>PREVIOUS</h4>
-                                  
+                                  <% for (var prevcycles of dataE) { %>
+                                    <h2 style="color: black; font-size:x-large;">Previous Term Report from: <%=prevcycles.cycle_Name%></h2>
+                                  <% } %>
                                     <!--view table for users-->
-                                    <table id="datatable-fixed-header"  class="table table-bordered" style="color: black; font-size: medium;">
+                                    <table   class="smalltable table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
                                             
                                             <tr>
@@ -74,7 +76,7 @@
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
                                                 <th>Progress</th>    
-                                                <th></th>
+                                                
   
                                             </tr>
                                         </thead>                                                                       
@@ -136,14 +138,16 @@
 
                                                                 <% } %> 
 
-                                                        </td>             
+                                                        </td>   
+                                                        <!--        
                                                         <td>
-                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                             <!-- VIEW ACTIVITIES BUTTON
                                                         <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                             <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
                                                         </form>        
-                                                        </td>                                            
+                                                        </td>    
+                                                    -->                                        
                                                      </tr>
                                                         <% } %>
                                                     <% } %> 
@@ -151,13 +155,14 @@
                                             <% } %>
                                         </tbody>
                                     </table> 
-                                    
-                            
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
                                   <!--CURRENT --> 
-                                  <h4>NEWEST </h4>
-                                    
+                                  <%for (var cycles of data) {%>
+                                  <h2 style="color: black; font-size:x-large;">Newest Term Report from: <%=cycles.cycle_Name%> </h2>
+                                  <% } %>  
                                     <!--view table for users-->
-                                    <table id="datatable-buttons" class="table table-bordered " style="color: black; font-size: medium;">
+                                    <table class="smalltable table-bordered " style="color: black; font-size: medium;">
                                         <thead> 
                                             
                                             <tr>
@@ -167,7 +172,7 @@
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
                                                 <th>Progress</th>    
-                                                <th></th>
+                                                
                                                 
                                                 
                                                 
@@ -234,14 +239,15 @@
                                                         </td>
                                                                    
                                                                     
-                                                         
+                                                        <!--
                                                         <td>
-                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                             <!-- VIEW ACTIVITIES BUTTON
                                                         <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
                                                             <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
                                                         </form>        
-                                                        </td>                                            
+                                                        </td>    
+                                                        -->                                        
                                                      </tr>
                                                         <% } %>
                                                     <% } %> 
@@ -249,7 +255,7 @@
                                             <% } %>
                                         </tbody>
                                     </table> 
-                                    
+                                </div>
                                     <div class="ln_solid">
                                         
                                     </div>
@@ -325,7 +331,65 @@
             <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
             <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
             <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
-            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script> 
+
+             <!--Table CSS-->
+             <style> 
+                      
+                table.smalltable {
+                    border:3px solid #000;
+                    width:350px; /*280px */
+                    margin:25px;
+                    border-collapse: collapse;
+                    font-size: 1.0em;
+                    min-width: 400px; 
+                    border-radius: 5px 5px 0 0;
+                    overflow: hidden;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                    float:left; 
+                    } 
+
+                    table.smalltable th{
+                    border: 1px solid #000; 
+                    background: #232931;
+                    color: white;
+                    padding: 5px 7px;
+                    }
+
+                    table.smalltable td {
+                    font-size:100%;
+                    padding: 5px;
+                    text-align:center;
+                    vertical-align:top;
+                    padding: 12px 15px;
+                     }
+
+                    table.smalltable tr{
+                      border-bottom: 1px solid #dddddd;
+                    } 
+
+                    table.smalltable tbody tr:nth-of-type(even){
+                      background-color: #f3f3f3;
+                    }
+
+                    table.smalltable tbody tr:last-of-type{
+                      border-bottom: 2px solid #009879;
+                    }
+
+                    table.smalltable thead tr{
+                      padding: 5px 7px;
+                      text-align:left;
+                      font-weight: bold;
+                      border-bottom: 1px solid #ddd;
+                    }
+
+
+                    
+                    table.smalltable td:nth-child(odd) {font-weight:bold; width:50%; }
+                    table.smalltable td:nth-child(even) {font-weight:normal; width:50%;}
+
+                    @media only screen and (min-width : 768px) and (max-width : 959px) and (orientation:portrait) { .smalltable {float:none; width:100%; display:block; margin:0 auto; } }
+                </style>
 
 </body>
 

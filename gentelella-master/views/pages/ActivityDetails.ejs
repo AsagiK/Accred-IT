@@ -79,7 +79,7 @@
                                     <br />
 
                                     <!--view table for users-->
-                                    <table class="table table-bordered">
+                                    <table name="submissiontable" id="submissiontable" class="table table-bordered">
                                         <thead>
                                             <tr>
 
@@ -178,7 +178,7 @@
                                                     <td>
                                                             <select class="form-control" style="width: 500px;" name="outputs" id="outputs">
                                                                 <% for (outputs of dataD) { %>
-                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>"><%= outputs.output %></option>
+                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>:<%= outputs.Document_ID %> `<%= outputs.Document_Name %>"><%= outputs.output %></option>
                                                                 <% } %>  
                                                             </select>
                                                             <br>
@@ -189,6 +189,8 @@
                                                                         <th>ID</th>
                                                                         <th>Output</th>
                                                                         <th></th>
+                                                                        <th style='display:none;'>FolderID</th>
+                                                                        <th style='display:none;'>FolderName</th>
                                                                     </thead>
                                                                     <tbody>
     
@@ -202,8 +204,25 @@
                                                             class="control-label col-md-3 col-sm-3 col-xs-12">Suggested
                                                             Progress: </label></td>
                                                     <td>
-                                                        <input type="number" name="score" id="score" value="0"
-                                                            placeholder="Suggested Progress">
+                                                        <input type="number" name="score" id="score" value=""
+                                                            placeholder="Suggested Progress"> 
+                                                            <% for (var target of dataTargets) { %>
+                                                                <% if (target.target_ID == data[0].target) { %>
+                                                                    <% if (target.target_Type == 0) { %>
+                                                                        %
+                                                                    <% } else { %>
+                                                                        #
+                                                                    <% } %> 
+                                                                 
+                                                                     - <%= target.target %> 
+                                                                    <% if (target.target_Type == 0) { %>
+                                                                    %
+                                                                    <% } else { %>
+                                                                    #
+                                                                    <% } %> 
+                                                                    - <%= target.target_Desc %>
+                                                                <% } %>
+                                                            <% } %>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -262,6 +281,12 @@
                                                     </td>
 
                                                 </tr>
+                                                <div id="inputs" name="inputs" style="display: none;">
+                                                    <input id='outputID' name='outputID' value="">
+                                                    <input id='outputName' name='outputName' value="">
+                                                    <input id='FoldID' name='FoldID' value="">
+                                                    <textarea id='FoldName' name='FoldName' value=""></textarea>
+                                                </div>
                                             </form>
                                             <td></td>
                                             <td><button type="submit" class="btn btn-success" id="toJSON">Submit</button></td>
@@ -272,6 +297,7 @@
                                     </table>
 
                                     <div class="ln_solid"></div>
+                                    
                                 </div>
 
                             </div>
@@ -295,13 +321,13 @@
 
         <!--MODAL FOR CHOOSE EVIDENCE-->
         <div class="modal fade chooseEvidence" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" style="width:1250px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel2">Choose Evidence</h4>
                     </div>
                     <div class="modal-body">
-                        <table name="table1" id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%">
+                        <table name="table1" id="datatable-fixed-header" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Check</th>
@@ -410,12 +436,22 @@
                     var output = document.getElementById("outputs").value;
                     console.log(output);
                     var outputID = output.substr(0, output.lastIndexOf('~'));
-                    var outputName = output.substr(output.lastIndexOf('~') + 1);
+                    var outputName = output.substr(output.lastIndexOf('~') + 1, output.indexOf(':')-2);
+                    var FoldID = output.substr(output.lastIndexOf(':') + 1, 3);
+                    var FoldName = output.substr(output.lastIndexOf('`') + 1);
                     console.log("OUTPUT ID = " + outputID);
                     console.log("OUTPUT NAME = " + outputName);
-                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-danger btn-xs' onclick='deleteRow(this)'>Remove</button></td></tr>";
+                    console.log("Folder ID = " + FoldName);
+                    var markup = "<tr><td>" + outputID + "</td><td>" + outputName + "</td><td><button type='button' class='btn btn-danger btn-xs' onclick='deleteRow(this)'>Remove</button></td><td style='display:none;'>" + FoldID + "</td><td style='display:none;'>" + FoldName + "</td></tr>";
                     $("#outputs option:selected").remove();
+                    //var markup2 = "<input style='display:none;' id='outputID' name='outputID' value=" + outputID +"><input style='display:none;' id='outputName' name='outputName' value=" + outputName +"><input style='display:none;' id='FoldID' name='FoldID' value=" + FoldID +"><textarea style='display:none;' id='FoldName' name='FoldName'>" + FoldName + "</textarea>"
+                    document.getElementById("addoutput").style.display="none";
                     $("#tableoutputs tbody").append(markup);
+                    //$("#inputs").append(markup2);
+                    $("#outputID").val(outputID);
+                    $("#outputName").val(outputName);
+                    $("#FoldID").val(FoldID);
+                    $("#FoldName").val(FoldName);
                 });
 
                 
@@ -435,6 +471,9 @@
                     var score = document.getElementById("score").value;
                     var CID = document.getElementById("CID").value;
                     var TID = document.getElementById("TID").value;
+                    var FoldID = document.getElementById("FoldID").value;
+                    var FoldName = document.getElementById("FoldName").value;
+                    
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/SendDocumentsJSON', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -456,7 +495,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID + "&FoldID=" + FoldID + "&FoldName=" + FoldName);
 
                 });
 
@@ -483,13 +522,20 @@
                     r.closest("tr").remove();
                     var valID = r.closest("tr").cells[0].innerHTML;
                     var valName = r.closest("tr").cells[1].innerHTML;
+                    var FoldID = r.closest("tr").cells[3].innerHTML;
+                    var FoldName = r.closest("tr").cells[4].innerHTML;
                     console.log(valID);
                     console.log(valName);
                     var dropdown = document.getElementById("outputs");
                     var option = document.createElement("option");
                     option.innerHTML = valName;
-                    option.value = valID + "~" + valName;
+                    option.value = valID + "~" + valName + ":" + FoldID + " `" + FoldName;
                     dropdown.options.add(option);
+                    document.getElementById("addoutput").style.display="block";
+                    $("#outputID").val("");
+                    $("#outputName").val("");
+                    $("#FoldID").val("");
+                    $("#FoldName").val("");
                 }
 
             function test() {

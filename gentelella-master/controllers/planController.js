@@ -1410,7 +1410,7 @@ module.exports = {
             var cid = req.query.CID;
             console.log(id);
             var values = [id, id];
-            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents left join capstone.folder_documents on folder_documents.document_id = documents.Document_ID where documents.isfolder = 0; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.activity_outputs WHERE activity_outputs.activity_ID = ?; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.approved_activities where approved_activities.activity_ID=(?); SELECT * FROM capstone.documents left join capstone.folder_documents on folder_documents.document_id = documents.Document_ID where documents.isfolder = 0; SELECT * FROM capstone.activity_outputs; SELECT *, CONCAT(approved_activities.activity_name, ' ', capstone.activity_outputs.output) FROM capstone.approved_activities join capstone.activity_outputs on approved_activities.activity_ID = activity_outputs.activity_ID join capstone.documents on documents.Document_Name = CONCAT(approved_activities.activity_name, ' ', capstone.activity_outputs.output) WHERE activity_outputs.activity_ID = ?; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
                 if (err) throw err;
                 if (results) {
                     console.log(results);
@@ -2157,7 +2157,7 @@ module.exports = {
             resp.redirect('/login');
         } else {
             var FID = req.query.FolderID;
-            var sql = "SELECT * FROM capstone.documents; SELECT * FROM capstone.folder_documents WHERE folder_documents.folder_ID = ?; SELECT * FROM capstone.documents WHERE documents.Document_ID = ?;";
+            var sql = "SELECT * FROM capstone.documents; SELECT  Distinct document_id, folder_name, folder_id FROM capstone.folder_documents WHERE folder_documents.folder_ID = ?; SELECT * FROM capstone.documents WHERE documents.Document_ID = ?;";
             var values = [FID, FID]
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -2406,10 +2406,12 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var MAID = req.query.MAID;
+            var CYID = req.query.CYID;
             console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
-            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members;"
-            var values = [MAID]
-            console.log("TESTING ----------"+ MAID);
+            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.cycle WHERE cycle_ID= (?);"
+            var values = [MAID, CYID]
+            console.log("GROUP REPORT TESTING ----------"+ MAID);
+            console.log(" GROUP REPORT TESTING ----------"+ CYID);
             connection.query( sql,values,function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/GroupReport.ejs', {
@@ -2422,6 +2424,7 @@ module.exports = {
                     dataG: results[6],
                     dataH: results[7],      
                     dataI: results[8],
+                    dataJ: results[9],
                     current_user: sess.user
                 });
             });

@@ -116,9 +116,9 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-
-                            <h3 style="color: #dddddd;">View Group Report</h3>
-
+                            
+                            <h3 style="color: #dddddd;">View Group Report:</h3>
+                            
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,9 @@
                                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" style="background-color: #696969; border-color: #696969; border-radius: 8px;">
                                                 <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px;">
                                                     <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= activities.activity_ID%>" aria-expanded="true" aria-controls="collapse<%= activities.activity_ID%>" >
+                                                        
                                                         <h4 class="panel-title"><%= activities.activity_name%> 
+                                                        
                                                         </h4>
                                                     </a>
                                                     <div id="collapse<%= activities.activity_ID %>"
@@ -222,7 +224,19 @@
                                                                                             <% } %>
                                                                                         </td>
                                                                                         <td><%=submission.comment%></td>    
-                                                                                        <td><%=submission.suggested_Score%></td>
+                                                                                        <td> 
+                                                                                        <% for (var target_audit of dataE) { %> 
+                                                                                            <%if (submission.target == target_audit.target_ID) {%>    
+                                                                                                <%if (target_audit.target_Type == 1) { %>  
+                                                                                                    <%=submission.suggested_Score%> 
+                                                                                                     - <%=target_audit.target_Desc%>
+                                                                                                <%} else { %>  
+                                                                                                    <%=submission.suggested_Score%> 
+                                                                                                    % - <%=target_audit.target_Desc%>
+                                                                                                <% } %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                        </td>
                                                                                         <td>
                                                                                         <% for (var target_audit of dataE) { %>
                                                                                            <%if (submission.target == target_audit.target_ID) {%>     
