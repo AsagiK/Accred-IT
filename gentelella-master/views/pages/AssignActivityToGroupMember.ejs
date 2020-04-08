@@ -137,7 +137,10 @@
                                                     <th>User Last</th>
                                                     <th style="display:none;">User ID</th>
                                                     <th style="display:none;">Activity ID</th>
+                                                    <th style="display:none;">Activity Name</th>
+                                                    <th style='display:none;'>Deadline</th>
                                                     <th style="display:none;">Measurement ID</th>
+                                                    <th style="display:none;">Measurement Name</th>
                                                 </tr>
                                             </thead>
 
@@ -160,8 +163,22 @@
                                                         <%= user.User_ID %></td>
                                                     <td style='display:none;' id='hidden<%= user.User_ID %>' value="<%= dataB[0].activity_ID %>"
                                                         ><%= dataB[0].activity_ID %></td>
+                                                    <td style='display:none;' id='hiddenname<%= user.User_ID %>' value="<%= dataB[0].activity_name %>"
+                                                        ><%= dataB[0].activity_name %></td>
+                                                    <% var deaddate = dataB[0].deadline; %>
+                                                    <% var ydate = deaddate.getFullYear(); %>
+                                                    <% if(deaddate.getMonth() >= 9) { %>
+                                                        <% mdate = deaddate.getMonth() + 1; %>
+                                                    <% } else { %>
+                                                        <% mdate = "0" + (deaddate.getMonth() + 1); %>
+                                                    <% } %>
+                                                    <% ddate = deaddate.getDate(); %>
+                                                    <td style='display:none;' id='hiddendead<%= user.User_ID %>' value="<%= ydate %>-<%= mdate %>-<%= ddate %>"
+                                                        ><%= ydate %>-<%= mdate %>-<%= ddate %></td>      
                                                     <td style='display:none;' id='measure<%= user.User_ID %>' value="<%= dataC[0].measurement_ID %>"
                                                         ><%= dataC[0].measurement_ID %></td>
+                                                    <td style='display:none;' id='measurename<%= user.User_ID %>' value="<%= dataC[0].measurement_Name %>"
+                                                        ><%= dataC[0].measurement_Name %></td>
                                                 </tr>
                                                 <% } %>
                                             </tbody>
@@ -260,11 +277,14 @@
                         //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
+                        var hiddenName = $('#hiddenname' + index).attr("value");
+                        var hiddenDead = $('#hiddendead' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
+                        var measureName = $('#measurename' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
                             "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td style='display:none;' id = UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= hiddenname" + index + " value=" + hiddenName + ">" + hiddenName + "</td><td style='display:none;' id= hiddendead" + index + " value=" + hiddenDead + ">" + hiddenDead + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td><td style='display:none;' id= measurename" + index + " value=" + measureName + ">" + measureName + "</td></tr>";
                         $("#table2 tbody").append(markup);
                         $(this).parents("tr").remove();
                     }
@@ -283,11 +303,14 @@
                         //var last = $("#last" + index).attr("value");
                         //console.log(last);
                         var hidden = $('#hidden' + index).attr("value");
+                        var hiddenName = $('#hiddenname' + index).attr("value");
+                        var hiddenDead = $('#hiddendead' + index).attr("value");
                         var measure = $('#measure' + index).attr("value");
+                        var measureName = $('#measurename' + index).attr("value");
                         var markup = "<tr><td><label class='containercheckbox'><input type='checkbox' name='record' id=" +
                             index + "><span class='checkmark'></span></label></td><td id= first" + index + " value=" + User_First + ">" + User_First +
                             "</td><td id= last" + index + " value=" + User_Last + ">" + User_Last + "<td style='display:none;' id = UID" + index + " value=" + UID + ">" + UID +
-                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td></tr>";
+                            "</td><td style='display:none;' id= hidden" + index + " value=" + hidden + ">" + hidden + "</td><td style='display:none;' id= hiddenname" + index + " value=" + hiddenName + ">" + hiddenName + "</td><td style='display:none;' id= hiddendead" + index + " value=" + hiddenDead + ">" + hiddenDead + "</td><td style='display:none;' id= measure" + index + " value=" + measure + ">" + measure + "</td><td style='display:none;' id= measurename" + index + " value=" + measureName + ">" + measureName + "</td></tr>";
                         $("#table1 tbody").append(markup);
                         $(this).parents("tr").remove();
 
