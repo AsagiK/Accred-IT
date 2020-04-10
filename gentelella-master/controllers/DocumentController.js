@@ -856,7 +856,8 @@ module.exports = {
                 }
 
                 function addFolder(sql, values, folderid) {
-                    if (folderid) {
+                    if (folderid) { 
+                        console.log(values);
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
                             if (result) {
