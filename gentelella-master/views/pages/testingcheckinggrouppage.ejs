@@ -176,7 +176,7 @@
                                                                                                         <tbody>
                                                                                                             <% for (var subs of dataPending) { %>
                                                                                                                 
-                                                                                                            <% if (activity.activity_ID == subs.activity_ID) { %>    
+                                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
                                                                                                             
                                                                                                             <tr>
                                                                                                                 <!-- MEASUREMENT TABLE :  -->
