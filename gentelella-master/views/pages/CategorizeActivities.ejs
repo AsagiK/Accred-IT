@@ -74,6 +74,7 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
+                                                <th>Achievements</th>
                                                 <th>Progress</th>    
                                                 <th></th>                                          
                                             </tr>
@@ -128,6 +129,17 @@
 
                                                                 <% } %>
 
+                                                        </td> 
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %> 
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <% if ((targets_audit.progress >= target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                                                                                       
+                                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            <% } %>
                                                         </td>
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON-->
@@ -153,7 +165,8 @@
                                                 <th>Measurement Name</th>
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
-                                                <th>Quality Target</th>
+                                                <th>Quality Target</th> 
+                                                <th>Achievements</th>
                                                 <th>Progress</th>    
                                                 <th></th>                                          
                                             </tr>
@@ -205,6 +218,17 @@
 
                                                                 <% } %>
 
+                                                        </td> 
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %> 
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 2 )) && (targets_audit.progress < (target))) { %>
+                                                                                                                                       
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            <% } %>
                                                         </td>
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON-->
@@ -231,6 +255,7 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
+                                                <th>Achievements</th>
                                                 <th>Progress</th>    
                                                 <th></th>                                          
                                             </tr>
@@ -273,9 +298,9 @@
                                                                     <% var target = targets_audit.target %> 
                                                                     <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 4 )) && (targets_audit.progress < (target)) && (targets_audit.progress < (target / 2 ))) { %>                                                                  
                                                                         <% if ( targets_audit.target_Type == 0) { %> 
-                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
                                                                         <% } else if ( targets_audit.target_Type == 1) { %>
-                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"><%= targets_audit.progress %>  / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%></span> <br>
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %>  / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%></span> <br>
                                                                         
                                                                         <% } else { %>
                                                                             NO DATA TO SHOW
@@ -284,6 +309,17 @@
 
                                                                 <% } %>
 
+                                                        </td> 
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %> 
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 4 )) && (targets_audit.progress < (target)) && (targets_audit.progress < (target / 2 ))) { %> 
+                                                                                                                                       
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            <% } %>
                                                         </td>
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON-->
