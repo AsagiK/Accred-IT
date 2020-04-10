@@ -187,8 +187,8 @@
                                         </table>
                                     </div>
                                 </div>
-                                <button type="button" class="add-row btn btn-primary">Add Row</button>
-                                <button type="button" class="delete-row btn btn-danger">Delete Row</button>
+                                <button type="button" class="add-row btn btn-primary btn-xs">Add Row</button>
+                                <button type="button" class="delete-row btn btn-danger btn-xs">Delete Row</button>
                                 <!--SELECTED MEMBERS TABLE-->
                                 <div class="form-group">
                                     <div class="col-md-12">
@@ -200,7 +200,10 @@
                                                     <th>User Last</th>
                                                     <th style="display:none;">User ID</th>
                                                     <th style="display:none;">Activity ID</th>
-                                                    <th style='display:none;'>Measurement ID</th>
+                                                    <th style="display:none;">Activity Name</th>
+                                                    <th style='display:none;'>Deadline</th>
+                                                    <th style="display:none;">Measurement ID</th>
+                                                    <th style="display:none;">Measurement Name</th>
                                                 </tr>
                                             </thead>
 
@@ -218,11 +221,12 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
+                                            <button type="submit" class="btn btn-danger">Cancel</button>
                                         </form>
-                                        <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
+                                        <br>
                                         <input type="hidden" id="AN" name="AN" value="<%= dataB[0].activity_name %>">
-                                        <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
                                             <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
