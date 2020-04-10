@@ -178,7 +178,7 @@
                                                     <td>
                                                             <select class="form-control" style="width: 500px;" name="outputs" id="outputs">
                                                                 <% for (outputs of dataD) { %>
-                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>:<%= outputs.Document_ID %> `<%= outputs.Document_Name %>"><%= outputs.output %></option>
+                                                                    <option value="<%= outputs.output_ID %>~<%= outputs.output %>:<%= outputs.Document_Name %>`<%= outputs.Document_ID %>"><%= outputs.output %></option>
                                                                 <% } %>  
                                                             </select>
                                                             <br>
@@ -273,7 +273,7 @@
                                                     </td>
 
                                                 </tr>
-                                                <div id="inputs" name="inputs" style="display: none;">
+                                                <div id="inputs" name="inputs" >
                                                     <input id='outputID' name='outputID' value="">
                                                     <input id='outputName' name='outputName' value="">
                                                     <input id='FoldID' name='FoldID' value="">
@@ -429,8 +429,8 @@
                     console.log(output);
                     var outputID = output.substr(0, output.lastIndexOf('~'));
                     var outputName = output.substr(output.lastIndexOf('~') + 1, output.indexOf(':')-2);
-                    var FoldID = output.substr(output.lastIndexOf(':') + 1, 3);
-                    var FoldName = output.substr(output.lastIndexOf('`') + 1);
+                    var FoldName = output.substr(output.lastIndexOf(':') + 1, output.indexOf('`')-2);
+                    var FoldID = output.substr(output.lastIndexOf('`') + 1);
                     console.log("OUTPUT ID = " + outputID);
                     console.log("OUTPUT NAME = " + outputName);
                     console.log("Folder ID = " + FoldName);
@@ -521,7 +521,7 @@
                     var dropdown = document.getElementById("outputs");
                     var option = document.createElement("option");
                     option.innerHTML = valName;
-                    option.value = valID + "~" + valName + ":" + FoldID + " `" + FoldName;
+                    option.value = valID + "~" + valName + ":" + FoldID + "`" + FoldName;
                     dropdown.options.add(option);
                     document.getElementById("addoutput").style.display="block";
                     $("#outputID").val("");
