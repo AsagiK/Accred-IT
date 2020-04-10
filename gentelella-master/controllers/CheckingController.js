@@ -476,5 +476,52 @@ module.exports = {
             });
         }
     }, 
+
+    CheckingAccordionGroupTestPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var sql = "SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.cycle; SELECT users.User_ID, User_First, User_Last, email_address, users.Role, users.Group, ContactNo, username, isleader, Groupdetails_ID, Groupdetails_UserID, Groupdetails_Position, pending_ID, activity_ID, activity_name, target, code, description, measurement_ID, current_Score, status, suggested_Score, dateupdated, active,comment, cycle_ID FROM users join groupdetails on users.User_ID = groupdetails.Groupdetails_UserID join pending_activities on users.User_ID = pending_activities.user_ID where users.Group = ?;"
+            var values = [sess.user[0].Group]
+            connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            if(results){
+
+                resp.render('./pages/testingcheckinggrouppage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    dataF: results[5],
+                    dataG: results[6],
+                    dataH: results[7],
+                    dataGroup: results[8],
+                    dataAssignedgroup: results[9],
+                    dataUsers: results[10],
+                    dataAssignedusers: results[11],
+                    dataTargets: results[12],
+                    dataCycle: results[13],
+                    dataPending: results[14],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("testing page for checking group leader");
+
+            }
+            });
+        }
+    }, 
     
 }

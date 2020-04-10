@@ -164,6 +164,7 @@ router.route('/EditTargetDeadline').get(planCtrl.EditTargetDeadline);
 
 router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
 router.route('/CheckingAccordionGroupLeaderPage').get(CheckCtrl.CheckingAccordionGroupLeaderPage);
+router.route('/CheckingAccordionGroupTestPage').get(CheckCtrl.CheckingAccordionGroupTestPage);
 
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
 router.route('/ViewActivityEvidencesGroupLeaderPage').get(CheckCtrl.ViewActivityEvidencesGroupLeaderPage);
