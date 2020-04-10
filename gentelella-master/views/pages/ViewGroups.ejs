@@ -225,12 +225,14 @@
                                                                                         <td><strong><%= user.Groupdetails_Position %></strong>
                                                                                         </td>
                                                                                         <td>
+                                                                                            <% if (current_user[0].role == 1 || current_user[0].role == 2 || current_user[0].role == 3) { %>
                                                                                             <form method="post" action="makeMember">
                                                                                                 <input type="hidden" name="UID" value="<%= user.User_ID %>">
                                                                                                 <input type="hidden" name="GID" value="<%= group.Group_ID %>">
                                                                                                 <button class="btn btn-primary" type="submit">Make
                                                                                                     Member</button>
                                                                                             </form>
+                                                                                            <% } %>
                                                                                             <% } %>
                                                                                         </td>
                                                                                     </tr>
