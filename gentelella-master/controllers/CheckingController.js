@@ -305,7 +305,9 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle;", function (err, results, fields) {
+            var sql = "SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle; SELECT users.User_ID, User_First, User_Last, email_address, users.Role, users.Group, ContactNo, username, isleader, Groupdetails_ID, Groupdetails_UserID, Groupdetails_Position, pending_ID, activity_ID, activity_name, target, code, description, measurement_ID, current_Score, status, suggested_Score, dateupdated, active,comment, cycle_ID FROM users join groupdetails on users.User_ID = groupdetails.Groupdetails_UserID join pending_activities on users.User_ID = pending_activities.user_ID where users.Group = ?;"
+            var values = [sess.user[0].Group]
+            connection.query(sql ,values, function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -325,10 +327,10 @@ module.exports = {
                     dataAssignedusers: results[12],
                     dataTargets: results[13],
                     dataCycle: results[14],
+                    dataPending: results[15],
                     current_user: sess.user
                 });
-                console.log(results);
-                console.log("Checking Accordion Group Leader Page loaded");
+                console.log("Checking Accordion Group Leader Page loaded" + sess.user[0].Group);
 
             }
             });

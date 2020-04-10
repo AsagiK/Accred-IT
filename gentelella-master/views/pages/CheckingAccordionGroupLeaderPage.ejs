@@ -179,20 +179,23 @@
                                                                                                         </thead>
                                                                                                         <tbody>
                 
-                                                                                                            <% for (var subs of dataE) { %>
+                                                                                                            <!--<% for (var subs of dataE) { %>
                                                                                                                 <% for (var group of dataGroups) { %>
                                                                                                                     <% for (var groupdetails of dataGroupDetails) { %>
                                                                                                                 
-                                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0 && current_user[0].Group == group.Group_ID && (groupdetails.Groupdetails_ID == current_user[0].Group && subs.user_ID == groupdetails.Groupdetails_UserID)) { %>    
+                                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0 && current_user[0].Group == group.Group_ID && (groupdetails.Groupdetails_ID == current_user[0].Group && subs.user_ID == groupdetails.Groupdetails_UserID)) { %> -->
+                                                                                                                
+                                                                                                                <% for (var pending of dataPending) { %>
+                                                                                                                
                                                                                                             
                                                                                                             <tr>
                                                                                                                 <!-- MEASUREMENT TABLE :  -->
-                                                                                                                <td> <%= subs.User_First %> <%= subs.User_Last %> </td>
-                                                                                                                <td> <%= subs.description %> </td>
+                                                                                                                <td> <%= pending.User_First %> <%= pending.User_Last %> </td>
+                                                                                                                <td> <%= pending.description %> </td>
                                                                                                                 <td>
                                                                                                                     <% for (pendingoutputs of dataH) { %>
                                                                                                                         <% for (outputs2 of dataG) { %>
-                                                                                                                            <% if (pendingoutputs.pendingID == subs.pending_ID && pendingoutputs.outputID == outputs2.output_ID) { %> 
+                                                                                                                            <% if (pendingoutputs.pendingID == pending.pending_ID && pendingoutputs.outputID == outputs2.output_ID) { %> 
                                                                                                                             - <%= outputs2.output %> <br>
                                                                                                                             <% } %>
                                                                                                                         <% } %>
@@ -200,9 +203,9 @@
                                                                                                                 </td>
                                                                                                                 <td>
                                                                                                                     <% for (var target of dataTargets) { %>
-                                                                                                                        <% if (target.target_ID == subs.target) { %>
+                                                                                                                        <% if (target.target_ID == pending.target) { %>
                                                                                                                             
-                                                                                                                            <%= subs.suggested_Score %> 
+                                                                                                                            <%= pending.suggested_Score %> 
                                                                                                                             <% if (target.target_Type == 0) { %>
                                                                                                                             %
                                                                                                                             <% } else { %>
@@ -217,7 +220,7 @@
                                                                                                                 <td>  
                                                                                                                     <form method="get" action="ViewActivityEvidencesGroupLeaderPage">
                                                                                                                         <input type="text" name="PID"
-                                                                                                                            value="<%= subs.pending_ID %>" style="display: none;">
+                                                                                                                            value="<%= pending.pending_ID %>" style="display: none;">
                                                                                                                         <button type="submit" class="btn btn-primary">View
                                                                                                                             Evidence
                                                                                                                         </button>
@@ -227,9 +230,9 @@
                                                                                                                
                                                                                                             <% } %>
                                                                                                                
+                                                                                                            <!--<% } %>
                                                                                                             <% } %>
-                                                                                                            <% } %>
-                                                                                                            <% } %>
+                                                                                                            <% } %>-->
                                         
                                                                                                         </tbody>
                                                                                                     </table>
