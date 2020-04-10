@@ -87,17 +87,21 @@
                                             <td>
                                                 <% for (var target of dataTargets) { %>
                                                     <% if (target.target_ID == data[0].target) { %>
-                                                        <%= data[0].suggested_Score %>
+                                                        
                                                         <% if (target.target_Type == 0) { %>
-                                                        %
+                                                        <%= data[0].suggested_Score %>%
                                                         <% } else { %>
-                                                        #
+                                                        #<%= data[0].suggested_Score %>
                                                         <% } %> 
                                                         
                                                     <% } %>
                                                 <% } %>
                                                 
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Group Leader Comment: </td>
+                                            <td><%= data[0].comment %></td>
                                         </tr>
                                         <tr>
                                             <td>Evidences: </td>

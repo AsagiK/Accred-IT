@@ -89,7 +89,9 @@
                                                                 <%= targets.target %>
                                                                 <% if (targets.target_Type == 0) { %>
                                                                 %
-                                                                <% } %> 
+                                                                <% } else { %> 
+                                                                #
+                                                                <% } %>
                                                                 - <%= targets.target_Desc %> <br>
                                                             <% } %>
                                                         <% } %>
@@ -103,7 +105,15 @@
                                                                         <%= targets.progress %>
                                                                         <% if (targets.target_Type == 0) { %>
                                                                         %
-                                                                        <% } %> <br>
+                                                                        <% } else { %> 
+                                                                        #
+                                                                        <% } %> 
+                                                                        / <%= targets.target %>
+                                                                        <% if (targets.target_Type == 0) { %>
+                                                                        %
+                                                                        <% } else { %> 
+                                                                        #
+                                                                        <% } %><br>
                                                                     <% } %>
                                                                 <% } %>
                                                             <% } %>
