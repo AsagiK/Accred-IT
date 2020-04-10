@@ -82,8 +82,9 @@
                                         <tbody> 
                                             
                                             <% for (var cycles of data) { %>
-                                                <% for (var measure_audit of dataB) { %>
-                                                    <% if ( measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                <% for (var measure_audit of dataB) { %> 
+                                                    <% for (var targets_audit of dataC) { %>
+                                                    <% if ( measure_audit.cycle_ID == cycles.cycle_ID && (targets_audit.progress >= targets_audit.target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID ) { %>
                                                         <tr>
                                                         <td><%= measure_audit.measurement_ID %>
                                                         </td>
@@ -133,7 +134,7 @@
                                                         <td>
                                                             <% for (var targets_audit of dataC) { %> 
                                                                 <% var target = targets_audit.target %> 
-                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
                                                                 <% if ((targets_audit.progress >= target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
                                                                                                                                        
                                                                         <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
@@ -149,6 +150,7 @@
                                                         </form>        
                                                         </td>                                            
                                                      </tr>
+                                                        <% } %> 
                                                         <% } %>
                                                     <% } %> 
                                                 <% } %>
@@ -222,7 +224,7 @@
                                                         <td>
                                                             <% for (var targets_audit of dataC) { %> 
                                                                 <% var target = targets_audit.target %> 
-                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 2 )) && (targets_audit.progress < (target))) { %>
                                                                                                                                        
                                                                         <span style="color:darkorange; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
@@ -313,7 +315,7 @@
                                                         <td>
                                                             <% for (var targets_audit of dataC) { %> 
                                                                 <% var target = targets_audit.target %> 
-                                                                <%var percent = (targets_audit.progress/targets_audit.target) * 100 %>
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
                                                                 <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 4 )) && (targets_audit.progress < (target)) && (targets_audit.progress < (target / 2 ))) { %> 
                                                                                                                                        
                                                                         <span style="color:tomato; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
