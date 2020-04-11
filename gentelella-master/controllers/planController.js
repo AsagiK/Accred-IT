@@ -2449,7 +2449,7 @@ module.exports = {
             var MAID = req.query.MAID;
             var CYID = req.query.CYID;
             console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
-            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.cycle WHERE cycle_ID= (?);"
+            var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.cycle WHERE cycle_ID= (?); SELECT *, concat(measurement_Name, ' - ', activity_name) as 'measurement-activity-name' from measurement join measurements_activities on measurement.measurement_ID = measurements_activities.measurement_ID join approved_activities on measurements_activities.activity_ID = approved_activities.activity_ID;"
             var values = [MAID, CYID]
             console.log("GROUP REPORT TESTING ----------"+ MAID);
             console.log(" GROUP REPORT TESTING ----------"+ CYID);
@@ -2466,6 +2466,7 @@ module.exports = {
                     dataH: results[7],      
                     dataI: results[8],
                     dataJ: results[9],
+                    dataK: results[10],
                     current_user: sess.user
                 });
             });

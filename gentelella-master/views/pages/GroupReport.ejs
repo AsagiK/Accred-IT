@@ -151,51 +151,65 @@
                                                             class="panel-collapse collapse" role="tabpanel"
                                                             aria-labelledby="headingOne">
 
-                                                            <div class="panel-body">
-                                                                <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Submission #</th>
-                                                                            <th>Description of Submission</th> 
-                                                                            <th>Assigned Activity</th>
-                                                                            <th>Status</th>
-                                                                            <th>Submitted Documents</th>
-                                                                        </tr>
-                                                                    </thead> 
-                                                                    <% for (var submissions of dataF) { %> 
-                                                                        <%if (members.User_ID == submissions.user_ID) {%>
-                                                                    <tbody>
-                                                                        <tr> 
-                                                                            <td><%=submissions.pending_activities_auditID %></td> 
-                                                                            <td><%=submissions.description%></td>
-                                                                            <td><%=submissions.activity_name %></td>
-                                                                            <td> 
-                                                                                <% if (submissions.status == 1) { %>
-                                                                                Approved
-                                                                                <% } else if (submissions.status == 2) { %>
-                                                                                Disapproved 
-                                                                                <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                                                                                                       
-                                                                                <% for (var evi of dataD) { %> 
-                                                                                    <% for (var doc of dataC) { %>
-                                                                                    <% if (submissions.pending_ID == evi.pendingID) {%>
-                                                                                     <% if (submissions.activity_ID == evi.activityID && evi.documentID == doc.Document_ID) { %>       
-                                                                                         <a href="<%= doc.Document_Route %>" download><%= doc.Document_Name %></a> 
-                                                                                         <br>
-                                                                                      <% } %>
-                                                                                    <% } %> 
-                                                                                <% } %> 
-                                                                                <%}%>
-                                                                            </td>
-                                                                                         
-                                                                         </tr>
-                                                                    </tbody>
-                                                                    <% } %>     
-                                                                    <% } %>        
-                                                                </table>                                                                       
-                                                            </div>
+                                                        <div class="panel-body">  
+
+                                                            <% for (var measurement_act of dataK) { %> 
+                                                               
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= measurement_act.measurement_ID %>" aria-expanded="false" aria-controls="collapseTwo<%=  measurement_act.measurement_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
+
+                                                                 <%=measurement_act.measurement_Name %> - <%=measurement_act. activity_name%>
+
+                                                                 <div id="collapseTwo<%=  measurement_act.measurement_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                    <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
+
+                                                                        <table  class="table table-bordered" style="color: black; font-size: medium;">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Submission #</th>
+                                                                                    <th>Description of Submission</th> 
+                                                                                    
+                                                                                    <th>Status</th>
+                                                                                    <th>Submitted Documents</th>
+                                                                                </tr>
+                                                                            </thead> 
+                                                                            <% for (var submissions of dataF) { %> 
+                                                                                <%if (members.User_ID == submissions.user_ID ) {%>
+                                                                            <tbody>
+                                                                                <tr> 
+                                                                                    <td><%=submissions.pending_activities_auditID %></td> 
+                                                                                    <td><%=submissions.description%></td>
+                                                                                    
+                                                                                    <td> 
+                                                                                        <% if (submissions.status == 1) { %>
+                                                                                        Approved
+                                                                                        <% } else if (submissions.status == 2) { %>
+                                                                                        Disapproved 
+                                                                                        <% } %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <% for (var evi of dataD) { %> 
+                                                                                            <% for (var doc of dataC) { %>
+                                                                                            <% if (submissions.pending_ID == evi.pendingID) {%>
+                                                                                            <% if (submissions.activity_ID == evi.activityID && evi.documentID == doc.Document_ID) { %>       
+                                                                                                <a href="<%= doc.Document_Route %>" download><%= doc.Document_Name %></a> 
+                                                                                                <br>
+                                                                                            <% } %>
+                                                                                            <% } %> 
+                                                                                        <% } %> 
+                                                                                        <%}%>
+                                                                                    </td>
+                                                                                                
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            <% } %>     
+                                                                            <% } %>        
+                                                                        </table>  
+
+                                                                    </div> 
+                                                                 </div> 
+                                                                    
+                                                            <% } %>                                                                     
+                                                        </div>
                                                     </div>
                                                 
                                                 <!--End of Group 1 Table -->
