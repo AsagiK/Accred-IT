@@ -60,13 +60,13 @@
                         <div class="col-md-20 col-sm-20 col-xs-20">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content"> 
-                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                
                                   <!--PREVIOUS--> 
                                   <% for (var prevcycles of dataE) { %>
                                     <h2 style="color: black; font-size:x-large;">Previous Term Report from: <%=prevcycles.cycle_Name%></h2>
                                   <% } %>
                                     <!--view table for users-->
-                                    <table   class="smalltable table-bordered" style="color: black; font-size: medium;">
+                                    <table  id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
                                             
                                             <tr>
@@ -75,7 +75,8 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
-                                                <th>Progress</th>    
+                                                <th>Progress PREVIOUS</th>  
+                                                <th>Progress CURRENT</th>  
                                                 
   
                                             </tr>
@@ -139,6 +140,33 @@
                                                                 <% } %> 
 
                                                         </td>   
+                                                        
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %> 
+                                                                
+                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                     
+                                                                    <% var target = targets_audit.target %> 
+                                                                    
+                                                                    <% if ((targets_audit.progress >= target) && targets_audit.target_Type == 0) { %>
+                                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span><br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 0) { %> 
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 0) { %>
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                    <% } else if ((targets_audit.progress >= target) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } %>  
+
+                                                                <% }%>
+
+                                                            <% } %>
+
+                                                    </td>
                                                         <!--        
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON
@@ -155,7 +183,7 @@
                                             <% } %>
                                         </tbody>
                                     </table> 
-                                </div>
+                                
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                   <!--CURRENT --> 
                                   <%for (var cycles of data) {%>
