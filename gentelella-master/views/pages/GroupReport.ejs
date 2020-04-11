@@ -135,7 +135,7 @@
                                             
                                         
                                         <div class="x_content">
-
+                                            <% x %>
                                             <!-- start accordion    -->
                                             <% for(var members of dataB) { %> 
                                                 <%if (members.Group == current_user[0].Group) { %>
@@ -152,14 +152,14 @@
                                                             aria-labelledby="headingOne">
 
                                                         <div class="panel-body">  
-
+                                                            
                                                             <% for (var measurement_act of dataK) { %> 
                                                                
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
 
                                                                  <%=measurement_act.measurement_Name %> - <%=measurement_act. activity_name%>
 
-                                                                 <div id="collapseTwo<%=  measurement_act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                 <div id="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
 
                                                                         <table  class="table table-bordered" style="color: black; font-size: medium;">
@@ -208,7 +208,8 @@
                                                                     </div> 
                                                                  </div> 
                                                                     
-                                                            <% } %>                                                                     
+                                                            <% } %>  
+                                                            <% x++; %>                                                                   
                                                         </div>
                                                     </div>
                                                 
