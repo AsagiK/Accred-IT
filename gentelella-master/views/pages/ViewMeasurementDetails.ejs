@@ -404,6 +404,13 @@
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <button type="submit" class="btn btn-primary btn-sm">Assign Member</button>
                                                                                     </form>
+                                                                                    <form method="get" action="RemoveGroupMemberFromActivity">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= current_user[0].Group %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary btn-sm">Remove Member</button>
+                                                                                    </form>
                                                                                     <% } %>
 
                                                                                     

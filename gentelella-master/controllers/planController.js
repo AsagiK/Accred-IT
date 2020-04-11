@@ -2359,6 +2359,47 @@ module.exports = {
         }
     },
 
+    RemoveGroupMemberFromActivity: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var AID = req.query.AID;
+            var MID = req.query.MID;
+            var GID = req.query.GID;
+            var CID = req.query.CID;
+            //console.log("GROUP ID-------------------" + GID)
+            console.log("ACTIVITY ID-------------------" + AID)
+            var sql = "SELECT * FROM capstone.users JOIN capstone.group ON users.Group = group.Group_ID WHERE group.Group_ID = ?; SELECT * FROM capstone.approved_activities WHERE approved_activities.activity_ID = ?; SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?; SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; SELECT * FROM capstone.activity_members_members JOIN capstone.users ON activity_members_members.activity_member_member = users.User_ID WHERE users.Group = ? AND activity_ID = ?;"
+            var values = [GID, AID, MID, CID, GID, AID];
+            connection.query(sql, values, function (err, results, fields) {
+                if (err) throw err;
+                //console.log(results[1])
+                if (results) {
+                    resp.render('./pages/RemoveGroupMemberActivity.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataD: results[3],
+                        dataUsers: results[4],
+                        current_user: sess.user
+                    });
+                    console.log("Remove Group Member From Activity Page");
+                }
+            });
+        }
+    },
+
     AddFileToFolder: function (req, resp) {
         sess = req.session;
         var sessionchecksql = "SELECT * FROM capstone.sysvalues;"

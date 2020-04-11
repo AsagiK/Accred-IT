@@ -456,6 +456,119 @@ module.exports = {
         })
     },
 
+    RemoveActivityToMemberJSON: function (req, resp) {
+        sess = req.session;
+        var UID = req.body.table;
+        console.log(UID);
+        UID = JSON.parse(UID);
+        var an = req.body.AN;
+        async.forEachOf(UID, function (value, key, callback) {
+            var aid = UID[key]["Activity ID"];
+            var uid = UID[key]["User ID"];
+            var mid = UID[key]["Measurement ID"];
+            var uf = UID[key]["User First"];
+            var ul = UID[key]["User Last"];
+            var an = UID[key]["Activity Name"];
+            var mname = UID[key]["Measurement Name"]
+            var dead = UID[key]["Deadline"];
+            console.log("---------------------------------------------------------------------AID " + aid);
+            console.log(uid);
+            console.log(mid);
+            var sql = "DELETE FROM capstone.`activity_members_members` WHERE (`activity_ID` = ? && `activity_member_member` = ? && `measurement_ID` = ?);  ";
+            var values = [aid, uid, mid];
+            connection.query(sql, values, function (err, result) {
+                if (err) callback(err);
+                if (result) {
+                    var today = new Date();
+                    var current = today.toISOString().split('T')[0];
+                    var notifobject0 = {
+                        "body": uf + " " + ul + " has been removed from activity: " + an, //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": "0", //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject0);
+//==================================================================
+                    /*var trigger = new Date(dead);
+                    var trigdate = trigger.toISOString().split('T')[0];
+                    var notifobject = {
+                        "body": "Activity: " + an + " is due today", //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": sess.user[0].Group, //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": trigdate, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject);
+
+                    var daybefore = addSubtractDate.subtract(trigger, 1, "day");
+                    var beforetrig = daybefore.toISOString().split('T')[0];
+                    console.log(beforetrig);
+                    var notifobject2 = {
+                        "body": "Activity: " + an + " is due tomorrow", //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": sess.user[0].Group, //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": beforetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject2);
+
+                    var threedays = addSubtractDate.subtract(trigger, 2, "days");
+                    var threetrig = threedays.toISOString().split('T')[0];
+                    console.log(threetrig);
+                    var notifobject3 = {
+                        "body": "Activity: " + an + " is due in 3 days at:" + trigdate, //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": sess.user[0].Group, //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": threetrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject3);
+
+                    var sevendays = addSubtractDate.subtract(trigger, 4, "days");
+                    var seventrig = sevendays.toISOString().split('T')[0];
+                    console.log(seventrig);
+                    var notifobject4 = {
+                        "body": "Activity: " + an + " is due in 7 days at:" + trigdate, //message body, cannot be null
+                        "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                        "receiver": uid, //ID of receiver, in this case the user that was created
+                        "group": sess.user[0].Group, //Group ID taken from req session
+                        "range": "1", //range of notification, refer to the JSONcontroller
+                        "admin": "1", // 0 if admin does not need to be notified, else 1
+                        "sysadmin": "1", // same as above
+                        "triggerdate": seventrig, //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                    }
+                    Notif.CreateNotif(notifobject4);*/
+
+
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
+
+
     AddOutputsJSON: function (req, resp) {
         var UID = req.body.table;
         var MID = req.body.mid;
