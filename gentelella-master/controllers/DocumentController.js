@@ -19,7 +19,7 @@ try {
 
 var dir = 'public/uploads';
 
-if (!fs.existsSync(dir)){
+if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
 
@@ -48,6 +48,8 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 var mime = require('mime-types');
 var Notif = require('../controllers/NotifController')
 var sess
+const datefix = new Date()
+const offset = datefix.getTimezoneOffset()
 
 
 module.exports = {
@@ -373,7 +375,7 @@ module.exports = {
 
     SubmitReport: function (req, resp) {
         sess = req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -489,7 +491,7 @@ module.exports = {
 
     FinalReport: function (req, resp) {
         sess = req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -543,8 +545,8 @@ module.exports = {
             var description = req.body.subdesc;
             var MID = req.body.MID;
             var PID = req.body.PID;
-            console.log("--------------------------------------------------------------------------------------------------"  + req.body.FoldID)
-            console.log("--------------------------------------------------------------------------------------------------"  + req.body.FoldName)
+            console.log("--------------------------------------------------------------------------------------------------" + req.body.FoldID)
+            console.log("--------------------------------------------------------------------------------------------------" + req.body.FoldName)
 
             var count = 0;
             console.log(files.length);
@@ -856,7 +858,7 @@ module.exports = {
                 }
 
                 function addFolder(sql, values, folderid) {
-                    if (folderid) { 
+                    if (folderid) {
                         console.log(values);
                         connection.query(sql, values, function (err, result) {
                             if (err) throw err;
@@ -947,6 +949,7 @@ module.exports = {
                 inserttable(results.insertId);
                 inserttable2(results.insertId);
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "User " + sess.user[0].User_First + " " + sess.user[0].User_Last + " has submitted to activity: " + name + " Under Measurement: " + MNAME, //message body, cannot be null
@@ -1391,7 +1394,7 @@ module.exports = {
             console.log("Folder Created");
             resp.redirect('/ViewDocument');
         });
-        
+
 
     },
 

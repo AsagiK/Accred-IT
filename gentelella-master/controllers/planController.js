@@ -23,7 +23,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 // ----
 var sess;
-
+const datefix = new Date()
+const offset = datefix.getTimezoneOffset()
 module.exports = {
 
     Viewusers: function (req, resp) {
@@ -179,18 +180,18 @@ module.exports = {
         } else {
             var GUID = req.query.GUID; // GOAL ID 
             var TERN = req.query.TERM; // TERM NUM 
-            var PTERN = TERN - 1;      // GRABS PREVIOSU TERM NUM
+            var PTERN = TERN - 1; // GRABS PREVIOSU TERM NUM
             var CUID = req.query.CYCL; // GRABS CYCLE ID 
-            
+
             console.log("----------------------------------------------------------------------------------------------------------------GUID " + GUID);
             console.log("----------------------------------------------------------------------------------------------------------------TERN " + TERN);
             console.log("---------------------------------------------------------------------------------------------------------------PTERN " + PTERN);
             console.log("----------------------------------------------------------------------------------------------------------------CUID " + CUID);
-            
+
             var sql = "SELECT * FROM capstone.cycle WHERE goal_ID = (?) and termnum = (?);  SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle WHERE goal_ID = (?) and termnum = (?); SELECT * FROM capstone.measurement_audit; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit, capstone.cycle WHERE measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = cycle.cycle_ID AND cycle.goal_ID = (?) AND cycle.termnum = (?);"
             var values = [GUID, TERN, CUID, GUID, PTERN, GUID, PTERN]
-           
-            connection.query( sql,values,function (err, results, fields) {
+
+            connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/Comparativeanalysis.ejs', {
                     data: results[0],
@@ -202,7 +203,7 @@ module.exports = {
                     dataG: results[6],
                     current_user: sess.user
                 });
-                
+
             });
         }
 
@@ -224,18 +225,19 @@ module.exports = {
             console.log("Record Inserted");
 
             var today = new Date();
-                var current = today.toISOString().split('T')[0];
-                var notifobject = {
-                    "body": "Group: " + gn + " ,has been made", //message body, cannot be null
-                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                    "receiver": "0", //ID of receiver, in this case the user that was created
-                    "group": sess.user[0].Group, //Group ID taken from req session
-                    "range": "3", //range of notification, refer to the JSONcontroller
-                    "admin": "1", // 0 if admin does not need to be notified, else 1
-                    "sysadmin": "1", // same as above
-                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
-                }
-                Notif.CreateNotif(notifobject);
+            today = new Date(today.getTime() - (offset * 60 * 1000))
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": "Group: " + gn + " ,has been made", //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": "0", //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "3", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+            }
+            Notif.CreateNotif(notifobject);
 
 
         });
@@ -271,6 +273,7 @@ module.exports = {
 
                 //working example derived from the sample at jsoncontroller         
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "User " + fn + " " + ln + " has been created", //message body, cannot be null
@@ -528,18 +531,19 @@ module.exports = {
             console.log("Record Inserted");
 
             var today = new Date();
-                var current = today.toISOString().split('T')[0];
-                var notifobject = {
-                    "body": "Metric: " + metricName + " ,has been made", //message body, cannot be null
-                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                    "receiver": "0", //ID of receiver, in this case the user that was created
-                    "group": sess.user[0].Group, //Group ID taken from req session
-                    "range": "3", //range of notification, refer to the JSONcontroller
-                    "admin": "1", // 0 if admin does not need to be notified, else 1
-                    "sysadmin": "1", // same as above
-                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
-                }
-                Notif.CreateNotif(notifobject);
+            today = new Date(today.getTime() - (offset * 60 * 1000))
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": "Metric: " + metricName + " ,has been made", //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": "0", //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "3", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+            }
+            Notif.CreateNotif(notifobject);
 
             resp.redirect('/QualityMetric');
         });
@@ -569,18 +573,19 @@ module.exports = {
             console.log("Record Inserted");
 
             var today = new Date();
-                var current = today.toISOString().split('T')[0];
-                var notifobject = {
-                    "body": "Metric: " + metricName + " ,has been made added to Source", //message body, cannot be null
-                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
-                    "receiver": "0", //ID of receiver, in this case the user that was created
-                    "group": sess.user[0].Group, //Group ID taken from req session
-                    "range": "3", //range of notification, refer to the JSONcontroller
-                    "admin": "1", // 0 if admin does not need to be notified, else 1
-                    "sysadmin": "1", // same as above
-                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
-                }
-                Notif.CreateNotif(notifobject);
+            today = new Date(today.getTime() - (offset * 60 * 1000))
+            var current = today.toISOString().split('T')[0];
+            var notifobject = {
+                "body": "Metric: " + metricName + " ,has been made added to Source", //message body, cannot be null
+                "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                "receiver": "0", //ID of receiver, in this case the user that was created
+                "group": sess.user[0].Group, //Group ID taken from req session
+                "range": "3", //range of notification, refer to the JSONcontroller
+                "admin": "1", // 0 if admin does not need to be notified, else 1
+                "sysadmin": "1", // same as above
+                "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+            }
+            Notif.CreateNotif(notifobject);
 
             resp.redirect('/ViewMetricofSource?SID=' + source);
         });
@@ -1280,6 +1285,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycle: " + CNAME + " ,Plan Phase has started for Goal: " + GNAME, //message body, cannot be null
@@ -1309,6 +1315,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycle: " + CNAME + " ,Do Phase has started for Goal: " + GNAME, //message body, cannot be null
@@ -1338,6 +1345,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycle: " + CNAME + " ,Check Phase has started for Goal: " + GNAME, //message body, cannot be null
@@ -1367,6 +1375,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycle: " + CNAME + " ,Act Phase has started for Goal: " + GNAME, //message body, cannot be null
@@ -1397,6 +1406,7 @@ module.exports = {
             console.log(result);
             if (result) {
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycle: " + CNAME + " ,has ended for Goal: " + GNAME, //message body, cannot be null
@@ -2120,7 +2130,7 @@ module.exports = {
             var Year = req.query.Year;
             var sql = "SELECT *,  SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) as extractedyear FROM capstone.measurement_audit JOIN capstone.measurements_targets_audit JOIN capstone.cycle WHERE measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = cycle.cycle_ID AND cycle.termindex <= cycle.totalterm AND cycle.goal_ID = (?) AND SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) = (?) AND cycle.termindex = cycle.totalterm; SELECT * FROM capstone.cycle; SELECT *,  SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) as extractedyear FROM capstone.measurement_audit LEFT JOIN capstone.cycle on measurement_audit.cycle_ID = cycle.cycle_ID WHERE goal_ID = (?) AND SUBSTRING_INDEX(SUBSTRING_INDEX(cycle.cycle_Name ,' ', -4),' ', 1) = (?) AND cycle.termindex = cycle.totalterm;"
             console.log("ANNUAL REPORT TEST ---------------------------------------------------------------------" + GID);
-            var values = [GID,Year,GID,Year]
+            var values = [GID, Year, GID, Year]
 
             connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
@@ -2285,7 +2295,7 @@ module.exports = {
 
     EditActivities: function (req, resp) {
         sess = req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -2301,7 +2311,7 @@ module.exports = {
             var AID = req.query.AID;
             var CID = req.query.CID;
             var MID = req.query.MID;
-            var sql= "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?;";
+            var sql = "SELECT * FROM capstone.approved_activities WHERE activity_ID = (?); SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = ?; SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?;";
             var value = [AID, CID, MID];
             //console.log(AID);
             connection.query(sql, value, function (err, result, fields) {
@@ -2317,11 +2327,11 @@ module.exports = {
         }
 
 
-    }, 
+    },
 
-    AlterActivities: function (req, resp) { 
-        sess=req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+    AlterActivities: function (req, resp) {
+        sess = req.session;
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -2330,7 +2340,7 @@ module.exports = {
                 //console.log("session not destroyed");
             }
         })
-        if(!req.session.user) {
+        if (!req.session.user) {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
@@ -2352,15 +2362,15 @@ module.exports = {
                 if (result) {
                     resp.redirect('/ViewMeasurementDetails?MID=' + MID + '&CID=' + CID);
                 }
-            }); 
+            });
             console.log("ACTIVITY UPDATED");
         }
-        
-    }, 
 
-    CategorizeActivities: function (req, resp) { 
+    },
+
+    CategorizeActivities: function (req, resp) {
         sess = req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -2374,11 +2384,11 @@ module.exports = {
             resp.redirect('/login?status=0');
         } else {
             var CID = req.query.CID;
-            console.log(CID +"----------------------------------------------------------------------------------------------------------------CID");
+            console.log(CID + "----------------------------------------------------------------------------------------------------------------CID");
             var sql = "SELECT * FROM capstone.cycle WHERE cycle.cycle_ID = (?); SELECT * FROM capstone.measurement_audit order by measurement_audit.measurement_ID asc; SELECT * FROM capstone.measurement_audit join capstone.measurements_targets_audit on measurement_audit.measurement_auditID = measurements_targets_audit.measurements_auditID AND measurement_audit.cycle_ID = (?);  SELECT * FROM capstone.measurements_targets;"
             var values = [CID, CID]
-            console.log (CID);
-            connection.query( sql,values,function (err, results, fields) {
+            console.log(CID);
+            connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/CategorizeActivities.ejs', {
                     data: results[0],
@@ -2523,22 +2533,22 @@ module.exports = {
         } else {
             var MAID = req.query.MAID;
             var CYID = req.query.CYID;
-            console.log(" G R O U P   R E P O R T S --------------------------" +MAID);
+            console.log(" G R O U P   R E P O R T S --------------------------" + MAID);
             var sql = "SELECT measurements_activities.measurement_ID,approved_activities.activity_ID,approved_activities.activity_name,approved_activities.target,approved_activities.description FROM capstone.measurements_activities JOIN capstone.approved_activities WHERE measurements_activities.activity_ID = approved_activities.activity_ID AND measurements_activities.measurement_ID = (?); SELECT * FROM capstone.users; SELECT * FROM capstone.documents JOIN capstone.pending_activities_audit, capstone.activity_evidences WHERE capstone.activity_evidences.activityID = capstone.pending_activities_audit.activity_ID AND capstone.activity_evidences.pendingID = capstone.pending_activities_audit.pending_ID AND capstone.activity_evidences.documentID = capstone.documents.Document_ID; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets; SELECT * FROM pending_activities_audit; SELECT * FROM capstone.`group`; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.cycle WHERE cycle_ID= (?); SELECT *, concat(measurement_Name, ' - ', activity_name) as 'measurement-activity-name' from measurement join measurements_activities on measurement.measurement_ID = measurements_activities.measurement_ID join approved_activities on measurements_activities.activity_ID = approved_activities.activity_ID;"
             var values = [MAID, CYID]
-            console.log("GROUP REPORT TESTING ----------"+ MAID);
-            console.log(" GROUP REPORT TESTING ----------"+ CYID);
-            connection.query( sql,values,function (err, results, fields) {
+            console.log("GROUP REPORT TESTING ----------" + MAID);
+            console.log(" GROUP REPORT TESTING ----------" + CYID);
+            connection.query(sql, values, function (err, results, fields) {
                 if (err) throw err;
                 resp.render('./pages/GroupReport.ejs', {
-                    data: results[0], 
+                    data: results[0],
                     dataB: results[1],
-                    dataC: results[2],   
-                    dataD: results[3],   
-                    dataE: results[4],  
-                    dataF: results[5],  
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    dataF: results[5],
                     dataG: results[6],
-                    dataH: results[7],      
+                    dataH: results[7],
                     dataI: results[8],
                     dataJ: results[9],
                     dataK: results[10],
@@ -2550,7 +2560,7 @@ module.exports = {
 
     EditTargetDeadline: function (req, resp) {
         sess = req.session;
-                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
         connection.query(sessionchecksql, function (err, result) {
             if (result[0].inmaintenance == 1) {
                 sess.destroy();
@@ -2565,7 +2575,7 @@ module.exports = {
         } else {
             var GID = req.query.GID;
             var MID = req.query.MID;
-            var sql= "SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?; SELECT * FROM capstone.measurements_targets WHERE measurements_targets.measurementID = ?; SELECT * FROM capstone.cycle WHERE cycle.goal_ID = ? ORDER BY termnum ASC;";
+            var sql = "SELECT * FROM capstone.measurement WHERE measurement.measurement_ID = ?; SELECT * FROM capstone.measurements_targets WHERE measurements_targets.measurementID = ?; SELECT * FROM capstone.cycle WHERE cycle.goal_ID = ? ORDER BY termnum ASC;";
             var value = [MID, MID, GID];
             //console.log(AID);
             connection.query(sql, value, function (err, result, fields) {
@@ -2581,5 +2591,5 @@ module.exports = {
         }
 
 
-    }, 
+    },
 }

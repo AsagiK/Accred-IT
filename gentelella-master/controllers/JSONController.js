@@ -21,6 +21,8 @@ server.use(session({
 }));
 // ----
 var sess;
+const datefix = new Date()
+const offset = datefix.getTimezoneOffset()
 
 module.exports = {
 
@@ -41,6 +43,7 @@ module.exports = {
                     callback();
 
                     var today = new Date();
+                    today = new Date(today.getTime() - (offset * 60 * 1000))
                     var current = today.toISOString().split('T')[0];
                     var notifobject = {
                         "body": "User " + fn + " " + ln + " has been assigned to Group", //message body, cannot be null
@@ -68,37 +71,37 @@ module.exports = {
             }
         })
     },
-    
+
     EditGroupMemberJSON: function (req, resp) {
-	        var UID = req.body.table;
-	        UID = JSON.parse(UID);
-	        async.forEachOf(UID, function (value, key, callback) {
-	            var gid = UID[key]["Group ID"];
-	            var uid = UID[key]["User ID"];
-	            
-	            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ? && `Groupdetails_UserID` = ?);";
-	            var values = [uid, gid, uid];
-	            console.log(values);
-	            connection.query(sql, values, function (err, result) {
-	                if (err){
-	                    console.log(err);
-	                    callback(err);
-	                } 
-	                if (result) {
-	                    console.log(result);
-	                    callback();
-	                }
-	            });
-	        }, function (err) {
-	            if (err) {
-	                console.log("Failed");
-	                resp.send("Not OK")
-	            } else {
-	                console.log("Passed");
-	                resp.send("OK");
-	            }
-	        })
-	    },
+        var UID = req.body.table;
+        UID = JSON.parse(UID);
+        async.forEachOf(UID, function (value, key, callback) {
+            var gid = UID[key]["Group ID"];
+            var uid = UID[key]["User ID"];
+
+            var sql = "UPDATE `capstone`.`users` SET `Group` = NULL WHERE (`User_ID` = ?); DELETE FROM `capstone`.`groupdetails` WHERE (`Groupdetails_ID` = ? && `Groupdetails_UserID` = ?);";
+            var values = [uid, gid, uid];
+            console.log(values);
+            connection.query(sql, values, function (err, result) {
+                if (err) {
+                    console.log(err);
+                    callback(err);
+                }
+                if (result) {
+                    console.log(result);
+                    callback();
+                }
+            });
+        }, function (err) {
+            if (err) {
+                console.log("Failed");
+                resp.send("Not OK")
+            } else {
+                console.log("Passed");
+                resp.send("OK");
+            }
+        })
+    },
 
     AssignTaskJSON: function (req, resp) {
         var UID = req.body.table;
@@ -269,6 +272,7 @@ module.exports = {
                         } else {
                             console.log("Passed");
                             var today = new Date();
+                            today = new Date(today.getTime() - (offset * 60 * 1000))
                             var current = today.toISOString().split('T')[0];
                             var notifobject5 = {
                                 "body": "Activities have been added to Measurement/s " + mname, //message body, cannot be null
@@ -319,6 +323,7 @@ module.exports = {
                 if (err) callback(err);
                 if (result) {
                     var today = new Date();
+                    today = new Date(today.getTime() - (offset * 60 * 1000))
                     var current = today.toISOString().split('T')[0];
                     var notifobject = {
                         "body": gn + " has been assigned to activity: " + an, //message body, cannot be null
@@ -369,6 +374,7 @@ module.exports = {
                 if (err) callback(err);
                 if (result) {
                     var today = new Date();
+                    today = new Date(today.getTime() - (offset * 60 * 1000))
                     var current = today.toISOString().split('T')[0];
                     var notifobject0 = {
                         "body": uf + " " + ul + " has been assigned to activity: " + an, //message body, cannot be null
@@ -381,7 +387,7 @@ module.exports = {
                         "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
                     }
                     Notif.CreateNotif(notifobject0);
-//==================================================================
+                    //==================================================================
                     var trigger = new Date(dead);
                     var trigdate = trigger.toISOString().split('T')[0];
                     var notifobject = {
@@ -480,6 +486,7 @@ module.exports = {
                 if (err) callback(err);
                 if (result) {
                     var today = new Date();
+                    today = new Date(today.getTime() - (offset * 60 * 1000))
                     var current = today.toISOString().split('T')[0];
                     var notifobject0 = {
                         "body": uf + " " + ul + " has been removed from activity: " + an, //message body, cannot be null
@@ -492,7 +499,7 @@ module.exports = {
                         "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
                     }
                     Notif.CreateNotif(notifobject0);
-//==================================================================
+                    //==================================================================
                     /*var trigger = new Date(dead);
                     var trigdate = trigger.toISOString().split('T')[0];
                     var notifobject = {
@@ -586,7 +593,7 @@ module.exports = {
             connection.query(sql, values, function (err, result) {
                 if (err) callback(err);
                 if (result) {
-                    createfolder(an ,result.insertId, eo)
+                    createfolder(an, result.insertId, eo)
                     callback();
                 }
             });
@@ -602,7 +609,7 @@ module.exports = {
 
         function createfolder(activityname, id, outputname) {
             var FolderName = (activityname);
-            if (FolderName.length > 50){
+            if (FolderName.length > 50) {
                 FolderName = FolderName.substr(0, 49) + "...";
             }
             var OutputName = outputname;
@@ -701,6 +708,7 @@ module.exports = {
                         console.log("Passed");
                         resp.send("OK");
                         var today = new Date();
+                        today = new Date(today.getTime() - (offset * 60 * 1000))
                         var current = today.toISOString().split('T')[0];
                         var notifobject = {
                             "body": "Measurement: " + mname + " ,has been created for Goal: " + GNAME, //message body, cannot be null
@@ -748,6 +756,7 @@ module.exports = {
                 console.log("Passed");
                 resp.send("OK");
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Achievement has been declared for Measurement: " + mname, //message body, cannot be null
@@ -811,7 +820,7 @@ module.exports = {
                     var beforetrig = daybefore.toISOString().split('T')[0];
                     console.log(beforetrig);
                     var notifobject2 = {
-                        "body": "Cycle " + cn + " for goal: " + gname +  " is due tomorrow", //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname + " is due tomorrow", //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -826,7 +835,7 @@ module.exports = {
                     var threetrig = threedays.toISOString().split('T')[0];
                     console.log(threetrig);
                     var notifobject3 = {
-                        "body": "Cycle " + cn + " for goal: " + gname +  " is due in 3 days at:" + trigdate, //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname + " is due in 3 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -841,7 +850,7 @@ module.exports = {
                     var seventrig = sevendays.toISOString().split('T')[0];
                     console.log(seventrig);
                     var notifobject4 = {
-                        "body": "Cycle " + cn + " for goal: " + gname +  " is due in 7 days at:" + trigdate, //message body, cannot be null
+                        "body": "Cycle " + cn + " for goal: " + gname + " is due in 7 days at:" + trigdate, //message body, cannot be null
                         "sender": sess.user[0].User_ID, //ID of sender taken from req session
                         "receiver": "0", //ID of receiver, in this case the user that was created
                         "group": "1", //Group ID taken from req session
@@ -862,6 +871,7 @@ module.exports = {
                 console.log("Passed");
                 resp.send("OK");
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Cycles have been created for Goal: " + gname, //message body, cannot be null
@@ -894,6 +904,7 @@ module.exports = {
                 console.log("Record Inserted");
                 insertdatatypes(result.insertId);
                 var today = new Date();
+                today = new Date(today.getTime() - (offset * 60 * 1000))
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
                     "body": "Source has been created at name: " + sname, //message body, cannot be null
@@ -948,6 +959,7 @@ module.exports = {
         // insert actual route stuff here, when it succeeds initialize the variables on the bottom      
         //        
         var today = new Date();
+        today = new Date(today.getTime() - (offset * 60 * 1000))
         var current = today.toISOString().split('T')[0];
         var notifobject = {
             "body": "test notify all", //message body, cannot be null
@@ -976,7 +988,7 @@ module.exports = {
             var did = DID[key]["Document ID"];
             var fid = DID[key]["Folder ID"];
             var fn = DID[key]["Folder Name"];
-            
+
             var sql = "INSERT INTO `capstone`.`folder_documents` (`folder_id`, `document_id`, `folder_name`) VALUES (? , ?, ?); ";
             var values = [fid, did, fn];
             connection.query(sql, values, function (err, result) {
@@ -1031,7 +1043,7 @@ module.exports = {
                 //    "sender": sess.user[0].User_ID, //ID of sender taken from req session
                 //    "receiver": "0", //ID of receiver, in this case the user that was created
                 //    "group": sess.user[0].Group, //Group ID taken from req session
-               //     "range": "1", //range of notification, refer to the JSONcontroller
+                //     "range": "1", //range of notification, refer to the JSONcontroller
                 //    "admin": "1", // 0 if admin does not need to be notified, else 1
                 //    "sysadmin": "1", // same as above
                 //    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
