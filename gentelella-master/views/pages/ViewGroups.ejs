@@ -182,7 +182,7 @@
                                                                             <table class="table table-bordered">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>#</th>
+                                                                                        <th style="display: none;">#</th>
                                                                                         <th>First Name</th>
                                                                                         <th>Last Name</th>
                                                                                         <th>Username</th>
@@ -198,7 +198,7 @@
                                                                                     <tr>
 
                                                                                         <% if (user.Groupdetails_Position == "Member") { %>
-                                                                                        <td><%= user.User_ID %></td>
+                                                                                        <td style="display: none;"><%= user.User_ID %></td>
                                                                                         <td><%= user.User_First %></td>
                                                                                         <td><%= user.User_Last %></td>
                                                                                         <td><%= user.username %></td>
@@ -207,7 +207,7 @@
                                                                                         <td><%= user.Groupdetails_Position %>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <% if (current_user[0].role == 1 || current_user[0].role == 2 || current_user[0].role == 3) { %>
+                                                                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                                             <form method="post" action="makeLeader">
                                                                                                 <input type="hidden" name="UID" value="<%= user.User_ID %>">
                                                                                                 <input type="hidden" name="GID" value="<%= group.Group_ID %>">
@@ -216,7 +216,7 @@
                                                                                             </form>
                                                                                             <% } %>
                                                                                             <% } else { %>
-                                                                                        <td><strong><%= user.User_ID %></strong></td>
+                                                                                        <td style="display: none;"><strong><%= user.User_ID %></strong></td>
                                                                                         <td><strong><%= user.User_First %></strong></td>
                                                                                         <td><strong><%= user.User_Last %></strong></td>
                                                                                         <td><strong><%= user.username %></strong></td>
@@ -225,7 +225,7 @@
                                                                                         <td><strong><%= user.Groupdetails_Position %></strong>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <% if (current_user[0].role == 1 || current_user[0].role == 2 || current_user[0].role == 3) { %>
+                                                                                            <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                                             <form method="post" action="makeMember">
                                                                                                 <input type="hidden" name="UID" value="<%= user.User_ID %>">
                                                                                                 <input type="hidden" name="GID" value="<%= group.Group_ID %>">
