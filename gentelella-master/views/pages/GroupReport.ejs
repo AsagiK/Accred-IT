@@ -154,7 +154,8 @@
                                                         <div class="panel-body">  
                                                             
                                                             <% for (var measurement_act of dataK) { %> 
-                                                               
+                                                               <% for (var actmember of dataH) { %> 
+                                                                <% if (measurement_act.activity_ID == actmember.activity_ID && members.User_ID == actmember.activity_member_member) { %>
                                                                 <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
 
                                                                  <%=measurement_act.measurement_Name %> - <%=measurement_act. activity_name%>
@@ -207,7 +208,8 @@
                                                                         
                                                                     </div> 
                                                                  </div> 
-                                                                    
+                                                                    <% } %>
+                                                                <% } %>
                                                             <% } %>  
                                                             <% x++; %>                                                                   
                                                         </div>
