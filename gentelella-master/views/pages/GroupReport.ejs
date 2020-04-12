@@ -155,6 +155,7 @@
                                                             
                                                             <% for (var measurement_act of dataK) { %> 
                                                                <% for (var actmember of dataH) { %> 
+                                                                
                                                                 <% if (measurement_act.activity_ID == actmember.activity_ID && members.User_ID == actmember.activity_member_member) { %>
                                                                 <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
 
@@ -174,7 +175,7 @@
                                                                                 </tr>
                                                                             </thead> 
                                                                             <% for (var submissions of dataF) { %> 
-                                                                                <%if (members.User_ID == submissions.user_ID ) {%>
+                                                                                <%if (members.User_ID == submissions.user_ID && measurement_act.activity_ID == submissions.activity_ID) {%>
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td><%=members.User_ID %></td> 
@@ -209,7 +210,8 @@
                                                                         
                                                                     </div> 
                                                                  </div> 
-                                                                    <% } %>
+                                                                    <% } %> 
+                                                                    
                                                                 <% } %>
                                                             <% } %>  
                                                             <% x++; %>                                                                   
