@@ -1270,6 +1270,8 @@ module.exports = {
 
     planPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var CNAME = (req.body.CNAME);
+        var GNAME = (req.body.GNAME);
         var status = "0"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1277,6 +1279,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Cycle: " + CNAME + " ,Plan Phase has started for Goal: " + GNAME, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "5", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
                 resp.redirect('/QualityMetric');
             }
         });
@@ -1284,6 +1299,8 @@ module.exports = {
 
     doPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var CNAME = (req.body.CNAME);
+        var GNAME = (req.body.GNAME);
         var status = "1"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1291,6 +1308,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Cycle: " + CNAME + " ,Do Phase has started for Goal: " + GNAME, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "5", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
                 resp.redirect('/QualityMetric');
             }
         });
@@ -1298,6 +1328,8 @@ module.exports = {
 
     checkPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var CNAME = (req.body.CNAME);
+        var GNAME = (req.body.GNAME);
         var status = "2"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1305,6 +1337,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Cycle: " + CNAME + " ,Check Phase has started for Goal: " + GNAME, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "5", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
                 resp.redirect('/ProgressPage');
             }
         });
@@ -1312,6 +1357,8 @@ module.exports = {
 
     actPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var CNAME = (req.body.CNAME);
+        var GNAME = (req.body.GNAME);
         var status = "3"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1319,6 +1366,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Cycle: " + CNAME + " ,Act Phase has started for Goal: " + GNAME, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "5", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
                 resp.redirect('/QualityMetric');
             }
         });
@@ -1327,6 +1387,8 @@ module.exports = {
 
     endPhase: function (req, resp) {
         var CID = (req.body.CID);
+        var CNAME = (req.body.CNAME);
+        var GNAME = (req.body.GNAME);
         var status = "4"
         var sql = "Update capstone.cycle set status = ? where cycle_ID = ? ";
         var values = [status, CID];
@@ -1334,6 +1396,19 @@ module.exports = {
             if (err) throw err;
             console.log(result);
             if (result) {
+                var today = new Date();
+                var current = today.toISOString().split('T')[0];
+                var notifobject = {
+                    "body": "Cycle: " + CNAME + " ,has ended for Goal: " + GNAME, //message body, cannot be null
+                    "sender": sess.user[0].User_ID, //ID of sender taken from req session
+                    "receiver": "0", //ID of receiver, in this case the user that was created
+                    "group": sess.user[0].Group, //Group ID taken from req session
+                    "range": "5", //range of notification, refer to the JSONcontroller
+                    "admin": "1", // 0 if admin does not need to be notified, else 1
+                    "sysadmin": "1", // same as above
+                    "triggerdate": current //leave to this to trigger notif instantly, otherwise provide a date in format YYYY-MM-DD
+                }
+                Notif.CreateNotif(notifobject);
                 resp.redirect('/QualityMetric');
             }
         });

@@ -445,6 +445,8 @@
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Do Phase</button>
                                                                         </form>
 
@@ -457,12 +459,16 @@
                                                                         <% } else if (cycles.status  == 1) { %>
                                                                         <form action="checkPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Check Phase</button>
 
                                                                         </form>
 
                                                                         <form action="planPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Plan Phase</button>
 
                                                                         </form>
@@ -471,23 +477,31 @@
                                                                         <% } else if (cycles.status  == 2) { %>
                                                                         <form action="actPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Act Phase</button>
 
                                                                         </form>
 
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Do Phase</button>
                                                                         </form>
 
                                                                         <% } else if (cycles.status  == 3) { %>
                                                                         <form action="endPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">End Cycle</button>
 
                                                                         </form>
                                                                         <form action="checkPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Check Phase</button>
                                                                         </form>
 
