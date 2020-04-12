@@ -257,6 +257,9 @@
                                                         <input type="hidden" id="MID" name="MID"
                                                             value="<%= data[0].measurement_ID %>"
                                                             class="form-control col-md-7 col-xs-12">
+                                                        <input type="hidden" id="MNAME" name="MNAME"
+                                                            value="<%= data[0].measurement_Name %>"
+                                                            class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" id="target" value="<%= data[0].target %>"
                                                             class="form-control col-md-7 col-xs-12">
                                                         <input type="hidden" name="code" id="code"
@@ -458,6 +461,7 @@
                     var code = document.getElementById("code").value;
                     var description = document.getElementById("subdesc").value;
                     var MID = document.getElementById("MID").value;
+                    var MNAME = document.getElementById("MNAME").value;
                     var UID = document.getElementById("UID").value;
                     var target = document.getElementById("target").value;
                     var score = document.getElementById("score").value;
@@ -487,7 +491,7 @@
                     };
 
 
-                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID + "&FoldID=" + FoldID + "&FoldName=" + FoldName);
+                    xhr.send("table=" + table + "&AID=" + AID + "&name=" + name + "&code=" + code + "&description=" + description + "&MID=" + MID + "&MNAME=" + MNAME + "&target=" + target + "&score=" + score + "&UID=" + UID + "&CID=" + CID + "&table2=" + table2 + "&TID=" + TID + "&FoldID=" + FoldID + "&FoldName=" + FoldName);
 
                 });
 
