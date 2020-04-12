@@ -63,10 +63,7 @@
     <%= notif.msg %>
 </div>
 <%}else{%>
-<div class="alert">
-    <span class="closebtn">&times;</span>
-    <%= notif.msg %>
-</div>
+
 <%}%>
 <%}%>
 <style>
@@ -161,7 +158,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3 style="color: #dddddd;">Quality Management</h3>
+                <h3 style="color: #dddddd;">Quality Metrics</h3>
             </div>
         </div>
     </div>
@@ -183,7 +180,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" id="gid" name="gid" class="form-control col-md-7 col-xs-12" />
-                                    <input type="" id="Gname" name="Gname" class="form-control col-md-7 col-xs-12" />
+                                    <input type="hidden" id="Gname" name="Gname" class="form-control col-md-7 col-xs-12" />
                                     <label for="cycleName">Goal Duration(in years):<span class="required">*</span>
                                     </label>
                                     <div>
@@ -873,7 +870,14 @@
                 </script>
 
 
-
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" id="backsuccesscycle" style="display: none;">Hi</button>
+                </form>
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" style="display: none;" id="backfailcycle">Hi</button>
+                </form>
                 
 
 
@@ -1220,13 +1224,13 @@
                         });
 
                             function backsuccess() {
-                                var button = document.getElementById('backsuccess');
+                                var button = document.getElementById('backsuccesscycle');
                                 button.click();
 
                             };
 
                             function backfail() {
-                                var button = document.getElementById('backfail');
+                                var button = document.getElementById('backfailcycle');
                                 button.click();
 
                             };
