@@ -63,10 +63,7 @@
     <%= notif.msg %>
 </div>
 <%}else{%>
-<div class="alert">
-    <span class="closebtn">&times;</span>
-    <%= notif.msg %>
-</div>
+
 <%}%>
 <%}%>
 <style>
@@ -873,7 +870,14 @@
                 </script>
 
 
-
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" id="backsuccesscycle" style="display: none;">Hi</button>
+                </form>
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" style="display: none;" id="backfailcycle">Hi</button>
+                </form>
                 
 
 
@@ -1220,13 +1224,13 @@
                         });
 
                             function backsuccess() {
-                                var button = document.getElementById('backsuccess');
+                                var button = document.getElementById('backsuccesscycle');
                                 button.click();
 
                             };
 
                             function backfail() {
-                                var button = document.getElementById('backfail');
+                                var button = document.getElementById('backfailcycle');
                                 button.click();
 
                             };
