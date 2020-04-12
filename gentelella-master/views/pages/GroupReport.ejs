@@ -175,7 +175,8 @@
                                                                             <% for (var submissions of dataF) { %> 
                                                                                 <%if (members.User_ID == submissions.user_ID ) {%>
                                                                             <tbody>
-                                                                                <tr> 
+                                                                                <tr>
+                                                                                    <td><%=members.User_ID %></td> 
                                                                                     <td><%=submissions.pending_activities_auditID %></td> 
                                                                                     <td><%=submissions.description%></td>
                                                                                     
