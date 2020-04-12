@@ -68,7 +68,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Measurment Name</th>
-                                            <th>Cycle Name</th>
+                                            
                                             <th>Target</th> 
 
                                             <th>Achievements</th>
@@ -84,8 +84,7 @@
                                             <tr>
                                                 <td width="10%" scope="row"><%= measurements.measurement_ID %></td>
                                                 <td width="30%"><%= measurements.measurement_Name %></td>
-                                                <td width="10%"> <%= measurements.cycle_Name%>
-                                                </td>
+                                                
                                                 <td width="10%"> 
                                                     <% for (var report of data) { %> 
                                                     <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
