@@ -152,16 +152,16 @@
                                                             aria-labelledby="headingOne">
 
                                                         <div class="panel-body">  
-                                                            
+                                                            <% y = 0 %>
                                                             <% for (var measurement_act of dataK) { %> 
                                                                <% for (var actmember of dataH) { %> 
                                                                 
                                                                 <% if (measurement_act.activity_ID == actmember.activity_ID && members.User_ID == actmember.activity_member_member) { %>
-                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
+                                                                <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= y %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%= y %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
 
                                                                  <%=measurement_act.measurement_Name %> - <%=measurement_act. activity_name%>
 
-                                                                 <div id="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                 <div id="collapseTwo<%= x %><%= y %><%=  measurement_act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
                                                                         
                                                                         <table  class="table table-bordered" style="color:  #dddddd; font-size: medium;">
@@ -178,7 +178,7 @@
                                                                                 <%if (members.User_ID == submissions.user_ID && measurement_act.activity_ID == submissions.activity_ID) {%>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><%=members.User_ID %></td> 
+                                                                                    
                                                                                     <td><%=submissions.pending_activities_auditID %></td> 
                                                                                     <td><%=submissions.description%></td>
                                                                                     
@@ -204,7 +204,8 @@
                                                                                                 
                                                                                 </tr>
                                                                             </tbody>
-                                                                            <% } %>     
+                                                                            <% } %>
+                                                                            <% y++ %>     
                                                                             <% } %>        
                                                                         </table>  
                                                                         
