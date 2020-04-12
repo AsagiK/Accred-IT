@@ -154,15 +154,16 @@
                                                         <div class="panel-body">  
                                                             
                                                             <% for (var measurement_act of dataK) { %> 
-                                                               
+                                                               <% for (var actmember of dataH) { %> 
+                                                                <% if (measurement_act.activity_ID == actmember.activity_ID && members.User_ID == actmember.activity_member_member) { %>
                                                                 <li class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= x %><%= measurement_act.activity_ID %>" aria-expanded="false" aria-controls="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" style="color: black"> <span class="fa fa-chevron-down"></span> 
 
                                                                  <%=measurement_act.measurement_Name %> - <%=measurement_act. activity_name%>
 
                                                                  <div id="collapseTwo<%= x %><%=  measurement_act.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                                     <div class="panel-body" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: black;">
-
-                                                                        <table  class="table table-bordered" style="color: black; font-size: medium;">
+                                                                        
+                                                                        <table  class="table table-bordered" style="color:  #dddddd; font-size: medium;">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Submission #</th>
@@ -205,10 +206,11 @@
                                                                             <% } %>     
                                                                             <% } %>        
                                                                         </table>  
-
+                                                                        
                                                                     </div> 
                                                                  </div> 
-                                                                    
+                                                                    <% } %>
+                                                                <% } %>
                                                             <% } %>  
                                                             <% x++; %>                                                                   
                                                         </div>
