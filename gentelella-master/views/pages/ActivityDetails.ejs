@@ -170,7 +170,7 @@
                                                         <textarea id="subdesc" name="subdesc" required="required"
                                                             class="form-control col-md-7 col-xs-12"
                                                             onkeyup="textAreaAdjust(this)" style="overflow:hidden"
-                                                            placeholder="Report Description"></textarea>
+                                                            placeholder="Report Description" required></textarea>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -205,7 +205,7 @@
                                                             Achievement: </label></td>
                                                     <td>
                                                         <input type="number" name="score" id="score" value=""
-                                                            placeholder="Suggested Progress"> 
+                                                            placeholder="Suggested Progress" required> 
                                                             <% for (var target of dataTargets) { %>
                                                                 <% if (target.target_ID == data[0].target) { %>
                                                                     <% if (target.target_Type == 0) { %>
