@@ -150,7 +150,7 @@
                                             </thead>
                                             <tbody>
                                             <% for (var subs of dataPending) { %>
-                                                <% if (subs.activity_ID == activity.activity_ID) { %>
+                                                <% if (subs.activity_ID == activity.activity_ID && subs.status==1) { %>
                                               <tr>
                                                 <td><%= subs.User_First %> <%= subs.User_Last %></td>
                                                 <td>

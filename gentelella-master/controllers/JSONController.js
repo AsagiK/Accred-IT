@@ -730,7 +730,7 @@ module.exports = {
         var mname = req.body.mname
         console.log(MID);
         async.forEachOf(UID, function (value, key, callback) {
-            var prog = UID[key]["Progress"];
+            var prog = UID[key]["Achievement"];
             var tid = UID[key]["TargetID"];
             var sql = "Update capstone.measurements_targets set measurements_targets.progress = ? where measurements_targets.target_ID = ? && measurements_targets.measurementID = ?;";
             var values = [prog, tid, MID];
