@@ -730,7 +730,7 @@ module.exports = {
         var mname = req.body.mname
         console.log(MID);
         async.forEachOf(UID, function (value, key, callback) {
-            var prog = UID[key]["Progress"];
+            var prog = UID[key]["Achievement"];
             var tid = UID[key]["TargetID"];
             var sql = "Update capstone.measurements_targets set measurements_targets.progress = ? where measurements_targets.target_ID = ? && measurements_targets.measurementID = ?;";
             var values = [prog, tid, MID];
@@ -750,7 +750,7 @@ module.exports = {
                 var today = new Date();
                 var current = today.toISOString().split('T')[0];
                 var notifobject = {
-                    "body": "Progress has been declared for Measurement: " + mname, //message body, cannot be null
+                    "body": "Achievement has been declared for Measurement: " + mname, //message body, cannot be null
                     "sender": sess.user[0].User_ID, //ID of sender taken from req session
                     "receiver": "0", //ID of receiver, in this case the user that was created
                     "group": sess.user[0].Group, //Group ID taken from req session
