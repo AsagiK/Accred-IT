@@ -642,7 +642,7 @@
                                                                                 <% } else { %>
                                                                                 <% for (var measurement of dataE) { %>
                                                                                     <% for (var activitycount of dataL) { %>
-                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID) { %>
+                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID && measurement.priority_Level != 0) { %>
                                                                                 <tr>
 
                                                                                     <td style="display:none;"><%= measurement.measurement_ID %>
