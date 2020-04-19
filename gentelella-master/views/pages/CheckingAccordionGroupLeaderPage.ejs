@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Checking Page For Group Leaders</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="assets/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="assets/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body">
+        <div class="main_container" style="background-color: #232931;">
+            <%- include ./nav.ejs %> 
+            <!-- page content -->
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div class="clearfix"></div>
+                <div role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+
+                                <h3 style="color: #dddddd;">Checking Submissions Page for Group Leaders</h3> 
+                                <a class="btn btn-primary" href="/QualityMetrics">Go Back Goals</a>
+
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
+                                    <div class="x_content">
+
+                                            
+                                            <% for (var goals of data) { %>
+                                                <!-- start accordion    --> 
+                                                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                                    <div class="panel">
+                                                      <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%=goals.metric_ID %>" aria-expanded="true" aria-controls="collapseOne<%=goals.metric_ID %>">
+                                                        <h4 class="panel-title"><%= goals.metric_Name %></h4>
+                                                      </a>
+                                                      <div id="collapseOne<%=goals.metric_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                        <div class="panel-body">
+                                                            <% for (var cycle of dataCycle) { %>
+                                                            <% for (var measure of dataB) { %> 
+                                                                <% if(cycle.goal_ID == goals.metric_ID && measure.cycle_ID == cycle.cycle_ID) { %>
+                                                                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true"> 
+                                                                    <div class="panel" style="background-color: #C0C0C0; border-color: #C0C0C0; border-radius: 8px;"> <!--PANEL FOR GOAL-->
+                                                                        <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapseTwo<%= measure.measurement_ID %>">
+                                                                            <h4 class="panel-title"> 
+                                                                                <!--MEAASUREMENT NAME-->
+                                                                                MEASUREMENT NAME:  <%= measure.measurement_Name %> 
+                                                                            </h4>
+                            
+                                                                        </a>      
+                    
+                                                                        
+                    
+                                                                        <div id="collapseTwo<%= measure.measurement_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" style="border-color: #393e46;border-radius: 8px;">
+                                                                            <input type="hidden" name="GID" value="<%= measure.measurement_ID %>">   
+                                                                            
+                                                                            <br>
+                                                                            <% for (var activity of dataC) { %>
+                                                                                <% for (var measure_Activity of dataF) { %>
+                                                                                <% if (activity.activity_ID == measure_Activity.activity_ID && measure_Activity.measurement_ID == measure.measurement_ID) { %>
+                                                                             
+                                                                            <div class="panel-body">
+                                                                                <!--Group 1 table-->
+                            
+                                                                                <div class="panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px; color: #0E1111;"> <!--PANEL FOR ACTIVITIES-->
+                            
+                                                                                    <a class="panel-heading" role="tab" id="HeadGroupOne" data-toggle="collapse" data-parent="#headingOne" href="#collapses<%= activity.activity_ID %>" aria-expanded="true" aria-controls="collapses<%= activity.activity_ID %>">
+                                                                                        <h3 class="panel-title">
+                                                                                            Activity: <%= activity.activity_name %> 
+                                                                                        </h3>
+                                                                                    </a>
+                                                                                    <div id="collapses<%= activity.activity_ID %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="HeadGroupOne">
+                                                                                        <input type="hidden" name="MID" value="<%= activity.activity_ID %>">
+                                                                                        <br>
+                                                                                        <table style="background-color: white;" class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>Activity Description</td>
+                                                                                                    <td><%= activity.description %></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Target linked to Activity: </td>
+                                                                                                    <td>
+                                                                                                        <% for (var target of dataTargets) { %>
+                                                                                                            <% if (target.target_ID == activity.target) { %>
+                                                                                                                
+                                                                                                                <%= target.target %> 
+                                                                                                                <% if (target.target_Type == 0) { %>
+                                                                                                                %
+                                                                                                                <% } else { %>
+                                                                                                                #
+                                                                                                                <% } %> 
+                                                                                                                - <%= target.target_Desc %>
+                                                                                                            <% } %>
+                                                                                                        <% } %>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Expected Outputs</td>
+                                                                                                    <td>
+                                                                                                        <% for (outputs of dataG) { %>
+                                                                                                            <% if (outputs.activity_ID == activity.activity_ID) { %>
+                                                                                                                - <%= outputs.output %> <br>
+                                                                                                            <% } %>
+                                                                                                        <% } %>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Assigned Groups</td>
+                                                                                                    <td>
+                                                                                                        <% for (var groups of dataGroups) { %>
+                                                                                                            <% for (var assignedgroup of dataAssignedgroup) { %>
+                                                                                                                <% if (assignedgroup.activity_ID == activity.activity_ID && assignedgroup.activity_Member == groups.Group_ID) { %>
+                                                                                                                    <h5><b><%= groups.Group_Name %>:<br></b></h5>
+                    
+                                                                                                                    <% for (users of dataUsers) { %>
+                    
+                                                                                                                        <% for(assignedmembers of dataAssignedusers) { %>
+                                                                                                                            <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activity.activity_ID) { %>
+                                                                                                                                -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                                                
+                                                                                                                            <% } %>
+                                                                                                                        <% } %>
+                    
+                                                                                                                    <% } %>
+                    
+                                                                                                                <% } %>
+                                                                                                            <% } %>
+                                                                                                        <% } %>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        <br>
+                        
+                                                                                                    <table style="background-color: white;" class="table table-bordered">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th>Submitted By</th>
+                                                                                                                    <th>Submission Description</th> 
+                                                                                                                    <th>Selected Outputs</th> 
+                                                                                                                    <th>Suggested Progress</th> 
+                                                                                                                    <th></th>
+                                                                                                                    
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                <% for (var subs of dataPending) { %>
+                                                                                                                    
+                                                                                                                <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
+                                                                                                                
+                                                                                                                <tr>
+                                                                                                                    <!-- MEASUREMENT TABLE :  -->
+                                                                                                                    <td> <%= subs.User_First %> <%= subs.User_Last %></td>
+                                                                                                                    <td> <%= subs.description %> </td>
+                                                                                                                    <td>
+                                                                                                                        <% for (pendingoutputs of dataH) { %>
+                                                                                                                            <% for (outputs2 of dataG) { %>
+                                                                                                                                <% if (pendingoutputs.pendingID == subs.pending_ID && pendingoutputs.outputID == outputs2.output_ID) { %> 
+                                                                                                                                - <%= outputs2.output %> <br>
+                                                                                                                                <% } %>
+                                                                                                                            <% } %>
+                                                                                                                        <% } %>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <% for (var target of dataTargets) { %>
+                                                                                                                            <% if (target.target_ID == subs.target) { %>
+                                                                                                                                
+                                                                                                                                <%= subs.suggested_Score %> 
+                                                                                                                                <% if (target.target_Type == 0) { %>
+                                                                                                                                %
+                                                                                                                                <% } else { %>
+                                                                                                                                #
+                                                                                                                                <% } %> 
+                                                                                                                                
+                                                                                                                            <% } %>
+                                                                                                                        <% } %>
+                                                                                                                         
+                                                                                                                        
+                                                                                                                    </td>
+                                                                                                                    <td>  
+                                                                                                                        <form method="get" action="ViewActivityEvidencesGroupLeaderPage">
+                                                                                                                            <input type="text" name="PID"
+                                                                                                                                value="<%= subs.pending_ID %>" style="display: none;">
+                                                                                                                            <button type="submit" class="btn btn-primary">View
+                                                                                                                                Evidence
+                                                                                                                            </button>
+                                                                                                                        </form>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                   
+                                                                                                                <% } %>
+                                                                                                                   
+                                                                                                                <% } %>
+                                            
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                            
+                                                                                            
+                                                                                    </div> 
+                                                                                    
+                                                                                    
+                                                                                </div> 
+                                                                                
+                                                                            </div>
+                            
+                                                                            <!--End of Group 1 Table -->
+                                                                            <% } %>
+                                                                            <% } %> 
+                                                                            <% } %>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <% } %>
+                                                                <% } %>
+                                                                <% } %>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                  </div>
+                                                  <!-- end of accordion -->
+                                            <% } %>
+                                            
+                                        </div>  
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /page content -->
+
+
+
+                    <!-- footer content -->
+                    <footer style="background-color: #232931;">
+                        <div class="pull-right">
+                            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+                </div>
+            </div>
+
+            <!script for dynamic text area>
+        <script>
+            function textAreaAdjust(o) {
+                o.style.height = "1px";
+                o.style.height = (25 + o.scrollHeight) + "px";
+            }
+
+        </script>
+
+            <!-- jQuery -->
+            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            <!-- Bootstrap -->
+            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- FastClick -->
+            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+            <!-- NProgress -->
+            <script src="assets/vendors/nprogress/nprogress.js"></script>
+            <!-- bootstrap-progressbar -->
+            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+            <!-- iCheck -->
+            <script src="assets/vendors/iCheck/icheck.min.js"></script>
+            <!-- bootstrap-daterangepicker -->
+            <script src="assets/vendors/moment/min/moment.min.js"></script>
+            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- bootstrap-wysiwyg -->
+            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+            <!-- jQuery Tags Input -->
+            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+            <!-- Switchery -->
+            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+            <!-- Select2 -->
+            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+            <!-- Parsley -->
+            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+            <!-- Autosize -->
+            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+            <!-- jQuery autocomplete -->
+            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+            <!-- starrr -->
+            <script src="assets/vendors/starrr/dist/starrr.js"></script>
+            <!-- Custom Theme Scripts -->
+            <script src="assets/build/js/custom.min.js"></script>
+
+</body>
+
+</html>

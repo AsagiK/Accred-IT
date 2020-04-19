@@ -57,16 +57,18 @@ router.route('/QualityMetrics').get(planCtrl.QualityMetric);
 router.route('/EditMeasurement').get(planCtrl.EditMeasurement);
 router.route('/UpdateMeasurement').post(planCtrl.UpdateMeasurement);
 router.route('/AuditMeasurement').post(planCtrl.AuditMeasurement); 
-router.route('/ViewActivitiesUnderMeasurement').post(planCtrl.ViewActivitiesUnderMeasurement);
+router.route('/ViewActivitiesUnderMeasurement').get(planCtrl.ViewActivitiesUnderMeasurement);
 router.route('/BackToMeasurement').get(planCtrl.BackToMeasurement); 
-router.route('/AnnualReport').post(planCtrl.AnnualReport); 
+router.route('/AnnualReport').get(planCtrl.AnnualReport); 
 
 //ACTIVITY ROUTES
 router.route('/AssignActivityToMember').get(planCtrl.Assignactivitytomember);
-router.route('/AlterActivities').get(planCtrl.EditActivities);
+router.route('/EditActivity').get(planCtrl.EditActivities);
 router.route('/AlterActivities').post(planCtrl.AlterActivities);
-router.route('/CategorizeActivities').post(planCtrl.CategorizeActivities);
-
+router.route('/CategorizeActivities').get(planCtrl.CategorizeActivities);
+router.route('/AssignActivityToGroupMember').get(planCtrl.AssignActivityToGroupMember);
+router.route('/GroupReport').get(planCtrl.GroupReport);
+router.route('/RemoveGroupMemberFromActivity').get(planCtrl.RemoveGroupMemberFromActivity);
 
 //CYCLE ROUTES
 router.route('/addcycle').post(planCtrl.addcycle);
@@ -79,8 +81,7 @@ router.route('/actPhase').post(planCtrl.actPhase);
 router.route('/endPhase').post(planCtrl.endPhase);
 
 
-router.route('/ViewDocument').get(planCtrl.ViewDocument);
-router.route('/UploadDocument').get(planCtrl.UploadDocument);
+
 router.route('/ActivityDetails').get(planCtrl.ActivityDetails);
 router.route('/ActivityPendingDetails').get(planCtrl.ActivityPendingDetails);
 
@@ -91,6 +92,8 @@ router.route('/AssignTaskJSON').post(JSONCtrl.AssignTaskJSON);
 router.route('/AddGradesJSON').post(JSONCtrl.AddGradesJSON);
 router.route('/AddActivitiesJSON').post(JSONCtrl.AddActivitiesJSON);
 router.route('/AssignActivityJSON').post(JSONCtrl.AssignActivityJSON);
+router.route('/AssignActivityToMemberJSON').post(JSONCtrl.AssignActivityToMemberJSON);
+router.route('/RemoveActivityToMemberJSON').post(JSONCtrl.RemoveActivityToMemberJSON);
 router.route('/AddOutputsJSON').post(JSONCtrl.AddOutputsJSON);
 router.route('/AssignActivitiesToMeasurementJSON').post(JSONCtrl.AssignActivitiesToMeasurementJSON);
 router.route('/AddMeasurementsJSON').post(JSONCtrl.AddMeasurementsJSON);
@@ -98,6 +101,8 @@ router.route('/AssignProgressJSON').post(JSONCtrl.AssignProgressJSON);
 router.route('/AddCyclesJSON').post(JSONCtrl.AddCyclesJSON);
 router.route('/CreateSourcesJSON').post(JSONCtrl.CreateSourcesJSON);
 router.route('/TestNotif').post(JSONCtrl.TestNotif);
+router.route('/AddfilestofoldersJSON').post(JSONCtrl.AddfilestofoldersJSON);
+router.route('/AssignTargetDeadlineJSON').post(JSONCtrl.AssignTargetDeadlineJSON);
 
 //==NotifCtrl==
 router.route('/CreateNotif').post(NotifCtrl.CreateNotif);
@@ -116,6 +121,9 @@ router.route('/TestingJSON').post(DocCtrl.TestingJSON);
 router.route('/UpdateDocumentsJSON').post(DocCtrl.UpdateDocumentsJSON);
 router.route('/CreateFolder').post(DocCtrl.CreateFolder);
 router.route('/PickerUploadJSON').post(DocCtrl.PickerUploadJSON);
+router.route('/ViewDocument').get(planCtrl.ViewDocument);
+router.route('/UploadDocument').get(planCtrl.UploadDocument);
+router.route('/AddFilesToFolder').get(planCtrl.AddFileToFolder);
 
 //--SessCtrl
 router.route('/RegisterAdminPage').post(SessCtrl.RegisterAdminPage);
@@ -153,10 +161,16 @@ router.route('/Comparativeanalysis').get(planCtrl.Comparativeanalysis);
 router.route('/Comparativeanalysis2').get(planCtrl.Comparativeanalysis2);
 router.route('/ActionPlan').get(planCtrl.ActionPlan);
 router.route('/home').get(planCtrl.Dashboards);
+router.route('/EditTargetDeadline').get(planCtrl.EditTargetDeadline);
 
 
 router.route('/CheckingAccordionPage').get(CheckCtrl.CheckingAccordionPage);
+router.route('/CheckingAccordionGroupLeaderPage').get(CheckCtrl.CheckingAccordionGroupLeaderPage);
+router.route('/CheckingAccordionGroupTestPage').get(CheckCtrl.CheckingAccordionGroupTestPage);
+
 router.route('/ViewActivityEvidences').get(CheckCtrl.ViewActivityEvidences);
+router.route('/ViewActivityEvidencesGroupLeaderPage').get(CheckCtrl.ViewActivityEvidencesGroupLeaderPage);
+
 router.route('/ProgressPage').get(CheckCtrl.ProgressPage);
 router.route('/ProgressDetailsPage').get(CheckCtrl.ProgressDetailsPage);
 

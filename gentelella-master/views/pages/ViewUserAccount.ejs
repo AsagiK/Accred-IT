@@ -62,19 +62,82 @@ table, th, td {
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-
-                            <h3 style="color: #dddddd;">View Submissions</h3>
-
+                            <% if (current_user[0].isleader == 0) { %> 
+                            <h3 style="color: #dddddd;">View Submissions </h3>
+                            <% } else { %>
+                                <h3 style="color: #dddddd;">View Submissions and Group </h3>
+                            <% } %>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
+                <% if(current_user[0].isleader == 1) { %>
+                <% for (var Group of dataGroup) { %>
+                    <% if(current_user[0].Group == Group.Group_ID) { %>
+                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel">
+                      <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h4 class="panel-title"><%= Group.Group_Name %></h4>
+                      </a>
+                      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                        
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Group Member</th>
+                                <th>Group Position</th>
+                                <th>Activity/s</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                                <% for (var users of dataUsers) { %>
+                                    <% if (users.Group == Group.Group_ID && users.Groupdetails_ID == Group.Group_ID) { %>
+                                    <tr>
+                                        <td><%= users.User_First %> <%= users.User_Last %></td>
+                                        <td><%= users.Groupdetails_Position %></td>
+                                        <td>
+                                            <% for (var activity of dataActivity) { %>
+                                                <% for (var assignedAct of dataAssigneduser) { %>
+                                                    <% if (users.User_ID == assignedAct.activity_member_member && assignedAct.activity_ID == activity.activity_ID) { %>
+                                                    <%= activity.activity_name %> <br>
+                                                    <% } %>
+                                                <% } %>
+                                            <% } %>
+                                        </td>
+                                        
+                                    </tr>
+                                    <% } %>
+                                <% } %>
+
+                                
+
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <% } %>
+                <% } %>
+                <% } %>
+                <div class="clearfix"></div>
+
+                <div class="title_left">
+                    
+                        <h3 style="color: #dddddd;">All Submissions </h3>
+                    
+                </div>
+
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel" style="background-color: #eeeeee; border-color: #eeeeee;  border-radius: 8px;">
                             <div class="x_content">
                                 <br />
-
+                                
                                 <!--view table for all submissions-->
                                 <table id="datatable-fixed-header" class="table table-bordered" style="background-color: whitesmoke; height: 100%; width: 100%;">
                                     <thead>
@@ -102,6 +165,8 @@ table, th, td {
                                                     <td>Pending</td>
                                                 <% } else if(submission.status == 1) { %> 
                                                     <td>Approved</td>
+                                                <% } else if(submission.status == 3) { %> 
+                                                    <td>Waiting for Department Chair Approval</td>
                                                 <% } else { %>
                                                     <td>Disapproved</td>
                                                 <% } %>

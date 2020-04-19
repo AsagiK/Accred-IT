@@ -47,8 +47,14 @@
                             <div class="x_panel" style="background-color: #393e46; border-color: #393e46;  border-radius: 8px;">
                               
                                 <div class="x_content">
+                                    <form method="GET" action="AddFilesToFolder">
+                                      <input style="display:none;" name="FID" value="<%= dataC[0].Document_ID %>">
+                                      <button style="display:inline-block;" class="btn btn-primary" type="submit">Add Files to Folder </button>
+                                    </form>
 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".UploadEvidence">Upload Evidence</button>
+
+                                    
 
                                   <!--MODAL FOR UPLOADING OF EVIDENCES-->
                                   <div class="modal fade UploadEvidence" tabindex="-1" role="dialog" aria-hidden="true">
@@ -70,6 +76,8 @@
                                                 <!--First name Input field-->
                                                 <input style="display:none;" type="text" id="FoldID" name="FoldID" required="required"
                                                     class="form-control col-md-7 col-xs-12" value="<%= dataC[0].Document_ID %>">
+                                                    <input style="display:none;" type="text" id="FoldName" name="FoldName" required="required"
+                                                    class="form-control col-md-7 col-xs-12" value="<%= dataC[0].Document_Name %>">
                                             </div>
                                         </div>
                                         <div class="form-group">

@@ -215,8 +215,7 @@
                         })
                     });
 
-                    $( document ).ready(function() {
-                        event.preventDefault();
+                    $("#btnsubmit2").click(function(event) {
 
                         $.ajax({
                             url: "/GetNotif",
@@ -228,9 +227,12 @@
 
                             success: function(data) {
                                 var wew = data[0];
-                                for(var i = 0; i <= wew.length; i++)
-                                {
-                                    console.log(wew[i].message);
+                                for(var usernotifs of wew){
+                                    console.log(usernotifs.message)
+                                }
+                                wew = data[1];
+                                for(var usernotifs of wew){
+                                    console.log(usernotifs.message)
                                 }
                                 
                             },

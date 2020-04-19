@@ -261,7 +261,7 @@ module.exports = {
             console.log("No session")
             resp.redirect('/login?status=0');
         } else {
-            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; ", function (err, results, fields) {
+            connection.query("SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.cycle;", function (err, results, fields) {
             if (err) throw err;
             if(results){
 
@@ -274,10 +274,63 @@ module.exports = {
                     dataF: results[5],
                     dataG: results[6],
                     dataH: results[7],
+                    dataGroup: results[8],
+                    dataAssignedgroup: results[9],
+                    dataUsers: results[10],
+                    dataAssignedusers: results[11],
+                    dataTargets: results[12],
+                    dataCycle: results[13],
                     current_user: sess.user
                 });
                 console.log(results);
                 console.log("Checking Accordion Page loaded");
+
+            }
+            });
+        }
+    }, 
+
+    CheckingAccordionGroupLeaderPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var sql = "SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.groupdetails; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.cycle; SELECT users.User_ID, User_First, User_Last, email_address, users.Role, users.Group, ContactNo, username, isleader, Groupdetails_ID, Groupdetails_UserID, Groupdetails_Position, pending_ID, activity_ID, activity_name, target, code, description, measurement_ID, current_Score, status, suggested_Score, dateupdated, active,comment, cycle_ID FROM users join groupdetails on users.User_ID = groupdetails.Groupdetails_UserID join pending_activities on users.User_ID = pending_activities.user_ID where users.Group = ?;"
+            var values = [sess.user[0].Group]
+            connection.query(sql ,values, function (err, results, fields) {
+            if (err) throw err;
+            if(results){
+
+                resp.render('./pages/CheckingAccordionGroupLeaderPage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    dataF: results[5],
+                    dataG: results[6],
+                    dataH: results[7],
+                    dataGroups: results[8],
+                    dataGroupDetails: results[9],
+                    dataAssignedgroup: results[10],
+                    dataUsers: results[11],
+                    dataAssignedusers: results[12],
+                    dataTargets: results[13],
+                    dataCycle: results[14],
+                    dataPending: results[15],
+                    current_user: sess.user
+                });
+                console.log("Checking Accordion Group Leader Page loaded" + sess.user[0].Group);
 
             }
             });
@@ -302,7 +355,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences;  SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -310,6 +363,41 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
+                        dataTargets: results[3],
+                        current_user: sess.user
+                    })
+                }
+            });
+        }
+    }, 
+
+    ViewActivityEvidencesGroupLeaderPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var id = (req.query.PID);
+            console.log(id);
+            var values = [id];
+            connection.query("SELECT * FROM capstone.pending_activities where pending_activities.pending_ID=(?); SELECT * FROM capstone.documents; SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.measurements_targets;", values, function (err, results) {
+                if (err) throw err;
+                if (results){
+                console.log(results);
+                    resp.render('./pages/ViewActivityEvidencesGroupLeaderPage.ejs', {
+                        data: results[0],
+                        dataB: results[1],
+                        dataC: results[2],
+                        dataTargets: results[3],
                         current_user: sess.user
                     })
                 }
@@ -335,7 +423,7 @@ module.exports = {
             var id = (req.query.PID);
             console.log(id);
             var values = [id];
-            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle;", values, function (err, results) {
+            connection.query("SELECT * FROM capstone.measurement; SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.group; SELECT * FROM capstone.cycle; SELECT * FROM capstone.metric;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results);
@@ -343,7 +431,8 @@ module.exports = {
                         data: results[0],
                         dataB: results[1],
                         dataC: results[2],
-                        dataD: results[3],
+                        dataCycle: results[3],
+                        dataGoal: results[4],
                         current_user: sess.user
                     })
                 }
@@ -368,8 +457,8 @@ module.exports = {
         } else {
             var id = (req.query.MID);
             console.log(id+ "------------------------------------------------------------------------");
-            var values = [id, id, id];
-            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents join activity_evidences on documents.Document_ID = activity_evidences.documentID join pending_activities on activity_evidences.pendingID = pending_activities.pending_ID join approved_activities on pending_activities.activity_ID = approved_activities.activity_ID join measurements_activities on approved_activities.activity_ID = measurements_activities.activity_ID join measurement  on measurement.measurement_ID = measurements_activities.measurement_ID where pending_activities.status = 1 && pending_activities.active = 1 && measurement.measurement_ID = ?;", values, function (err, results) {
+            var values = [id, id, id, id];
+            connection.query("SELECT * FROM capstone.measurement WHERE measurement_ID=(?); SELECT * FROM capstone.measurements_targets WHERE measurementID=(?); SELECT * FROM capstone.group; SELECT * FROM capstone.documents join activity_evidences on documents.Document_ID = activity_evidences.documentID join pending_activities on activity_evidences.pendingID = pending_activities.pending_ID join approved_activities on pending_activities.activity_ID = approved_activities.activity_ID join measurements_activities on approved_activities.activity_ID = measurements_activities.activity_ID join measurement  on measurement.measurement_ID = measurements_activities.measurement_ID where pending_activities.status = 1 && pending_activities.active = 1 && measurement.measurement_ID = ?; SELECT * FROM capstone.approved_activities JOIN capstone.measurements_activities ON approved_activities.activity_ID = measurements_activities.activity_ID WHERE measurements_activities.measurement_ID = ?;SELECT * FROM capstone.measurements_targets; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID WHERE pending_activities.status = 1;", values, function (err, results) {
                 if (err) throw err;
                 if (results){
                 console.log(results[1]);
@@ -378,10 +467,59 @@ module.exports = {
                         dataB: results[1],
                         dataC: results[2],
                         dataD: results[3],
-                        
+                        dataActivity: results[4],
+                        dataTargets: results[5],
+                        dataPending: results[6],
                         current_user: sess.user
                     })
                 }
+            });
+        }
+    }, 
+
+    CheckingAccordionGroupTestPage: function (req, resp) {
+        sess = req.session;
+                var sessionchecksql = "SELECT * FROM capstone.sysvalues;"
+        connection.query(sessionchecksql, function (err, result) {
+            if (result[0].inmaintenance == 1) {
+                sess.destroy();
+                console.log("session destroyed");
+            } else {
+                //console.log("session not destroyed");
+            }
+        })
+        if (!req.session.user) {
+            console.log("No session")
+            resp.redirect('/login?status=0');
+        } else {
+            var sql = "SELECT * FROM capstone.metric; SELECT * FROM capstone.measurement; SELECT * FROM capstone.approved_activities;SELECT * FROM capstone.activity_evidences; SELECT * FROM capstone.pending_activities JOIN capstone.users ON pending_activities.user_ID = users.User_ID; SELECT * FROM capstone.measurements_activities; SELECT * FROM capstone.activity_outputs; SELECT * FROM capstone.pending_outputs; SELECT * FROM capstone.group; SELECT * FROM capstone.activity_members; SELECT * FROM capstone.users; SELECT * FROM capstone.activity_members_members; SELECT * FROM capstone.measurements_targets;SELECT * FROM capstone.cycle; SELECT users.User_ID, User_First, User_Last, email_address, users.Role, users.Group, ContactNo, username, isleader, Groupdetails_ID, Groupdetails_UserID, Groupdetails_Position, pending_ID, activity_ID, activity_name, target, code, description, measurement_ID, current_Score, status, suggested_Score, dateupdated, active,comment, cycle_ID FROM users join groupdetails on users.User_ID = groupdetails.Groupdetails_UserID join pending_activities on users.User_ID = pending_activities.user_ID where users.Group = ?;"
+            var values = [sess.user[0].Group]
+            connection.query(sql, values, function (err, results, fields) {
+            if (err) throw err;
+            if(results){
+
+                resp.render('./pages/testingcheckinggrouppage.ejs', {
+                    data: results[0],
+                    dataB: results[1],
+                    dataC: results[2],
+                    dataD: results[3],
+                    dataE: results[4],
+                    dataF: results[5],
+                    dataG: results[6],
+                    dataH: results[7],
+                    dataGroup: results[8],
+                    dataAssignedgroup: results[9],
+                    dataUsers: results[10],
+                    dataAssignedusers: results[11],
+                    dataTargets: results[12],
+                    dataCycle: results[13],
+                    dataPending: results[14],
+                    current_user: sess.user
+                });
+                console.log(results);
+                console.log("testing page for checking group leader");
+
+            }
             });
         }
     }, 

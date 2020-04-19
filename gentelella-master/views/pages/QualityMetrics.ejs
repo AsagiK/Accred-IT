@@ -63,10 +63,7 @@
     <%= notif.msg %>
 </div>
 <%}else{%>
-<div class="alert">
-    <span class="closebtn">&times;</span>
-    <%= notif.msg %>
-</div>
+
 <%}%>
 <%}%>
 <style>
@@ -161,7 +158,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3 style="color: #dddddd;">Quality Management</h3>
+                <h3 style="color: #dddddd;">Quality Metrics</h3>
             </div>
         </div>
     </div>
@@ -183,7 +180,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" id="gid" name="gid" class="form-control col-md-7 col-xs-12" />
-
+                                    <input type="hidden" id="Gname" name="Gname" class="form-control col-md-7 col-xs-12" />
                                     <label for="cycleName">Goal Duration(in years):<span class="required">*</span>
                                     </label>
                                     <div>
@@ -331,7 +328,7 @@
                                                 Goal ID: <span class="required">*</span></label>-->
                                         <!--Edited-->
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            
+                                            <input type="hidden" id="GName" name="GName" required="required" class="form-control col-md-7 col-xs-12">
                                             <input type="hidden" id="GoalID" name="GoalID" required="required" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
@@ -374,7 +371,7 @@
                                                             <!--BUTTON AND MODAL FOR CREATION CYCLES -->
                                                             <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3) { %>
                                                                 <%if (goals.cycle_Created==0){%>
-                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" >Create Cycles</button>
+                                                                    <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" data-book-id2="<%= goals.metric_Name %>" >Create Cycles</button>
                                                                 <%}else{%>
                                                                     <button class="btn btn-primary" href="#my_modalCYCLE" data-toggle="modal" data-book-id="<%= goals.metric_ID %>" style="display: none;">Create Cycles</button>
                                                                 <%}%>
@@ -448,24 +445,30 @@
                                                                         <% if(cycles.status  == 0) { %>
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Do Phase</button>
                                                                         </form>
 
                                                                         
 
                                                                         <!--BUTTON FOR CALLING MODAL OF CREATE MEASUREMENT-->
-                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>">Create
+                                                                        <button class="btn btn-primary" href="#my_modalCreateMeasures" data-toggle="modal" data-book-id="<%=cycles.cycle_ID%>" data-book-id2="<%=cycles.goal_ID%>" data-book-id3="<%= goals.metric_Name %>">Create
                                                                             Measurement</button>
 
                                                                         <% } else if (cycles.status  == 1) { %>
                                                                         <form action="checkPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Check Phase</button>
 
                                                                         </form>
 
                                                                         <form action="planPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Plan Phase</button>
 
                                                                         </form>
@@ -474,23 +477,31 @@
                                                                         <% } else if (cycles.status  == 2) { %>
                                                                         <form action="actPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Start Act Phase</button>
 
                                                                         </form>
 
                                                                         <form action="doPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Do Phase</button>
                                                                         </form>
 
                                                                         <% } else if (cycles.status  == 3) { %>
                                                                         <form action="endPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">End Cycle</button>
 
                                                                         </form>
                                                                         <form action="checkPhase" method="post">
                                                                             <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
+                                                                            <input type="hidden" name="CNAME" value="<%= cycles.cycle_Name %>">
+                                                                            <input type="hidden" name="GNAME" value="<%= goals.metric_Name %>">
                                                                             <button class="btn btn-default" type="submit">Back to Check Phase</button>
                                                                         </form>
 
@@ -499,12 +510,6 @@
                                                                             Measurement</button>
                                                                         <% } %>
                                                                         <% } %>
-
-
-
-                                                                        
-
-
                                                                         <!-- MEASUREMENTS LOOP PART-->
 
                                                                         <table id="" class="display" style="background-color: white; height: 100%; width: 100%;">
@@ -512,14 +517,14 @@
                                                                             <thead>
 
                                                                                 <tr>
-                                                                                    <th>ID</th>
+                                                                                    <th style="display:none;">ID</th>
                                                                                     <th>Measurement Name</th>
                                                                                     <th>Measurement Description</th>
                                                                                     <th>Priority Level</th>
                                                                                     <th>Quality Target</th>
                                                                                     <% if (cycles.status == 4 || cycles.status == 3) { %>
+                                                                                        <th># of Activities</th>
                                                                                         <th>Progress</th>
-                                                                                        <th></th>
                                                                                         <th></th>
                                                                                     <% } else { %>
                                                                                     <th># of Activities</th>
@@ -532,56 +537,115 @@
                                                                             </thead>
                                                                             <tbody> 
                                                                                 <!--TERMLY REPORT VIEW-->
-                                                                                <% if (cycles.status == 4 && cycles.termindex != cycles.totalterm) { %>
+                                                                                <% if (cycles.status == 4 && cycles.termindex != cycles.totalterm == 1 && current_user[0].isleader == 0) { %>
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
                                                                                             <td>
                                                                                                  <!-- VIEW TERM REPORT BUTTON-->
-                                                                                            <form id="categorizeactivities" method="post" action="CategorizeActivities">
+                                                                                            <form id="categorizeactivities~<%= cycles.cycle_ID %>" method="get" action="CategorizeActivities">
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
+                                                                                            </form> 
+                                                                                            
+                                                                                            <form id="comparativereport~<%=cycles.cycle_ID%>" method="get" action="Comparativeanalysis">
+                                                                                                <input type="hidden" name="CYCL" value="<%= cycles.cycle_ID %>">
+                                                                                                <input type="hidden" name="GUID" value="<%=cycles.goal_ID%>">
+                                                                                                <input type="hidden" name="TERM" value="<%=cycles.termnum%>">
+                                                                                                <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.cycle_ID %>"> View Comparative Report</button>
                                                                                             </form>
                                                                                             </td>
                                                                                                 <td style="display: none;"></td>
                                                                                         </tr>
                                                                                         <% } %>
                                                                                     <% } %> 
-                                                                                    <!--ANNUAL REPORT-->
-                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm) { %> 
+                                                                                        <!--ANNUAL REPORT-->      
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm && current_user[0].isleader == 0) { %> 
                                                                                     <% for (var measure_audit of dataI) { %>
                                                                                         <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
                                                                                             <tr>
-                                                                                            <td><%= measure_audit.measurement_ID %>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
                                                                                             </td>
                                                                                             <td><%= measure_audit.measurement_Name %>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <!-- VIEW TERM REPORT BUTTON-->
-                                                                                            <form id="categorizeactivities" method="get" action="CategorizeActivities">
+                                                                                            <form id="categorizeactivities~<%= cycles.cycle_ID %>" method="get" action="CategorizeActivities">
                                                                                                 <input type="hidden" name="CID" value="<%= cycles.cycle_ID %>">
-                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities"> View Term Report</button>
+                                                                                                <button type="submit" class="btn btn-primary" form="categorizeactivities~<%= cycles.cycle_ID %>"> View Term Report</button>
                                                                                             </form>
                                                                                                 <!--VIEW ANNUAL REPORT BUTTON-->
-                                                                                            <form id="annualreport" method="post" action="AnnualReport">
-                                                                                                    <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                                                                    <button type="submit" class="btn btn-primary" form="annualreport">View Annual Report</button> 
-                                                                                                </form>
+                                                                                            <form id="annualreport~<%= measure_audit.measurement_auditID %>" method="get" action="AnnualReport">
+                                                                                                    <input type="hidden" name="GID" value="<%= cycles.goal_ID %>"> 
+                                                                                                    <% var Year=cycles.cycle_Name.substr(5, 1) %>
+                                                                                                    <input type="hidden" name="Year" value="<%= Year %>"> 
+                                                                                                    <button type="submit" class="btn btn-primary" form="annualreport~<%= measure_audit.measurement_auditID %>">View Annual Report</button> 
+                                                                                            </form> 
+
+                                                                                            <form id="comparativereport~<%=cycles.goal_ID%>" method="get" action="Comparativeanalysis">
+                                                                                                <input type="hidden" name="CYCL" value="<%= cycles.cycle_ID %>">
+                                                                                                <input type="hidden" name="GUID" value="<%=cycles.goal_ID%>">
+                                                                                                <input type="hidden" name="TERM" value="<%=cycles.termnum%>">
+                                                                                                <button type="submit" class="btn btn-primary" form="comparativereport~<%= cycles.goal_ID %>"> View Comparative Report</button>
+                                                                                            </form>
                                                                                             </td>
                                                                                         </tr>
                                                                                         <% } %>
-                                                                                    <% } %>
+                                                                                    <% } %> 
+                                                                                    <!--GROUP REPORT-->
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex != cycles.totalterm && current_user[0].isleader == 1) { %>
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td style="display:none;" ><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                             
+                                                                                                <!--VIEW GROUP REPORT -->
+                                                                                            <form id="groupreport~<%= measure_audit.measurement_ID%>" method="get" action="GroupReport">
+                                                                                                <input type="hidden" name="MAID" value="<%= measure_audit.measurement_ID%>">
+                                                                                                <input type="hidden" name="CYID" value="<%=cycles.cycle_ID%>">
+                                                                                                <button type="submit" class="btn btn-primary" form="groupreport~<%= measure_audit.measurement_ID%>"> View Group Report</button>
+                                                                                            </form>
+                                                                                            </td>
+                                                                                                <td style="display: none;"></td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                    <% } %> 
+                                                                                <% } else if (cycles.status == 4 && cycles.termindex == cycles.totalterm && current_user[0].isleader == 1) { %>
+                                                                                    <% for (var measure_audit of dataI) { %>
+                                                                                        <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                                                                            <tr>
+                                                                                            <td style="display:none;"><%= measure_audit.measurement_ID %>
+                                                                                            </td>
+                                                                                            <td><%= measure_audit.measurement_Name %>
+                                                                                            </td>
+                                                                                            <td>
+                                    
+                                                                                                <!--VIEW GROUP REPORT -->
+                                                                                            <form id="groupreport~<%= measure_audit.measurement_ID%>" method="get" action="GroupReport">
+                                                                                                <input type="hidden" name="MAID" value="<%= measure_audit.measurement_ID%>">
+                                                                                                <input type="hidden" name="CYID" value="<%=cycles.cycle_ID%>">
+                                                                                                <button type="submit" class="btn btn-primary" form="groupreport~<%= measure_audit.measurement_ID%>"> View Group Report</button>
+                                                                                            </form>
+                                                                                            </td>
+                                                                                                <td style="display: none;"></td>
+                                                                                        </tr>
+                                                                                        <% } %>
+                                                                                    <% } %> 
                                                                                 <% } else { %>
                                                                                 <% for (var measurement of dataE) { %>
                                                                                     <% for (var activitycount of dataL) { %>
-                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID) { %>
+                                                                                <% if (measurement.cycle_ID == cycles.cycle_ID && activitycount.measurement_ID == measurement.measurement_ID && measurement.priority_Level != 0) { %>
                                                                                 <tr>
 
-                                                                                    <td><%= measurement.measurement_ID %>
+                                                                                    <td style="display:none;"><%= measurement.measurement_ID %>
                                                                                     </td>
                                                                                     <td><%= measurement.measurement_Name %>
                                                                                     </td>
@@ -596,16 +660,23 @@
                                                                                     <%}%>
                                                                                     <td>
                                                                                         <% for (var targets of dataF) { %>
+                                                                                            
                                                                                         <% if (targets.measurementID == measurement.measurement_ID) { %>
-                                                                                        <%= targets.target %>
-                                                                                        <% if (targets.target_Type == 0) { %>
-                                                                                        %
-                                                                                        <% } else { %>
-                                                                                        #
-                                                                                        <% } %> 
-                                                                                        - <%= targets.target_Desc %> <br>
+                                                                                            <%= targets.target %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= targets.target_Desc %><br> 
+                                                                                            <% for (var cycle of dataD) { %>
+                                                                                            <% if (cycle.cycle_ID == targets.cycle) { %>
+                                                                                                To be achieved by : <%= cycle.cycle_Name %><br>
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                         <% } %>
 
+                                                                                        
                                                                                         <% } %>
                                                                                     </td>
                                                                                     <td>
@@ -618,7 +689,18 @@
                                                                                         <% for (var targets of dataF) { %>
                                                                                             <% if (targets.measurementID == measurement.measurement_ID) { %>
                                                                                             <%= targets.progress %>
-                                                                                            
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                                %
+                                                                                                <% } else { %>
+                                                                                                #
+                                                                                                <% } %> 
+                                                                                            /<%= targets.target %>
+                                                                                            <% if (targets.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= targets.target_Desc %><br>
                                                                                             <br>
                                                                                             <% } %>
     
@@ -643,6 +725,12 @@
                                                                                                     <button type="submit" class="btn btn-primary">Edit
                                                                                                         Measurement
                                                                                                         Details</button>
+                                                                                                </form>
+                                                                                                <!--SET TARGET DEADLINE BUTTON PLAN PHASE-->
+                                                                                                <form method="get" action="EditTargetDeadline">
+                                                                                                    <input type="hidden" name="MID" value="<%= measurement.measurement_ID %>">
+                                                                                                    <input type="hidden" name="GID" value="<%= goals.metric_ID %>">
+                                                                                                    <button type="submit" class="btn btn-primary">Set Target Deadline</button>
                                                                                                 </form>
                                                                                                 <% } else if (cycles.status == 3) { %>
                                                                                                 <!--EDIT BUTTON ACTION PHASE-->
@@ -769,8 +857,10 @@
                 <script>
                     $('#my_modalCYCLE').on('show.bs.modal.fade.createCycle', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
+                        var bookId2 = $(e.relatedTarget).data('book-id2');
                         console.log("Create Cycle Modal");
                         $(e.currentTarget).find('input[name="gid"]').val(bookId);
+                        $(e.currentTarget).find('input[name="Gname"]').val(bookId2);
                     });
 
 
@@ -778,10 +868,11 @@
                     $('#my_modalCreateMeasures').on('show.bs.modal.fade-in.createMeasurement', function(e) {
                         var bookId = $(e.relatedTarget).data('book-id');
                         var goalid = $(e.relatedTarget).data('book-id2');
+                        var goalName = $(e.relatedTarget).data('book-id3');
                         console.log(goalid);
                         console.log("Create Measurement Modal");
                         $(e.currentTarget).find('input[name="GoalID"]').val(bookId);
-                        
+                        $(e.currentTarget).find('input[name="GName"]').val(goalName);
                     });
 
                     $('#my_modal').on('show.bs.modal.fade.createMeasurement', function(e) {
@@ -793,7 +884,14 @@
                 </script>
 
 
-
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" id="backsuccesscycle" style="display: none;">Hi</button>
+                </form>
+                <form method="get" action="/QualityMetrics">
+                    <input type="hidden" name="passdata" value="">
+                    <button type="submit" class="btn btn-success" style="display: none;" id="backfailcycle">Hi</button>
+                </form>
                 
 
 
@@ -1076,7 +1174,7 @@
                                 var desc = document.getElementById(
                                     "MeasurementDesc").value;
                                 var gid = document.getElementById("GoalID").value;
-                                
+                                var GName = document.getElementById("GName").value;
                                 var p = document.getElementById("priority");
                                 var priority = p.options[p.selectedIndex].value;
                                 console.log(priority);
@@ -1104,7 +1202,8 @@
 
                                 xhr.send("table=" + table + "&mname=" + mname +
                                     "&desc=" + desc + "&priority=" + priority +
-                                    "&gid=" + gid );
+                                    "&gid=" + gid +
+                                    "&GName=" + GName);
 
                             });
 
@@ -1113,7 +1212,7 @@
                             console.log("JSON CYCLES");
                             var table = JSON.stringify($('#tableCycles').tableToJSON());
                             //var mid = document.getElementById("mid").value
-
+                            var Gname = document.getElementById("Gname").value;
                             var xhr = new XMLHttpRequest();
                             xhr.open('POST', '/AddCyclesJSON', true);
                             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -1134,18 +1233,18 @@
                             };
 
 
-                            xhr.send("table=" + table);
+                            xhr.send("table=" + table + "&Gname=" + Gname);
 
                         });
 
                             function backsuccess() {
-                                var button = document.getElementById('backsuccess');
+                                var button = document.getElementById('backsuccesscycle');
                                 button.click();
 
                             };
 
                             function backfail() {
-                                var button = document.getElementById('backfail');
+                                var button = document.getElementById('backfailcycle');
                                 button.click();
 
                             };

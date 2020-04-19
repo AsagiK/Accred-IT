@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Comparative Analysis Page</title>
+    <title>Comparative Report</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,389 +29,306 @@
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
+    
 </head>
 
-<body class="nav-md">
-    <div class="container body"> 
+<body class="nav-md" style="background-color: #232931;">
+    <div class="container body">
+        <div class="main_container" style="background-color: #232931;">
+            <% include ./nav %>
+            <!-- page content -->
+            <div class="right_col" role="main" style="background-color: #232931;">
+                <div role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3 style="color: #dddddd; font-size:xx-large;">Comparative Report</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-20 col-sm-20 col-xs-20">
+                            <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
+                                <div class="x_content"> 
+                                
+                                  <!--PREVIOUS--> 
+                                  <% for (var prevcycles of dataE) { %> 
+                                    <%for (var cycles of data) {%>
+                                    <h2 style="color: black; font-size:x-large;">Comparative Report from: <%=prevcycles.cycle_Name%> to <%=cycles.cycle_Name%></h2>
+                                  <% } %>
+                                  <% } %>
+                                    <!--view table for users-->
+                                    <table  id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                        <thead> 
+                                            
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Measurement Name</th>
+                                                <th>Measurement Description</th>
+                                                <th>Priority Level</th>
+                                                <th>Quality Target</th>
+                                                <th> 
+                                                    <% for (var prevcycles of dataE) { %>
+                                                    Achievements from:  <%=prevcycles.cycle_Name%>
+                                                    <% } %>
+                                                </th>  
+                                                
+                                                <th> 
+                                                    <%for (var cycles of data) {%>
+                                                    Achievements from:  <%=cycles.cycle_Name%>
+                                                    <% } %>
+                                                </th>  
+                                                <th></th>
+  
+                                            </tr>
+                                        </thead>                                                                       
+                                        <tbody> 
+                                            <% for (var prevcycles of dataE) { %>
+                                                
+                                                <% for (var measure_audit of dataB) { %>
+                                                    <% if (measure_audit.cycle_ID == prevcycles.cycle_ID ) { %>
+                                                        <tr>
+                                                        <td><%= measure_audit.measurement_ID %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Name %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Description %>
+                                                        </td>
+                                                        
+                                                                <%if(measure_audit.priority_Level==1){%>
+                                                                    <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
+                                                                <%}else if(measure_audit.priority_Level==2){%>
+                                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                <%}else if(measure_audit.priority_Level==3){%>
+                                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
+                                                                <%}%>
+                                                        
+                                                        <td>
+                                                            <% for (var prevtargets_audit of dataG) { %>
+                                                            <% if (prevtargets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                            <%= prevtargets_audit.target %>
+                                                            <% if (prevtargets_audit.target_Type == 0) { %> 
+                                                                %
+                                                            <% } %> - <%= prevtargets_audit.target_Desc %><br><br>
+                                                            <% } %>
 
-      <div class="main_container">
-        <%- include ./nav.ejs %>
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title" style="float: left">
-                    <h3> Previous Cycle Scores & Current Cycles Scores </h3>
-              </div>
+                                                            <% } %>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                                <% for (var prevtargets_audit of dataG) { %> 
+                                                                    
+                                                                    <% if (prevtargets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                         
+                                                                        <% var target = prevtargets_audit.target %> 
+                                                                        
+                                                                        <% if ((prevtargets_audit.progress >= target) && prevtargets_audit.target_Type == 0) { %>
+                                                                            <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= prevtargets_audit.progress %> % / <%= prevtargets_audit.target %> %<br><%= prevtargets_audit.target_Desc%></span><br>
+                                                                        <% } else if ((prevtargets_audit.progress >= (target / 2 )) && prevtargets_audit.target_Type == 0) { %> 
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= prevtargets_audit.progress %> % / <%= prevtargets_audit.target %> %<br><%= prevtargets_audit.target_Desc%></span> <br>
+                                                                        <% } else if ((prevtargets_audit.progress >= (target / 4 )) && prevtargets_audit.target_Type == 0) { %>
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"><%= prevtargets_audit.progress %> % / <%= prevtargets_audit.target %> %<br><%= prevtargets_audit.target_Desc%></span> <br>
+                                                                        <% } else if ((prevtargets_audit.progress >= target) && prevtargets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:forestgreen; font-weight: bold; font-size: large;"> <%= prevtargets_audit.progress %> / <%= prevtargets_audit.target %> <br><%= prevtargets_audit.target_Desc%> </span> <br>
+                                                                        <% } else if ((prevtargets_audit.progress >= (target / 2 )) && prevtargets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= prevtargets_audit.progress %> / <%= prevtargets_audit.target %> <br><%= prevtargets_audit.target_Desc%> </span> <br>
+                                                                        <% } else if ((prevtargets_audit.progress >= (target / 4 )) && prevtargets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"> <%= prevtargets_audit.progress %> / <%= prevtargets_audit.target %> <br><%= prevtargets_audit.target_Desc%> </span> <br>
+                                                                        <% } %>  
+
+                                                                    <% }%>
+
+                                                                <% } %> 
+
+                                                        </td>   
+                                                        
+                                                        <td>
+                                                            <% for (var targets_audit of dataC) { %> 
+                                                                
+                                                                <% if (targets_audit.measurementID == measure_audit.measurement_ID) { %> 
+                                                                     
+                                                                    <% var target = targets_audit.target %> 
+                                                                    
+                                                                    <% if ((targets_audit.progress >= target) && targets_audit.target_Type == 0) { %>
+                                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span><br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 0) { %> 
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 0) { %>
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                    <% } else if ((targets_audit.progress >= target) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 2 )) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } else if ((targets_audit.progress >= (target / 4 )) && targets_audit.target_Type == 1){ %> 
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                    <% } %>  
+
+                                                                <% }%>
+
+                                                            <% } %>
+
+                                                    </td>
+                                                                
+                                                        <td>
+                                                            <!-- VIEW ACTIVITIES BUTTON -->
+                                                        <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
+                                                            <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
+                                                        </form>        
+                                                        </td>    
+                                                                                         
+                                                     </tr>
+                                                        <% } %>
+                                                    <% } %> 
+                                                
+                                            <% } %>
+                                        </tbody>
+                                    </table> 
+                                    
+                                    <div class="ln_solid">
+                                        
+                                    </div>
+                                    <button class ="btn btn-primary" onclick="window.history.back()">Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /page content -->
+
+                    <!-- footer content -->
+                    <footer style="border-radius: 8px; background-color: #232931;">
+                        <div class="pull-right">
+                            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                    <!-- /footer content -->
+                </div>
             </div>
-            <form id="AcademicYearPicker" action="getJson">
-                    <select class="selectpicker" data-style="btn-info" name="selectpicker" style="float: left; box-sizing: border-box; ">
-                        <optgroup label="Select Academic Year">
-                          <option name="2014-2015" value="0">2014-2015</option>
-                          <option name="2015-2016" value="1">2015-2016</option>
-                          <option name="2016-2017" value="2">2016-2017</option>
-                          <option name="2017-2018" value="3">2017-2018</option>
-                        </optgroup>
-                    </select>
-                </form> 
-                <br>
-                <form id="CyclePicker" action="getJson">
-                        <select class="selectpicker" data-style="btn-info" name="selectpicker" style="float: left ; box-sizing: border-box; padding-left: 40x">
-                            <optgroup label="Select Cycle">
-                              <option name="1" value="0">1</option>
-                              <option name="2" value="1">2</option>
-                              <option name="3" value="2">3</option>
-                              
-                            </optgroup>
-                        </select>
-                    </form>
-                <!--Div fpr Table generation-->
-                <div class="box600"> 
-                    
-                    <table class="smalltable floatleft"><!-- First Table --> 
-                      <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                            <th>General Objective</th>
-                            <!--Measurement-->
-                            <th>Quality Target</th>
-                            <!--removed base standard column-->
-                            <th>Group Assigned</th><!--Exclude to G.L-->
-                            <th>Personnel Assigned</th><!---Exclude to G.M-->
-                            <th>Priority Level</th>
-                            <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 8/10</td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 5/10 </td>
-                            
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                            <td>Safety Practices and Academic Efficiency </td>
-                            
-                            <td> 9/10 </td>
-                            <td> Student Services </td>
-                            <td></td>
-                            <td>9/10</td>
-                            <td> 6/10 </td>
-                            
-                          </tr>
-                          <tr>
-                              <th scope="row">3</th>
-                              <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                              <td>Safety Practices and Academic Efficiency </td>
-                              
-                              <td> 9/10 </td>
-                              <td> Student Services </td>
-                              <td></td>
-                              <td>9/10</td>
-                              <td> 6/10 </td>
-                              
-                            </tr>
-                        </tbody>
 
-                    </table>
-                
-                    
-                    <table class="smalltable floatleft"> <!--Second Table-->
+            
 
-                        <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                              <th>General Objective</th>
-                              <!--measurement-->
-                              <th>Quality Target</th>
-                              <!--removed base standard column-->
-                              <th>Group Assigned</th><!--Exclude to G.L-->
-                              <th>Personnel Assigned</th><!---Exclude to G.M-->
-                              <th>Priority Level</th>
-                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                              
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>All classrooms contain fire extinguishers for cases of emergency</td>
-                                <td>Safety Practices and Academic Efficiency </td>
-                                
-                                <td> 8/10</td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>All Scientific Laboratories contain proper safety materials and follow proper safety guidelines </td>
-                                <td>Safety Practices and Academic Efficiency </td>
-                                
-                                <td> 9/10 </td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 5/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                  <th scope="row">3</th>
-                                  <td>Each classrooms contain learning materials athat are in good condition to be used for academic learning </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 6/10 </td>
-                                  
-                                </tr>
-                            </tbody>
+            <!-- jQuery -->
+            <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+            <!-- Bootstrap -->
+            <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- FastClick -->
+            <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+            <!-- NProgress -->
+            <script src="assets/vendors/nprogress/nprogress.js"></script>
+            <!-- bootstrap-progressbar -->
+            <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+            <!-- iCheck -->
+            <script src="assets/vendors/iCheck/icheck.min.js"></script>
+            <!-- bootstrap-daterangepicker -->
+            <script src="assets/vendors/moment/min/moment.min.js"></script>
+            <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- bootstrap-wysiwyg -->
+            <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+            <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+            <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
+            <!-- jQuery Tags Input -->
+            <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+            <!-- Switchery -->
+            <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
+            <!-- Select2 -->
+            <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+            <!-- Parsley -->
+            <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+            <!-- Autosize -->
+            <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
+            <!-- jQuery autocomplete -->
+            <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+            <!-- starrr -->
+            <script src="assets/vendors/starrr/dist/starrr.js"></script>
+            <!-- Custom Theme Scripts -->
+            <script src="assets/build/js/custom.min.js"></script>
+            <!-- Datatables -->
+            <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+            <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+            <script src="assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+            <script src="assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+            <script src="assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+            <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+            <script src="assets/vendors/jszip/dist/jszip.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+            <script src="assets/vendors/pdfmake/build/vfs_fonts.js"></script> 
 
-                    </table>
-                    <table class="smalltable floatleft"> <!--Third Table-->
-
-                        <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                              <th>General Objective</th>
-                              <!--measurement-->
-                              <th>Quality Target</th>
-                              <!--removed base standard column-->
-                              <th>Group Assigned</th><!--Exclude to G.L-->
-                              <th>Personnel Assigned</th><!---Exclude to G.M-->
-                              <th>Priority Level</th>
-                              <th>Previous Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                              
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>The library has enough learnin resources that can help the student with their specific courses </td>
-                                <td>Library </td>
-                                
-                                <td> 8/10</td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
-                                <td>Safety Practices and Academic Efficiency </td>
-                                
-                                <td> 9/10 </td>
-                                <td> Student Services </td>
-                                <td></td>
-                                <td>9/10</td>
-                                <td> 7/10 </td>
-                                
-                              </tr>
-                              <tr>
-                                  <th scope="row">3</th>
-                                  <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 6/10 </td>
-                                  
-                                </tr>
-                            </tbody>
-
-                    </table> 
-
-                    <table class="smalltable floatleft"> <!--Fourth Table-->  
-
-                        <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Criteria</th>   <!-- changed to Critera instead of Task-->
-                              <th>General Objective</th>
-                              <!--measurement-->
-                              <th>Quality Target</th>
-                              <!--removed base standard column-->
-                              <th>Group Assigned</th><!--Exclude to G.L-->
-                              <th>Personnel Assigned</th><!---Exclude to G.M-->
-                              <th>Priority Level</th>
-                              <th>Current Score</th>  <!--Added score row to display recieved score from previous cycle-->
-                              
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <th scope="row">1</th>
-                                  <td>The library has enough learnin resources that can help the student with their specific courses </td>
-                                  <td>Library </td>
-                                  
-                                  <td> 8/10</td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 8/10 </td>
-                                  
-                                </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                  <td>All Computers in the computer laboratories are well maintained and suffices the technological specifications for the student's needs </td>
-                                  <td>Safety Practices and Academic Efficiency </td>
-                                  
-                                  <td> 9/10 </td>
-                                  <td> Student Services </td>
-                                  <td></td>
-                                  <td>9/10</td>
-                                  <td> 7/10 </td>
-                                  
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>The Laboratories are well maintained and upgraded to increase guranteed safety and learning efficiency of the students </td>
-                                    <td>Safety Practices and Academic Efficiency </td>
-                                    
-                                    <td> 9/10 </td>
-                                    <td> Student Services </td>
-                                    <td></td>
-                                    <td>9/10</td>
-                                    <td> 7/10 </td>
-                                    
-                                  </tr>
-                            </tbody>
-
-                    </table> 
-
-
-                    </div><!-- End Div for table creation -->
-
-                    <!--Table CSS-->
-                    <style> 
+             <!--Table CSS-->
+             <style> 
                       
-                      table.smalltable {
-                          border:3px solid #000;
-                          width:350px; /*280px */
-                          margin:25px;
-                          border-collapse: collapse;
-                          font-size: 1.0em;
-                          min-width: 400px; 
-                          border-radius: 5px 5px 0 0;
-                          overflow: hidden;
-                          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-                          float:left; 
-                          } 
+                table.smalltable {
+                    border:3px solid #000;
+                    width:350px; /*280px */
+                    margin:25px;
+                    border-collapse: collapse;
+                    font-size: 1.0em;
+                    min-width: 400px; 
+                    border-radius: 5px 5px 0 0;
+                    overflow: hidden;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                    float:left; 
+                    } 
 
-                          table.smalltable th{
-                          border: 1px solid #000; 
-                          background-color: darkseagreen;
-                          color: white;
-                          padding: 5px 7px;
-                          }
+                    table.smalltable th{
+                    border: 1px solid #000; 
+                    background: #232931;
+                    color: white;
+                    padding: 5px 7px;
+                    }
 
-                          table.smalltable td {
-                          font-size:100%;
-                          padding: 5px;
-                          text-align:center;
-                          vertical-align:top;
-                          padding: 12px 15px;
-                           }
+                    table.smalltable td {
+                    font-size:100%;
+                    padding: 5px;
+                    text-align:center;
+                    vertical-align:top;
+                    padding: 12px 15px;
+                     }
 
-                          table.smalltable tr{
-                            border-bottom: 1px solid #dddddd;
-                          } 
+                    table.smalltable tr{
+                      border-bottom: 1px solid #dddddd;
+                    } 
 
-                          table.smalltable tbody tr:nth-of-type(even){
-                            background-color: #f3f3f3;
-                          }
+                    table.smalltable tbody tr:nth-of-type(even){
+                      background-color: #f3f3f3;
+                    }
 
-                          table.smalltable tbody tr:last-of-type{
-                            border-bottom: 2px solid #009879;
-                          }
+                    table.smalltable tbody tr:last-of-type{
+                      border-bottom: 2px solid #009879;
+                    }
 
-                          table.smalltable thead tr{
-                            padding: 5px 7px;
-                            text-align:left;
-                            font-weight: bold;
-                            border-bottom: 1px solid #ddd;
-                          }
-
-
-                          
-                          table.smalltable td:nth-child(odd) {font-weight:bold; width:50%; }
-                          table.smalltable td:nth-child(even) {font-weight:normal; width:50%;}
-
-                          @media only screen and (min-width : 768px) and (max-width : 959px) and (orientation:portrait) { .smalltable {float:none; width:100%; display:block; margin:0 auto; } }
-                      </style>
-                            
-        </div>  
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
-      </div>
+                    table.smalltable thead tr{
+                      padding: 5px 7px;
+                      text-align:left;
+                      font-weight: bold;
+                      border-bottom: 1px solid #ddd;
+                    }
 
 
-    </div>
+                    
+                    table.smalltable td:nth-child(odd) {font-weight:bold; width:50%; }
+                    table.smalltable td:nth-child(even) {font-weight:normal; width:50%;}
 
-    <!-- jQuery -->
-    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="assets/vendors/nprogress/nprogress.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="assets/vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="assets/vendors/moment/min/moment.min.js"></script>
-    <script src="assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- bootstrap-wysiwyg -->
-    <script src="assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-    <script src="assets/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-    <script src="assets/vendors/google-code-prettify/src/prettify.js"></script>
-    <!-- jQuery Tags Input -->
-    <script src="assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-    <!-- Switchery -->
-    <script src="assets/vendors/switchery/dist/switchery.min.js"></script>
-    <!-- Select2 -->
-    <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-    <!-- Parsley -->
-    <script src="assets/vendors/parsleyjs/dist/parsley.min.js"></script>
-    <!-- Autosize -->
-    <script src="assets/vendors/autosize/dist/autosize.min.js"></script>
-    <!-- jQuery autocomplete -->
-    <script src="assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-    <!-- starrr -->
-    <script src="assets/vendors/starrr/dist/starrr.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="assets/build/js/custom.min.js"></script>
+                    @media only screen and (min-width : 768px) and (max-width : 959px) and (orientation:portrait) { .smalltable {float:none; width:100%; display:block; margin:0 auto; } }
+                </style>
 
 </body>
 

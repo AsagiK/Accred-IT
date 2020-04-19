@@ -55,9 +55,93 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                             <div class="x_content">
+
+                                <!-- start accordion -->
+                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                        <% for(var goal of dataGoal) { %>
+                        <div class="panel">
+                          <a class="panel-heading" role="tab" id="heading<%= goal.metric_ID %>" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= goal.metric_ID %>" aria-expanded="true" aria-controls="collapse<%= goal.metric_ID %>">
+                            <h4 class="panel-title"><%= goal.metric_Name %></h4>
+                          </a>
+                          <div id="collapse<%= goal.metric_ID %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= goal.metric_ID %>">
+                            <div class="panel-body">
+                              <table class="table table-bordered">
+                                <thead>
+                                    <th>MeasurementID</th>
+                                    <th>Measurement</th>
+                                    <th>Description</th>
+                                    
+                                    <th>Quality Target</th>
+                                    <th>Achievement</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <% for (var cycle of dataCycle) { %>
+                                        <% for (var measurement of data) { %> 
+                                            <% if(cycle.goal_ID == goal.metric_ID && measurement.cycle_ID == cycle.cycle_ID) { %>
+                                                <tr>
+                                                    <td><%= measurement.measurement_ID %></td>
+                                                    <td><%= measurement.measurement_Name %></td>
+                                                    <td><%= measurement.measurement_Description %></td>
+                                                    <td>
+                                                        <% for(var targets of dataB) { %>
+                                                            <% if(targets.measurementID == measurement.measurement_ID) { %>
+                                                                <%= targets.target %>
+                                                                <% if (targets.target_Type == 0) { %>
+                                                                %
+                                                                <% } else { %> 
+                                                                #
+                                                                <% } %>
+                                                                - <%= targets.target_Desc %> <br>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </td>
+                                                    <td>
+                                                            <% for(var targets of dataB) { %>
+                                                                <% if(targets.measurementID == measurement.measurement_ID) { %>
+                                                                    <% if (targets.progress == null) { %> 
+                                                                        No Progress <br>
+                                                                    <% } else { %> 
+                                                                        <%= targets.progress %>
+                                                                        <% if (targets.target_Type == 0) { %>
+                                                                        %
+                                                                        <% } else { %> 
+                                                                        #
+                                                                        <% } %> 
+                                                                        / <%= targets.target %>
+                                                                        <% if (targets.target_Type == 0) { %>
+                                                                        %
+                                                                        <% } else { %> 
+                                                                        #
+                                                                        <% } %><br>
+                                                                    <% } %>
+                                                                <% } %>
+                                                            <% } %>
+                                                        </td>
+                                                    <td>
+                                                        <form method="GET" action="ProgressDetailsPage">
+                                                            <input type="hidden" name="MID" id="MID" value="<%= measurement.measurement_ID %>">
+                                                            <button class="btn btn-primary">Review Evidence</button>
+                                                        </form>
+                                                    </td>             
+                                                </tr>
+                                            <% } %>
+                                        <% } %>
+                                    <% } %>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          
+                          <% } %>
+
+                        </div>
+                        
+                      </div>
+                      <!-- end of accordion -->
                                
                                 
-                                <table class="table table-bordered">
+                                <!--table class="table table-bordered">
                                     <thead>
                                         <th>MeasurementID</th>
                                         <th>Measurement</th>
@@ -110,7 +194,7 @@
                                         
                                         <% } %>
                                     </tbody>
-                                </table>
+                                </table-->
                                 
                             </div>
                         </div>

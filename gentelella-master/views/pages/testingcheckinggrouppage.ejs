@@ -73,7 +73,7 @@
                                                                     <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#headingOne" href="#collapseTwo<%= measure.measurement_ID %>" aria-expanded="true" aria-controls="collapseTwo<%= measure.measurement_ID %>">
                                                                         <h4 class="panel-title"> 
                                                                             <!--MEAASUREMENT NAME-->
-                                                                            MEASUREMENT NAME:  <%= measure.measurement_Name %>
+                                                                            MEASUREMENT NAME:  <%= measure.measurement_Name %> <%= measure.measurement_ID %>
                                                                         </h4>
                         
                                                                     </a>      
@@ -174,9 +174,9 @@
                                                                                                             </tr>
                                                                                                         </thead>
                                                                                                         <tbody>
-                                                                                                            <% for (var subs of dataE) { %>
+                                                                                                            <% for (var subs of dataPending) { %>
                                                                                                                 
-                                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 3) { %>    
+                                                                                                            <% if (activity.activity_ID == subs.activity_ID && subs.status == 0) { %>    
                                                                                                             
                                                                                                             <tr>
                                                                                                                 <!-- MEASUREMENT TABLE :  -->

@@ -148,19 +148,22 @@
                                     <!--h1>TESTING CURRENT USER LOGGED IN: <%= current_user[0].User_ID %> - <%= current_user[0].Role %></h1-->
                                     <h4><a href="/QualityMetrics" class="btn btn-primary">Back to Goals Page</a></h4>
                                 </div>
-                                <br>
+                                
 
                                 <div class="col-md-12 col-sm-6 col-xs-12">
                                     <div class="x_panel" style="background-color: #393e46; border-color: #393e46; border-radius: 8px;">
                                         <div class="x_title">
-                                            <div class="page-title">
-                                                <div class="title_right">
-                                                    <h2 style="color: #dddddd;">Description:<br> <%= data[0].measurement_Description %></h2>
-                                                </div>
-                                                <% if (current_user[0].Role == 1) { %>
-                                                    <div class="title_left">
-                                                        <h2 style="color: #dddddd;">
-                                                            Quality Target/s :<br>
+                                            <table class="table-bordered" style="background-color: whitesmoke; color: black;">
+                                                <thead>
+                                                    <th>Description</th>
+                                                    <th>Quality Target/s</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font-size: 18px; width: 180px">
+                                                            <%= data[0].measurement_Description %>
+                                                        </td>
+                                                        <td style="font-size: 18px; width: 60px">
                                                             <% for(var targets of dataI) { %>
                                                                 <% if (data[0].measurement_ID == targets.measurementID) { %> 
                                                                     <%= targets.target %> 
@@ -173,10 +176,11 @@
                                                                     <br>
                                                                 <% } %>
                                                             <% } %>
-                                                        </h2>
-                                                    </div>
-                                                <% } %>
-                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            
                                             <!--Edited-->
                                             
                                         </div>
@@ -214,9 +218,10 @@
                                                                 <th style="display: none;">ID</th>
                                                                 <th>Activity Name</th>
                                                                 <th>Description</th>
+                                                                <th>Linked to Target</th>
                                                                 <th>Expected Outputs</th>
                                                                 <th>Deadline</th>
-                                                                <th>Assigned Members</th>
+                                                                <th>Assigned Group and Members</th>
                                                                 <th></th>
                                                                 
                                                                 <% if (current_user[0].Role == 1 || current_user[0].Role == 2 || current_user[0].Role == 3 ) { %>
@@ -238,6 +243,19 @@
                                                                                 <td><%= activities.activity_name %></td>
                                                                                 <td><%= activities.description %></td>
                                                                                 <td>
+                                                                                    <% for (var target of dataI) { %>
+                                                                                        <% if (target.target_ID == activities.target) { %>
+                                                                                            <%= target.target %> 
+                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= target.target_Desc %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
+                                                                                <td>
                 
                                                                                     <% for (outputs of dataD){ %>
                                                                                     <% if (outputs.activity_ID == activities.activity_ID) { %>
@@ -251,16 +269,28 @@
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
-                                                                                            <% for (users of dataJ) { %>
-                                                                                                <% if(users.Group == actMembers.activity_Member) { %>
-                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
-                                                                                                <% } %>
+                                                                                            <% for (groups of dataL) { %>
+                                                                                                <% if (actMembers.activity_Member == groups.Group_ID) { %>
+                                                                                                <h5><b><%= groups.Group_Name %>: <br></b></h5>
+                                                                                                
+                                                                                                <% for (users of dataJ) { %>
+
+                                                                                                    <% for(assignedmembers of dataM) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
+                                                                                                            -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                     <% } %>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <% if (dataK[0].status == 1) { %>
+                                                                                    <% for(assignedmembers of dataM) { %>
+                                                                                    <% if (dataK[0].status == 1 && assignedmembers.activity_member_member == current_user[0].User_ID) { %>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
@@ -269,22 +299,32 @@
                                                                                         </button>
                                                                                     </form>
                                                                                     <% } %>
-                                                                                    
+                                                                                    <% } %>
                                                                                     <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
                                                                                     <button class="btn btn-primary" href="#my_modaloutputs"
                                                                                         data-toggle="modal"
-                                                                                        data-book-id="<%= activities.activity_ID %>">Add
+                                                                                        data-book-id="<%= activities.activity_ID %>" data-book-id2="<%= activities.activity_name %>">Add
                                                                                         expected output/s</button>
                                                                                     <% } %>
+                                                                                    <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
+                                                                                        <form method="get" action="AssignActivityToMember">
+                                                                                            <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                            <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                            <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
+                                                                                            <button type="submit" class="btn btn-primary">Assign Group
+                                                                                            </button>
+                                                                                        </form>
+                                                                                        <% } %>
                                                                                 </td>
                                                                                 
                                                                                 <td>
                                                                                     <% if (dataK[0].status == 0 || dataK[0].status == 3) { %>
-                                                                                    <form method="get" action="AssignActivityToMember">
+                                                                                    <form method="get" action="EditActivity">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
                                                                                         <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
                                                                                         <!-- REMOVED GROUP ID BECUASE ACTIVITY WILL THEN BE ASSIGNED TO THE GROUP-->
-                                                                                        <button type="submit" class="btn btn-primary">Assign Group
+                                                                                        <button type="submit" class="btn btn-primary">Edit Activity
                                                                                         </button>
                                                                                     </form>
                                                                                     <% } %>
@@ -297,10 +337,11 @@
                                                                             <!--END OF ADMIN, QAO, AND DEPCHAIR VIEW-->
                                                                             <!--VIEW OF A USER-->
                                                             <% } else { %>
-                                                                <% for (var actMembers of dataH) { %>
-                                                                    <% for (actMeasures of dataG) { %> 
+                                                                
+                                                                <% for (actMeasures of dataG) { %>
+                                                                    <% for (var actMembers of dataH) { %> 
                                                                       <% for (activities of dataB) { %>
-                                                                        <% if ((actMembers.activity_Member == current_user[0].Group && data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMembers.activity_ID && actMeasures.activity_ID == activities.activity_ID)) { %>
+                                                                        <% if (actMembers.activity_Member == current_user[0].Group && data[0].measurement_ID == actMeasures.measurement_ID && activities.activity_ID == actMembers.activity_ID && actMeasures.activity_ID == activities.activity_ID) { %>
                                                                 
                                                                         
                                                                             <tr>
@@ -308,6 +349,19 @@
                                                                                 </td>
                                                                                 <td><%= activities.activity_name %></td>
                                                                                 <td><%= activities.description %></td>
+                                                                                <td>
+                                                                                    <% for (var target of dataI) { %>
+                                                                                        <% if (target.target_ID == activities.target) { %>
+                                                                                            <%= target.target %> 
+                                                                                            <% if (target.target_Type == 0) { %>
+                                                                                            %
+                                                                                            <% } else { %>
+                                                                                            #
+                                                                                            <% } %> 
+                                                                                            - <%= target.target_Desc %>
+                                                                                        <% } %>
+                                                                                    <% } %>
+                                                                                </td>
                                                                                 <td>
                 
                                                                                     <% for (outputs of dataD){ %>
@@ -322,16 +376,46 @@
                                                                                 <td>
                                                                                     <% for (actMembers of dataH) { %>
                                                                                         <% if(activities.activity_ID == actMembers.activity_ID) { %>
-                                                                                            <% for (users of dataJ) { %>
-                                                                                                <% if(users.Group == actMembers.activity_Member) { %>
-                                                                                                    <%= users.User_First %> <%= users.User_Last %> <br>
-                                                                                                <% } %>
+                                                                                            <% for (groups of dataL) { %>
+                                                                                                <% if (actMembers.activity_Member == groups.Group_ID) { %>
+                                                                                                    <h5><b><%= groups.Group_Name %>: <br></b></h5>
+                                                                                                
+                                                                                                <% for (users of dataJ) { %>
+
+                                                                                                    <% for(assignedmembers of dataM) { %>
+                                                                                                        <% if(users.User_ID == assignedmembers.activity_member_member && users.Group == groups.Group_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
+                                                                                                            -<%= users.User_First %> <%= users.User_Last %> <br>
+                                                                                                            
+                                                                                                        <% } %>
+                                                                                                    <% } %>
+
+                                                                                            <% } %>
+                                                                                            <% } %>
                                                                                             <% } %>
                                                                                         <% } %>
                                                                                     <% } %>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <% if (dataK[0].status == 1) { %>
+                                                                                    <% if (dataK[0].status == 0 && current_user[0].isleader == 1 ) { %>
+                                                                                    <form method="get" action="AssignActivityToGroupMember">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= current_user[0].Group %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary btn-sm">Assign Member</button>
+                                                                                    </form>
+                                                                                    <form method="get" action="RemoveGroupMemberFromActivity">
+                                                                                        <input type="hidden" name="MID" value="<%= data[0].measurement_ID %>">
+                                                                                        <input type="hidden" name="AID" value="<%= activities.activity_ID %>">
+                                                                                        <input type="hidden" name="GID" value="<%= current_user[0].Group %>">
+                                                                                        <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
+                                                                                        <button type="submit" class="btn btn-primary btn-sm">Remove Member</button>
+                                                                                    </form>
+                                                                                    <% } %>
+
+                                                                                    
+                                                                                    <% for(assignedmembers of dataM) { %>
+                                                                                    <% if (dataK[0].status == 1 && assignedmembers.activity_member_member == current_user[0].User_ID && assignedmembers.activity_ID == activities.activity_ID) { %>
                                                                                     <form method="get" action="ActivityDetails">
                                                                                         <input type="hidden" name="UID" value="<%= activities.activity_ID %>">
                                                                                         <input type="hidden" name="CID" value="<%= dataK[0].cycle_ID %>">
@@ -341,6 +425,9 @@
                                                                                     </form>
                                                                                    <% } %>
                                                                                     
+                                                                                    
+                                                                                    
+                                                                                    <% } %>
                                                                                 </td>
                                                                                 
                                                                             </tr>
@@ -451,9 +538,45 @@
                                     <% } %>
                                 </select>
                                 <br>
-                                <label> Deadline
+                                <label for="target">Target</label>
+                                <br>
+                                <select class="form-control" name="target" id="target">
+                                    <% for(var targets of dataI) { %>
+                                        <% if (data[0].measurement_ID == targets.measurementID) { %> 
+                                            <%= targets.target %> 
+                                            <% if (targets.target_Type == 0) { %>
+                                                <option value="<%= targets.target_ID %>~<%= targets.target %>%-<%= targets.target_Desc %>"><%= targets.target %>% - <%= targets.target_Desc %></option>
+                                            <% } else { %>
+                                                <option value="<%= targets.target_ID %>~<%= targets.target %>#-<%= targets.target_Desc %>"><%= targets.target %># - <%= targets.target_Desc %></option>
+                                            <% } %> 
+                                            
+                                            <br>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                                <br>
+                                <label> Deadline </label>
+
+                                <% var startDate = dataK[0].start_Date %>
+                                <% var endDate = dataK[0].end_Date %>
+                                <% syear = startDate.getFullYear(); %>
+                                <% if(startDate.getMonth() >= 9) { %>
+                                    <% smonth = startDate.getMonth() + 1; %>
+                                <% } else { %>
+                                    <% smonth = "0" + (startDate.getMonth() + 1); %>
+                                <% } %>
+                                <% sday = startDate.getDate(); %>
+
+                                <% eyear = endDate.getFullYear(); %>
+                                <% if(endDate.getMonth() >= 9) { %>
+                                    <% emonth = endDate.getMonth() + 1; %>
+                                <% } else { %>
+                                    <% emonth = "0" + (endDate.getMonth() + 1); %>
+                                <% } %>
+                                <% eday = endDate.getDate(); %>
+                                    
                                     <br>
-                                    <input type="date" name="deadline" id="deadline" value="" min="<%= newDate %>">
+                                    <input type="date" name="deadline" id="deadline" value="" min="<%= syear %>-<%= smonth %>-<%= sday %>" max="<%= eyear %>-<%= emonth %>-<%= eday %>">
                                     <br><br>
 
                                     <button type="button" class="btn btn-default add-row2">Add</button>
@@ -469,9 +592,11 @@
                                                 <th>Activity Name</th>
                                                 <th>Description</th>
                                                 <th>Measurement to assign</th>
+                                                <th>Target</th>
                                                 <th>Deadline</th>
                                                 <th></th>
                                                 <th style='display: none;'>MeasurementID</th>
+                                                <th style='display: none;'>TargetID</th>
 
                                             </tr>
                                         </thead>
@@ -544,6 +669,7 @@
                             </a>
                             <br>
                             <input type="hidden" name="activityID" id="activityID" required="required" class="form-control col-md-7 col-xs-12" hidden>
+                            <input type="hidden" name="activityName" id="activityName" required="required" class="form-control col-md-7 col-xs-12" hidden>
                             <br>
                             <label for="activityoutput">Expected Output</label>
                             <br>
@@ -557,7 +683,7 @@
                             <table id="tableoutputs">
                                 <thead>
                                     <tr>
-
+                                        <th style="display: none;">Activity Name</th>
                                         <th style="display: none;">Activity ID</th>
                                         <th>Output</th>
                                         <th></th>
@@ -729,6 +855,14 @@
                 console.log("Final: " +measureID);
                 console.log("Final: " +measureName);
                 
+                var target = $("#target").val();
+                var targetID = target.substr(0, target.lastIndexOf('~'));
+                var targetTarget = target.substr(target.lastIndexOf('~') + 1, target.lastIndexOf('-') - 2);
+                var targetDesc = target.substr(target.lastIndexOf('-') + 1);
+                console.log(targetID);
+                console.log(targetTarget);
+                console.log(targetDesc);
+                
                 if (!checkEmptyInputcount()) {
                     //console.log("testing add button");
                     var activity = $("#activitycount").val();
@@ -745,8 +879,8 @@
                     //console.log(total + " 1st");
                     //if (total <= 100) {
                     var markup = "<tr><td>" + activity +
-                        "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + dead +
-                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td></tr>";
+                        "</td><td>" + description + "</td><td>" + measureName + "</td><td>" + targetTarget +"-" + targetDesc + "</td><td>" + dead +
+                        "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td><td style='display: none;'>" + measureID + "</td><td style='display: none;'>" + targetID + "</td></tr>";
                     var table = document.getElementById("tableactivities")
                     $(table).append(markup);
                     //console.log(total + " 2nd");
@@ -863,10 +997,12 @@
                 //console.log("testing test");
                 if (!checkEmptyInput()) {
                     //console.log("testing add button");
+                    var activityname = $("#activityName").val();
                     var activity = $("#activityID").val();
                     var output = $("#activityoutput").val();
 
-                    var markup = "<tr><td style='display: none'>" + activity +
+                    var markup = "<tr><td style='display: none'>" + activityname +
+                        "</td><td style='display: none'>" + activity +
                         "</td><td>" + output + "</td><td><button type='button' class='delete-row' onclick='deleteRow(this)'>Remove</button></td></tr>";
                     var table = document.getElementById("tableoutputs")
                     $(table).append(markup);
@@ -951,8 +1087,10 @@
 
         $('#my_modaloutputs').on('show.bs.modal.fade', function (e) {
             var bookId = $(e.relatedTarget).data('book-id');
+            var bookId2 = $(e.relatedTarget).data('book-id2');
             //alert(bookId);
             $(e.currentTarget).find('input[name="activityID"]').val(bookId);
+            $(e.currentTarget).find('input[name="activityName"]').val(bookId2);
         });
 
     </script>

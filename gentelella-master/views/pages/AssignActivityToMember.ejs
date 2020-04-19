@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Assign Member to Activity </title>
+    <title>Assign Group to Activity </title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -207,11 +207,12 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
-                                            <button type="submit" class="btn btn-primary" style="display: none;" id="backcancel">Cancel</button>
+                                            <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
+                                            <button type="submit" class="btn btn-danger" id="backcancel">Cancel</button>
                                         </form>
-                                        <button class="btn btn-primary" type="reset" id="cancel">Cancel</button>
-                                        <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-success" id="toJSON">Submit</button>
+                                        
+                                        <input type="hidden" id="AN" name="AN" value="<%= dataB[0].activity_name %>">
+                                        <button type="submit" class="btn btn-primary" id="toJSON">Submit</button>
                                         <form method="get" action="/ViewMeasurementDetails">
                                             <input type="hidden" name="MID" value="<%= dataC[0].measurement_ID %>">
                                             <input type="hidden" name="CID" value="<%= dataD[0].cycle_ID %>">
@@ -306,12 +307,12 @@
             $("#toJSON").click(function () {
 
                 var table = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2]
+                    
                 }));
                 var table2 = JSON.stringify($('#table2').tableToJSON({
-                    ignoreColumns: [0, 2 ]
+                    
                 })); // 
-
+                var AN = document.getElementById("AN").value;
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/AssignActivityJSON', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -333,7 +334,7 @@
                 };
 
 
-                xhr.send("table=" + table + "&table2=" + table2);
+                xhr.send("table=" + table + "&table2=" + table2 + "&AN=" + AN);
 
             });
 

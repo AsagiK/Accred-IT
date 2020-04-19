@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <title>Term Report</title>
-
+    
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -50,8 +50,10 @@
                 <div role="main">
                     <div class="">
                         <div class="page-title">
-                            <div class="title_left">
-                                <h3 style="color: #dddddd; font-size:xx-large;">Term Report</h3>
+                            <div class="title_left"> 
+                                <%for (var cycles of data) { %>
+                                <h3 style="color: #dddddd; font-size:xx-large;">Term Report for: <%= cycles.cycle_Name%></h3> 
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -60,8 +62,9 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="background-color: #eeeeee; border-radius: 8px;">
                                 <div class="x_content">
-                                    <% for (var cycles of data) { %>
-                                    <!--view table for users-->
+                                    
+                                    <!--view table for users--> 
+                                    <h1 style="color: black; font-size:x-large;">Achieved Target:</h1>
                                     <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
                                         <thead> 
                                             
@@ -71,22 +74,17 @@
                                                 <th>Measurement Description</th>
                                                 <th>Priority Level</th>
                                                 <th>Quality Target</th>
-                                                <% if (cycles.status == 4 || cycles.status == 3) { %>
-                                                    <th>Progress</th>    
-                                                    <th></th>
-                                                <% } else { %>
-                                                <th># of Activities</th>
-                                                    
-                                                <% } %>
-                                                
-                                                
+                                                <th>Achievements</th>
+                                                <th>Progress</th>    
+                                                <th></th>                                          
                                             </tr>
                                         </thead>                                                                       
                                         <tbody> 
                                             
-                                            <% if (cycles.status == 4 && cycles.termnum != cycles.totalterm) { %>
-                                                <% for (var measure_audit of dataB) { %>
-                                                    <% if (measure_audit.cycle_ID == cycles.cycle_ID) { %>
+                                            <% for (var cycles of data) { %>
+                                                <% for (var measure_audit of dataB) { %> 
+                                                    <% for (var targets_audit of dataC) { %>
+                                                    <% if ( measure_audit.cycle_ID == cycles.cycle_ID && (targets_audit.progress >= targets_audit.target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID ) { %>
                                                         <tr>
                                                         <td><%= measure_audit.measurement_ID %>
                                                         </td>
@@ -98,56 +96,250 @@
                                                                 <%if(measure_audit.priority_Level==1){%>
                                                                     <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
                                                                 <%}else if(measure_audit.priority_Level==2){%>
-                                                                    <td style="color: yellow; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
                                                                 <%}else if(measure_audit.priority_Level==3){%>
                                                                     <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
                                                                 <%}%>
                                                         
                                                         <td>
-                                                            <% for (var targets_audit of dataC) { %>
+                                                            
                                                             <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
                                                             <%= targets_audit.target %>
                                                             <% if (targets_audit.target_Type == 0) { %> 
                                                                 %
-                                                            <% } %> - <%= targets_audit.target_Desc %><br>
+                                                            <% } %> - <%= targets_audit.target_Desc %><br><br>
                                                             <% } %>
 
-                                                            <% } %>
+                                                           
                                                         </td>
                                                         
-                                                                <% for (var targets_audit of dataC) { %> 
-                                                                    
-                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                        <td>
+                                                                
+                                                                    <% var target = targets_audit.target %> 
+                                                                    <% if ((targets_audit.progress >= target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                         
+                                                                        
+                                                                        
+                                                                        <% if (targets_audit.target_Type == 0) { %>
+                                                                            <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span><br>
+                                                                        <% } else if ( targets_audit.target_Type == 1){ %> 
+                                                                            <span style="color:forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%> </span> <br>
+                                                                        <% } %>  
 
-                                                                        <% if (targets_audit.progress >= 75) { %>
-                                                                            <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 60) { %> 
-                                                                            <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 30) { %>
-                                                                            <td style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } else if (targets_audit.progress >= 0) { %>
-                                                                            <td style="color: blue; font-weight: bold; font-size: large;"> <%= targets_audit.progress %></td> <br>
-                                                                        <% } %>
-                                                                   
                                                                     <% }%>
 
-                                                                <% } %>
-                                                         
+                                                                
+
+                                                        </td> 
+                                                        <td>
+                                                            
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
+                                                                <% if ((targets_audit.progress >= target) && targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %> 
+                                                                                                                                       
+                                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            
+                                                        </td>
                                                         <td>
                                                              <!-- VIEW ACTIVITIES BUTTON-->
-                                                        <form id="viewactivitiesundermeasurement" method="post" action="ViewActivitiesUnderMeasurement">
+                                                        <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
                                                             <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
-                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement">View Activities under Measurement</button> 
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
+                                                        </form>        
+                                                        </td>                                            
+                                                     </tr>
+                                                        <% } %> 
+                                                        <% } %>
+                                                    <% } %> 
+                                                <% } %>
+                                        </tbody>  
+                                    </table>
+                                    <br>
+                                    <br>
+                                    <h1 style="color: black; font-size:x-large;"> Above average:</h1>
+                                    <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                        <thead> 
+                                            
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Measurement Name</th>
+                                                <th>Measurement Description</th>
+                                                <th>Priority Level</th>
+                                                <th>Quality Target</th> 
+                                                <th>Achievements</th>
+                                                <th>Progress</th>    
+                                                <th></th>                                          
+                                            </tr>
+                                        </thead>                                                                       
+                                        <tbody> 
+                                            
+                                            <% for (var cycles of data) { %>
+                                                <% for (var measure_audit of dataB) { %> 
+                                                    <% for (var targets_audit of dataC) { %>
+                                                    <% if (measure_audit.cycle_ID == cycles.cycle_ID && (targets_audit.progress >= (targets_audit.target / 2 )) && (targets_audit.progress < (targets_audit.target)) && targets_audit.measurements_auditID == measure_audit.measurement_auditID ) { %>
+                                                        <tr>
+                                                        <td><%= measure_audit.measurement_ID %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Name %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Description %>
+                                                        </td>
+                                                        
+                                                                <%if(measure_audit.priority_Level==1){%>
+                                                                    <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
+                                                                <%}else if(measure_audit.priority_Level==2){%>
+                                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                <%}else if(measure_audit.priority_Level==3){%>
+                                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
+                                                                <%}%>
+                                                        
+                                                        <td>
+                                                            
+                                                            <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                            <%= targets_audit.target %>
+                                                            <% if (targets_audit.target_Type == 0) { %> 
+                                                                %
+                                                            <% } %> - <%= targets_audit.target_Desc %><br><br>
+                                                            <% } %>
+
+                                                            
+                                                        </td>
+                                                        
+                                                        <td>
+                                                                
+                                                                    <% var target = targets_audit.target %> 
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 2 )) && (targets_audit.progress < (target))) { %>                                                                  
+                                                                        <% if ( targets_audit.target_Type == 0) { %> 
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                        <% } else if ( targets_audit.target_Type == 1) { %>
+                                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"><%= targets_audit.progress %>  / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%></span> <br>
+                                                                        
+                                                                        <% } %>
+                                                                    <% }%>
+
+                                                                
+
+                                                        </td> 
+                                                        <td>
+                                                            
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
+                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 2 )) && (targets_audit.progress < (target))) { %>
+                                                                                                                                       
+                                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            
+                                                        </td>
+                                                        <td>
+                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                        <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
+                                                            <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
+                                                        </form>        
+                                                        </td>                                            
+                                                     </tr>
+                                                        <% } %> 
+                                                        <% } %>
+                                                    <% } %> 
+                                                <% } %>
+                                        </tbody>  
+                                    </table>
+                                     <br>
+                                     <br>
+                                    <h1 style="color: black; font-size:x-large;">Needs improvement:</h1>
+                                    <table id="datatable-buttons" class="table table-bordered" style="color: black; font-size: medium;">
+                                        <thead> 
+                                            
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Measurement Name</th>
+                                                <th>Measurement Description</th>
+                                                <th>Priority Level</th>
+                                                <th>Quality Target</th>
+                                                <th>Achievements</th>
+                                                <th>Progress</th>    
+                                                <th></th>                                          
+                                            </tr>
+                                        </thead>                                                                       
+                                        <tbody> 
+                                            
+                                            <% for (var cycles of data) { %>
+                                                <% for (var measure_audit of dataB) { %> 
+                                                    <% for (var targets_audit of dataC) { %>
+                                                    <% if (measure_audit.cycle_ID == cycles.cycle_ID && (targets_audit.progress >= (targets_audit.target / 4 )) && (targets_audit.progress < (targets_audit.target)) && (targets_audit.progress < (targets_audit.target / 2 ))) { %>
+                                                        <tr>
+                                                        <td><%= measure_audit.measurement_ID %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Name %>
+                                                        </td>
+                                                        <td><%= measure_audit.measurement_Description %>
+                                                        </td>
+                                                        
+                                                                <%if(measure_audit.priority_Level==1){%>
+                                                                    <td style="color: red; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - High</td>
+                                                                <%}else if(measure_audit.priority_Level==2){%>
+                                                                    <td style="color:darkorange; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Medium</td>
+                                                                <%}else if(measure_audit.priority_Level==3){%>
+                                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"><%= measure_audit.priority_Level %> - Low</td>
+                                                                <%}%>
+                                                        
+                                                        <td>
+                                                            
+                                                            <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID) { %>
+                                                            <%= targets_audit.target %>
+                                                            <% if (targets_audit.target_Type == 0) { %> 
+                                                                %
+                                                            <% } %> - <%= targets_audit.target_Desc %><br><br>
+                                                            <% } %>
+
+                                                            
+                                                        </td>
+                                                        
+                                                        <td>
+                                                                
+                                                                    <% var target = targets_audit.target %> 
+                                                                    <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 4 )) && (targets_audit.progress < (target)) && (targets_audit.progress < (target / 2 ))) { %>                                                                  
+                                                                        <% if ( targets_audit.target_Type == 0) { %> 
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"> <%= targets_audit.progress %> % / <%= targets_audit.target %> %<br><%= targets_audit.target_Desc%></span> <br>
+                                                                        <% } else if ( targets_audit.target_Type == 1) { %>
+                                                                            <span style="color:tomato; font-weight: bold; font-size: large;"><%= targets_audit.progress %>  / <%= targets_audit.target %> <br><%= targets_audit.target_Desc%></span> <br>
+                                                                        
+                                                                        <% } else { %>
+                                                                            NO DATA TO SHOW
+                                                                        <% } %>
+                                                                    <% }%>
+
+                                                                
+
+                                                        </td> 
+                                                        <td>
+                                                            
+                                                                <% var target = targets_audit.target %> 
+                                                                <%var percent = ((targets_audit.progress/targets_audit.target) * 100).toFixed(2) %>
+                                                                <% if (targets_audit.measurements_auditID == measure_audit.measurement_auditID && (targets_audit.progress >= (target / 4 )) && (targets_audit.progress < (target)) && (targets_audit.progress < (target / 2 ))) { %> 
+                                                                                                                                       
+                                                                        <span style="color:tomato; font-weight: bold; font-size: large;"> <%=percent%> % complete</span><br><br>
+                                                                <% }%>
+
+                                                            
+                                                        </td>
+                                                        <td>
+                                                             <!-- VIEW ACTIVITIES BUTTON-->
+                                                        <form id="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>" method="get" action="ViewActivitiesUnderMeasurement">
+                                                            <input type="hidden" name="MID" value="<%= measure_audit.measurement_ID %>">
+                                                            <button type="submit" class="btn btn-primary" form="viewactivitiesundermeasurement~<%= measure_audit.measurement_ID %>">View Activities under Measurement</button> 
                                                         </form>        
                                                         </td>                                            
                                                      </tr>
                                                         <% } %>
+                                                        <% } %>
                                                     <% } %> 
-                                                <% } %> 
-                                           
+                                                <% } %>
+                                        </tbody>  
                                     </table>
-                                    <% } %> 
-                                     
                                     <div class="ln_solid">
                                         
                                     </div>

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>View Cycle Page</title>
+    <title>Annual Report</title>
 
     <!-- Bootstrap -->
     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -49,9 +49,9 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left" style="color: #dddddd;"> 
-
-                            <h3 style="color: #dddddd; font-size:xx-large;">Annual Report</h3>
-
+                          
+                            <h3 style="color: #dddddd; font-size:xx-large;">Annual Report for : <%=dataC[0].cycle_Name.substr(0, 7)%></h3>
+                            
                         </div>
                     </div>
                 </div>
@@ -68,46 +68,81 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Measurment Name</th>
-                                            <th>Cycle Name</th>
-                                            <th>Target</th>
-                                            <th>Progress</th>
+                                            
+                                            <th>Target</th> 
+
+                                            <th>Achievements</th>
+                                            <th>Progress</th> 
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <% for (var report of data) { %> 
-                                                                                       
+                                    <tbody> 
+                            
+                                        
+                                          <% for (var measurements of dataC) { %>      
+                                                                                
                                             <tr>
-                                                <td width="10%" scope="row"><%= report.measurementID %></td>
-                                                <td width="30%"><%= report.measurement_Name %></td>
-                                                <td>
-                                                <% for (var cycle of dataB) { %>
-                                                <% if ((report.cycle_ID -1 ) == cycle.cycle_ID) {%>
-                                                  <%= cycle.cycle_Name %>  
-                                                <% } %>
-                                                <% } %> 
+                                                <td width="10%" scope="row"><%= measurements.measurement_ID %></td>
+                                                <td width="30%"><%= measurements.measurement_Name %></td>
                                                 
-                                                </td>
-                                                <td width="10%">
+                                                <td width="10%"> 
+                                                    <% for (var report of data) { %> 
+                                                    <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
+
                                                     <%=report.target %> 
                                                     <% if (report.target_Type == 0) { %> 
                                                         %
                                                     <% } %> 
-                                                    - <%= report.target_Desc %><br>
-                                                </td> 
-                                                <% if (report.progress >= 75) { %>
-                                                    <td style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 60) { %> 
-                                                    <td style="color:goldenrod; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 30) { %>
-                                                    <td style="color:tomato; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } else if (report.progress >= 0) { %>
-                                                    <td style="color: blue; font-weight: bold; font-size: large;"> <%= report.progress %></td> <br>
-                                                <% } %>
+                                                    - <%= report.target_Desc %><br> 
+
+                                                    <% } %>
+                                                    <% } %>
+                                                </td>  
+                                                <td> 
+                                                    <% for (var report of data) { %> 
+                                                    <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
+
+                                                    <% if (report.progress >= report.target && report.target_Type == 0) { %>
+                                                        <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br> 
+                                                    <% } else if ((report.progress >= (report.target/2)) && report.target_Type == 0) { %> 
+                                                        <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
+                                                    <% } else if ((report.progress >= (report.target/4)) && report.target_Type == 0) { %>
+                                                        <span style="color:tomato; font-weight: bold; font-size: large;"><%= report.progress %> % / <%= report.target %> %<br><%= report.target_Desc%></span> <br>
+                                                    <% } else if (report.progress >= report.target && report.target_Type == 1) { %>
+                                                        <span style="color:forestgreen  ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } else if ((report.progress >= (report.target/2)) && report.target_Type == 1) { %>
+                                                        <span style="color:darkorange  ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } else if ((report.progress >= (report.target/4)) && report.target_Type == 1) { %>
+                                                        <span style="color:tomato ; font-weight: bold; font-size: large;"> <%= report.progress %>  / <%= report.target %> <br><%= report.target_Desc%> </span> <br>
+                                                    <% } %>
+                                                    
+                                                    <% } %>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% for (var report of data) { %> 
+                                                        <% var percent = ((report.progress/report.target)*100).toFixed(2) %>
+                                                        <%  if (report.measurement_auditID == measurements.measurement_auditID) { %>
+    
+                                                        <% if (report.progress >= report.target) { %>
+                                                            <span style="color: forestgreen; font-weight: bold; font-size: large;"> <%= percent %> % complete </span> <br> 
+                                                        <% } else if ((report.progress >= (report.target/2)) ) { %> 
+                                                            <span style="color:darkorange; font-weight: bold; font-size: large;"> <%= percent %> % complete</span> <br>
+                                                        <% } else if ((report.progress >= (report.target/4)) ) { %>
+                                                            <span style="color:tomato; font-weight: bold; font-size: large;"><%= percent %> % complete</span> <br>
+                                        
+                                                        <% } %>
+                                                        
+                                                        <% } %>
+                                                        <% } %>
+                                                </td>
                                                 
+                                                  
                                                 
                                             </tr> 
-                                            
-                                        <% } %>
+                                                
+                                            <% } %>
+                                        
                                         
                                 
                                     </tbody>
