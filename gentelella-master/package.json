@@ -19,7 +19,7 @@
         "clipboardy": "^2.2.0",
         "ejs": "^2.7.4",
         "express": "^4.17.1",
-        "express-fileupload": "^1.1.6",
+        "express-fileupload": "^1.1.9",
         "express-session": "^1.17.0",
         "googleapis": "^39.2.0",
         "md5": "^2.2.1",
