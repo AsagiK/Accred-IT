@@ -13,7 +13,7 @@
         "add-subtract-date": "^1.0.14",
         "async": "^2.6.3",
         "autosize": "^4.0.2",
-        "bcrypt": "^3.0.8",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.19.0",
         "check-disk-space": "^2.1.0",
         "clipboardy": "^2.2.0",
